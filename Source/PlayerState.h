@@ -22,7 +22,7 @@ class AttackState:public PlayerState
 {
 private:
 	//攻撃フラグ（一度に沢山の出てほしくないため）
-	bool AttackFlg=false;
+	bool attackFlg=false;
 	//攻撃アニメーションのタイミング
 	const float AttackTimeRate = 0.5f;
 public:
@@ -109,7 +109,7 @@ public:
 	BossEntryPlayerState() {};
 	~BossEntryPlayerState() {};
 
-	void SetState(BossStage* stage) { this->stage = stage; }
+	inline void SetState(BossStage* stage) { this->stage = stage; }
 	
 	//初期化
 	void Start(Player* pl);

@@ -52,7 +52,7 @@ void EnemyTurtleShell::Init()
 		anime->Register(i, AnimeIndex[i]);
 	}
 
-	SetTag(ObjectTag::TagEnemy);
+	SetTag(ObjectTag::TAG_ENEMY);
 	SetEnemyTag(EnemyTag::TurtleShell);
 
 	//ミニオンが攻撃してくる最大数
@@ -62,14 +62,14 @@ void EnemyTurtleShell::Init()
 
 	behaviorTree = make_unique<BehaviorTree>();
 	behaviordata = make_unique<BehaviorData>();
-	behaviorTree->AddNode("", "root", 0, BehaviorTree::SelectRule::Priority, nullptr, nullptr);
-	behaviorTree->AddNode("root", "damage", 1, BehaviorTree::SelectRule::Non, new DamageJudgement(this), new DamageAction(this));
-	behaviorTree->AddNode("root", "dead", 2, BehaviorTree::SelectRule::Non, new DeadJudgement(this), new DeadAction(this));
-	behaviorTree->AddNode("root", "attack", 3, BehaviorTree::SelectRule::Non, new AttackJudgement(this), new AttackAction(this));
-	behaviorTree->AddNode("root", "pursuit", 4, BehaviorTree::SelectRule::Non, new PursuitJudgement(this), new PursuitAction(this));
+	behaviorTree->AddNode("", "root", 0, BehaviorTree::SelectRule::PRIORITY, nullptr, nullptr);
+	behaviorTree->AddNode("root", "damage", 1, BehaviorTree::SelectRule::NONE, new DamageJudgement(this), new DamageAction(this));
+	behaviorTree->AddNode("root", "dead", 2, BehaviorTree::SelectRule::NONE, new DeadJudgement(this), new DeadAction(this));
+	behaviorTree->AddNode("root", "attack", 3, BehaviorTree::SelectRule::NONE, new AttackJudgement(this), new AttackAction(this));
+	behaviorTree->AddNode("root", "pursuit", 4, BehaviorTree::SelectRule::NONE, new PursuitJudgement(this), new PursuitAction(this));
 
 
-	behaviorTree->AddNode("root", "idle", 5, BehaviorTree::SelectRule::Non, new IdleJudgement(this), new IdleAction(this));
+	behaviorTree->AddNode("root", "idle", 5, BehaviorTree::SelectRule::NONE, new IdleJudgement(this), new IdleAction(this));
 	
 	//ミニオンが攻撃してくる最大数
 	SetMaxBeAttacked(5);

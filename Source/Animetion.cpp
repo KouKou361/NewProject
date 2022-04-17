@@ -4,12 +4,12 @@
 void Animetion::Register(const int Animeindex, const string AnimeKey)
 {
 	//登録
-	AnimeData.insert(make_pair(AnimeKey, Animeindex));
+	animeData.insert(make_pair(AnimeKey, Animeindex));
 }
 //モデルアニメーション番号の取得
 int Animetion::GetIndex(const string AnimeKey)
 {
-	return AnimeData.at(AnimeKey);
+	return animeData.at(AnimeKey);
 }
 //アニメーション中かどうか
 bool Animetion::IsAnimetion(const string AnimeKey)
@@ -20,5 +20,5 @@ bool Animetion::IsAnimetion(const string AnimeKey)
 //モデルアニメーションのクリア
 void Animetion::Clear()
 {
-	AnimeData.clear();
+	animeData.clear();
 }

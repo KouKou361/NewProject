@@ -9,7 +9,7 @@ class EnemyBase;
 void AttackAction::Start()
 {
 	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->anime->GetIndex(owner->anime->Attack1), false);
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->Attack1), false);
 }
 
 //実行処理

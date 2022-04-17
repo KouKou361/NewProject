@@ -10,12 +10,12 @@
 void BossWalkAction::Start()
 {
 	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->anime->GetIndex(owner->anime->BossWalk), true);
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->BossWalk), true);
 	timer = 0;
 
 
 	//移動目標地点の設定
-	TargetPos = { 0,0,0 };
+	targetPos = { 0,0,0 };
 	XMVECTOR Target, Pos, OriginPos, V, NV;
 	const float Scale = 100;
 
@@ -36,11 +36,11 @@ void BossWalkAction::Start()
 		Target = XMVectorScale(NV,Scale);
 	}
 
-	XMStoreFloat3(&TargetPos,Target);
+	XMStoreFloat3(&targetPos,Target);
 
 	TK_Lib::Lib_Sound::SoundPlay("BossRun", true);
 	
-	TargetPos.y = 0;
+	targetPos.y = 0;
 }
 
 //実行処理
@@ -49,11 +49,11 @@ ActionBase::State BossWalkAction::Run()
 	const float Speed = 2.0f;
 	const float CollisionRadius = 10.0f;
 	Advance(Speed);
-	owner->Turn(TargetPos-owner->GetPos());
+	owner->Turn(targetPos-owner->GetPos());
 
-	TK_Lib::Debug3D::Circle(TargetPos, CollisionRadius);
+	TK_Lib::Debug3D::Circle(targetPos, CollisionRadius);
 
-	if (owner->Length(TargetPos) <= CollisionRadius)
+	if (owner->Length(targetPos) <= CollisionRadius)
 	{
 		return ActionBase::State::Complete;
 	}

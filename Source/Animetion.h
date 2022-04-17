@@ -5,20 +5,8 @@ using namespace std;
 class Animetion
 {
 public:
-	Animetion() { Clear(); };
-	~Animetion() { Clear(); };
-
-	//モデルアニメーション登録
-	void Register(const int Animeindex,const string AnimeKey);
-	//モデルアニメーション番号の取得
-	int GetIndex(const string AnimeKey);
-	//アニメーション中かどうか
-	bool IsAnimetion(const string AnimeKey);
-	//モデルアニメーションのクリア
-	void Clear();
-
 	const string Idle = "Idle";
-	const string Run  = "Run";
+	const string Run = "Run";
 	const string Attack1 = "Attack1";
 	const string Damage = "Damage";
 	const string Die = "Die";
@@ -30,8 +18,20 @@ public:
 	const string BossWalk = "Walk";
 	const string BossClose_RollLoop = "Close_RollLoop";
 	const string BossClose = "Close";
-
 private:
-	map<string,int> AnimeData;
-	
+	map<string, int> animeData;
+
+public:
+	Animetion() { Clear(); };
+	~Animetion() { Clear(); };
+
+	//モデルアニメーション登録
+	void Register(const int animeindex,const string animeKey);
+	//モデルアニメーション番号の取得
+	int GetIndex(const string animeKey);
+	//アニメーション中かどうか
+	bool IsAnimetion(const string animeKey);
+	//モデルアニメーションのクリア
+	void Clear();
+
 };

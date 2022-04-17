@@ -14,11 +14,11 @@ KillDummyEnemyTuto::KillDummyEnemyTuto(SceneGame* sceneGame)
 
 
 	this->sceneGame = sceneGame;
-	AttackTutoStep = StepTargetEnemy;
+	attackTutoStep = STEP_TARGET_ENEMY;
 
-	TutoTexture[StepTargetEnemy] = TK_Lib::Load::LoadTexture("./Data/Sprite/Tuto/tutoScreenShot1.jpg");
-	TutoTexture[StepTargetCamera] = TK_Lib::Load::LoadTexture("./Data/Sprite/Tuto/tutoScreenShot2.jpg");
-	TutoTexture[StepAttack] = TK_Lib::Load::LoadTexture("./Data/Sprite/Tuto/tutoScreenShot3.jpg");
+	tutoTexture[STEP_TARGET_ENEMY] = TK_Lib::Load::LoadTexture("./Data/Sprite/Tuto/tutoScreenShot1.jpg");
+	tutoTexture[STEP_TARGET_CAMERA] = TK_Lib::Load::LoadTexture("./Data/Sprite/Tuto/tutoScreenShot2.jpg");
+	tutoTexture[STEP_ATTACK] = TK_Lib::Load::LoadTexture("./Data/Sprite/Tuto/tutoScreenShot3.jpg");
 
 
 }
@@ -27,7 +27,7 @@ void KillDummyEnemyTuto::Init()
 {
 	ui = make_unique<UITuto>();
 	ui->Init();
-	TextIndex = 0;
+	textIndex = 0;
 	
 	for (int i = 0; i < 2; i++)
 	{
@@ -62,15 +62,15 @@ void KillDummyEnemyTuto::Update()
 	//もしプレイヤーがターゲットを捕捉していないなら
 	if (sceneGame->GetPlayer()->GetTarget() == nullptr)
 	{
-		AttackTutoStep = StepTargetEnemy;
+		attackTutoStep = STEP_TARGET_ENEMY;
 	}
 	else
 	{
-		AttackTutoStep = StepTargetCamera;
+		attackTutoStep = STEP_TARGET_CAMERA;
 		//もしターゲットカメラに移行しているなら
 		if (TK_Lib::Gamepad::GetButtonDown(BTN::LT) >= 1)
 		{
-			AttackTutoStep = StepAttack;
+			attackTutoStep = STEP_ATTACK;
 		}
 
 	}
@@ -97,7 +97,7 @@ bool KillDummyEnemyTuto::Judge()
 //描画
 void KillDummyEnemyTuto::Render()
 {
-	ui->SetText(textes.at(TextIndex));
+	ui->SetText(textes.at(textIndex));
 	ui->Render();
 
 	ui2DDirection->Render();
@@ -110,18 +110,18 @@ void KillDummyEnemyTuto::Render()
 		
 
 
-	switch (AttackTutoStep)
+	switch (attackTutoStep)
 	{
-	case StepTargetEnemy:
-		TK_Lib::Draw::Sprite(TutoTexture[StepTargetEnemy], pos,size,cut);
+	case STEP_TARGET_ENEMY:
+		TK_Lib::Draw::Sprite(tutoTexture[STEP_TARGET_ENEMY], pos,size,cut);
 		TK_Lib::Draw::JapanFont("攻撃目標に近づいて", pos2);
 		break;
-	case StepTargetCamera:
-		TK_Lib::Draw::Sprite(TutoTexture[StepTargetCamera], pos, size, cut);
+	case STEP_TARGET_CAMERA:
+		TK_Lib::Draw::Sprite(tutoTexture[STEP_TARGET_CAMERA], pos, size, cut);
 		TK_Lib::Draw::JapanFont("L2を押しながら", pos2);
 		break;
-	case StepAttack:
-		TK_Lib::Draw::Sprite(TutoTexture[StepAttack], pos, size, cut);
+	case STEP_ATTACK:
+		TK_Lib::Draw::Sprite(tutoTexture[STEP_ATTACK], pos, size, cut);
 		TK_Lib::Draw::JapanFont("R2押すと攻撃！(L2を押しながら)", pos2);
 		break;
 	}

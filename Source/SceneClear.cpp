@@ -3,12 +3,12 @@
 //初期化処理
 void SceneClear::Initialize()
 {
-	Texture[TextureData::Font]            = TK_Lib::Load::LoadTexture("./Data/Sprite/Clear/GameClearFont.png");
-	Texture[TextureData::Back]  = TK_Lib::Load::LoadTexture("./Data/Sprite/Clear/ClearBackTexture.png");
-	Texture[TextureData::Back1] = TK_Lib::Load::LoadTexture("./Data/Sprite/Clear/ClearBackTexture1.png");
-	Texture[TextureData::Back2] = TK_Lib::Load::LoadTexture("./Data/Sprite/Clear/ClearBackTexture2.png");
-	Texture[TextureData::Back3] = TK_Lib::Load::LoadTexture("./Data/Sprite/Clear/ClearBackTexture3.png");
-	Texture[TextureData::SiroboAnimetion] = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/SiroboAnimetion.png");
+	texture[TextureData::FONT]            = TK_Lib::Load::LoadTexture("./Data/Sprite/Clear/GameClearFont.png");
+	texture[TextureData::BACK]  = TK_Lib::Load::LoadTexture("./Data/Sprite/Clear/ClearBackTexture.png");
+	texture[TextureData::BACK1] = TK_Lib::Load::LoadTexture("./Data/Sprite/Clear/ClearBackTexture1.png");
+	texture[TextureData::BACK2] = TK_Lib::Load::LoadTexture("./Data/Sprite/Clear/ClearBackTexture2.png");
+	texture[TextureData::BACK3] = TK_Lib::Load::LoadTexture("./Data/Sprite/Clear/ClearBackTexture3.png");
+	texture[TextureData::SIROBO_ANIMETION] = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/SiroboAnimetion.png");
 
 	const float SoundVolume = 0.5f;
 	TK_Lib::Lib_Sound::RegisterSound("./Data/Sound/Clear/SE/GameClear.wav", "GameClear");
@@ -50,12 +50,12 @@ void SceneClear::Render()
 	static VECTOR2 pos = { 100,100 };
 	ImGui::SliderFloat2("pos",&pos.x,0,1000);
 	ImGui::End();
-	TK_Lib::Draw::Sprite(Texture[TextureData::Back], { 0,0 }, WindowSize, {0,0,1920,1080} );
-	TK_Lib::Draw::Sprite(Texture[TextureData::Font], {640,100}, { 758,300 }, { 0,0,758,300 });
+	TK_Lib::Draw::Sprite(texture[TextureData::BACK], { 0,0 }, WindowSize, {0,0,1920,1080} );
+	TK_Lib::Draw::Sprite(texture[TextureData::FONT], {640,100}, { 758,300 }, { 0,0,758,300 });
 
-	TK_Lib::Draw::Sprite(Texture[TextureData::Back1], { 0,0 }, WindowSize, { 0,Speed1 * static_cast<int>(timer * 60),1920,1080 });
-	TK_Lib::Draw::Sprite(Texture[TextureData::Back2], { 0,0 }, WindowSize, { 0,Speed2 * static_cast<int>(timer * 60),1920,1080 });
-	TK_Lib::Draw::Sprite(Texture[TextureData::Back3], { 0,0 }, WindowSize, { 0,Speed3 * static_cast<int>(timer * 60),1920,1080 });
+	TK_Lib::Draw::Sprite(texture[TextureData::BACK1], { 0,0 }, WindowSize, { 0,Speed1 * static_cast<int>(timer * 60),1920,1080 });
+	TK_Lib::Draw::Sprite(texture[TextureData::BACK2], { 0,0 }, WindowSize, { 0,Speed2 * static_cast<int>(timer * 60),1920,1080 });
+	TK_Lib::Draw::Sprite(texture[TextureData::BACK3], { 0,0 }, WindowSize, { 0,Speed3 * static_cast<int>(timer * 60),1920,1080 });
 
 
 
@@ -65,7 +65,7 @@ void SceneClear::Render()
 	{
 		const float LoadSiroboIconIndexX = (static_cast<int>((timer * 60) / 5) / 7) * 256;
 		const float LoadSiroboIconIndexY = (static_cast<int>((timer * 60) / 5) % 6) * 256;
-		TK_Lib::Draw::Sprite(Texture[TextureData::SiroboAnimetion], { 520,760 }, { 100,100 }, { LoadSiroboIconIndexX,LoadSiroboIconIndexY,256,256 });
+		TK_Lib::Draw::Sprite(texture[TextureData::SIROBO_ANIMETION], { 520,760 }, { 100,100 }, { LoadSiroboIconIndexX,LoadSiroboIconIndexY,256,256 });
 		if (static_cast<int>(timer * 60) % 60 >= 30)
 		{
 			TK_Lib::Draw::JapanFont("PS4コントローラー「〇」キーでスタート画面に！", { 640,800 });
@@ -89,9 +89,9 @@ void SceneClear::ModelRender()
 //終了処理
 void SceneClear::End()
 {
-	TK_Lib::Delete::DeleteTexture(Texture[TextureData::Font]);
-	TK_Lib::Delete::DeleteTexture(Texture[TextureData::Back]);
-	TK_Lib::Delete::DeleteTexture(Texture[TextureData::SiroboAnimetion]);
+	TK_Lib::Delete::DeleteTexture(texture[TextureData::FONT]);
+	TK_Lib::Delete::DeleteTexture(texture[TextureData::BACK]);
+	TK_Lib::Delete::DeleteTexture(texture[TextureData::SIROBO_ANIMETION]);
 
 	TK_Lib::Lib_Sound::SoundStop("GameClear");
 

@@ -3,7 +3,7 @@
 //‰Šú‰»ˆ—
 void EffectTowerBreak::Init()
 {
-	Pos = VECTOR3{ 11,0,-2 };
+	pos = VECTOR3{ 11,0,-2 };
 	//	PointLight = TK_Lib::SpotLight::Create(Pos, {1,0,0,1},10);
 	//TK_Lib::Lib_Effect::GetSpriteEffect(EffectIndex)->Fire2({ 0,0,0 }, 2);
 	//TK_Lib::Lib_Effect::GetSpriteEffect(EffectIndex)->Fire2({ 0,0,0 }, 2);
@@ -19,7 +19,7 @@ void EffectTowerBreak::Play(VECTOR3 Pos, int Num)
 		return;
 	}
 
-	vector<EffectData>* spriteEffects = TK_Lib::Lib_Effect::Geteffects(EffectIndex);
+	vector<EffectData>* spriteEffects = TK_Lib::Lib_Effect::Geteffects(effectIndex);
 	for (int i = 0; i < Num; i++) {
 		for (int j = 0; j < spriteEffects->size(); j++)
 		{
@@ -53,9 +53,9 @@ void EffectTowerBreak::Play(VECTOR3 Pos, int Num)
 void EffectTowerBreak::Update()
 {
 	float time = TK_Lib::Window::GetElapsedTime();
-	vector<EffectData>* spriteEffects = TK_Lib::Lib_Effect::Geteffects(EffectIndex);
+	vector<EffectData>* spriteEffects = TK_Lib::Lib_Effect::Geteffects(effectIndex);
 
-	for (int i = 0; i < TK_Lib::Lib_Effect::GetUseLastEffectIndex(EffectIndex); i++) {
+	for (int i = 0; i < TK_Lib::Lib_Effect::GetUseLastEffectIndex(effectIndex); i++) {
 		EffectData* spriteEffect = &spriteEffects->at(i);
 		if (spriteEffect->type < 0) continue;
 		spriteEffect->alpha = spriteEffect->timer / 0.1f;

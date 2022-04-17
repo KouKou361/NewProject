@@ -8,8 +8,8 @@
 void MinionIdleAction::Start()
 {
 	//アニメーションの開始
-	TK_Lib::Model::PlayAnimation(minionOwner->GetModel(),minionOwner->anime->GetIndex(minionOwner->anime->Idle),true);
-	minionOwner->SetState(MinionPlayer::StateType::TypeIdle);
+	TK_Lib::Model::PlayAnimation(minionOwner->GetModel(),minionOwner->GetAnime()->GetIndex(minionOwner->GetAnime()->Idle),true);
+	minionOwner->SetState(MinionPlayer::StateType::TYPE_IDLE);
 }
 
 //実行処理
@@ -18,7 +18,7 @@ ActionBase::State MinionIdleAction::Run()
 	//仲間になる範囲にいるなら
 	if (minionOwner->SearchPosition(minionOwner->FollowSerchL, minionOwner->GetPlayer()->GetPos()))
 	{
-		minionOwner->SetTeam(MinionPlayer::Team::TeamPlayer);
+		minionOwner->SetTeam(MinionPlayer::Team::TEAM_PLAYER);
 		return ActionBase::State::Failed;
 	}
 

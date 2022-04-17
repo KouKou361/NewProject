@@ -11,8 +11,8 @@
 void MinionAttackAction::Start()
 {
 	//アニメーションの開始
-	TK_Lib::Model::PlayAnimation(minionOwner->GetModel(), minionOwner->anime->GetIndex(minionOwner->anime->Attack1), true);
-	minionOwner->SetState(MinionPlayer::StateType::TypeAttack);
+	TK_Lib::Model::PlayAnimation(minionOwner->GetModel(), minionOwner->GetAnime()->GetIndex(minionOwner->GetAnime()->Attack1), true);
+	minionOwner->SetState(MinionPlayer::StateType::TYPE_ATTACK);
 	minionOwner->SetAttackStandBy(false);
 
 	if (minionOwner->GetTarget() == nullptr)return;
@@ -74,7 +74,7 @@ bool MinionAttackAction::Stick()
 {
 	if (minionOwner->GetTarget() == nullptr)assert(!L"ターゲットが消えました！");
 
-	if (minionOwner->GetTarget()->GetTag() != ObjectTag::TagEnemy)return false;
+	if (minionOwner->GetTarget()->GetTag() != ObjectTag::TAG_ENEMY)return false;
 
 	VECTOR3 PosA, PosB;
 	PosA = minionOwner->GetPos();

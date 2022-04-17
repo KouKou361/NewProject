@@ -20,21 +20,21 @@ class MinionPlayer :public Charactor
 public:
 	enum Team
 	{
-		TeamPlayer,//プレイヤーの仲間
-		TeamEnemy,//敵チームの仲間(一応　いらないかも)
-		TeamNeutral,//中立
-		TeamEnd
+		TEAM_PLAYER,//プレイヤーの仲間
+		TEAM_ENEMY,//敵チームの仲間(一応　いらないかも)
+		TEAM_NEUTRAL,//中立
+		TEAM_END
 	};
 	enum StateType
 	{
-		TypeIdle,   //中立（ボーっとしている）
-		TypeStandBy,//指示待ち（攻撃OK）
-		TypeAttack, //攻撃中
-		TypeBack,   //撤退中
-		TypeThrow,  //投げられ中
-		TypeDamage, //ダメージ中
-		TypeDead,//死亡中
-		TypeResuscitation,//蘇生されている時
+		TYPE_IDLE,   //中立（ボーっとしている）
+		TYPE_STAND_BY,//指示待ち（攻撃OK）
+		TYPE_ATTACK, //攻撃中
+		TYPE_BACK,   //撤退中
+		TYPE_THROW,  //投げられ中
+		TYPE_DAMAGE, //ダメージ中
+		TYPE_DEAD,//死亡中
+		TYPE_RESUSCITATION,//蘇生されている時
 		TypeEnd,
 	};
 private:

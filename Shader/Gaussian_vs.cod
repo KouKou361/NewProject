@@ -38,7 +38,7 @@ dcl_temps 3
 //   o1.x <- <main return value>.Tex.x; o1.y <- <main return value>.Tex.y; 
 //   o0.x <- <main return value>.Position.x; o0.y <- <main return value>.Position.y; o0.z <- <main return value>.Position.z; o0.w <- <main return value>.Position.w
 //
-#line 13 "C:\Users\taketomo\Desktop\GameProgram\Shader\Gaussian_vs.hlsl"
+#line 13 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Gaussian_vs.hlsl"
 itof r0.w, l(1)  // r0.w <- output.Position.w
 mov r0.xyz, v0.xyzx  // r0.x <- output.Position.x; r0.y <- output.Position.y; r0.z <- output.Position.z
 

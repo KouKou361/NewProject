@@ -21,31 +21,31 @@ void SceneGame::LoadModel()
 	//FontTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/fonts/font0.png");
 
 	//プレイヤー
-	Model[PlayerModel] = TK_Lib::Load::LoadModel("./Data/Model/Player/Player.mdl", "Player");
+	model[PLAYER_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Player/Player.mdl", "Player");
 	TK_Lib::Model::SetModelTexture("Player", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//ミニオン
-	Model[MinionPlayerModel] = TK_Lib::Load::LoadModel("./Data/Model/MinionPlayer/MinionPlayer.mdl", "MinionPlayer");
+	model[MINION_PLAYER_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/MinionPlayer/MinionPlayer.mdl", "MinionPlayer");
 	TK_Lib::Model::SetModelTexture("MinionPlayer", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//敵スライム
-	Model[EnemySlimeModel] = TK_Lib::Load::LoadModel("./Data/Model/Slime/Slime.mdl", "Slime");
+	model[ENEMY_SLIME_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Slime/Slime.mdl", "Slime");
 	TK_Lib::Model::SetModelTexture("Slime", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//敵爆発
-	Model[EnemyBoomModel] = TK_Lib::Load::LoadModel("./Data/Model/Boom/Boom.mdl", "Boom");
+	model[ENEMY_BOOM_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Boom/Boom.mdl", "Boom");
 	TK_Lib::Model::SetModelTexture("Boom", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//敵浮遊
-	Model[EnemyBeholderModel] = TK_Lib::Load::LoadModel("./Data/Model/Beholder/Beholder.mdl", "Beholder");
+	model[ENEMY_BEKOLDER_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Beholder/Beholder.mdl", "Beholder");
 	TK_Lib::Model::SetModelTexture("Beholder", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//敵宝箱
-	Model[EnemyChestModel] = TK_Lib::Load::LoadModel("./Data/Model/ChestEnemy/ChestEnemy.mdl", "ChestEnemy");
+	model[ENEMY_CHEST_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/ChestEnemy/ChestEnemy.mdl", "ChestEnemy");
 	TK_Lib::Model::SetModelTexture("ChestEnemy", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//敵亀
-	Model[EnemyTurtleShellModel] = TK_Lib::Load::LoadModel("./Data/Model/TurtleShell/TurtleShell.mdl", "TurtleShell");
+	model[ENEMY_TURTLESHELL_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/TurtleShell/TurtleShell.mdl", "TurtleShell");
 	TK_Lib::Model::SetModelTexture("TurtleShell", "./Data/Model/TurtleShell/Textures/PBRTurtleShellNormal.png", 4);
 	//敵ボス
 	TK_Lib::Load::LoadModel("./Data/Model/Boss/Boss.mdl", "Boss");
 	TK_Lib::Model::SetModelTexture("Boss", "./Data/Model/Boss/Texture/NormalMap .png", 4);
 	//敵ダミー
-	Model[Traning_Dummy] = TK_Lib::Load::LoadModel("./Data/Model/Training_Dummy/Training_dummy.mdl", "Dummy");
+	model[TRANING_DUMMY] = TK_Lib::Load::LoadModel("./Data/Model/Training_Dummy/Training_dummy.mdl", "Dummy");
 	TK_Lib::Model::SetModelTexture("Dummy", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 
 
@@ -54,18 +54,18 @@ void SceneGame::LoadModel()
 	//Model[StageModel] = TK_Lib::Load::LoadModel("./Data/Model/Stage/Panel01/StagePanel1.mdl", "Stage");
 	
 	//1ステージ
-	Model[StageCollisionModel1] = TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/CollisionStage01.mdl", "Collision1");
-	Model[StageNav1] =            TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/NavStage01.mdl", "Nav1");
-	Model[StageModel2] =          TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/StageWall.mdl", "Stage1");
+	model[STAGE_COLLISION_MODEL1] = TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/CollisionStage01.mdl", "Collision1");
+	model[STAGE_NAV1] =            TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/NavStage01.mdl", "Nav1");
+	model[STAGE_MODEL2] =          TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/StageWall.mdl", "Stage1");
 	                              TK_Lib::Model::SetModelTexture("Stage1", "./Data/Model/Stage/NormalMap.png", 4);
 
 	                              TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/StageGround.mdl", "Stage1NoMakeShadow");
 								  TK_Lib::Model::SetModelTexture("Stage1NoMakeShadow", "./Data/Model/Stage/NormalMap.png", 4);
 
 	//2ステージ
-	Model[StageCollisionModel2] = TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/CollisionStage02.mdl", "Collision2");
-	Model[StageNav2] =            TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/NavStage02.mdl", "Nav2");
-	Model[StageModel2] =          TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/StageWall.mdl", "Stage2");
+	model[STAGE_COLLISION_MODEL2] = TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/CollisionStage02.mdl", "Collision2");
+	model[STAGE_NAV2] =            TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/NavStage02.mdl", "Nav2");
+	model[STAGE_MODEL2] =          TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/StageWall.mdl", "Stage2");
 	                              TK_Lib::Model::SetModelTexture("Stage2", "./Data/Model/Stage/NormalMap.png", 4);
 	                              TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/StageGround.mdl", "Stage2NoMakeShadow");
 								  TK_Lib::Model::SetModelTexture("Stage2NoMakeShadow", "./Data/Model/Stage/NormalMap.png", 4);
@@ -79,13 +79,13 @@ void SceneGame::LoadModel()
 	TK_Lib::Model::SetModelTexture("Stage3NoMakeShadow", "./Data/Model/Stage/NormalMap.png", 4);
 
 	//ポット
-	Model[Pat] = TK_Lib::Load::LoadModel("./Data/Model/Pat/Pat.mdl", "Pat");
+	model[PAT] = TK_Lib::Load::LoadModel("./Data/Model/Pat/Pat.mdl", "Pat");
 	TK_Lib::Model::SetModelTexture("Pat", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//タワー
 	TK_Lib::Load::LoadModel("./Data/Model/Tower/Tower.mdl", "Tower");
 	TK_Lib::Model::SetModelTexture("Tower", "./Data/Model/Tower/Textures/NormalMap .png", 4);
 	//壁
-	Model[Wall] = TK_Lib::Load::LoadModel("./Data/Model/Wall/Wall.mdl", "Wall");
+	model[WALL] = TK_Lib::Load::LoadModel("./Data/Model/Wall/Wall.mdl", "Wall");
 	TK_Lib::Model::SetModelTexture("Wall", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//壁
 	TK_Lib::Load::LoadModel("./Data/Model/Wall/CollisionWall.mdl", "CollisionWall");
@@ -396,11 +396,11 @@ void SceneGame::Initialize()
 	//}
 	//Pos = { 40,0,0 };
 	//壁
-	{
-		TK_Lib::Model::Tranceform(Model[Wall], Pos, Angle, Scale);
-		TK_Lib::Model::PlayAnimation(Model[Wall], 0, false);
-		TK_Lib::Model::AnimetionUpdate(Model[Wall]);
-	}
+	//{
+	//	TK_Lib::Model::Tranceform(model[WALL], Pos, Angle, Scale);
+	//	TK_Lib::Model::PlayAnimation(model[WALL], 0, false);
+	//	TK_Lib::Model::AnimetionUpdate(model[WALL]);
+	//}
 
 	
 	TK_Lib::Light::SetLookAt({ 500, 800,500 }, { 0,0,100 }, { 0,1,0 });
@@ -437,17 +437,17 @@ void SceneGame::Initialize()
 	//	objectManager->Register(obj);
 	//}
 	//
-	{
-		shared_ptr<ObjectWall> obj;
-		obj = make_shared<ObjectWall>(objectManager.get(), this);
-		obj->SetPos({ 80,0,0 });
-		objectManager->Register(obj);
-	}
+	//{
+	//	shared_ptr<ObjectWall> obj;
+	//	obj = make_shared<ObjectWall>(objectManager.get(), this);
+	//	obj->SetPos({ 80,0,0 });
+	//	objectManager->Register(obj);
+	//}
 	//
 	//
 	TK_Lib::Lib_Fade::FadeOutBegin(0.02f);
 	
-	ClearFlg = false;
+	clearFlg = false;
 }
 //更新処理
 void SceneGame::Update()
@@ -536,7 +536,7 @@ void SceneGame::Update()
 	//{
 	//	SceneManager::Instance().ChangeScene(new SceneClear);
 	//}
-	
+	//
 
 	if (GameClear())
 	{
@@ -607,7 +607,7 @@ bool SceneGame::GameOver()
 //ゲームクリア処理
 bool SceneGame::GameClear()
 {
-	return ClearFlg;
+	return clearFlg;
 }
 
 //デバック
@@ -615,32 +615,32 @@ void SceneGame::DegugImgui()
 {
 	ImGui::Begin(u8"ゲーム");
 
-	const char* DebugName[DebugEnd] = {
+	const char* DebugName[DEBUG_END] = {
 	 "Parameter",
 	 "Collision",
 	 "Shader",
 	 "DebugNav",
 	 "DebugCamera",
 	};
-	for (int i = 0; i < DebugEnd; i++)
+	for (int i = 0; i < DEBUG_END; i++)
 	{
 		ImGui::Checkbox(DebugName[i], &debugType[i]);
 	}
 
-	for (int i = 0; i < DebugEnd; i++)
+	for (int i = 0; i < DEBUG_END; i++)
 	{
 		if (!debugType[i])continue;
 		switch (i)
 		{
-		case DebugParameter:ImguiParameter();
+		case DEBUG_PARAMETER:ImguiParameter();
 			break;
-		case DebugCollision:ImguiCollision();
+		case DEBUG_COLLISION:ImguiCollision();
 			break;
-		case DebugShader:ImguiShader();
+		case DEBUG_SHADER:ImguiShader();
 			break;
-		case DebugNav:ImguiNav();
+		case DEBUG_NAV:ImguiNav();
 			break;
-		case DebugCamera:ImguiCamera();
+		case DEBUG_CAMERA:ImguiCamera();
 			break;
 		}
 	}

@@ -3,21 +3,21 @@ void EffectBase::Create(string Texturename, int MaxNum, VECTOR2 TextureChipSize,
 {
 
 	//エフェクトで使用しているテクスチャの名前
-	this->Texturename= Texturename;
+	this->textureName= Texturename;
 	//エフェクト粒子の最大数
-	this->MaxNum=MaxNum;
+	this->maxNum=MaxNum;
 
-	this->TextureChipSize= TextureChipSize;
-	this->TextureNum= TextureNum;
-	this->blendstate= blendstate;
+	this->textureChipSize= TextureChipSize;
+	this->textureNum= TextureNum;
+	this->blendState= blendstate;
 
 	//エフェクト番号
-	EffectIndex=TK_Lib::Lib_Effect::Load(Texturename, MaxNum, TextureChipSize, TextureNum, blendstate);
+	effectIndex=TK_Lib::Lib_Effect::Load(Texturename, MaxNum, TextureChipSize, TextureNum, blendstate);
 }
 
 void EffectBase::NotRender()
 {
-	vector<EffectData>* spriteEffects = TK_Lib::Lib_Effect::Geteffects(EffectIndex);
+	vector<EffectData>* spriteEffects = TK_Lib::Lib_Effect::Geteffects(effectIndex);
 	for (int j = 0; j < spriteEffects->size(); j++)
 	{
 		EffectData* spriteEffect = &spriteEffects->at(j);
@@ -32,5 +32,5 @@ void EffectBase::NotRender()
 }
 void EffectBase::Delete()
 {
-	TK_Lib::Lib_Effect::Erase(EffectIndex);
+	TK_Lib::Lib_Effect::Erase(effectIndex);
 }

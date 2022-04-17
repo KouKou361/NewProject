@@ -12,11 +12,11 @@
 //開始処理
 void MinionThrowAction::Start()
 {
-	minionOwner->SetState(MinionPlayer::StateType::TypeThrow);
+	minionOwner->SetState(MinionPlayer::StateType::TYPE_THROW);
 	minionOwner->SetAttackStandBy(false);
 
 	//アニメーションの開始
-	TK_Lib::Model::PlayAnimation(minionOwner->GetModel(), minionOwner->anime->GetIndex("Jump"), false);
+	TK_Lib::Model::PlayAnimation(minionOwner->GetModel(), minionOwner->GetAnime()->GetIndex("Jump"), false);
 
 	//放物線
 	{

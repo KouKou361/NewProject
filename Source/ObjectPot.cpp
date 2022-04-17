@@ -17,7 +17,7 @@ void ObjectPot::Init()
 	SetMaxHp(GetHp());
 
 
-	SetTag(ObjectTag::TagObject);
+	SetTag(ObjectTag::TAG_OBJECT);
 	collisionRadius = 5;
 	objectType = ObjectType::Pot;
 

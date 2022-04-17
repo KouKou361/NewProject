@@ -17,12 +17,12 @@ void MinionPlayer::Init(Player* pl)
 	this->pl = pl;
 	Ai = make_shared<MinionPlayerAI>(this,pl);
 //	SetTeam(Team::TeamPlayer);
-	SetTeam(Team::TeamNeutral);
+	SetTeam(Team::TEAM_NEUTRAL);
 	SetHp(4);
 	SetMaxHp(GetHp());
 	ResuscitationTime = 0;
 
-	SetTag(ObjectTag::TagMinion);
+	SetTag(ObjectTag::TAG_MINION);
 
 	ResuscitationFlg = false;
 	AttackMinions.clear();
@@ -79,7 +79,7 @@ void MinionPlayer::Init(Player* pl)
 //更新処理
 void MinionPlayer::Update()
 {
-	if (state != StateType::TypeDead)
+	if (state != StateType::TYPE_DEAD)
 	{
 		Ai->Update();
 	}
@@ -119,8 +119,8 @@ void MinionPlayer::HPRender(const int SpriteIndex, const VECTOR2 Pos)
 void MinionPlayer::Render()
 {
 
-	if (GetState() == StateType::TypeResuscitation ||
-		GetState() == StateType::TypeDead)
+	if (GetState() == StateType::TYPE_RESUSCITATION ||
+		GetState() == StateType::TYPE_DEAD)
 	{
 		uiMinionDownHelp->SetValue(static_cast<float>(ResuscitationTime));
 		uiMinionDownHelp->Render();
@@ -132,7 +132,7 @@ void MinionPlayer::Render()
 //蘇生ステート変換処理
 void MinionPlayer::SetResuscitation()
 {
-	SetState(StateType::TypeResuscitation);
+	SetState(StateType::TYPE_RESUSCITATION);
 	ResuscitationFlg = true;
 }
 //蘇生ステート変換処理

@@ -11,6 +11,25 @@ class EnemyBase;
 class Camera
 {
 	friend class CameraManager;
+protected:
+	float lerpSpeed = 0.02f;
+	//補完用（注視点）
+	VECTOR3 startTargetPos;
+	VECTOR3 endTargetPos;
+	//補完用（視点）
+	VECTOR3 startEyePos;
+	VECTOR3 endEyePos;
+	//カメラ情報
+	VECTOR3 targetPos = { 0,0,0 };
+	VECTOR3 eye = { 0,0,0 };
+	VECTOR3 angle = { 0,0,0 };
+	//カメラの持ち主
+	Actor* owner = nullptr;
+	CameraManager* manager = nullptr;
+	//目標のキャラ
+	Actor* targetChara = nullptr;
+
+
 public:
 	Camera() {}
 	~Camera() {};
@@ -35,28 +54,10 @@ public:
 	void RayPick();
 	//カメラの視点移動(補完)
 	bool LerpEyeCamera(const float time);
-	void SetTarget(const VECTOR3 TargetPos) { this->targetPos = TargetPos; };
-	void SetOnwer(Actor* owner) { this->owner = owner; };
-	Actor* GetActor() { return targetChara; }
-	void SetActor(Actor* Actor) {targetChara=Actor; }
-
-protected:
-	float LerpSpeed = 0.02f;
-	//補完用（注視点）
-	VECTOR3 startTargetPos;
-	VECTOR3 endTargetPos;
-	//補完用（視点）
-	VECTOR3 startEyePos;
-	VECTOR3 endEyePos;
-	//カメラの持ち主
-	Actor* owner = nullptr;
-	CameraManager* manager = nullptr;
-	//目標のキャラ
-	Actor* targetChara = nullptr;
-
-	VECTOR3 targetPos = { 0,0,0 };
-	VECTOR3 eye = { 0,0,0 };
-	VECTOR3 angle = { 0,0,0 };
+	inline void SetTarget(const VECTOR3 TargetPos) { this->targetPos = TargetPos; };
+	inline void SetOnwer(Actor* owner) { this->owner = owner; };
+	inline Actor* GetActor() { return targetChara; }
+	inline void SetActor(Actor* Actor) {targetChara=Actor; }
 };
 
 //通常モード コントローラーでカメラの視点を変える
@@ -86,12 +87,12 @@ class CameraAim :public Camera
 private:
 
 	//切り替え時の保存用カメラ
-	VECTOR3 SaveAngle = { 0,0,0 };
+	VECTOR3 saveAngle = { 0,0,0 };
 	//敵マネージャー
 	EnemyManager* enemyManager = nullptr;
 
 	//入力不可タイマー
-	int Keytimer = 0;
+	int keyTimer = 0;
 public:
 	CameraAim() {};
 	CameraAim(Actor* owner, Actor* targetChara, EnemyManager* enemyManager);
@@ -115,7 +116,7 @@ public:
 class CameraBossEntry :public Camera
 {
 private:
-	float LookatOwnerTimer = 0.0f;
+	float lookAtOwnerTimer = 0.0f;
 	BossStage* state=nullptr;
 	EnemyBase* enm = nullptr;
 public:
@@ -159,9 +160,10 @@ private:
 public:
 	enum  CameraType
 	{
-		TypeNormal,
-		TypeAim,
-		TypeEnd
+		TYPE_NORMAL,
+		TYPE_AIM,
+		TYPE_BOSS,
+		TYPE_END
 	};
 	CameraType cameraType;
 	CameraManager() {};
@@ -170,12 +172,12 @@ public:
 	void Update();
 	void End();
 	void Imgui();
-	CameraType GetNowType() { return cameraType; }
+	inline CameraType GetNowType() { return cameraType; }
 	//カメラの目標のキャラクターのセット
-	Actor* GetTargetChractor() {return currentCamera->GetActor(); }
-	void SetTarget(const VECTOR3 TargetPos) { currentCamera->SetTarget(TargetPos); };
-	void SetOwner(Actor* owner) { currentCamera->SetOnwer(owner); };
+	inline Actor* GetTargetChractor() {return currentCamera->GetActor(); }
+	inline void SetTarget(const VECTOR3 targetPos) { currentCamera->SetTarget(targetPos); };
+	inline void SetOwner(Actor* owner) { currentCamera->SetOnwer(owner); };
 	void ChangeCamera(Camera* newScene);
 	void ChangeCamera(Camera* newScene,const VECTOR3 cameraPos);
-	void SetEnemyManager(EnemyManager* enemyManager) { this->enemyManager = enemyManager; }
+	inline void SetEnemyManager(EnemyManager* enemyManager) { this->enemyManager = enemyManager; }
 };

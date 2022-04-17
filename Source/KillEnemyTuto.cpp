@@ -16,7 +16,7 @@ void KillEnemyTuto::Init()
 {
 	ui = make_unique<UITuto>();
 	ui->Init();
-	TextIndex = 0;
+	textIndex = 0;
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -66,7 +66,7 @@ bool KillEnemyTuto::Judge()
 //•`‰æ
 void KillEnemyTuto::Render()
 {
-	ui->SetText(textes.at(TextIndex));
+	ui->SetText(textes.at(textIndex));
 	ui->Render();
 
 	ui2DDirection->Render();

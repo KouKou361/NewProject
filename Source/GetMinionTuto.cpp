@@ -18,7 +18,7 @@ void GetMinionTuto::Init()
 {
 	ui = make_unique<UITuto>();
 	ui->Init();
-	TextIndex = 0;
+	textIndex = 0;
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -51,7 +51,7 @@ bool GetMinionTuto::Judge()
 	for (int i = 0; i < sceneGame->GetPlayer()->GetMinionManager()->GetMinionsSize(); i++)
 	{
 		MinionPlayer* minion = sceneGame->GetPlayer()->GetMinionManager()->GetMinionIndex(i);
-		if (MinionPlayer::StateType::TypeIdle != minion->GetState())
+		if (MinionPlayer::StateType::TYPE_IDLE != minion->GetState())
 		{
 			MinionNum++;
 		}
@@ -67,7 +67,7 @@ bool GetMinionTuto::Judge()
 //•`‰æ
 void GetMinionTuto::Render()
 {
-	ui->SetText(textes.at(TextIndex));
+	ui->SetText(textes.at(textIndex));
 	ui->Render();
 	ui2DDirection->Render();
 }

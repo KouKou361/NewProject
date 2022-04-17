@@ -97,13 +97,13 @@ bool Charactor::TryInclined(const VECTOR3 Normal)
 
 	ImGui::Begin("aaa");
 	ImGui::Text("Radius=%f", dot/0.01754f);
-	if (dot >= CanInclined)
+	if (dot >= canInclined)
 	{
 		ImGui::Text("OK");
 	}
 	ImGui::End();
 
-	return (dot >= CanInclined);
+	return (dot >= canInclined);
 
 	
 	
@@ -471,10 +471,10 @@ void Charactor::AddVelocity(VECTOR3 velocity)
 	float L;
 	XMStoreFloat(&L, Velocity);
 	//‚à‚µ‘¬“x‚ªMaxVelocity‚æ‚è‘å‚«‚³‚È‚ç
-	if (L >= MaxVelocity)
+	if (L >= maxVelocity)
 	{
 		Velocity = XMVector3Normalize(Velocity);
-		Velocity = XMVectorScale(Velocity,MaxVelocity);
+		Velocity = XMVectorScale(Velocity,maxVelocity);
 		//‘¬“x‚ªMaxVelocity‚É‚È‚é
 		XMStoreFloat3(&this->velocity, Velocity);
 	}

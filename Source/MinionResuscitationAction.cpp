@@ -20,14 +20,14 @@ ActionBase::State MinionResuscitationAction::Run()
 {
 	if (!minionOwner->IsResuscitation())
 	{
-		minionOwner->SetState(MinionPlayer::StateType::TypeDead);
+		minionOwner->SetState(MinionPlayer::StateType::TYPE_DEAD);
 		//蘇生されていないなら
 		return ActionBase::State::Failed;
 	}
 
 	//蘇生更新処理
 	UpdateResuscitation();
-	if (minionOwner->GetState() == MinionPlayer::StateType::TypeStandBy)
+	if (minionOwner->GetState() == MinionPlayer::StateType::TYPE_STAND_BY)
 	{
 		return ActionBase::State::Failed;
 	}
@@ -43,7 +43,7 @@ void MinionResuscitationAction::Resuscitation()
 {
 	minionOwner->ResuscitationTime = 0;
 	minionOwner->SetHp(minionOwner->GetMaxHp());
-	minionOwner->SetState(MinionPlayer::StateType::TypeStandBy);
+	minionOwner->SetState(MinionPlayer::StateType::TYPE_STAND_BY);
 }
 
 //蘇生更新処理

@@ -10,7 +10,7 @@ CameraNormal::CameraNormal(Actor* owner) {
 //‰Šú‰»ˆ—
 void CameraNormal::Init()
 {
-	manager->cameraType = CameraManager::CameraType::TypeNormal;
+	manager->cameraType = CameraManager::CameraType::TYPE_NORMAL;
 	//	Angle.x = DirectX::XMConvertToRadians(10);
 	angle.y = DirectX::XMConvertToRadians(10);
 	//angle.z = DirectX::XMConvertToRadians(10);

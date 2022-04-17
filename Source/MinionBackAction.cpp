@@ -9,8 +9,8 @@
 void MinionBackAction::Start()
 {
 	//アニメーションの開始
-	TK_Lib::Model::PlayAnimation(minionOwner->GetModel(), minionOwner->anime->GetIndex(minionOwner->anime->Run), true);
-	minionOwner->SetState(MinionPlayer::StateType::TypeBack);
+	TK_Lib::Model::PlayAnimation(minionOwner->GetModel(), minionOwner->GetAnime()->GetIndex(minionOwner->GetAnime()->Run), true);
+	minionOwner->SetState(MinionPlayer::StateType::TYPE_BACK);
 }
 
 //実行処理

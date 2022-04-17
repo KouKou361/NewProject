@@ -19,7 +19,7 @@ void ObjectTower::Init()
 	SetMaxHp(GetHp());
 
 
-	SetTag(ObjectTag::TagObject);
+	SetTag(ObjectTag::TAG_OBJECT);
 	collisionRadius = 5;
 	objectType = ObjectType::Tower;
 

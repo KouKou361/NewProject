@@ -11,7 +11,7 @@ public:
 	//初期化処理
 	virtual void Init()=0;
 	//作成処理
-	virtual void Create(string Texturename,int MaxNum,VECTOR2 TextureChipSize,VECTOR2 TextureNum, Bland_state blendstate= Bland_state::BS_ALPHA);
+	virtual void Create(string textureName,int maxNum,VECTOR2 textureChipSize,VECTOR2 textureNum, Bland_state blendstate= Bland_state::BS_ALPHA);
 	//実行処理
 	virtual void Play(VECTOR3 Pos,int Num) = 0;
 	//更新処理
@@ -19,21 +19,21 @@ public:
 
 	void Delete();
 
-	void SetPos(VECTOR3 pos) { Pos = pos; };
+	void SetPos(VECTOR3 pos) { pos = pos; };
 	void NotRender();
 protected:
 	//エフェクト番号
-	int EffectIndex;
+	int effectIndex;
 	//エフェクトで使用しているテクスチャの名前
-	string Texturename;
+	string textureName;
 	//エフェクト粒子の最大数
-	int MaxNum;
+	int maxNum;
 
-	VECTOR2 TextureChipSize;
-	VECTOR2 TextureNum;
-	Bland_state blendstate;
+	VECTOR2 textureChipSize;
+	VECTOR2 textureNum;
+	Bland_state blendState;
 
-	VECTOR3 Pos;
+	VECTOR3 pos;
 
 
 };

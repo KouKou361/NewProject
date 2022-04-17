@@ -10,32 +10,32 @@
 BossStage::BossStage(string RenderModel, string NoShadowRenderModel, string CollisionModel, string NavModel, VECTOR3 Pos, VECTOR3 Angle, VECTOR3 Scale, string SetData, SceneGame* scene)
 {
 	//データの登録
-	StageIndex[StageType::RenderModel] = TK_Lib::Load::GetModel(RenderModel);
-	StageIndex[StageType::NoMakeShadowModel] = TK_Lib::Load::GetModel(NoShadowRenderModel);
-	StageIndex[StageType::CollisionModel] = TK_Lib::Load::GetModel(CollisionModel);
-	StageIndex[StageType::NavModel] = TK_Lib::Load::GetModel(NavModel);
+	StageIndex[StageType::RENDER_MODEL] = TK_Lib::Load::GetModel(RenderModel);
+	StageIndex[StageType::NO_MAKE_SHADOW_MODEL] = TK_Lib::Load::GetModel(NoShadowRenderModel);
+	StageIndex[StageType::COLISION_MODEL] = TK_Lib::Load::GetModel(CollisionModel);
+	StageIndex[StageType::NAV_MODEL] = TK_Lib::Load::GetModel(NavModel);
 
 	//ステージ
-	TK_Lib::Model::Tranceform(StageIndex[StageType::RenderModel], Pos, Angle, Scale);
-	TK_Lib::Model::PlayAnimation(StageIndex[StageType::RenderModel], 0, false);
-	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::RenderModel]);
+	TK_Lib::Model::Tranceform(StageIndex[StageType::RENDER_MODEL], Pos, Angle, Scale);
+	TK_Lib::Model::PlayAnimation(StageIndex[StageType::RENDER_MODEL], 0, false);
+	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::RENDER_MODEL]);
 
 	//影なしステージ
-	TK_Lib::Model::Tranceform(StageIndex[StageType::NoMakeShadowModel], Pos, Angle, Scale);
-	TK_Lib::Model::PlayAnimation(StageIndex[StageType::NoMakeShadowModel], 0, false);
-	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::NoMakeShadowModel]);
+	TK_Lib::Model::Tranceform(StageIndex[StageType::NO_MAKE_SHADOW_MODEL], Pos, Angle, Scale);
+	TK_Lib::Model::PlayAnimation(StageIndex[StageType::NO_MAKE_SHADOW_MODEL], 0, false);
+	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::NO_MAKE_SHADOW_MODEL]);
 
 	//Navメッシュ
-	TK_Lib::Model::Tranceform(StageIndex[StageType::NavModel], Pos, Angle, Scale);
-	TK_Lib::Model::PlayAnimation(StageIndex[StageType::NavModel], 0, false);
-	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::NavModel]);
+	TK_Lib::Model::Tranceform(StageIndex[StageType::NAV_MODEL], Pos, Angle, Scale);
+	TK_Lib::Model::PlayAnimation(StageIndex[StageType::NAV_MODEL], 0, false);
+	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::NAV_MODEL]);
 
 
 
 	//当たり判定
-	TK_Lib::Model::Tranceform(StageIndex[StageType::CollisionModel], Pos, Angle, Scale);
-	TK_Lib::Model::PlayAnimation(StageIndex[StageType::CollisionModel], 0, false);
-	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::CollisionModel]);
+	TK_Lib::Model::Tranceform(StageIndex[StageType::COLISION_MODEL], Pos, Angle, Scale);
+	TK_Lib::Model::PlayAnimation(StageIndex[StageType::COLISION_MODEL], 0, false);
+	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::COLISION_MODEL]);
 
 	//ステージのオブジェクト配置
 	stageExport = std::make_unique<Export>();
@@ -51,9 +51,9 @@ void BossStage::Init()
 	smoke_driftTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/Title/smoke_drift.png");
 
 	//当たり判定登録
-	Collision::Instance().RegisterModel(StageIndex[StageType::CollisionModel], ModelCollisionType::CollisionModel, nullptr);
+	Collision::Instance().RegisterModel(StageIndex[StageType::COLISION_MODEL], ModelCollisionType::COLLISION_MODEL, nullptr);
 	//ナビメッシュ登録
-	Collision::Instance().RegisterModel(StageIndex[StageType::NavModel], ModelCollisionType::NavModel, nullptr);
+	Collision::Instance().RegisterModel(StageIndex[StageType::NAV_MODEL], ModelCollisionType::NAV_MODEL, nullptr);
 	//ナビメッシュの構成
 	Collision::Instance().NacStageBuild();
 	//ステージのオブジェクト配置
@@ -79,11 +79,11 @@ void BossStage::Init()
 		Pos = { 0,0,0 };
 		Angle = { 0,0,0 };
 		Scale = { 0.5f,0.5f,0.5f };
-		SkyModel = TK_Lib::Load::GetModel("Sky");
+		skyModel = TK_Lib::Load::GetModel("Sky");
 		//ステージ
-		TK_Lib::Model::Tranceform(SkyModel, Pos, Angle, Scale);
-		TK_Lib::Model::PlayAnimation(SkyModel, 0, false);
-		TK_Lib::Model::AnimetionUpdate(SkyModel);
+		TK_Lib::Model::Tranceform(skyModel, Pos, Angle, Scale);
+		TK_Lib::Model::PlayAnimation(skyModel, 0, false);
+		TK_Lib::Model::AnimetionUpdate(skyModel);
 	}
 	if (sceneGame->GetEnemyManager()->GetEnemiesSize() == 0)
 	{
@@ -94,9 +94,9 @@ void BossStage::Init()
 	enm = sceneGame->GetEnemyManager()->SearchEnemyTag(EnemyTag::Boss);
 	camera = new CameraBossEntry(sceneGame->GetPlayer(), enm, this);
 
-	eventState = EventState::LookPlayer;
+	eventState = EventState::LOOK_PLAYER;
 	sceneGame->GetCameraManager()->ChangeCamera(camera);
-	sceneGame->GetPlayer()->ChangeState(Player::State::BossEntry, this);
+	sceneGame->GetPlayer()->ChangeState(Player::State::BOSS_ENTRY, this);
 	timer = 0;
 	TK_Lib::Lib_Sound::SoundPlay("BossWind",true);
 
@@ -114,17 +114,17 @@ void BossStage::Update()
 	{
 		switch (eventState)
 		{
-		case EventState::LookPlayer:
-			eventState = EventState::TurnCameraLookFront;
+		case EventState::LOOK_PLAYER:
+			eventState = EventState::TURN_CAMERA_LOOK_FRONT;
 			break;
-		case EventState::TurnCameraLookFront:
-			eventState = EventState::LookEnemy;
+		case EventState::TURN_CAMERA_LOOK_FRONT:
+			eventState = EventState::LOOK_ENEMY;
 			TK_Lib::Lib_Sound::SoundStop("BossWind");
 			break;
-		case EventState::LookEnemy:
-			eventState = EventState::BackCamera;
+		case EventState::LOOK_ENEMY:
+			eventState = EventState::BACK_CAMERA;
 			break;
-		case EventState::End:
+		case EventState::END:
 			//eventState = EventState::BackCamera;
 			break;
 		}
@@ -134,38 +134,38 @@ void BossStage::Update()
 
 	switch (eventState)
 	{
-	case EventState::LookPlayer:
+	case EventState::LOOK_PLAYER:
 
 		if (camera->LookatOwner())
 		{
-			eventState = EventState::TurnCameraLookFront;
+			eventState = EventState::TURN_CAMERA_LOOK_FRONT;
 		}
 		break;
-	case EventState::TurnCameraLookFront:
+	case EventState::TURN_CAMERA_LOOK_FRONT:
 		if (camera->LookatOwnerFront())
 		{
-			eventState = EventState::LookEnemy;
+			eventState = EventState::LOOK_ENEMY;
 			TK_Lib::Lib_Sound::SoundStop("BossWind");
 		}
 
 		break;
-	case EventState::LookEnemy:
+	case EventState::LOOK_ENEMY:
 		if (camera->LookatBoss())
 		{
-			eventState = EventState::BackCamera;
+			eventState = EventState::BACK_CAMERA;
 
 		
 
 		
 		}
 		break;
-	case EventState::BackCamera:
+	case EventState::BACK_CAMERA:
 		if (camera->BackCamera())
 		{
 			TK_Lib::Lib_Sound::SoundPlay("BossBGM", true);
-			eventState = EventState::End;
+			eventState = EventState::END;
 			sceneGame->GetCameraManager()->ChangeCamera(new CameraNormal(sceneGame->GetPlayer()));
-			sceneGame->GetPlayer()->ChangeState(Player::State::Wait);
+			sceneGame->GetPlayer()->ChangeState(Player::State::WAIT);
 
 			for (int i = 0; i < 4; i++)
 			{
@@ -179,7 +179,7 @@ void BossStage::Update()
 		}
 
 		break;
-	case EventState::End:
+	case EventState::END:
 		//eventState = EventState::BackCamera;6
 		uiNumTower->Update();
 		//UIの更新
@@ -210,7 +210,7 @@ void BossStage::Render()
 
 	//uiNumTower->Render();
 
-	if (eventState == EventState::End)
+	if (eventState == EventState::END)
 	{
 		uiTimer->Render();
 	}
@@ -225,12 +225,12 @@ void BossStage::Render()
 
 	//デバッグ
 	//死亡時の救済措置
-	if (sceneGame->GetPlayer()->GetState() == Player::State::Dead)
+	if (sceneGame->GetPlayer()->GetState() == Player::State::DEAD)
 	{
 		VECTOR2 Window = TK_Lib::Window::GetWindowSize();
 		if (TK_Lib::Gamepad::GetButtonDown(BTN::A) >= 50)
 		{
-			sceneGame->GetPlayer()->ChangeState(Player::State::Wait);
+			sceneGame->GetPlayer()->ChangeState(Player::State::WAIT);
 			uiTimer->AddGameOverTimer(100);
 		}
 		TK_Lib::Draw::JapanFont("「〇キー」長押しで救済措置", { Window.x / 2 - 100, Window.y / 2 - 100 });

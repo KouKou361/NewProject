@@ -35,7 +35,7 @@ bool ResurectionMinionTuto::Judge()
 	for (int i = 0; i < sceneGame->GetPlayer()->GetMinionManager()->GetMinionsSize(); i++)
 	{
 		MinionPlayer* minion = sceneGame->GetPlayer()->GetMinionManager()->GetMinionIndex(i);
-		if (MinionPlayer::StateType::TypeStandBy == minion->GetState())
+		if (MinionPlayer::StateType::TYPE_STAND_BY == minion->GetState())
 		{
 			MinionNum++;
 		}
@@ -52,7 +52,7 @@ bool ResurectionMinionTuto::Judge()
 //•`‰æ
 void ResurectionMinionTuto::Render()
 {
-	ui->SetText(textes.at(TextIndex));
+	ui->SetText(textes.at(textIndex));
 	ui->Render();
 
 

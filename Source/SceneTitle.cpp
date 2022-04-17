@@ -3,13 +3,13 @@
 //初期化処理
 void SceneTitle::Initialize()
 {
-	FontTexture=TK_Lib::Load::LoadTexture("./Data/Sprite/fonts/font0.png");
-	TitleSceneBackTitleTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/Title/unnamed.png");
+	fontTexture=TK_Lib::Load::LoadTexture("./Data/Sprite/fonts/font0.png");
+	titleSceneBackTitleTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/Title/unnamed.png");
 	smoke_driftTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/Title/smoke_drift.png");
-	TitleLogoTexture= TK_Lib::Load::LoadTexture("./Data/Sprite/Title/TitleLogo.png");
-	PlayerTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/Title/player.png");
+	titleLogoTexture= TK_Lib::Load::LoadTexture("./Data/Sprite/Title/TitleLogo.png");
+	playerTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/Title/player.png");
 
-	MinionTextue = TK_Lib::Load::LoadTexture("./Data/Sprite/Title/Minion.png");
+	minionTextue = TK_Lib::Load::LoadTexture("./Data/Sprite/Title/Minion.png");
 
 	TK_Lib::Lib_Sound::RegisterSound("./Data/Sound/Title/BGM/TitleBGM.wav","TitleBGM");
 	TK_Lib::Lib_Sound::SoundPlay("TitleBGM",true);
@@ -47,18 +47,18 @@ void SceneTitle::Render()
 	const float cosVolume = 50.0f;
 	
 	//バックスクリーン
-	TK_Lib::Draw::Sprite(TitleSceneBackTitleTexture, { 0,0 }, WindowSize, { ScreenBackSpeed*timer,0,1000,750 });
+	TK_Lib::Draw::Sprite(titleSceneBackTitleTexture, { 0,0 }, WindowSize, { ScreenBackSpeed*timer,0,1000,750 });
 	//シロボ
-	TK_Lib::Draw::Sprite(MinionTextue, { 90,400 + cosf(PlayerSpeed * timer) * cosVolume }, { 200,200 }, { 0,0,76,97 });
+	TK_Lib::Draw::Sprite(minionTextue, { 90,400 + cosf(PlayerSpeed * timer) * cosVolume }, { 200,200 }, { 0,0,76,97 });
 	//プレイヤー
-	TK_Lib::Draw::Sprite(PlayerTexture, {-100,300 + sinf(PlayerSpeed * timer) * SinVolume }, {900,900 }, { 0,0,624,689 });
+	TK_Lib::Draw::Sprite(playerTexture, {-100,300 + sinf(PlayerSpeed * timer) * SinVolume }, {900,900 }, { 0,0,624,689 });
 	//シロボ
-	TK_Lib::Draw::Sprite(MinionTextue, { 1500,500 + cosf(PlayerSpeed * timer) * cosVolume }, { 200,200 }, { 0,0,76,97 });
+	TK_Lib::Draw::Sprite(minionTextue, { 1500,500 + cosf(PlayerSpeed * timer) * cosVolume }, { 200,200 }, { 0,0,76,97 });
 	
 	//煙
 	TK_Lib::Draw::Sprite(smoke_driftTexture, { 0,100 }, WindowSize, { SmokeSpeed * timer,0,960,540 });
 	//タイトルロゴ
-	TK_Lib::Draw::Sprite(TitleLogoTexture, { WindowSize.x / 2 - 500,100 }, { 900,300 }, { 0,0,1620,480 });
+	TK_Lib::Draw::Sprite(titleLogoTexture, { WindowSize.x / 2 - 500,100 }, { 900,300 }, { 0,0,1620,480 });
 
 	if(static_cast<int>(timer*60) %60>=30)
 	TK_Lib::Draw::JapanFont("PS4コントローラー「〇」キーでスタート！", {700,500});
@@ -83,5 +83,5 @@ void SceneTitle::End()
 {
 	TK_Lib::Lib_Sound::SoundStop("TitleBGM");
 	TK_Lib::Lib_Sound::SoundClear();
-	TK_Lib::Delete::DeleteTexture(FontTexture);
+	TK_Lib::Delete::DeleteTexture(fontTexture);
 }

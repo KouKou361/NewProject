@@ -8,7 +8,7 @@ void EffectThrow::Init()
 //çXêVèàóù
 void EffectThrow::Play(VECTOR3 Pos, int Num)
 {
-	vector<EffectData> * spriteEffects = TK_Lib::Lib_Effect::Geteffects(EffectIndex);
+	vector<EffectData> * spriteEffects = TK_Lib::Lib_Effect::Geteffects(effectIndex);
 	
 
 	for (int i = 0; i < Num; i++) {
@@ -41,9 +41,9 @@ void EffectThrow::Play(VECTOR3 Pos, int Num)
 void EffectThrow::Update()
 {
 
-	vector<EffectData>* spriteEffects = TK_Lib::Lib_Effect::Geteffects(EffectIndex);
+	vector<EffectData>* spriteEffects = TK_Lib::Lib_Effect::Geteffects(effectIndex);
 
-	for (int i = 0; i < TK_Lib::Lib_Effect::GetUseLastEffectIndex(EffectIndex); i++) {
+	for (int i = 0; i < TK_Lib::Lib_Effect::GetUseLastEffectIndex(effectIndex); i++) {
 		EffectData* spriteEffect = &spriteEffects->at(i);
 		if (spriteEffect->type < 0) continue;
 		spriteEffect->color.w -= 0.01f;

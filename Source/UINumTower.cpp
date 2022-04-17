@@ -8,30 +8,30 @@
 void UINumTower::Init()
 {
 	indexTexture = TK_Lib::Load::LoadTexture("Data/Sprite/TowerIcon.png");
-	FontUI = TK_Lib::Load::LoadTexture("Data/Sprite/fonts/font1.png");
-	TowerSound = true;
+	fontUI = TK_Lib::Load::LoadTexture("Data/Sprite/fonts/font1.png");
+	towerSound = true;
 }
 //更新処理
 void UINumTower::Update()
 {
 
 	if(scene->GetStageManager()->GetClearJudge()){
-		if (TowerSound)
+		if (towerSound)
 		{
 			//すべてのタワーを破壊！
 			TK_Lib::Lib_Sound::SoundPlay("AllTowerBreak", false);
-			TowerSound = false;
+			towerSound = false;
 		}
 	}
 
 
-	if (BlinkingTimer > 0)
+	if (breakingTimer > 0)
 	{
-		BlinkingTimer -= TK_Lib::Window::GetElapsedTime();
+		breakingTimer -= TK_Lib::Window::GetElapsedTime();
 	}
 	else
 	{
-		BlinkingTimer = 0;
+		breakingTimer = 0;
 	}
 
 	
@@ -39,7 +39,7 @@ void UINumTower::Update()
 //描画処理
 void UINumTower::Render()
 {
-	if (static_cast<int>(BlinkingTimer) % 2 >= 1)return;
+	if (static_cast<int>(breakingTimer) % 2 >= 1)return;
 	
 	const  float X = 100;
 	const  float offsetX = 50;

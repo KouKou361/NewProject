@@ -73,19 +73,19 @@ NodeBase* NodeBase::Inference(BehaviorData* data)
 	switch (selectRule)
 	{
 		//優先順位
-	case BehaviorTree::SelectRule::Priority:
+	case BehaviorTree::SelectRule::PRIORITY:
 		result=SelectPriority(&list);
 		break;
 		//ランダム
-	case BehaviorTree::SelectRule::Random:
+	case BehaviorTree::SelectRule::RANDOM:
 		result = SelectRandom(&list);
 		break;
 		//シーケンス
-	case BehaviorTree::SelectRule::Sequence:
+	case BehaviorTree::SelectRule::SEQUENCE:
 		result = SelectSequence(&list, data);
 		break;
 		//ONOFF
-	case BehaviorTree::SelectRule::OnOff:
+	case BehaviorTree::SelectRule::ON_OFF:
 		result = SelectOnOff(&list);
 		break;
 	}
@@ -151,7 +151,7 @@ NodeBase* NodeBase::SelectSequence(std::vector<NodeBase*>* list, BehaviorData* d
 	// 手順①で取得したステップ数が子ノード数を超えているか
 	if (step >= (int)children.size())
 	{
-		if (selectRule == BehaviorTree::SelectRule::SequentialLooping)step = 0;
+		if (selectRule == BehaviorTree::SelectRule::SEQUETIAL_LOOPING)step = 0;
 		else return NULL;
 		// 手順②：selectRuleがSEQUENTIAL_LOOPINGの場合、stepに0を代入
 		// 		  それ以外はNULLをリターンしなさい
@@ -186,9 +186,9 @@ NodeBase* NodeBase::SelectOnOff(std::vector<NodeBase*>* list)
 	for (int i = 0; i < list->size(); i++)
 	{
 		//選択されたことがない場合
-		if (list->at(i)->OldSelect==false)
+		if (list->at(i)->oldSelect==false)
 		{
-			list->at(i)->OldSelect = true;
+			list->at(i)->oldSelect = true;
 			return list->at(i);
 		}
 

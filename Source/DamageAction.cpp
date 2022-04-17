@@ -9,7 +9,7 @@ class EnemyBase;
 void DamageAction::Start()
 {
 	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->anime->GetIndex(owner->anime->Damage), false);
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->Damage), false);
 	owner->SetDamageFlg(false);
 }
 

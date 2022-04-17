@@ -78,9 +78,9 @@ void MinionManager::AllBack()
 	{
 		if (minion)
 		{
-			if (minion->GetState() == MinionPlayer::StateType::TypeDead)continue;
+			if (minion->GetState() == MinionPlayer::StateType::TYPE_DEAD)continue;
 			//攻撃可能なミニオンの算出
-			if (minion->GetState() != MinionPlayer::StateType::TypeStandBy)
+			if (minion->GetState() != MinionPlayer::StateType::TYPE_STAND_BY)
 			{
 				minion->ResetNode();
 			}
@@ -95,7 +95,7 @@ void MinionManager::OneAttack(MinionPlayer* minion)
 		if (minion)
 		{
 			//攻撃可能なミニオンの算出
-			if (minion->GetState() == MinionPlayer::StateType::TypeStandBy)
+			if (minion->GetState() == MinionPlayer::StateType::TYPE_STAND_BY)
 			{
 				minion->SetAttackStandBy(true);
 				minion->ResetNode();

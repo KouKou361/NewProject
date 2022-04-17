@@ -53,7 +53,7 @@
     def c1, -1, 1, 0, 0
     dcl t0.xy  // input<4,5>
 
-#line 9 "C:\Users\taketomo\Desktop\GameProgram\Shader\TargetScreen_ps.hlsl"
+#line 9 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\TargetScreen_ps.hlsl"
     mul r0.w, t0.y, c0.y  // ::weight<0>
     add r0.x, r0.w, c1.x
     cmp r0.x, r0.x, c1.y, r0.w
@@ -92,7 +92,7 @@ dcl_temps 2
 //   v2.x <- input.color.x; v2.y <- input.color.y; v2.z <- input.color.z; v2.w <- input.color.w; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 5 "C:\Users\taketomo\Desktop\GameProgram\Shader\TargetScreen_ps.hlsl"
+#line 5 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\TargetScreen_ps.hlsl"
 itof r0.xyzw, l(1, 0, 0, 1)  // r0.x <- color.x; r0.y <- color.y; r0.z <- color.z; r0.w <- color.w
 
 #line 9

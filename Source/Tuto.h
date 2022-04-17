@@ -16,7 +16,7 @@ protected:
 	unique_ptr<UITuto>  ui;
 	std::unique_ptr<UINextMessage> uiNextMessage;
 	std::vector <string>textes;
-	int TextIndex = 0;
+	int textIndex = 0;
 	int uiTimer = 0;
 	std::shared_ptr<UI2DDirection> ui2DDirection;
 public:
@@ -27,16 +27,17 @@ public:
 	virtual void Init();
 	//更新処理
 	virtual void Update();
-	//テキスト
-	void SetText(string text) { this->ui->SetText(text); }
 	//次のテキストに移行、終了判定処理
 	virtual bool Judge();
 	//描画
 	virtual void Render();
-	//テキストの追加
-	void AddText(string text) { textes.push_back(text); };
 
-	UITuto* GetUi() { return ui.get(); };
+	//テキストの追加
+	inline void AddText(const string text) { textes.push_back(text); };
+	//テキスト
+	inline void SetText(const string text) { this->ui->SetText(text); }
+
+	inline UITuto* GetUi() { return ui.get(); };
 
 };
 class MoveTuto:public Tuto
@@ -44,9 +45,9 @@ class MoveTuto:public Tuto
 	class ClearCircle
 	{
 	public:
-		VECTOR3 Pos;
-		float Radius;
-		float Weight;
+		VECTOR3 pos;
+		float radius;
+		float weight;
 	};
 	ClearCircle circle;
 public:
@@ -79,14 +80,14 @@ class KillDummyEnemyTuto :public Tuto
 {
 	enum
 	{
-		StepTargetEnemy,
-		StepTargetCamera,
-		StepAttack,
-		StepEnd,
+		STEP_TARGET_ENEMY,
+		STEP_TARGET_CAMERA,
+		STEP_ATTACK,
+		STEP_END,
 	};
 private:
-	int AttackTutoStep = 0;
-	int TutoTexture[StepEnd];
+	int attackTutoStep = 0;
+	int tutoTexture[STEP_END];
 public:
 	KillDummyEnemyTuto(SceneGame* sceneGame);
 	~KillDummyEnemyTuto() {};

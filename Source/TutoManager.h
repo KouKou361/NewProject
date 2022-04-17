@@ -21,9 +21,9 @@ public:
 	void Clear();
 
 	//“G‚Ì”‚Ìæ“¾
-	int GetStageSize() { return stages.size(); }
+	inline int GetStageSize() { return stages.size(); }
 	//“G‚Ì”‚Ìæ“¾
-	Tuto* GetStgeIndex(const int& index) { return stages.at(index).get(); }
+	inline Tuto* GetStgeIndex(const int& index) { return stages.at(index).get(); }
 
 private:
 	SceneGame* sceneGame = nullptr;

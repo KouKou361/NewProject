@@ -5,31 +5,31 @@
 void UITimer::Init()
 {
 	indexTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/HP_gage.png");
-	FontUI = TK_Lib::Load::LoadTexture("Data/Sprite/fonts/font1.png");
+	fontUI = TK_Lib::Load::LoadTexture("Data/Sprite/fonts/font1.png");
 	SetGameOverTimer(100);
-	FontScaleTimer = 0;
+	fontScaleTimer = 0;
 }
 //更新処理
 void UITimer::Update()
 {
 	//一秒数える。
-	if (FrameTimer >= TK_Lib::Window::GetElapsedTime()*60)
+	if (frameTimer >= TK_Lib::Window::GetElapsedTime()*60)
 	{
-		FrameTimer = 0;
-		GameTimer--;
+		frameTimer = 0;
+		gameTimer--;
 	}
-	FrameTimer += TK_Lib::Window::GetElapsedTime();
+	frameTimer += TK_Lib::Window::GetElapsedTime();
 
-	if (GameTimer <= 0)GameTimer = 0;
+	if (gameTimer <= 0)gameTimer = 0;
 
 
-	if (FontScaleTimer > 0)
+	if (fontScaleTimer > 0)
 	{
-		FontScaleTimer -= TK_Lib::Window::GetElapsedTime();
+		fontScaleTimer -= TK_Lib::Window::GetElapsedTime();
 	}
 	else
 	{
-		FontScaleTimer = 0;
+		fontScaleTimer = 0;
 	}
 	
 	
@@ -42,7 +42,7 @@ void UITimer::Render()
 	const  float offsetY = 80;
 	const  float Size = 700;
 	VECTOR2 screenPos = { 100,10 };
-	const  float TargetHpRatio = static_cast<float>(GameTimer) / static_cast<float>(MaxGameTimer) ;
+	const  float TargetHpRatio = static_cast<float>(gameTimer) / static_cast<float>(maxGameTimer) ;
 
 	//黒ゲージ
 	TK_Lib::Draw::Sprite(indexTexture, { screenPos.x+500,screenPos.y }, VECTOR2{ Size       ,20 }, VECTOR4{ 0,(60 / 4) * 3,942 / 3,60 / 4 });
@@ -54,25 +54,25 @@ void UITimer::Render()
 	
 	//ゲームオーバータイマーの表示
 	{
-		float Scale = FontScaleTimer * 15;
+		float Scale = fontScaleTimer * 15;
 		VECTOR4 Color = { 1,1,1,1 };
-		if (GameTimer <= 20)
+		if (gameTimer <= 20)
 		{
 			Color = { 1,0,0,1 };
 		}
-		text = std::to_string(GameTimer);
-		TK_Lib::Draw::Font(text, FontUI, { screenPos.x - 50- Scale,screenPos.y- Scale }, { 50 + (Scale*2),50 + (Scale * 2) }, Color, 30+( FontScaleTimer*2));
+		text = std::to_string(gameTimer);
+		TK_Lib::Draw::Font(text, fontUI, { screenPos.x - 50- Scale,screenPos.y- Scale }, { 50 + (Scale*2),50 + (Scale * 2) }, Color, 30+( fontScaleTimer*2));
 	}
-	if(GameTimer<=9)
+	if(gameTimer<=9)
 	{
 		VECTOR2 Screen = TK_Lib::Window::GetWindowSize();
-		TK_Lib::Draw::Font(text, FontUI, { 300,100 }, { Screen.x-600,Screen.y - 200 }, { 1,1,1,0.3f }, 120);
+		TK_Lib::Draw::Font(text, fontUI, { 300,100 }, { Screen.x-600,Screen.y - 200 }, { 1,1,1,0.3f }, 120);
 	}
 
 
 	
 	text = "GameOverTimer";
-	TK_Lib::Draw::Font(text, FontUI, { screenPos.x - 50,screenPos.y+50 }, { 15,15 }, { 1,1,1,1 }, 10);
+	TK_Lib::Draw::Font(text, fontUI, { screenPos.x - 50,screenPos.y+50 }, { 15,15 }, { 1,1,1,1 }, 10);
 	
 
 }
@@ -80,17 +80,17 @@ void UITimer::Render()
 //ゲームオーバーの時間設定
 void UITimer::SetGameOverTimer(int timer)
 {
-	MaxGameTimer = timer;
-	GameTimer = MaxGameTimer;
-	FrameTimer = 0;
+	maxGameTimer = timer;
+	gameTimer = maxGameTimer;
+	frameTimer = 0;
 
 }
 
 void UITimer::AddGameOverTimer(int addTimer)
 {
 	
-	GameTimer += addTimer;
+	gameTimer += addTimer;
 
-	FontScaleTimer = 2;
-	if (GameTimer >= MaxGameTimer) { GameTimer = MaxGameTimer; }
+	fontScaleTimer = 2;
+	if (gameTimer >= maxGameTimer) { gameTimer = maxGameTimer; }
 }

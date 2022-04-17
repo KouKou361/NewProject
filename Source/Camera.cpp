@@ -4,7 +4,7 @@
 //視点移動更新処理
 bool Camera::LerpCameraUpdate()
 {
-	return LerpTargetCamera(LerpSpeed);
+	return LerpTargetCamera(lerpSpeed);
 }
 //視点移動
 bool Camera::LerpTargetCamera(const float time)

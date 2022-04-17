@@ -21,14 +21,14 @@ void EnemyBase::Init()
 
 	anime = make_unique<Animetion>();
 
-	SetTag(ObjectTag::TagEnemy);
+	SetTag(ObjectTag::TAG_ENEMY);
 	
 	behaviorTree = make_unique<BehaviorTree>();
 	behaviordata = make_unique<BehaviorData>();
-	behaviorTree->AddNode("","root",1, BehaviorTree::SelectRule::Priority,nullptr,nullptr);
-	behaviorTree->AddNode("root", "idle", 1, BehaviorTree::SelectRule::Non,new IdleJudgement(this), new IdleAction(this));
-	behaviorTree->AddNode("root", "attack", 1, BehaviorTree::SelectRule::Non, new AttackJudgement(this), new AttackAction(this));
-	behaviorTree->AddNode("root", "pursuit", 1, BehaviorTree::SelectRule::Non, new PursuitJudgement(this), new PursuitAction(this));
+	behaviorTree->AddNode("","root",1, BehaviorTree::SelectRule::PRIORITY,nullptr,nullptr);
+	behaviorTree->AddNode("root", "idle", 1, BehaviorTree::SelectRule::NONE,new IdleJudgement(this), new IdleAction(this));
+	behaviorTree->AddNode("root", "attack", 1, BehaviorTree::SelectRule::NONE, new AttackJudgement(this), new AttackAction(this));
+	behaviorTree->AddNode("root", "pursuit", 1, BehaviorTree::SelectRule::NONE, new PursuitJudgement(this), new PursuitAction(this));
 }
 //XVˆ—
 void EnemyBase::Update()

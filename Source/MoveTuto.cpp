@@ -15,16 +15,16 @@ void MoveTuto::Init()
 {
 	ui = make_unique<UITuto>();
 	ui->Init();
-	TextIndex = 0;
+	textIndex = 0;
 
-	circle.Pos = { 0,0,0 };
-	circle.Radius = 10.0f;
-	circle.Weight = 0;
+	circle.pos = { 0,0,0 };
+	circle.radius = 10.0f;
+	circle.weight = 0;
 
 	{
 		ui2DDirection = make_shared<UI2DDirection>(sceneGame);
 		ui2DDirection->Init();
-		ui2DDirection->SetTargetPos({ circle.Pos });
+		ui2DDirection->SetTargetPos({ circle.pos });
 	}
 
 }
@@ -33,7 +33,7 @@ void MoveTuto::Update()
 	ui->Update();
 
 	ui2DDirection->Update();
-	ui2DDirection->SetTargetPos({ circle.Pos });
+	ui2DDirection->SetTargetPos({ circle.pos });
 }
 
 //‰Šú‰»ˆ—
@@ -45,7 +45,7 @@ bool MoveTuto::Judge()
 
 	if (Collision::Instance().SphereVsSphere(
 		player->GetPos(),player->GetWeight(),player->GetCollisionRadius(),
-		circle.Pos, circle.Weight, circle.Radius,outA,outB
+		circle.pos, circle.weight, circle.radius,outA,outB
 		))
 	{
 		TK_Lib::Lib_Sound::SoundPlay("TutoMisstionClear", false);
@@ -57,9 +57,9 @@ bool MoveTuto::Judge()
 //•`‰æ
 void MoveTuto::Render()
 {
-	ui->SetText(textes.at(TextIndex));
+	ui->SetText(textes.at(textIndex));
 	ui->Render();
 	ui2DDirection->Render();
 
-	TK_Lib::Debug3D::Circle(circle.Pos, circle.Radius);
+	TK_Lib::Debug3D::Circle(circle.pos, circle.radius);
 }

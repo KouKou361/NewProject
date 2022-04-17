@@ -62,7 +62,7 @@ dcl_maxout 4
 //   v[0][2].x <- In[0].Tex.x; v[0][2].y <- In[0].Tex.y; v[0][2].z <- In[0].Tex.z; v[0][2].w <- In[0].Tex.w; 
 //   v[0][3].x <- In[0].Color.x; v[0][3].y <- In[0].Color.y; v[0][3].z <- In[0].Color.z; v[0][3].w <- In[0].Color.w
 //
-#line 9 "C:\Users\taketomo\Desktop\GameProgram\Shader\PointSprite_gs.hlsl"
+#line 9 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\PointSprite_gs.hlsl"
 mul r0.xyzw, cb0[0].xyzw, v[0][0].xxxx
 mul r1.xyzw, cb0[1].xyzw, v[0][0].yyyy
 add r0.xyzw, r0.xyzw, r1.xyzw

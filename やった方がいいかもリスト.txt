@@ -31,8 +31,14 @@ inline
 !エフェクトを削る
 !影の調整
 !Boss影を出しておく
-NormalMapの適応
+!NormalMapの適応
 !Effectの復活
 !Cameraの修正
 !Raypick
-19:47 2022/03/01
+
+
+Stageの改善
+ステージ切り替わりバグ
+影
+
+ファイル整理

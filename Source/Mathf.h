@@ -8,5 +8,5 @@ public:
 	//指定範囲のランダム値を計算する
 	static float RandomRange(float min, float max);
 	//正規化 Vec3
-	static VECTOR3 Vec3Normalize(const VECTOR3 &Vec);
+	static VECTOR3 Vec3Normalize(const VECTOR3 &vec);
 };

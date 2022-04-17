@@ -12,15 +12,15 @@ void MinionDieAction::Start()
 	minionOwner->SetMoveVec({0,0,0});
 	//minionOwner->SetTarget(nullptr);
 	//アニメーションの開始
-	TK_Lib::Model::PlayAnimation(minionOwner->GetModel(), minionOwner->anime->GetIndex(minionOwner->anime->Die), false);
-	minionOwner->SetState(MinionPlayer::StateType::TypeDead);
+	TK_Lib::Model::PlayAnimation(minionOwner->GetModel(), minionOwner->GetAnime()->GetIndex(minionOwner->GetAnime()->Die), false);
+	minionOwner->SetState(MinionPlayer::StateType::TYPE_DEAD);
 	TK_Lib::Lib_Sound::SoundPlay("MinionDown", false);
 }
 
 //実行処理
 ActionBase::State MinionDieAction::Run()
 {
-	if (minionOwner->GetState() != MinionPlayer::StateType::TypeDead)
+	if (minionOwner->GetState() != MinionPlayer::StateType::TYPE_DEAD)
 	{
 		return ActionBase::State::Failed;
 	}

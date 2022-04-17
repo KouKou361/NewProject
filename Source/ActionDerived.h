@@ -27,8 +27,8 @@ public:
 class PursuitAction : public ActionBase
 {
 private:
-	bool SearchFlg;
-	VECTOR3 TargetPos;
+	bool searchFlg;
+	VECTOR3 targetPos;
 public:
 	PursuitAction(EnemyBase* enemy) :ActionBase(enemy) {}
 
@@ -152,8 +152,8 @@ public:
 class BossRollAttackAction : public ActionBase
 {
 private:
-	float RollTimer = 0;
-	static constexpr float RollTimerMax = 180;
+	float rollTimer = 0;
+	static constexpr float rollTimerMax = 180;
 public:
 	BossRollAttackAction(EnemyBase* enemy) :ActionBase(enemy) {}
 
@@ -220,7 +220,7 @@ class BossWalkAction :public ActionBase
 {
 private:
 	int timer = 0;
-	VECTOR3 TargetPos;//ˆÚ“®‚·‚é–Ú•W’n“_
+	VECTOR3 targetPos;//ˆÚ“®‚·‚é–Ú•W’n“_
 public:
 	BossWalkAction(EnemyBase* enemy) :ActionBase(enemy) {}
 
@@ -246,10 +246,10 @@ class BossDeadAction : public ActionBase
 private:
 	enum class EventDeleteState
 	{
-		Stop,//Ž~‚Ü‚é
-		Fire,//”R‚¦‚é
-		Explosion,//”š”­
-		End,
+		STOP,//Ž~‚Ü‚é
+		FIRE,//”R‚¦‚é
+		EXPLOSION,//”š”­
+		END,
 	};
 	EventDeleteState state;
 public:

@@ -9,34 +9,34 @@
 Stage::Stage(string RenderModel, string NoShadowRenderModel, string CollisionModel, string NavModel, VECTOR3 Pos, VECTOR3 Angle, VECTOR3 Scale,string SetData, SceneGame* scene)
 {
 	//データの登録
-	StageIndex[StageType::RenderModel]    = TK_Lib::Load::GetModel(RenderModel);
-	StageIndex[StageType::NoMakeShadowModel] = TK_Lib::Load::GetModel(NoShadowRenderModel);
-	StageIndex[StageType::CollisionModel] = TK_Lib::Load::GetModel(CollisionModel);
-	StageIndex[StageType::NavModel]       = TK_Lib::Load::GetModel(NavModel);
+	StageIndex[StageType::RENDER_MODEL]    = TK_Lib::Load::GetModel(RenderModel);
+	StageIndex[StageType::NO_MAKE_SHADOW_MODEL] = TK_Lib::Load::GetModel(NoShadowRenderModel);
+	StageIndex[StageType::COLISION_MODEL] = TK_Lib::Load::GetModel(CollisionModel);
+	StageIndex[StageType::NAV_MODEL]       = TK_Lib::Load::GetModel(NavModel);
 
 	//ステージ
-	TK_Lib::Model::Tranceform(StageIndex[StageType::RenderModel], Pos, Angle, Scale);
-	TK_Lib::Model::PlayAnimation(StageIndex[StageType::RenderModel], 0, false);
-	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::RenderModel]);
+	TK_Lib::Model::Tranceform(StageIndex[StageType::RENDER_MODEL], Pos, Angle, Scale);
+	TK_Lib::Model::PlayAnimation(StageIndex[StageType::RENDER_MODEL], 0, false);
+	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::RENDER_MODEL]);
 
 
 
 	//影なしステージ
-	TK_Lib::Model::Tranceform(StageIndex[StageType::NoMakeShadowModel], Pos, Angle, Scale);
-	TK_Lib::Model::PlayAnimation(StageIndex[StageType::NoMakeShadowModel], 0, false);
-	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::NoMakeShadowModel]);
+	TK_Lib::Model::Tranceform(StageIndex[StageType::NO_MAKE_SHADOW_MODEL], Pos, Angle, Scale);
+	TK_Lib::Model::PlayAnimation(StageIndex[StageType::NO_MAKE_SHADOW_MODEL], 0, false);
+	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::NO_MAKE_SHADOW_MODEL]);
 	
 	//Navメッシュ
-	TK_Lib::Model::Tranceform(StageIndex[StageType::NavModel], Pos, Angle, Scale);
-	TK_Lib::Model::PlayAnimation(StageIndex[StageType::NavModel], 0, false);
-	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::NavModel]);
+	TK_Lib::Model::Tranceform(StageIndex[StageType::NAV_MODEL], Pos, Angle, Scale);
+	TK_Lib::Model::PlayAnimation(StageIndex[StageType::NAV_MODEL], 0, false);
+	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::NAV_MODEL]);
 
 
 	
 	//当たり判定
-	TK_Lib::Model::Tranceform(StageIndex[StageType::CollisionModel], Pos, Angle, Scale);
-	TK_Lib::Model::PlayAnimation(StageIndex[StageType::CollisionModel], 0, false);
-	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::CollisionModel]);
+	TK_Lib::Model::Tranceform(StageIndex[StageType::COLISION_MODEL], Pos, Angle, Scale);
+	TK_Lib::Model::PlayAnimation(StageIndex[StageType::COLISION_MODEL], 0, false);
+	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::COLISION_MODEL]);
 	
 	//ステージのオブジェクト配置
 	stageExport = std::make_unique<Export>();
@@ -50,9 +50,9 @@ Stage::Stage(string RenderModel, string NoShadowRenderModel, string CollisionMod
 void Stage::Init()
 {
 	//当たり判定登録
-	Collision::Instance().RegisterModel(StageIndex[StageType::CollisionModel], ModelCollisionType::CollisionModel, nullptr);
+	Collision::Instance().RegisterModel(StageIndex[StageType::COLISION_MODEL], ModelCollisionType::COLLISION_MODEL, nullptr);
 	//ナビメッシュ登録
-	Collision::Instance().RegisterModel(StageIndex[StageType::NavModel], ModelCollisionType::NavModel, nullptr);
+	Collision::Instance().RegisterModel(StageIndex[StageType::NAV_MODEL], ModelCollisionType::NAV_MODEL, nullptr);
 	//ナビメッシュの構成
 	Collision::Instance().NacStageBuild();
 	//ステージのオブジェクト配置
@@ -87,11 +87,11 @@ void Stage::Init()
 		Pos = { 0,0,0 };
 		Angle = { 0,0,0 };
 		Scale = { 0.5f,0.5f,0.5f };
-		SkyModel = TK_Lib::Load::GetModel("Sky");
+		skyModel = TK_Lib::Load::GetModel("Sky");
 		//ステージ
-		TK_Lib::Model::Tranceform(SkyModel, Pos, Angle, Scale);
-		TK_Lib::Model::PlayAnimation(SkyModel, 0, false);
-		TK_Lib::Model::AnimetionUpdate(SkyModel);
+		TK_Lib::Model::Tranceform(skyModel, Pos, Angle, Scale);
+		TK_Lib::Model::PlayAnimation(skyModel, 0, false);
+		TK_Lib::Model::AnimetionUpdate(skyModel);
 	}
 
 }
@@ -115,12 +115,12 @@ void Stage::Render()
 
 	//デバッグ
 	//死亡時の救済措置
-	if (sceneGame->GetPlayer()->GetState() == Player::State::Dead)
+	if (sceneGame->GetPlayer()->GetState() == Player::State::DEAD)
 	{
 		VECTOR2 Window = TK_Lib::Window::GetWindowSize();
 		if (TK_Lib::Gamepad::GetButtonDown(BTN::A) >= 50)
 		{
-			sceneGame->GetPlayer()->ChangeState(Player::State::Wait);
+			sceneGame->GetPlayer()->ChangeState(Player::State::WAIT);
 			uiTimer->AddGameOverTimer(100);
 		}
 		TK_Lib::Draw::JapanFont("「〇キー」長押しで救済措置", { Window.x / 2 - 100, Window.y / 2 - 100 });
@@ -130,11 +130,11 @@ void Stage::Render()
 //描画
 void Stage::ModelRender()
 {
-	TK_Lib::Draw::Model(StageIndex[StageType::RenderModel], ShaderType::Shader_MakeShadow);
+	TK_Lib::Draw::Model(StageIndex[StageType::RENDER_MODEL], ShaderType::Shader_MakeShadow);
 
-	TK_Lib::Draw::Model(StageIndex[StageType::NoMakeShadowModel], ShaderType::Shader_DrawShadow);
+	TK_Lib::Draw::Model(StageIndex[StageType::NO_MAKE_SHADOW_MODEL], ShaderType::Shader_DrawShadow);
 
-	TK_Lib::Draw::Model(SkyModel, ShaderType::Shader_NoLight);
+	TK_Lib::Draw::Model(skyModel, ShaderType::Shader_NoLight);
 }
 
 //終了処理

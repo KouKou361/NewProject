@@ -9,7 +9,7 @@ void BossRollAttackStartAction::Start()
 {
 	owner->TargetFaild();
 	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->anime->GetIndex(owner->anime->BossOpenGoToRoll), false);
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->BossOpenGoToRoll), false);
 }
 
 //実行処理

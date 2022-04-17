@@ -42,12 +42,12 @@ public:
 class SceneTitle :public Scene
 {
 private:
-	int FontTexture;
-	int TitleSceneBackTitleTexture;
+	int fontTexture;
+	int titleSceneBackTitleTexture;
 	int smoke_driftTexture;
-	int TitleLogoTexture;
-	int PlayerTexture;
-	int MinionTextue;
+	int titleLogoTexture;
+	int playerTexture;
+	int minionTextue;
 
 public:
 	SceneTitle() {};
@@ -72,21 +72,21 @@ class SceneLoad : public Scene
 {
 	enum
 	{
-		MaskSIROBO,
-		MaskEnemy,
-		MaskPlayer,
-		LoadingIcon,
-		Sirobo,
-		MaskEnd,
+		MASK_SIROBO,
+		MASK_ENEMY,
+		MASK_PLAYER,
+		LOADING_ICON,
+		SIROBO,
+		MASK_END,
 	};
 private:
 
-	int MaskTexture[MaskEnd];
-	int LineTexture;
+	int maskTexture[MASK_END];
+	int lineTexture;
 
 	float angle = 0;
-	float LinePos;
-	static constexpr float MaskSpeed = 3.0f;
+	float linePos;
+	static constexpr float maskSpeed = 3.0f;
 	
 	string text;
 
@@ -127,24 +127,24 @@ public:
 	//モデル番号
 	enum ModelIndex
 	{
-		PlayerModel,
-		MinionPlayerModel,
-		EnemySlimeModel,
-		EnemyTurtleShellModel,
-		EnemyBeholderModel,
-		EnemyChestModel,
-		EnemyBoomModel,
+		PLAYER_MODEL,
+		MINION_PLAYER_MODEL,
+		ENEMY_SLIME_MODEL,
+		ENEMY_TURTLESHELL_MODEL,
+		ENEMY_BEKOLDER_MODEL,
+		ENEMY_CHEST_MODEL,
+		ENEMY_BOOM_MODEL,
 		//EnemyBoss,
-		StageModel1,
-		StageCollisionModel1,
-		StageNav1,
-		StageModel2,
-		StageCollisionModel2,
-		StageNav2,
-		Pat,
-		Traning_Dummy,
-		Wall,
-		ModelEnd,
+		STAGE_MODEL1,
+		STAGE_COLLISION_MODEL1,
+		STAGE_NAV1,
+		STAGE_MODEL2,
+		STAGE_COLLISION_MODEL2,
+		STAGE_NAV2,
+		PAT,
+		TRANING_DUMMY,
+		WALL,
+		MODEL_END,
 	};
 
 	int stageIndex1 = -1;
@@ -153,8 +153,8 @@ public:
 private:
 
 
-	int ModelTexture[ModelEnd];
-	int Model[ModelEnd];
+	int modelTexture[MODEL_END];
+	int model[MODEL_END];
 
 	
 	unique_ptr<Player> mPlayer;
@@ -166,7 +166,7 @@ private:
 	shared_ptr<ObjectFunctionManager> objectFunctionManager;
 	shared_ptr<EXPManager>expManager;
 
-	bool ClearFlg = false;
+	bool clearFlg = false;
 
 	
 	//shared_ptr<UIManager> uiManager;
@@ -175,14 +175,14 @@ private:
 
 	enum debugType
 	{
-		DebugParameter,
-		DebugCollision,
-		DebugShader,
-		DebugNav,
-		DebugCamera,
-		DebugEnd
+		DEBUG_PARAMETER,
+		DEBUG_COLLISION,
+		DEBUG_SHADER,
+		DEBUG_NAV,
+		DEBUG_CAMERA,
+		DEBUG_END
 	};
-	bool debugType[DebugEnd];
+	bool debugType[DEBUG_END];
 public:
 	SceneGame() {};
 	~SceneGame() {};
@@ -218,7 +218,7 @@ public:
 	//ゲームクリア処理
 	bool GameClear();
 
-	void SetGameClear(bool flg) { ClearFlg = flg; };
+	void SetGameClear(bool flg) { clearFlg = flg; };
 
 	//終了処理
 	void End() override;
@@ -242,15 +242,15 @@ class SceneClear : public Scene
 private:
 	enum TextureData
 	{
-		Font,
-		Back,
-		Back1,
-		Back2,
-		Back3,
-		SiroboAnimetion,
-		TextureEnd,
+		FONT,
+		BACK,
+		BACK1,
+		BACK2,
+		BACK3,
+		SIROBO_ANIMETION,
+		TEXTURE_END,
 	};
-	int Texture[TextureData::TextureEnd];
+	int texture[TextureData::TEXTURE_END];
 public:
 	SceneClear() {};
 	~SceneClear() {};
@@ -271,7 +271,7 @@ public:
 class SceneOver : public Scene
 {
 private:
-	int FontTexture;
+	int fontTexture;
 public:
 	SceneOver() {};
 	~SceneOver() {};

@@ -3,7 +3,7 @@
 //‰Šú‰»ˆ—
 void EffectThowSmoke::Init()
 {
-	Pos = VECTOR3{ 11,0,-2 };
+	pos = VECTOR3{ 11,0,-2 };
 	//	PointLight = TK_Lib::SpotLight::Create(Pos, {1,0,0,1},10);
 	//TK_Lib::Lib_Effect::GetSpriteEffect(EffectIndex)->Fire2({ 0,0,0 }, 2);
 	//TK_Lib::Lib_Effect::GetSpriteEffect(EffectIndex)->Fire2({ 0,0,0 }, 2);
@@ -14,7 +14,7 @@ void EffectThowSmoke::Init()
 void EffectThowSmoke::Play(VECTOR3 Pos, int Num)
 {
 
-	vector<EffectData>* spriteEffects = TK_Lib::Lib_Effect::Geteffects(EffectIndex);
+	vector<EffectData>* spriteEffects = TK_Lib::Lib_Effect::Geteffects(effectIndex);
 	for (int i = 0; i < Num; i++) {
 		for (int j = 0; j < spriteEffects->size(); j++)
 		{
@@ -44,7 +44,7 @@ void EffectThowSmoke::Play(VECTOR3 Pos, int Num)
 void EffectThowSmoke::Update()
 {
 	float time = TK_Lib::Window::GetElapsedTime();
-	vector<EffectData>* spriteEffects = TK_Lib::Lib_Effect::Geteffects(EffectIndex);
+	vector<EffectData>* spriteEffects = TK_Lib::Lib_Effect::Geteffects(effectIndex);
 
 	for (int i = 0; i < spriteEffects->size(); i++) {
 		EffectData* spriteEffect = &spriteEffects->at(i);

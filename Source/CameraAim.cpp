@@ -11,9 +11,9 @@ this->enemyManager = enemyManager;
 //‰Šú‰»ˆ—
 void CameraAim::Init()
 {
-	Keytimer = 0;
+	keyTimer = 0;
 	angle.y = DirectX::XMConvertToRadians(10);
-	manager->cameraType = CameraManager::CameraType::TypeAim;
+	manager->cameraType = CameraManager::CameraType::TYPE_AIM;
 
 	endTargetPos = targetChara->GetPos();
 }
@@ -84,7 +84,7 @@ void CameraAim::Update()
 //–Ú•W‚ÌØ‚è‘Ö‚¦
 void CameraAim::ChangeTargetChara()
 {
-	if (Keytimer > 0)return;
+	if (keyTimer > 0)return;
 	float ax = TK_Lib::Gamepad::GetAxisRX();
 
 	float nearDot = FLT_MAX;

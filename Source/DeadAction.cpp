@@ -10,7 +10,7 @@ class EnemyBase;
 void DeadAction::Start()
 {
 	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->anime->GetIndex(owner->anime->Die), false);
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->Die), false);
 	owner->SetDeadFlg(false);
 	owner->SetDeathTime(1.0f);
 }

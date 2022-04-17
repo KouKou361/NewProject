@@ -14,6 +14,8 @@ public:
 	VECTOR3 Scale;//大きさ
 	VECTOR4 Color;//色
 	bool Select;//選択フラグ
+
+public:
 	template<class Archive>
 	void serialize(Archive& archive, int version);
 };
@@ -25,12 +27,11 @@ public:
 	~Export() {};
 private:
 	SceneGame* sceneGame=nullptr;
-public:
 	std::vector<ExportActor> exportActorList;
+public:
+
 	void Loading(std::string filename);
 	void ObjectSet();
-	
-	void SetManager(SceneGame* sceneGame) { this->sceneGame = sceneGame; };
 	//敵のセットする
 	void SetEnemy(ExportActor *exportActor);
 	//オブジェクト配置
@@ -44,6 +45,7 @@ public:
 	//関数の設定
 	void SetFunction(ExportActor* exportActor);
 
+	inline void SetManager(SceneGame* sceneGame) { this->sceneGame = sceneGame; };
 
 
 };

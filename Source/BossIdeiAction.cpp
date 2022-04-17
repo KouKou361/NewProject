@@ -10,7 +10,7 @@
 void BossIdeiAction::Start()
 {
 	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->anime->GetIndex(owner->anime->Idle), true);
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->Idle), true);
 	timer = 0;
 }
 

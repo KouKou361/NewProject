@@ -5,20 +5,20 @@
 //èâä˙âªèàóù
 void EXP::Init(VECTOR3 Pos)
 {
-	SpriteIndex = TK_Lib::Load::LoadTexture("./Data/Sprite/EXP.png");
+	spriteIndex = TK_Lib::Load::LoadTexture("./Data/Sprite/EXP.png");
 
 
-	TargetPos = TK_Lib::Window::GetWindowSize();
+	targetPos = TK_Lib::Window::GetWindowSize();
 
-	TargetPos.x = TargetPos.x/2;
-	TargetPos.y = 20;
+	targetPos.x = targetPos.x/2;
+	targetPos.y = 20;
 	//this->Pos = { 600,700 };
-	this->Pos=WorldToScreen(Pos);
-	this->Pos.y -= 10;
+	this->pos=WorldToScreen(Pos);
+	this->pos.y -= 10;
 
-	Angle = XMConvertToRadians(rand() % 360);
+	angle = XMConvertToRadians(rand() % 360);
 
-	this->Velocity = { sinf(Angle),cosf(Angle)};
+	this->velocity = { sinf(angle),cosf(angle)};
 
 	timer = 0;
 	speed = -10;
@@ -39,17 +39,17 @@ void EXP::Update()
 	if (speed >= 0)
 	{
 
-		Angle = atan2f(TargetPos.y - Pos.y, TargetPos.x - Pos.x);
+		angle = atan2f(targetPos.y - pos.y, targetPos.x - pos.x);
 
 
-		const VECTOR2 V = { cosf(Angle), sinf(Angle) };
+		const VECTOR2 V = { cosf(angle), sinf(angle) };
 	
 
 		//if(timer>= TK_Lib::Window::GetElapsedTime()*120)
 		{
 			VECTOR2 Vec;
-			Vec.x = TargetPos.x - Pos.x;
-			Vec.y = TargetPos.y - Pos.y;
+			Vec.x = targetPos.x - pos.x;
+			Vec.y = targetPos.y - pos.y;
 			XMVECTOR V;
 			V = XMLoadFloat2(&Vec);
 			V = XMVector3Length(V);
@@ -73,18 +73,18 @@ void EXP::Update()
 
 	}
 
-	const VECTOR2 V = { cosf(Angle), sinf(Angle) };
-	Velocity = speed * V;
+	const VECTOR2 V = { cosf(angle), sinf(angle) };
+	velocity = speed * V;
 
-	Pos.x += Velocity.x;
-	Pos.y += Velocity.y;
+	pos.x += velocity.x;
+	pos.y += velocity.y;
 }
 //çXêVèàóù
 void EXP::Render()
 {
 //	TK_Lib::Blender::SetBlender(Bland_state::BS_ADD);
 
-	TK_Lib::Draw::Sprite(SpriteIndex, Pos, Size, VECTOR4{ 0,0,1024,1024 }, Angle);
+	TK_Lib::Draw::Sprite(spriteIndex, pos, size, VECTOR4{ 0,0,1024,1024 }, angle);
 	//TK_Lib::Draw::Sprite(SpriteIndex, TargetPos, Size, VECTOR4{ 0,0,1024,1024 }, Angle);
 
 //	TK_Lib::Blender::SetBlender(Bland_state::BS_NONE);

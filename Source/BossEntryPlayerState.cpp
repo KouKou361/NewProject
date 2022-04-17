@@ -12,14 +12,14 @@
 //‰Šú‰»
 void BossEntryPlayerState::Start(Player* pl)
 {
-	pl->state = Player::State::BossEntry;
+	pl->state = Player::State::BOSS_ENTRY;
 	TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Run), true);
 	pl->moveVec = { 0,0,-0.1f };
 }
 //XV
 void BossEntryPlayerState::Run(Player* pl)
 {
-	if (stage->GetEventState() == EventState::TurnCameraLookFront)
+	if (stage->GetEventState() == EventState::TURN_CAMERA_LOOK_FRONT)
 	{
 		TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Idle), true);
 		pl->moveVec = { 0,0,0 };

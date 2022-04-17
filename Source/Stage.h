@@ -19,27 +19,28 @@ protected:
 	//ステージタイプ
 	enum StageType
 	{
-		RenderModel,//描画
-		NoMakeShadowModel,//影を生成しない描画
-		CollisionModel,//当たり判定
-		NavModel,//ナビメッシュ
-		EndModel,
+		RENDER_MODEL,//描画
+		NO_MAKE_SHADOW_MODEL,//影を生成しない描画
+		COLISION_MODEL,//当たり判定
+		NAV_MODEL,//ナビメッシュ
+		END_MODEL,
 	};
 
-	int StageIndex[StageType::EndModel];
-	unique_ptr<Export> stageExport;
+	int StageIndex[StageType::END_MODEL];
+	int skyModel = 0;
+
 	SceneGame* sceneGame;
 
+	unique_ptr<Export> stageExport;
 	std::shared_ptr<UINumTower> uiNumTower;
-
 	std::shared_ptr<UITimer> uiTimer;
 
-	int SkyModel = 0;
+
 
 public:
 	Stage() {};
-	Stage(string RenderModel, string NoShadowRenderModel, string CollisionModel, string NavModel,
-		VECTOR3 Pos, VECTOR3 Angle, VECTOR3 Scale,string SetData, SceneGame* scene);
+	Stage(const string renderModel, const string noShadowRenderModel, const string collisionModel, const string navModel,
+		const VECTOR3 pos, const VECTOR3 angle, const VECTOR3 scale, const string setData, SceneGame* scene);
 	~Stage() {};
 	//初期化処理
 	virtual void Init();
@@ -54,22 +55,22 @@ public:
 	//クリア判定
 	virtual bool ClearJudge();
 
-	UITimer* GetUiTimer() { return uiTimer.get(); }
-	UINumTower* GetNumTower() { return uiNumTower.get(); }
+	inline UITimer* GetUiTimer() { return uiTimer.get(); }
+	inline UINumTower* GetNumTower() { return uiNumTower.get(); }
 };
 
 class TutoStage: public Stage
 {
 private:
-	int TutoIndex = 0;
-	std::vector<shared_ptr<Tuto>> TutoManager;
+	int tutoIndex = 0;
+	std::vector<shared_ptr<Tuto>> tutoManager;
 	shared_ptr<Tuto> nowTuto=nullptr;
 
-	const int RenderUiNumTower = 9;
+	const int renderUiNumTower = 9;
 public:
 	TutoStage(){}
-	TutoStage(string RenderModel, string NoShadowRenderModel, string CollisionModel, string NavModel,
-		VECTOR3 Pos, VECTOR3 Angle, VECTOR3 Scale, string SetData, SceneGame* scene);
+	TutoStage(const string renderModel, const string noShadowRenderModel, const string collisionModel, const string navModel,
+		const VECTOR3 pos, const VECTOR3 angle, const VECTOR3 scale, const string setData, SceneGame* scene);
 	~TutoStage() {};
 
 	//初期化処理
@@ -91,11 +92,11 @@ public:
 
 enum class EventState
 {
-	LookPlayer,//プレイヤーを見る
-	TurnCameraLookFront,//カメラが回転して正面を見る
-	LookEnemy,
-	BackCamera,
-	End
+	LOOK_PLAYER,//プレイヤーを見る
+	TURN_CAMERA_LOOK_FRONT,//カメラが回転して正面を見る
+	LOOK_ENEMY,
+	BACK_CAMERA,
+	END
 };
 
 
@@ -107,19 +108,19 @@ private:
 	
 	int smoke_driftTexture = -1;
 	EventState eventState;
-	int TutoIndex = 0;
-	std::vector<shared_ptr<Tuto>> TutoManager;
+	int tutoIndex = 0;
+	std::vector<shared_ptr<Tuto>> tutoManager;
 	shared_ptr<Tuto> nowTuto = nullptr;
 
-	const int RenderUiNumTower = 9;
+	const int renderUiNumTower = 9;
 	//Boss
 	EnemyBase* enm = nullptr;
 	//カメラ
 	CameraBossEntry* camera = nullptr;
 public:
 	BossStage() {}
-	BossStage(string RenderModel, string NoShadowRenderModel, string CollisionModel, string NavModel,
-		VECTOR3 Pos, VECTOR3 Angle, VECTOR3 Scale, string SetData, SceneGame* scene);
+	BossStage(const string renderModel, const string noShadowRenderModel, const string collisionModel, const string navModel,
+		const VECTOR3 pos, const VECTOR3 angle, const VECTOR3 scale, const string setData, SceneGame* scene);
 	~BossStage() {};
 
 	//初期化処理
@@ -136,5 +137,5 @@ public:
 	bool ClearJudge();
 
 	//現在進行中のイベントを返す
-	EventState GetEventState() { return eventState; }
+	inline EventState GetEventState() { return eventState; }
 };

@@ -98,7 +98,7 @@ dcl_temps 7
 //   o1.x <- <main return value>.texcoord.x; o1.y <- <main return value>.texcoord.y; o1.z <- <main return value>.power; 
 //   o0.x <- <main return value>.pos.x; o0.y <- <main return value>.pos.y; o0.z <- <main return value>.pos.z; o0.w <- <main return value>.pos.w
 //
-#line 5 "C:\Users\taketomo\Desktop\GameProgram\Shader\Lib_Outline_vs.hlsl"
+#line 5 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Lib_Outline_vs.hlsl"
 itof r0.xyz, l(0, 0, 0, 0)  // r0.x <- p.x; r0.y <- p.y; r0.z <- p.z
 
 #line 6

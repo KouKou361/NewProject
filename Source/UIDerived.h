@@ -81,9 +81,9 @@ public:
 class UINumTower :public UIBase
 {
 private:
-	bool TowerSound = true;
-	int FontUI = -1;
-	float BlinkingTimer = 0;
+	bool towerSound = true;
+	int fontUI = -1;
+	float breakingTimer = 0;
 public:
 	UINumTower(SceneGame* scene) { this->scene = scene; }
 	UINumTower() {};
@@ -96,7 +96,7 @@ public:
 	//ï`âÊèàóù
 	void Render();
 
-	void SetBlinkingTimer(float timer) { BlinkingTimer = timer; }
+	inline void SetBlinkingTimer(float timer) { breakingTimer = timer; }
 };
 
 
@@ -104,11 +104,11 @@ public:
 class UITimer :public UIBase
 {
 private:
-	int FontUI=-1;
-	int GameTimer=0;
-	int MaxGameTimer = 0;
-	float FrameTimer=0;
-	float FontScaleTimer = 0;
+	int fontUI=-1;
+	int gameTimer=0;
+	int maxGameTimer = 0;
+	float frameTimer=0;
+	float fontScaleTimer = 0;
 public:
 	UITimer() {};
 	~UITimer() {};
@@ -126,17 +126,17 @@ public:
 	void SetGameOverTimer(int timer);
 
 	void AddGameOverTimer(int addTimer);
-	int GetGameTimer() { return GameTimer; }
+	inline  int GetGameTimer() { return gameTimer; }
 };
 
 
 class UINextMessage :public UIBase
 {
-	const VECTOR2 FontOffset = { 50,70 };
+	const VECTOR2 fontOffset = { 50,70 };
 	VECTOR2 centerScale;
-	VECTOR2 S1 = { 256 / 3,256 / 3 };
-	VECTOR2 S2 = { (256 / 3) * 2,(256 / 3) * 2 };
-	VECTOR2 Scale = { 1,1 };
+	VECTOR2 s1 = { 256 / 3,256 / 3 };
+	VECTOR2 s2 = { (256 / 3) * 2,(256 / 3) * 2 };
+	VECTOR2 scale = { 1,1 };
 public:
 	UINextMessage() {};
 	~UINextMessage() {};
@@ -151,12 +151,12 @@ public:
 
 class UITuto :public UIBase
 {
-	const VECTOR2 FontOffset = { 50,100 };
-	const VECTOR2 NextFontOffset = { 1300,250 };
+	const VECTOR2 fontOffset = { 50,100 };
+	const VECTOR2 nextFontOffset = { 1300,250 };
 	VECTOR2 centerScale;
-	VECTOR2 S1 = { 256 / 3,256 / 3 };
-	VECTOR2 S2 = { (256 / 3) * 2,(256 / 3) * 2 };
-	VECTOR2 Scale = { 1,1 };
+	VECTOR2 s1 = { 256 / 3,256 / 3 };
+	VECTOR2 s2 = { (256 / 3) * 2,(256 / 3) * 2 };
+	VECTOR2 scale = { 1,1 };
 
 
 
@@ -180,7 +180,7 @@ class UI2DDirection :public UIBase
 	VECTOR3 targetWorldPos;
 	VECTOR2 targetScreenPos;
 	//îºåa
-	const float UICenterR = 250.0f;
+	const float uiCenterR = 250.0f;
 	float targetAngle;
 
 

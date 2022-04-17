@@ -36,7 +36,7 @@ void Player::Init()
 	SetHp(5);
 	SetMaxInvincibleTime(120);
 
-	SetTag(ObjectTag::TagPlayer);
+	SetTag(ObjectTag::TAG_PLAYER);
 
 	//全ての状態を先に登録しておく
 	stateAttack = make_unique<AttackState>();
@@ -155,9 +155,9 @@ void Player::InputAttack()
 {
 	CameraManager* cameraManager = sceneGame->GetCameraManager();
 	//もしAimカメラ時ではない状態ならreturn 
-	if (cameraManager->GetNowType() != CameraManager::CameraType::TypeAim)return;
+	if (cameraManager->GetNowType() != CameraManager::CameraType::TYPE_AIM)return;
 	//もし攻撃モードならreturn;
-	if (state == State::Attack)return;
+	if (state == State::ATTACK)return;
 
 	if (TK_Lib::Gamepad::GetButtonDown(BTN::RT) == 1)
 	//if (TK_Lib::Gamepad::GetButtonDown(BTN::Y) == 1)
@@ -208,7 +208,7 @@ void Player::InputCamera()
 	{
 		CameraManager* cameraManager = sceneGame->GetCameraManager();
 		//もしAimカメラ時ではない状態ならreturn 
-		if (cameraManager->GetNowType() == CameraManager::CameraType::TypeAim)return;
+		if (cameraManager->GetNowType() == CameraManager::CameraType::TYPE_AIM)return;
 		ChangeCameraAim();
 	}
 }
@@ -226,8 +226,8 @@ void Player::InputMinionResuscitation()
 	{
 		MinionPlayer* minion=minionManager->GetMinionIndex(i);
 		//死亡のミニオンのみ
-		if (minion->GetState() == MinionPlayer::StateType::TypeDead ||
-			minion->GetState() == MinionPlayer::StateType::TypeResuscitation
+		if (minion->GetState() == MinionPlayer::StateType::TYPE_DEAD ||
+			minion->GetState() == MinionPlayer::StateType::TYPE_RESUSCITATION
 			)
 		{
 			float L = Length(minion->GetPos());
@@ -495,22 +495,22 @@ void Player::ChangeState(State state,BossStage* stage)
 	PlayerState* playerstate=nullptr;
 	switch (state)
 	{
-	case State::Attack://攻撃
+	case State::ATTACK://攻撃
 		playerstate = stateAttack.get();
 			break;
-	case State::Damage://ダメージ
+	case State::DAMAGE://ダメージ
 		playerstate = stateDamage.get();
 			break;
-	case State::Dead://死亡
+	case State::DEAD://死亡
 		playerstate = stateDead.get();
 			break;
-	case State::Wait://待機
+	case State::WAIT://待機
 		playerstate = stateWait.get();
 			break;
-	case State::Walk://移動
+	case State::WALK://移動
 		playerstate = stateWalk.get();
 			break;
-	case State::BossEntry://ボスの登場
+	case State::BOSS_ENTRY://ボスの登場
 		playerstate = stateBossEntry.get();
 		stateBossEntry->SetState(stage);
 		break;
@@ -526,7 +526,7 @@ void Player::ResetFarTarget(float L)
 
 	if (GetTarget() == nullptr)
 	{
-		if (sceneGame->GetCameraManager()->GetNowType() == CameraManager::CameraType::TypeAim)
+		if (sceneGame->GetCameraManager()->GetNowType() == CameraManager::CameraType::TYPE_AIM)
 		{
 			sceneGame->GetCameraManager()->ChangeCamera(new CameraNormal(this));
 		
@@ -549,7 +549,7 @@ void Player::SetTargetEnemy(Actor* enm) {
 	for (int i = 0; i < minionManager->GetMinionsSize(); i++)
 	{
 		MinionPlayer* minion = minionManager->GetMinionIndex(i);
-		if (minion->GetState() == MinionPlayer::StateType::TypeStandBy)
+		if (minion->GetState() == MinionPlayer::StateType::TYPE_STAND_BY)
 		{
 			minion->SetTarget(enm);
 		}

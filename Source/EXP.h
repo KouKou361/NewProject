@@ -25,16 +25,16 @@ public:
 	VECTOR2 WorldToScreen(VECTOR3 Pos);
 protected:
 	//エフェクト番号
-	int SpriteIndex;
+	int spriteIndex;
 
-	VECTOR2 Pos;
-	VECTOR2 Velocity = { 0,0 };
-	VECTOR2 Size = { 50,50 };
+	VECTOR2 pos;
+	VECTOR2 velocity = { 0,0 };
+	VECTOR2 size = { 50,50 };
 
-	VECTOR2 TargetPos = { 20,20 };
+	VECTOR2 targetPos = { 20,20 };
 
-	VECTOR4 Cut;
-	float Angle;
+	VECTOR4 cut;
+	float angle;
 	float speed = 0.0f;
 
 	SceneGame* scene;

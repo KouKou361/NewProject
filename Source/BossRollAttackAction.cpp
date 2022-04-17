@@ -10,8 +10,8 @@
 void BossRollAttackAction::Start()
 {
 	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->anime->GetIndex(owner->anime->BossClose_RollLoop), true);
-	RollTimer = 0;
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->BossClose_RollLoop), true);
+	rollTimer = 0;
 	owner->TargetFaild();
 
 	TK_Lib::Lib_Sound::SoundPlay("BossRoll", true);
@@ -24,7 +24,7 @@ ActionBase::State BossRollAttackAction::Run()
 	owner->TargetFaild();
 
 	Advance(4.0f);
-	RollTimer++;
+	rollTimer++;
 	owner->AttackCircle(owner->GetPos(),10.0f);
 	
 	//レイピックして壁にぶつかったなら終了

@@ -17,7 +17,7 @@ bool MinionIdleJudgement::Judgement()
 bool MinionFollowJudgement::Judgement()
 {
 	//ミニオンがプレイヤーの味方なら
-	if (minionOwner->GetTeam() == minionOwner->Team::TeamPlayer)
+	if (minionOwner->GetTeam() == minionOwner->Team::TEAM_PLAYER)
 	{
 		return true;
 	}
@@ -134,7 +134,7 @@ bool MinionDieJudgement::Judgement()
 bool MinionResuscitationJudgement::Judgement()
 {
 	//蘇生されている時状態なら
-	if (minionOwner->GetState()==MinionPlayer::StateType::TypeResuscitation)
+	if (minionOwner->GetState()==MinionPlayer::StateType::TYPE_RESUSCITATION)
 	{
 		return true;
 	}

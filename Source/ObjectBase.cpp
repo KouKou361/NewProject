@@ -10,12 +10,12 @@ void ObjectBase::SetCollisionModel(string CollisionModelKey)
 	collisionModel=TK_Lib::Load::GetModel(CollisionModelKey);
 	TK_Lib::Model::Tranceform(collisionModel, GetPos(), GetQuaternion(), GetScale());
 	TK_Lib::Model::PlayAnimation(collisionModel,0,false);
-	Collision::Instance().RegisterModel(collisionModel, ModelCollisionType::CollisionModel, this);
+	Collision::Instance().RegisterModel(collisionModel, ModelCollisionType::COLLISION_MODEL, this);
 }
 //‰Šú‰»ˆ—
 void ObjectBase::Init()
 {
-	SetTag(ObjectTag::TagObject);
+	SetTag(ObjectTag::TAG_OBJECT);
 }
 //XVˆ—
 void ObjectBase::Update()

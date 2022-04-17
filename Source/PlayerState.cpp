@@ -13,10 +13,10 @@
 void AttackState::Start(Player* pl)
 {
 	TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Attack1),false);
-	pl->state = Player::State::Attack;
+	pl->state = Player::State::ATTACK;
 
 	//攻撃出来る状態
-	AttackFlg = true;
+	attackFlg = true;
 }
 //更新
 void AttackState::Run(Player* pl)
@@ -56,13 +56,13 @@ void AttackState::Run(Player* pl)
 	//ミニオンの攻撃開始
 	if (RateTime>=AttackTimeRate)
 	{
-		if (AttackFlg == true)
+		if (attackFlg == true)
 		{
 			pl->minionManager->OneAttack(nullptr);
 		}
 
 		//攻撃出来る状態をfalseにする
-		AttackFlg = false;
+		attackFlg = false;
 
 	}
 
@@ -88,7 +88,7 @@ void AttackState::DownSpeed(Player* pl)
 void DamageState::Start(Player* pl)
 {
 	pl->moveVec = { 0,0,0 };
-	pl->state = Player::State::Damage;
+	pl->state = Player::State::DAMAGE;
 	pl->SetDamageFlg(false);
 	TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Damage), false);
 }
@@ -115,7 +115,7 @@ void DamageState::End(Player* pl)
 void DeadState::Start(Player* pl)
 {
 	pl->moveVec = { 0,0,0 };
-	pl->state = Player::State::Dead;
+	pl->state = Player::State::DEAD;
 	pl->SetDeadFlg(false);
 	TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Die), false);
 	pl->sceneGame->GetEnemyManager()->SetEnemyActive(false);
@@ -142,7 +142,7 @@ void DeadState::End(Player* pl)
 //初期化
 void WaitState::Start(Player* pl)
 {
-	pl->state = Player::State::Wait;
+	pl->state = Player::State::WAIT;
 	TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Idle), true);
 }
 //更新
@@ -172,7 +172,7 @@ void WaitState::End(Player* pl)
 //初期化
 void WalkState::Start(Player* pl)
 {
-	pl->state = Player::State::Walk;
+	pl->state = Player::State::WALK;
 	TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Run), true);
 }
 //更新

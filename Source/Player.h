@@ -36,15 +36,12 @@ private:
 	//攻撃中はスピードが落ちる
 	const float AttackSpeedDown = 0.5f;
 
-	
-private:
-
 	shared_ptr<MinionManager> minionManager;
 	//プレイヤーの動きステートマシン
 	PlayerState* stateMachine;
 	//SceneGameの更新
 	SceneGame* sceneGame;
-public:
+
 	//全ての行動
 	unique_ptr<PlayerState>   stateAttack;
 	unique_ptr<PlayerState>   stateDamage;
@@ -52,16 +49,18 @@ public:
 	unique_ptr<PlayerState>   stateWait;
 	unique_ptr<PlayerState>   stateWalk;
 	unique_ptr<BossEntryPlayerState>   stateBossEntry;
+public:
+
 
 	
 	enum class State
 	{
-		Attack,//攻撃
-		Damage,//ダメージ
-		Dead,//死亡
-		Wait,//待機
-		Walk,//移動
-		BossEntry,//ボスの登場
+		ATTACK,//攻撃
+		DAMAGE,//ダメージ
+		DEAD,//死亡
+		WAIT,//待機
+		WALK,//移動
+		BOSS_ENTRY,//ボスの登場
 	};
 
 
@@ -85,16 +84,13 @@ public:
 	//状態マシンの変換
 	void ChangeState(PlayerState* state);
 	void ChangeState(State state, BossStage* stage =nullptr);
-
-	State GetState() { return state; };
-	
 	//ターゲットがある程度遠かった場合見失う
 	void ResetFarTarget(float L);
 
-	MinionManager* GetMinionManager() { return minionManager.get(); };
-
+	inline MinionManager* GetMinionManager() { return minionManager.get(); };
+	inline State GetState() { return state; };
 	//ゲームシーンの設定
-	SceneGame* GetSceneGame() { return sceneGame; };
+	inline SceneGame* GetSceneGame() { return sceneGame; };
 
 	//プレイヤーのステージリセット処理
 	void ResetPlayer();
@@ -128,19 +124,19 @@ private:
 	//カーソルの描画
 	void RenderCursur();
 	//目標のHPの表示
-	void RenderTargetHP(const VECTOR2 Pos);
+	void RenderTargetHP(const VECTOR2 pos);
 	//目標の敵設定
 	void SetTargetEnemy(Actor* enm);
 	//プレイヤーの体力表示
-	void HPRender(const int SpriteIndex, const VECTOR2 Pos);
+	void HPRender(const int spriteIndex, const VECTOR2 pos);
 	
 	
 	//目標の敵の設定
 	bool SetTargetActor();
 	//速さ取得
-	float GetSpeed() { return speed; };
+	inline float GetSpeed() { return speed; };
 	//速さ設定
-	void SetSpeed(const float speed) { this->speed = speed; };
+	inline void SetSpeed(const float speed) { this->speed = speed; };
 	//ダメージ
-	bool AddDamage(int Damage, int SetinvincibleTime);
+	bool AddDamage(int damage, int setinvincibleTime);
 };

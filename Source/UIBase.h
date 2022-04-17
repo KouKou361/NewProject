@@ -7,6 +7,26 @@ class SceneGame;
 //UIの基本的処理
 class UIBase
 {
+protected:
+
+	int indexTexture;
+	float value = 0;//汎用的な数字
+	float value2 = 0;//汎用的な数字
+	float angle;
+
+	VECTOR2 pos = { 0,0 };
+	VECTOR2 size = { 0,0 };
+	VECTOR4 cut = { 0,0,0,0 };
+	VECTOR4 color = { 1,1,1,1 };
+
+	string text;//テキスト
+	SceneGame* scene = nullptr;
+	UIManager* manager = nullptr;//UI管理クラス
+	Charactor* chara = nullptr;//キャラクター
+private:
+	UIBase* parent = nullptr;//親
+	vector<UIBase*> children;//子供
+
 public:
 	UIBase() {};
 	UIBase(UIManager* manager, SceneGame* scene) { this->manager = manager; this->scene = scene; };
@@ -25,42 +45,18 @@ public:
 	//子供設定
 	void SetChildren(UIBase* ui);
 	//数字の設定
-	void SetValue(float value) { this->value = value; };
-	void SetValue2(float value) { this->value = value2; };
-	VECTOR2 WorldToScreen(VECTOR3 Pos);
+	inline void SetValue(const float value) { this->value = value; };
+	inline void SetValue2(const float value) { this->value = value2; };
+	VECTOR2 WorldToScreen(const VECTOR3 Pos);
 
-	void SetTexture(int indexTexture) { this->indexTexture = indexTexture; };
-	void SetCharactor(Charactor* chara) { this->chara = chara; }
+	inline void SetTexture(const int indexTexture) { this->indexTexture = indexTexture; };
+	inline void SetCharactor(Charactor* chara) { this->chara = chara; }
 
-	virtual void SetText(string text) { this->text = text; };
-	string GetText() { return this->text; };
+	virtual void SetText(const string text) { this->text = text; };
+	inline string GetText() { return this->text; };
 
 	
 
-protected:
-	UIManager* manager = nullptr;//UI管理クラス
-	Charactor* chara = nullptr;//キャラクター
-	int indexTexture;
-	float value = 0;//汎用的な数字
-	float value2 = 0;//汎用的な数字
-
-	string text;//テキスト
-	SceneGame* scene = nullptr;
-
-
-	VECTOR2 pos = { 0,0 };
-	VECTOR2 size = { 0,0 };
-	VECTOR4 cut = { 0,0,0,0 };
-	float angle;
-	VECTOR4 color = { 1,1,1,1 };
-private:
-
-
-
-
-
-	UIBase* parent = nullptr;//親
-	vector<UIBase*> children;//子供
 
 
 };

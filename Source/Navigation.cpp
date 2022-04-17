@@ -4,9 +4,9 @@
 //既に登録されているノードかどうか
 bool NavEdge::EdgeDuplicate(NavEdge* edge)
 {
-	for (NavNode* Node : NacNodes)
+	for (NavNode* Node : navNodes)
 	{
-		if (edge == Node->NextNavMesh)
+		if (edge == Node->nextNavMesh)
 		{
 			//既に登録されている
 			return true;
@@ -81,13 +81,13 @@ void NavCollision::NavStageBuild(int navModelIndex)
 					WorldPolygonPostion[2] = XMVector3TransformCoord(C, WorldTranceform);
 
 					VECTOR3 WorldPostion[3];
-					XMStoreFloat3(&stageNode.Pos[0], WorldPolygonPostion[0]);
-					XMStoreFloat3(&stageNode.Pos[1], WorldPolygonPostion[1]);
-					XMStoreFloat3(&stageNode.Pos[2], WorldPolygonPostion[2]);
+					XMStoreFloat3(&stageNode.pos[0], WorldPolygonPostion[0]);
+					XMStoreFloat3(&stageNode.pos[1], WorldPolygonPostion[1]);
+					XMStoreFloat3(&stageNode.pos[2], WorldPolygonPostion[2]);
 
 
 
-					CollisionModelsPos.push_back(stageNode);
+					collisionModelsPos.push_back(stageNode);
 				}
 
 			}
@@ -101,71 +101,71 @@ void NavCollision::NavStageBuild(int navModelIndex)
 		
 		//ナビメッシュの作成
 		int test = 0;
-		for (int i = 0; i <= CollisionModelsPos.size(); i++)
+		for (int i = 0; i <= collisionModelsPos.size(); i++)
 		{
 		
-			if (i >= CollisionModelsPos.size() )break;
+			if (i >= collisionModelsPos.size() )break;
 
 			NavEdge* navEdge = new NavEdge();
 
-			VECTOR3 Pos1 = CollisionModelsPos.at(i).Pos[0];
-			VECTOR3 Pos2 = CollisionModelsPos.at(i).Pos[1];
-			VECTOR3 Pos3 = CollisionModelsPos.at(i).Pos[2];
+			VECTOR3 Pos1 = collisionModelsPos.at(i).pos[0];
+			VECTOR3 Pos2 = collisionModelsPos.at(i).pos[1];
+			VECTOR3 Pos3 = collisionModelsPos.at(i).pos[2];
 			
 		 
 		//	VECTOR3 Pos4 = CollisionModelsPos.at(i+1).Pos[1];
 		//	if (InPosition(Pos1, Pos2, Pos3, Pos4))
 			{//重心の算出
 				navEdge->centerPos = (Pos1 + Pos2 + Pos3) / 3;
-				navEdge->Positions.push_back(Pos1);
-				navEdge->Positions.push_back(Pos2);
+				navEdge->positions.push_back(Pos1);
+				navEdge->positions.push_back(Pos2);
 			//	nacMesh->Positions.push_back(Pos4);
-				navEdge->Positions.push_back(Pos3);
+				navEdge->positions.push_back(Pos3);
 			}
 
 	
 	
 
-				NacMeshes.push_back(navEdge);
+				navMeshes.push_back(navEdge);
 			//	break;
 			
 		}
 		//隣のメッシュの関連ずけ
-		for (NavEdge* navEdge : NacMeshes)
+		for (NavEdge* navEdge : navMeshes)
 		{
-			for (NavEdge* navEdge2 : NacMeshes)
+			for (NavEdge* navEdge2 : navMeshes)
 			{
 				if (navEdge == navEdge2)continue;
 
 				//基準となるメッシュ
-				for (int i = 0; i < navEdge->Positions.size(); i++)
+				for (int i = 0; i < navEdge->positions.size(); i++)
 				{
 					//関連となるメッシュ
-					for (int j = 0; j < navEdge2->Positions.size(); j++)
+					for (int j = 0; j < navEdge2->positions.size(); j++)
 					{
 						//一点が連なっている！
-						if (navEdge->Positions.at(i) == navEdge2->Positions.at(j))
+						if (navEdge->positions.at(i) == navEdge2->positions.at(j))
 						{
-							VECTOR3 Duplicate= navEdge->Positions.at(i);
+							VECTOR3 Duplicate= navEdge->positions.at(i);
 						//２点とも連なっているかどうか	
-							for (int k = 0; k < navEdge->Positions.size(); k++)
+							for (int k = 0; k < navEdge->positions.size(); k++)
 							{
-								if (Duplicate == navEdge->Positions.at(k))continue;
+								if (Duplicate == navEdge->positions.at(k))continue;
 
-								for (int m = 0; m < navEdge2->Positions.size(); m++)
+								for (int m = 0; m < navEdge2->positions.size(); m++)
 								{
-									if (navEdge->Positions.at(k) == navEdge2->Positions.at(m))
+									if (navEdge->positions.at(k) == navEdge2->positions.at(m))
 									{
 										//既に登録されているかどうか
 										if (navEdge->EdgeDuplicate(navEdge2))break;
 
 										NavNode *navNode=new NavNode();
-										navNode->NextNavMesh = navEdge2;
+										navNode->nextNavMesh = navEdge2;
 										XMVECTOR A = XMLoadFloat3(&navEdge->centerPos);
 										XMVECTOR B = XMLoadFloat3(&navEdge2->centerPos);
 										XMVECTOR Length = XMVector3Length(XMVectorSubtract(A, B));
-										XMStoreFloat(&navNode->Length,Length);
-										navEdge->NacNodes.push_back(navNode);
+										XMStoreFloat(&navNode->length,Length);
+										navEdge->navNodes.push_back(navNode);
 									}
 
 								}
@@ -202,16 +202,16 @@ bool NavCollision::GetOnNacMesh(const VECTOR3& Pos, const VECTOR3& Pos2, NavEdge
 	//最短距離のエッジ
 	NavEdge* SaveEdge=nullptr;
 
-	for (NavEdge* navEdge : NacMeshes)
+	for (NavEdge* navEdge : navMeshes)
 	{
 		
-		XMVECTOR A = DirectX::XMLoadFloat3(&navEdge->Positions.at(0));
-		XMVECTOR B = DirectX::XMLoadFloat3(&navEdge->Positions.at(1));
-		XMVECTOR C = DirectX::XMLoadFloat3(&navEdge->Positions.at(2));
+		XMVECTOR A = DirectX::XMLoadFloat3(&navEdge->positions.at(0));
+		XMVECTOR B = DirectX::XMLoadFloat3(&navEdge->positions.at(1));
+		XMVECTOR C = DirectX::XMLoadFloat3(&navEdge->positions.at(2));
 
 		for (int i = 0; i < 3; i++)
 		{
-			VECTOR3 P = navEdge->Positions.at(i) - Pos;
+			VECTOR3 P = navEdge->positions.at(i) - Pos;
 			XMVECTOR V = XMLoadFloat3(&P);
 			V = XMVector3Length(V);
 			float NL;
@@ -322,23 +322,23 @@ bool NavCollision::GetOnNacMesh(const VECTOR3& Pos, const VECTOR3& Pos2, NavEdge
 void NavCollision::Render()
 {
 	//経路探索の可視化
-	for (int i = 0; i < RoatEdge.size(); i++)
+	for (int i = 0; i < roatEdge.size(); i++)
 	{
-		NavEdge* edge = RoatEdge.at(i);
-		VECTOR3 Pos1 = { edge->Positions.at(0).x,edge->Positions.at(0).y +0.5f ,edge->Positions.at(0).z };
-		VECTOR3 Pos2 = { edge->Positions.at(1).x,edge->Positions.at(1).y +0.5f ,edge->Positions.at(1).z };
-		VECTOR3 Pos3 = { edge->Positions.at(2).x,edge->Positions.at(2).y +0.5f ,edge->Positions.at(2).z };
+		NavEdge* edge = roatEdge.at(i);
+		VECTOR3 Pos1 = { edge->positions.at(0).x,edge->positions.at(0).y +0.5f ,edge->positions.at(0).z };
+		VECTOR3 Pos2 = { edge->positions.at(1).x,edge->positions.at(1).y +0.5f ,edge->positions.at(1).z };
+		VECTOR3 Pos3 = { edge->positions.at(2).x,edge->positions.at(2).y +0.5f ,edge->positions.at(2).z };
 
 		TK_Lib::Debug3D::Line(Pos1, Pos2, { 0,0,1,1 });
 		TK_Lib::Debug3D::Line(Pos2, Pos3, { 0,0,1,1 });
 		TK_Lib::Debug3D::Line(Pos3, Pos1, { 0,0,1,1 });
 	}
 
-	for (NavCollisionNode node : CollisionModelsPos)
+	for (NavCollisionNode node : collisionModelsPos)
 	{
-		VECTOR3 Pos1 = { node.Pos[0].x,node.Pos[0].y + 0.3f ,node.Pos[0].z };
-		VECTOR3 Pos2 = { node.Pos[1].x,node.Pos[1].y + 0.3f ,node.Pos[1].z };
-		VECTOR3 Pos3 = { node.Pos[2].x,node.Pos[2].y + 0.3f ,node.Pos[2].z };
+		VECTOR3 Pos1 = { node.pos[0].x,node.pos[0].y + 0.3f ,node.pos[0].z };
+		VECTOR3 Pos2 = { node.pos[1].x,node.pos[1].y + 0.3f ,node.pos[1].z };
+		VECTOR3 Pos3 = { node.pos[2].x,node.pos[2].y + 0.3f ,node.pos[2].z };
 
 		TK_Lib::Debug3D::Line(Pos1, Pos2, { 0,0,0,1 });
 		TK_Lib::Debug3D::Line(Pos2, Pos3, { 0,0,0,1 });
@@ -410,13 +410,13 @@ bool NavCollision::InPosition(const VECTOR3 &Rpos, const VECTOR3& Pos1, const VE
 void NavCollision::SetTarget(const VECTOR3& Pos, const VECTOR3& Pos2)
 {
 	//レイに当たったナビメッシュの取得
-	target->function =GetOnNacMesh(Pos,Pos2,target->InMesh);
-	target->Position = Pos;
+	target->function =GetOnNacMesh(Pos,Pos2,target->inMesh);
+	target->position = Pos;
 }
 //経路探索の探索済みを消す
 void NavCollision::ClearNavEdgeSearch()
 {
-	for (NavEdge* Edge : NacMeshes)
+	for (NavEdge* Edge : navMeshes)
 	{
 		Edge->searchflg = false;
 		Edge->parent = nullptr;
@@ -426,10 +426,10 @@ void NavCollision::ClearNavEdgeSearch()
 void NavCollision::GetNotContact(NavEdge* edge, NavEdge* nextedge,VECTOR3 &OutPosition)
 {
 	//面していない頂点の算出
-	for (VECTOR3 pos1 : nextedge->Positions)
+	for (VECTOR3 pos1 : nextedge->positions)
 	{
 		bool flg = false;
-		for (VECTOR3 pos2 : edge->Positions)
+		for (VECTOR3 pos2 : edge->positions)
 		{
 			//面している！
 			if (pos1 == pos2)
@@ -490,14 +490,14 @@ void NavCollision::SearchRoat(NavEdge*& Start, NavEdge*& End)
 		queue.pop();
 
 		//ノードを辿る
-		for (NavNode* node : nowEdge->NacNodes)
+		for (NavNode* node : nowEdge->navNodes)
 		{
-			if (node->NextNavMesh->searchflg)continue;
+			if (node->nextNavMesh->searchflg)continue;
 			//追加
-			queue.push(node->NextNavMesh);
+			queue.push(node->nextNavMesh);
 			//親の設定
-			node->NextNavMesh->parent = nowEdge;
-			node->NextNavMesh->searchflg = true;
+			node->nextNavMesh->parent = nowEdge;
+			node->nextNavMesh->searchflg = true;
 
 		//	//探索の可視化
 		//	VECTOR3 Pos1 = { nowEdge->Positions.at(0).x,nowEdge->Positions.at(0).y + 0.2f ,nowEdge->Positions.at(0).z };
@@ -529,14 +529,14 @@ void NavCollision::SearchRoat(NavEdge*& Start, NavEdge*& End)
 		
 		}
 		int size = stack.size();
-		RoatEdge.clear();
+		roatEdge.clear();
 		
 		for (int i = 0; i < size; i++)
 		{
 			NavEdge* edge = stack.top();
 			stack.pop();
 
-			RoatEdge.push_back(edge);
+			roatEdge.push_back(edge);
 
 			//VECTOR3 Pos1 = { edge->Positions.at(0).x,edge->Positions.at(0).y + 0.4f ,edge->Positions.at(0).z };
 			//VECTOR3 Pos2 = { edge->Positions.at(1).x,edge->Positions.at(1).y + 0.4f ,edge->Positions.at(1).z };
@@ -552,13 +552,13 @@ void NavCollision::SearchRoat(NavEdge*& Start, NavEdge*& End)
 //	Start = nowEdge;
 }
 //NavEdgeから実際の距離の算出
-bool NavCollision::CreateNearRoat(VECTOR3 Position, VECTOR3 Target, VECTOR3& OutPos)
+bool NavCollision::CreateNearRoat(const VECTOR3 Position, const VECTOR3 Target, VECTOR3& OutPos)
 {
 	//もしターゲットが全てのNavEdge内にはいないなら
 	if (target->function == false)return false;
 
 	//とりあえず //同じマスならreturn;
-	if (RoatEdge.size() <= 1) {
+	if (roatEdge.size() <= 1) {
 		OutPos = Target;
 		return true;
 	}
@@ -572,8 +572,8 @@ bool NavCollision::CreateNearRoat(VECTOR3 Position, VECTOR3 Target, VECTOR3& Out
 	VECTOR3 V_Answer= Target;
 
 	//エッジデータの算出
-	NavEdge* edge = RoatEdge.at(0);
-	NavEdge* Nextedge = RoatEdge.at(1);
+	NavEdge* edge = roatEdge.at(0);
+	NavEdge* Nextedge = roatEdge.at(1);
 
 	static int degugIndex = 0;
 
@@ -609,11 +609,11 @@ bool NavCollision::CreateNearRoat(VECTOR3 Position, VECTOR3 Target, VECTOR3& Out
 	int blue = 0;
 
 	//角を見つけるまで算出
-	for (int i = 0; i < RoatEdge.size()-1; i++)
+	for (int i = 0; i < roatEdge.size()-1; i++)
 	{
 		//今と次のメッシュの算出
-		edge = RoatEdge.at(i);
-		Nextedge = RoatEdge.at(i + 1);
+		edge = roatEdge.at(i);
+		Nextedge = roatEdge.at(i + 1);
 
 		//次のメッシュに面していない頂点の算出
 		GetNotContact(edge, Nextedge, NotContctPosition);
@@ -625,13 +625,13 @@ bool NavCollision::CreateNearRoat(VECTOR3 Position, VECTOR3 Target, VECTOR3& Out
 		//位置を適用
 		VECTOR3 RedCross, BlueCross,RCross;
 		VECTOR3 V_Yellow;
-		if (RoatEdge.size() - i > 2)
+		if (roatEdge.size() - i > 2)
 		{
-			V_Yellow = Nextedge->centerPos - RoatEdge.at(i + 2)->centerPos;
+			V_Yellow = Nextedge->centerPos - roatEdge.at(i + 2)->centerPos;
 		}
 		else
 		{
-			V_Yellow = Nextedge->centerPos - RoatEdge.at(i)->centerPos;
+			V_Yellow = Nextedge->centerPos - roatEdge.at(i)->centerPos;
 		}
 		VECTOR3 V_Green = NotContctPosition - edge->centerPos;
 		VECTOR3 V_Red = ContantPos[0] - edge->centerPos;
@@ -749,13 +749,13 @@ bool NavCollision::CreateNearRoat(VECTOR3 Position, VECTOR3 Target, VECTOR3& Out
 
 }
 //次のメッシュに面している頂点の算出
-void NavCollision::GetContactPos(const NavEdge* edge, const NavEdge* Nextedge,VECTOR3 *Posision)
+void NavCollision::GetContactPos(const NavEdge* edge, const NavEdge* Nextedge,  VECTOR3 *Posision)
 {
 	int ret = 0;
-	for (VECTOR3 pos1 : Nextedge->Positions)
+	for (VECTOR3 pos1 : Nextedge->positions)
 	{
 		bool flg = false;
-		for (VECTOR3 pos2 : edge->Positions)
+		for (VECTOR3 pos2 : edge->positions)
 		{
 			//面している！
 			if (pos1 == pos2)
@@ -775,10 +775,10 @@ void NavCollision::Clear()
 		delete target;
 		target = nullptr;
 	}
-	CollisionModelsPos.clear();
-	for (NavEdge* mesh : NacMeshes)
+	collisionModelsPos.clear();
+	for (NavEdge* mesh : navMeshes)
 	{
-		for (NavNode* node : mesh->NacNodes)
+		for (NavNode* node : mesh->navNodes)
 		{
 			if (node)
 			{
@@ -793,7 +793,7 @@ void NavCollision::Clear()
 		}
 	}
 
-	NacMeshes.clear();
+	navMeshes.clear();
 }
 void NavCollision::Cross(const VECTOR3& V, const VECTOR3& V2, VECTOR3 &OutV)
 {
@@ -807,9 +807,9 @@ void NavCollision::Cross(const VECTOR3& V, const VECTOR3& V2, VECTOR3 &OutV)
 //二つのエッジの頂点がどれか接触していたならtrueを返す
 bool NavCollision::Contant(NavEdge*& edge1, NavEdge*& edge2)
 {
-	for (VECTOR3 pos1 : edge1->Positions)
+	for (VECTOR3 pos1 : edge1->positions)
 	{
-		for (VECTOR3 pos2 : edge2->Positions)
+		for (VECTOR3 pos2 : edge2->positions)
 		{
 			if (pos1 == pos2) {
 				return true;
@@ -820,12 +820,12 @@ bool NavCollision::Contant(NavEdge*& edge1, NavEdge*& edge2)
 }
 
 //ゆとりを持たせる
-void NavCollision::ClearRoomPos(VECTOR3 ownerPos,VECTOR3 GoalPos,VECTOR3 &OutPos)
+void NavCollision::ClearRoomPos(const VECTOR3 ownerPos, const VECTOR3 GoalPos,  VECTOR3 &OutPos)
 {
 	//ゆとり
 	constexpr float Volume = 1.1f;
 	VECTOR3 vec1, vec2;
-	vec1= target->Position - ownerPos;//スタートとTargetのベクトル
+	vec1= target->position - ownerPos;//スタートとTargetのベクトル
 	vec2= GoalPos - ownerPos;//スタートとゴールのベクトル
 
 	//TK_Lib::Debug3D::Line(target->Position , ownerPos);

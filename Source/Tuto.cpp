@@ -15,7 +15,7 @@ Tuto::Tuto(SceneGame* sceneGame)
 void Tuto::Init()
 {
 
-	TextIndex = 0;
+	textIndex = 0;
 }
 void Tuto::Update()
 {
@@ -31,10 +31,10 @@ bool Tuto::Judge()
 	{
 		TK_Lib::Lib_Sound::SoundPlay("TutoButton", false);
 		//もし次のテキストがあるなら
-		if (textes.size()-1 > TextIndex)
+		if (textes.size()-1 > textIndex)
 		{
 			uiTimer = 0;
-			TextIndex++;
+			textIndex++;
 			return false;
 		}
 		//最後のテキストを読み終えたなら
@@ -46,7 +46,7 @@ bool Tuto::Judge()
 //描画
 void Tuto::Render()
 {
-	ui->SetText(textes.at(TextIndex));
+	ui->SetText(textes.at(textIndex));
 	ui->Render();
 
 

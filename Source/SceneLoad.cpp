@@ -25,8 +25,8 @@ void SceneLoad::Initialize()
   //
     text = "ÉçÅ[ÉhíÜ";
 
-    MaskTexture[LoadingIcon] = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/LoadingIcon.png");
-    MaskTexture[Sirobo] = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/SiroboAnimetion.png");
+    maskTexture[LOADING_ICON] = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/LoadingIcon.png");
+    maskTexture[SIROBO] = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/SiroboAnimetion.png");
     
     
 
@@ -54,10 +54,10 @@ void SceneLoad::Update()
 
 
 
-    LinePos += MaskSpeed;
+    linePos += maskSpeed;
     VECTOR2 ScreenSize = TK_Lib::Window::GetWindowSize();
-    if (LinePos >= ScreenSize.x) {
-        LinePos = -ScreenSize.x;
+    if (linePos >= ScreenSize.x) {
+        linePos = -ScreenSize.x;
     }
 
     if (nextScene->initialized)
@@ -85,12 +85,12 @@ void SceneLoad::Render()
 
    // TK_Lib::Draw::JapanFont("ÉVÉçÉ{åRíc", { 100,100 });
 
-    TK_Lib::Draw::Sprite(MaskTexture[LoadingIcon], { ScreenSize.x - 100,ScreenSize.y-100 }, { 48,48 }, { LoadPos,0,48,48 });
+    TK_Lib::Draw::Sprite(maskTexture[LOADING_ICON], { ScreenSize.x - 100,ScreenSize.y-100 }, { 48,48 }, { LoadPos,0,48,48 });
 
     const float LoadSiroboIconIndexX = (static_cast<int>((timer*60) / 5) / 7 )* 256;
     const float LoadSiroboIconIndexY = (static_cast<int>((timer*60) / 5) % 6 )*256;
  //   const float LoadPos = static_cast<float> (48 * LoadIconI)ndex);
-    TK_Lib::Draw::Sprite(MaskTexture[Sirobo], { ScreenSize.x - 500,ScreenSize.y - 150 }, { 100,100 }, { LoadSiroboIconIndexX,LoadSiroboIconIndexY,256,256 });
+    TK_Lib::Draw::Sprite(maskTexture[SIROBO], { ScreenSize.x - 500,ScreenSize.y - 150 }, { 100,100 }, { LoadSiroboIconIndexX,LoadSiroboIconIndexY,256,256 });
 
  
 

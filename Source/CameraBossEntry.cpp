@@ -16,7 +16,7 @@ void CameraBossEntry::Init()
 	if (this->owner == nullptr)assert(!"ownerがnull");
 	if (this->state == nullptr)assert(!"stateがnull");
 	if (this->enm == nullptr)assert(!"enmがnull");
-	manager->cameraType = CameraManager::CameraType::TypeNormal;
+	manager->cameraType = CameraManager::CameraType::TYPE_BOSS;
 	//	Angle.x = DirectX::XMConvertToRadians(10);
 	angle.y = DirectX::XMConvertToRadians(15);
 	angle.x = DirectX::XMConvertToRadians(45);
@@ -26,7 +26,7 @@ void CameraBossEntry::Init()
 	eye = startEyePos;
 	targetPos = { 0,0,0 };
 
-	LookatOwnerTimer = 0.0f;
+	lookAtOwnerTimer = 0.0f;
 }
 
 //視点位置を決める更新
@@ -108,10 +108,10 @@ void CameraBossEntry::Imgui()
 //Ownerの方に向いておく
 bool CameraBossEntry::LookatOwner()
 {
-	LookatOwnerTimer += TK_Lib::Window::GetElapsedTime();
-	if (LookatOwnerTimer >= 3.0f)
+	lookAtOwnerTimer += TK_Lib::Window::GetElapsedTime();
+	if (lookAtOwnerTimer >= 3.0f)
 	{
-		LookatOwnerTimer = 0.0f;
+		lookAtOwnerTimer = 0.0f;
 		return true;
 	}
 	//カメラの注視点
@@ -217,8 +217,8 @@ bool CameraBossEntry::LookatBoss()
 //ボスからカメラが離れる
 bool CameraBossEntry::BackCamera()
 {
-	LookatOwnerTimer += TK_Lib::Window::GetElapsedTime();
-	if (LookatOwnerTimer >= 1.0f)
+	lookAtOwnerTimer += TK_Lib::Window::GetElapsedTime();
+	if (lookAtOwnerTimer >= 1.0f)
 	{
 		enm->SetActionFlg(true);
 		angle.y = DirectX::XMConvertToRadians(10);

@@ -16,7 +16,7 @@ void EnemyBeholder::Init()
 	collisionRadius = 1.0f;
 	SetModel(TK_Lib::Load::GetModel("Beholder"));
 
-	SetTag(ObjectTag::TagEnemy);
+	SetTag(ObjectTag::TAG_ENEMY);
 
 	anime = make_unique<Animetion>();
 	//アニメーション番号
@@ -51,6 +51,6 @@ void EnemyBeholder::Init()
 
 	behaviorTree = make_unique<BehaviorTree>();
 	behaviordata = make_unique<BehaviorData>();
-	behaviorTree->AddNode("", "root", 1, BehaviorTree::SelectRule::Priority, nullptr, nullptr);
-	behaviorTree->AddNode("root", "idle", 1, BehaviorTree::SelectRule::Non, new IdleJudgement(this), new IdleAction(this));
+	behaviorTree->AddNode("", "root", 1, BehaviorTree::SelectRule::PRIORITY, nullptr, nullptr);
+	behaviorTree->AddNode("root", "idle", 1, BehaviorTree::SelectRule::NONE, new IdleJudgement(this), new IdleAction(this));
 }

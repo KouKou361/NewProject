@@ -15,9 +15,9 @@ class EnemyBase;
 void BossDeadAction::Start()
 {
 	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌÄ¶
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->anime->GetIndex(owner->anime->Idle), false);
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->Idle), false);
 	owner->SetDeathTime(2);
-	state = EventDeleteState::Stop;
+	state = EventDeleteState::STOP;
 }
 
 //Àsˆ—
@@ -29,16 +29,16 @@ ActionBase::State BossDeadAction::Run()
 
 	switch (state)
 	{
-	case EventDeleteState::Stop://~‚Ü‚é
+	case EventDeleteState::STOP://~‚Ü‚é
 		StateStop();
 		break;
-	case EventDeleteState::Fire://”R‚¦‚é
+	case EventDeleteState::FIRE://”R‚¦‚é
 		StateFire();
 		break;
-	case EventDeleteState::Explosion://”š”­
+	case EventDeleteState::EXPLOSION://”š”­
 		StateExplosion();
 		break;
-	case EventDeleteState::End://I—¹
+	case EventDeleteState::END://I—¹
 		StateEnd();
 		return ActionBase::State::Failed;
 		break;
@@ -54,7 +54,7 @@ void BossDeadAction::StateStop()
 	if (owner->UpdateDeathTime())
 	{
 		owner->SetDeathTime(3);
-		state = EventDeleteState::Fire;
+		state = EventDeleteState::FIRE;
 	}
 }
 //”R‚¦‚é
@@ -65,7 +65,7 @@ void BossDeadAction::StateFire()
 	if (owner->UpdateDeathTime())
 	{
 		owner->SetDeathTime(3);
-		state = EventDeleteState::Explosion;
+		state = EventDeleteState::EXPLOSION;
 	}
 }
 //”š”­
@@ -75,7 +75,7 @@ void BossDeadAction::StateExplosion()
 	//€–SŠÔ‚ÌXV
 	if (owner->UpdateDeathTime())
 	{
-		state = EventDeleteState::End;
+		state = EventDeleteState::END;
 	}
 }
 //I—¹

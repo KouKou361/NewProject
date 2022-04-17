@@ -10,8 +10,8 @@
 void MinionStandByAction::Start()
 {
 	//アニメーションの開始
-	TK_Lib::Model::PlayAnimation(minionOwner->GetModel(), minionOwner->anime->GetIndex(minionOwner->anime->Idle), true);
-	minionOwner->SetState(MinionPlayer::StateType::TypeStandBy);
+	TK_Lib::Model::PlayAnimation(minionOwner->GetModel(), minionOwner->GetAnime()->GetIndex(minionOwner->GetAnime()->Idle), true);
+	minionOwner->SetState(MinionPlayer::StateType::TYPE_STAND_BY);
 	TK_Lib::Lib_Sound::SoundPlay("MinionAttack", false);
 	
 	//全回復
@@ -152,7 +152,7 @@ void MinionStandByAction::VsPlayer()
 	{
 
 
-		minionOwner->GetPlayer()->SetPos(OutPosB);
+	//	minionOwner->GetPlayer()->SetPos(OutPosB);
 		minionOwner->SetPos(OutPosA);
 	}
 }

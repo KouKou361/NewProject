@@ -13,13 +13,13 @@ void Collision::RegisterModel(const int model, const ModelCollisionType type,Act
 	modelCollision.type = type;
 	modelCollision.actorModel = actor;
 
-	CollisionModels.push_back(modelCollision);
+	collisionModels.push_back(modelCollision);
 }
 //全消し
 void Collision::Clear()
 {
 
-	CollisionModels.clear();
+	collisionModels.clear();
 	navCollision->Clear();
 }
 //レイピック
@@ -27,13 +27,13 @@ void Collision::RayPick(const VECTOR3& start, const VECTOR3& end, RayOut& ray)
 {
 	float L = FLT_MAX;
 	RayOut nearRay;
-	for (ModelCollsion model : CollisionModels)
+	for (ModelCollsion model : collisionModels)
 	{
 		//もしモデルタイプがレイピック用のモデルではないのならば
 		if (model.modelIndex <= -1)continue;
 
 		//もしモデルタイプがレイピック用のモデルではないのならば
-		if (model.type != ModelCollisionType::CollisionModel)continue;
+		if (model.type != ModelCollisionType::COLLISION_MODEL)continue;
 
 
 		TK_Lib::Model::LayPick(model.modelIndex,start, end, ray);
@@ -53,10 +53,10 @@ void Collision::RayPick(const VECTOR3& start, const VECTOR3& end, RayOut& ray,Ac
 	float L = FLT_MAX;
 	RayOut nearRay;
 	Actor* saveActor = nullptr;
-	for (ModelCollsion model : CollisionModels)
+	for (ModelCollsion model : collisionModels)
 	{
 		//もしモデルタイプがレイピック用のモデルではないのならば
-		if (model.type != ModelCollisionType::CollisionModel)continue;
+		if (model.type != ModelCollisionType::COLLISION_MODEL)continue;
 
 		TK_Lib::Model::LayPick(model.modelIndex, start, end, ray);
 		if (ray.materialIndex <= -1)continue;
@@ -79,10 +79,10 @@ void Collision::RayPick(const VECTOR3& start, const VECTOR3& end, RayOut& ray,Ac
 //AIのためのステージ構成
 void Collision::NacStageBuild()
 {
-	for (ModelCollsion modelCollision : CollisionModels)
+	for (ModelCollsion modelCollision : collisionModels)
 	{
 		//もしモデルタイプがナビモデルではないのならば
-		if (modelCollision.type != ModelCollisionType::NavModel)continue;
+		if (modelCollision.type != ModelCollisionType::NAV_MODEL)continue;
 		//構成
 		navCollision->NavStageBuild(modelCollision.modelIndex);
 	}
@@ -106,12 +106,12 @@ void Collision::NavRender()
 //当たり判定のモデルの削除
 void Collision::DeleteCollisionModel(int modelIndex)
 {
-	for (auto it = CollisionModels.begin(); it != CollisionModels.end();)
+	for (auto it = collisionModels.begin(); it != collisionModels.end();)
 	{
 
 		if (it->modelIndex == modelIndex)
 		{
-			CollisionModels.erase(it);
+			collisionModels.erase(it);
 			break;
 		}
 		else
@@ -125,14 +125,14 @@ void Collision::DeleteCollisionModel(int modelIndex)
 //
 bool Collision::SearchRoat(const VECTOR3& Pos, VECTOR3& OutPos)
 {
-	VECTOR3 StartPos = { Pos.x,Pos.y + RayUP ,Pos.z };
-	VECTOR3 EndPos = { Pos.x,Pos.y - RayUnder ,Pos.z };
+	VECTOR3 StartPos = { Pos.x,Pos.y + rayUP ,Pos.z };
+	VECTOR3 EndPos = { Pos.x,Pos.y - rayUnder ,Pos.z };
 	NavEdge *edge = nullptr;
 	if (navCollision->GetOnNacMesh(StartPos, EndPos, edge))
 	{
 		//経路探索
-		navCollision->SearchRoat(edge, navCollision->GetNavTarget()->InMesh);
-		bool result= navCollision->CreateNearRoat(Pos, navCollision->GetNavTarget()->Position, OutPos);
+		navCollision->SearchRoat(edge, navCollision->GetNavTarget()->inMesh);
+		bool result= navCollision->CreateNearRoat(Pos, navCollision->GetNavTarget()->position, OutPos);
 
 		//navCollision->ClearRoomPos(Pos, OutPos, OutPos);
 		return result;
@@ -149,10 +149,10 @@ void Collision::RadiusRayPick(const VECTOR3& start, const VECTOR3& end, RayOut& 
 {
 	float L = FLT_MAX;
 	RayOut nearRay;
-	for (ModelCollsion model : CollisionModels)
+	for (ModelCollsion model : collisionModels)
 	{
 		//もしモデルタイプがレイピック用のモデルではないのならば
-		if (model.type != ModelCollisionType::CollisionModel)continue;
+		if (model.type != ModelCollisionType::COLLISION_MODEL)continue;
 
 		TK_Lib::Model::RadiusLayPick(model.modelIndex, start, end, ray,radius);
 		//もし今までレイピックした中で近い距離なら
@@ -206,8 +206,8 @@ bool Collision::SphereVsSphere(const VECTOR3& posA, const float& weghtA, const f
 void Collision::SetTarget(const VECTOR3& Pos)
 {
 
-	VECTOR3 StartPos = { Pos.x,Pos.y + RayUP ,Pos.z };
-	VECTOR3 EndPos = { Pos.x,Pos.y - RayUnder ,Pos.z };
+	VECTOR3 StartPos = { Pos.x,Pos.y + rayUP ,Pos.z };
+	VECTOR3 EndPos = { Pos.x,Pos.y - rayUnder ,Pos.z };
 	
 	navCollision->SetTarget(StartPos, EndPos);
 }

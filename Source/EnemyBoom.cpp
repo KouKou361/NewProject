@@ -31,11 +31,11 @@ void EnemyBoom::Init()
 	{
 		anime->Register(i, AnimeIndex[i]);
 	}
-	SetTag(ObjectTag::TagEnemy);
+	SetTag(ObjectTag::TAG_ENEMY);
 	SetEnemyTag(EnemyTag::Boom);
 	AttackMinions.clear();
 
 	behaviorTree = make_unique<BehaviorTree>();
 	behaviordata = make_unique<BehaviorData>();
-	behaviorTree->AddNode("", "root", 1, BehaviorTree::SelectRule::Priority, nullptr, nullptr);
+	behaviorTree->AddNode("", "root", 1, BehaviorTree::SelectRule::PRIORITY, nullptr, nullptr);
 }

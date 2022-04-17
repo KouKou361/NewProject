@@ -13,8 +13,8 @@ void UINextMessage::Init()
 	cut = { 0,0,256,256 };
 	size = { 256,256 };
 
-	S1 = { 256 / 3,256 / 3 };
-	S2 = { (256 / 3) * 2,(256 / 3) * 2 };
+	s1 = { 256 / 3,256 / 3 };
+	s2 = { (256 / 3) * 2,(256 / 3) * 2 };
 
 
 }
@@ -46,7 +46,7 @@ void UINextMessage::Render()
 	//	ImGui::End();
 
 	//
-	TK_Lib::Draw::SliceUISprite(indexTexture, pos, size, S1, S2, centerScale);
+	TK_Lib::Draw::SliceUISprite(indexTexture, pos, size, s1, s2, centerScale);
 	//ÅZÇ≈éüÇ…êiÇﬁ
-	TK_Lib::Draw::JapanFont("ÅZÇ≈éüÇ…êiÇﬁ", pos + FontOffset);
+	TK_Lib::Draw::JapanFont("ÅZÇ≈éüÇ…êiÇﬁ", pos + fontOffset);
 }

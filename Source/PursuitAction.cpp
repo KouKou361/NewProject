@@ -6,10 +6,10 @@
 //開始処理
 void PursuitAction::Start()
 {
-	SearchFlg = true;
-	TargetPos = { 0,0,0 };
+	searchFlg = true;
+	targetPos = { 0,0,0 };
 	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->anime->GetIndex(owner->anime->Run), true);
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->Run), true);
 }
 
 //実行処理

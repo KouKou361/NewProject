@@ -13,7 +13,7 @@ void ObjectWall::Init()
 	SetHp(10);
 	SetMaxHp(GetHp());
 
-	SetTag(ObjectTag::TagObject);
+	SetTag(ObjectTag::TAG_OBJECT);
 
 	collisionRadius = 5;
 	objectType = ObjectType::Wall;

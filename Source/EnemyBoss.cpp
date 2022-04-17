@@ -60,7 +60,7 @@ void EnemyBoss::Init()
 
 	AttackMinions.clear();
 
-	SetTag(ObjectTag::TagEnemy);
+	SetTag(ObjectTag::TAG_ENEMY);
 	SetEnemyTag(EnemyTag::Boss);
 
 	//TK_Lib::Model::PlayAnimation(GetModel(),0,true);
@@ -68,43 +68,43 @@ void EnemyBoss::Init()
 
 	behaviorTree = make_unique<BehaviorTree>();
 	behaviordata = make_unique<BehaviorData>();
-	behaviorTree->AddNode("", "root", 1, BehaviorTree::SelectRule::OnOff, nullptr, nullptr);
+	behaviorTree->AddNode("", "root", 1, BehaviorTree::SelectRule::ON_OFF, nullptr, nullptr);
 
-	behaviorTree->AddNode("root",   "Battle",          1, BehaviorTree::SelectRule::Random,   nullptr, nullptr,            true);
+	behaviorTree->AddNode("root",   "Battle",          1, BehaviorTree::SelectRule::RANDOM,   nullptr, nullptr,            true);
 
-	behaviorTree->AddNode("root",  "Entry",           2, BehaviorTree::SelectRule::Sequence, nullptr, nullptr,            false);
-	behaviorTree->AddNode("Entry", "EntryActoin",     0, BehaviorTree::SelectRule::Non,      nullptr, new BossEntry(this),false);
-	behaviorTree->AddNode("Entry", "AttackRollStart", 1, BehaviorTree::SelectRule::Non,      nullptr, new BossRollAttackStartAction(this));
-	behaviorTree->AddNode("Entry", "AttackRoll",      2, BehaviorTree::SelectRule::Non,      nullptr, new BossRollAttackAction(this));
-	behaviorTree->AddNode("Entry", "AttackRollEnd",   3, BehaviorTree::SelectRule::Non,      nullptr, new BossRollAttackEndAction(this));
+	behaviorTree->AddNode("root",  "Entry",           2, BehaviorTree::SelectRule::SEQUENCE, nullptr, nullptr,            false);
+	behaviorTree->AddNode("Entry", "EntryActoin",     0, BehaviorTree::SelectRule::NONE,      nullptr, new BossEntry(this),false);
+	behaviorTree->AddNode("Entry", "AttackRollStart", 1, BehaviorTree::SelectRule::NONE,      nullptr, new BossRollAttackStartAction(this));
+	behaviorTree->AddNode("Entry", "AttackRoll",      2, BehaviorTree::SelectRule::NONE,      nullptr, new BossRollAttackAction(this));
+	behaviorTree->AddNode("Entry", "AttackRollEnd",   3, BehaviorTree::SelectRule::NONE,      nullptr, new BossRollAttackEndAction(this));
 
-	behaviorTree->AddNode("root",   "Die",             3, BehaviorTree::SelectRule::Non,    new DeadJudgement(this), new BossDeadAction(this),false);
+	behaviorTree->AddNode("root",   "Die",             3, BehaviorTree::SelectRule::NONE,    new DeadJudgement(this), new BossDeadAction(this),false);
 
 
 	//=======================================
 	//ˆÚ“®Œã‘Ò‹@
-	behaviorTree->AddNode("Battle", "Walk_Idei", 0, BehaviorTree::SelectRule::Sequence, nullptr, nullptr);
-	behaviorTree->AddNode("Walk_Idei",   "Walk", 1, BehaviorTree::SelectRule::Non     , nullptr, new BossWalkAction(this));
-	behaviorTree->AddNode("Walk_Idei",   "Idei", 2, BehaviorTree::SelectRule::Non     , nullptr, new BossIdeiAction(this));
+	behaviorTree->AddNode("Battle", "Walk_Idei", 0, BehaviorTree::SelectRule::SEQUENCE, nullptr, nullptr);
+	behaviorTree->AddNode("Walk_Idei",   "Walk", 1, BehaviorTree::SelectRule::NONE     , nullptr, new BossWalkAction(this));
+	behaviorTree->AddNode("Walk_Idei",   "Idei", 2, BehaviorTree::SelectRule::NONE     , nullptr, new BossIdeiAction(this));
 
 
 	//=======================================
 	//ˆÚ“®ŒãUŒ‚
-	behaviorTree->AddNode("Battle",      "Walk_Attack",     0, BehaviorTree::SelectRule::Sequence, nullptr, nullptr);
-	behaviorTree->AddNode("Walk_Attack", "Walk",            1, BehaviorTree::SelectRule::Non, nullptr, new BossWalkAction(this));
-	behaviorTree->AddNode("Walk_Attack", "Attack",          3, BehaviorTree::SelectRule::Sequence, new BossRollAttackJudgement(this), nullptr);
-    behaviorTree->AddNode("Attack",      "AttackRollStart", 1, BehaviorTree::SelectRule::Non, nullptr, new BossRollAttackStartAction(this));
-    behaviorTree->AddNode("Attack",      "AttackRoll",      2, BehaviorTree::SelectRule::Non, nullptr, new BossRollAttackAction(this));
-    behaviorTree->AddNode("Attack",      "AttackRollEnd",   3, BehaviorTree::SelectRule::Non, nullptr, new BossRollAttackEndAction(this));
+	behaviorTree->AddNode("Battle",      "Walk_Attack",     0, BehaviorTree::SelectRule::SEQUENCE, nullptr, nullptr);
+	behaviorTree->AddNode("Walk_Attack", "Walk",            1, BehaviorTree::SelectRule::NONE, nullptr, new BossWalkAction(this));
+	behaviorTree->AddNode("Walk_Attack", "Attack",          3, BehaviorTree::SelectRule::SEQUENCE, new BossRollAttackJudgement(this), nullptr);
+    behaviorTree->AddNode("Attack",      "AttackRollStart", 1, BehaviorTree::SelectRule::NONE, nullptr, new BossRollAttackStartAction(this));
+    behaviorTree->AddNode("Attack",      "AttackRoll",      2, BehaviorTree::SelectRule::NONE, nullptr, new BossRollAttackAction(this));
+    behaviorTree->AddNode("Attack",      "AttackRollEnd",   3, BehaviorTree::SelectRule::NONE, nullptr, new BossRollAttackEndAction(this));
 	
 	
 	//=======================================
 	//‰ñ“]UŒ‚Œã‘Ò‹@
-	behaviorTree->AddNode("Battle", "Attack", 3, BehaviorTree::SelectRule::Sequence, new BossRollAttackJudgement(this), nullptr);
-	behaviorTree->AddNode("Attack", "AttackRollStart", 1, BehaviorTree::SelectRule::Non, nullptr, new BossRollAttackStartAction(this));
-	behaviorTree->AddNode("Attack", "AttackRoll",      2, BehaviorTree::SelectRule::Non, nullptr, new BossRollAttackAction(this));
-	behaviorTree->AddNode("Attack", "AttackRollEnd",   3, BehaviorTree::SelectRule::Non, nullptr, new BossRollAttackEndAction(this));
-	behaviorTree->AddNode("Attack", "Idei",            2, BehaviorTree::SelectRule::Non, nullptr, new BossIdeiAction(this));
+	behaviorTree->AddNode("Battle", "Attack", 3, BehaviorTree::SelectRule::SEQUENCE, new BossRollAttackJudgement(this), nullptr);
+	behaviorTree->AddNode("Attack", "AttackRollStart", 1, BehaviorTree::SelectRule::NONE, nullptr, new BossRollAttackStartAction(this));
+	behaviorTree->AddNode("Attack", "AttackRoll",      2, BehaviorTree::SelectRule::NONE, nullptr, new BossRollAttackAction(this));
+	behaviorTree->AddNode("Attack", "AttackRollEnd",   3, BehaviorTree::SelectRule::NONE, nullptr, new BossRollAttackEndAction(this));
+	behaviorTree->AddNode("Attack", "Idei",            2, BehaviorTree::SelectRule::NONE, nullptr, new BossIdeiAction(this));
 }
 
 
