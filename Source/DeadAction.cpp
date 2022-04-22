@@ -26,12 +26,12 @@ ActionBase::State DeadAction::Run()
 		if (owner->UpdateDeathTime())
 		{
 			owner->Destroy();
-			return ActionBase::State::Failed;
+			return ActionBase::State::FAILED;
 		}
 	}
 
 
-	return ActionBase::State::Run;
+	return ActionBase::State::RUN;
 }
 
 //I—¹ˆ—

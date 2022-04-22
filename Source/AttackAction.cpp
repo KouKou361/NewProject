@@ -15,23 +15,29 @@ void AttackAction::Start()
 //実行処理
 ActionBase::State AttackAction::Run()
 {
-
+	//敵の方向に向く
 	VECTOR3 Vec =owner->GetTarget()->GetPos()- owner->GetPos();
 	owner->Turn(Vec);
 
-	//攻撃モーション中
+
+	//攻撃モーション中に攻撃する。
 	if (TK_Lib::Model::IsPlayAnimetion(owner->GetModel()))
 	{
-		owner->AttackCircleNode(owner->GetAttackNode(), owner->GetAttackRadius(), 0.0f, 0.5f);
-		return ActionBase::State::Run;
+		//攻撃開始レート
+		constexpr float AttackStartTime = 0.0f;
+		//攻撃終了レート
+		constexpr float AttackEndTime   = 0.5f;
+		//攻撃処理
+		owner->AttackCircleNode(owner->GetAttackNode(), owner->GetAttackRadius(), AttackStartTime, AttackEndTime);
+		return ActionBase::State::RUN;
 
 	}
 
-	return ActionBase::State::Failed;
+	return ActionBase::State::FAILED;
 }
 void AttackAction::DebugRender()
 {
-	TK_Lib::Debug3D::Circle(owner->GetPos(), owner->GetAttackRadius());
+	//TK_Lib::Debug3D::Circle(owner->GetPos(), owner->GetAttackRadius());
 }
 
 //終了処理

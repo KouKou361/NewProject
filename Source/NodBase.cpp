@@ -39,7 +39,7 @@ ActionBase::State NodeBase::Run(Charactor* enemy)
 	}
 	
 		
-	else 	return ActionBase::State::Failed;
+	else 	return ActionBase::State::FAILED;
 }
 
 //ƒm[ƒh„˜_

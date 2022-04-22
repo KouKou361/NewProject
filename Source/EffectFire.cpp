@@ -24,21 +24,21 @@ void EffectFire::Play(VECTOR3 Pos, int Num)
 		{
 			EffectData* spriteEffect = &spriteEffects->at(j);
 			if (spriteEffect->type >= 0)continue;
-			DirectX::XMFLOAT3 p;
-			DirectX::XMFLOAT3 v = { 0,0,0 };
-			DirectX::XMFLOAT3 f = { 0,-2.0f,0 };
+			DirectX::XMFLOAT3 p;                              //速度
+			DirectX::XMFLOAT3 v = { 0,0,0 };				  //加速度
+			DirectX::XMFLOAT3 f = { 0,-2.0f,0 };			  //大きさ
 			DirectX::XMFLOAT2 s = { .8f,.8f };
+			
+			p.x = Pos.x + (rand() % 10001 - 5000) * 0.00005f; //位置の算出
+			p.y = Pos.y + (rand() % 10001) * 0.0001f + 0.2f;  //位置の算出
+			p.z = Pos.z + (rand() % 10001 - 5000) * 0.00005f; //位置の算出
+			
+			v.x = (rand() % 10001 - 5000) * 0.0002f;		  //速度の算出
+			v.y = (rand() % 10001) * 0.0004f + 0.005f;		  //速度の算出
+			v.z = (rand() % 10001 - 5000) * 0.0002f;          //速度の算出
 
-			p.x = Pos.x + (rand() % 10001 - 5000) * 0.00005f;
-			p.y = Pos.y + (rand() % 10001) * 0.0001f + 0.2f;
-			p.z = Pos.z + (rand() % 10001 - 5000) * 0.00005f;
-
-			v.x = (rand() % 10001 - 5000) * 0.0002f;
-			v.y = (rand() % 10001) * 0.0004f + 0.005f;
-			v.z = (rand() % 10001 - 5000) * 0.0002f;
-
-			spriteEffect->Set(13, 4, p, v, f, s);
-			break;
+			spriteEffect->Set(13, 4, p, v, f, s);			  
+			break;											  
 		}
 
 
@@ -67,7 +67,7 @@ void EffectFire::Update()
 		spriteEffect->h += 0.005f;
 		spriteEffect->w += 0.005f;
 	
-
+		//非表示にする
 		if (spriteEffect->timer <= 0) {
 			spriteEffect->type = -1;
 		}

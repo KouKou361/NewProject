@@ -32,7 +32,7 @@ void EnemyBoom::Init()
 		anime->Register(i, AnimeIndex[i]);
 	}
 	SetTag(ObjectTag::TAG_ENEMY);
-	SetEnemyTag(EnemyTag::Boom);
+	SetEnemyTag(EnemyTag::BOMB);
 	AttackMinions.clear();
 
 	behaviorTree = make_unique<BehaviorTree>();

@@ -6,9 +6,9 @@ class ObjectManager;
 class SceneGame;
 enum ObjectType
 {
-	Wall,
-	Pot,
-	Tower,
+	WALL,
+	POT,
+	TOWER,
 };
 
 
@@ -46,7 +46,7 @@ public:
 	void HPRender(const int SpriteIndex, const VECTOR2 Pos);
 	bool AddDamage(int Damage, int MaxinvincibleTime = 0);
 
-	ObjectType GetType() { return objectType; }
+	inline ObjectType GetType() { return objectType; }
 protected:
 	int collisionModel = -1;
 	ObjectManager* objectManager = nullptr;

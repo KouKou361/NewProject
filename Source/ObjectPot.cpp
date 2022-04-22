@@ -19,7 +19,7 @@ void ObjectPot::Init()
 
 	SetTag(ObjectTag::TAG_OBJECT);
 	collisionRadius = 5;
-	objectType = ObjectType::Pot;
+	objectType = ObjectType::POT;
 
 
 	TK_Lib::Model::Tranceform(GetModel(), GetPos(), GetQuaternion(), GetScale());

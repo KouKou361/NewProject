@@ -12,7 +12,7 @@ using namespace std;
 class UpdatePlayEffect
 {
 public:
-	VECTOR3 Pos;//à íu
+	VECTOR3 pos;//à íu
 	string name;//ñºëO
 	int playNum;//ÇæÇ∑êî
 };
@@ -57,11 +57,11 @@ public:
 private:
 
 	//Ç±ÇÃ
-	vector<UpdatePlayEffect> UpdatePlayEffectPoses;
+	vector<UpdatePlayEffect> updatePlayEffectPoses;
 
 	vector<shared_ptr<EffectBase>>effects;
 	vector<shared_ptr<EffectBase>>remove;
 
-	map<string, EffectBase*> EffectIndexResources;
+	map<string, EffectBase*> effectIndexResources;
 
 };

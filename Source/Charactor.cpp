@@ -257,7 +257,7 @@ void Charactor::VerticalCollision()
 void Charactor::BesideCollision()
 {
 	VECTOR3 Start = { pos.x - moveVec.x,pos.y - moveVec.y + BesideRayPickUP, pos.z - moveVec.z };
-	VECTOR3 End = { pos.x + moveVec.x,pos.y + moveVec.y + BesideRayPickUnder, pos.z + moveVec.z };
+	VECTOR3 End = { pos.x + moveVec.x,pos.y + moveVec.y + BesideRayPickUP, pos.z + moveVec.z };
 	//レイピックに当たった位置の情報
 	RayOut ray;
 	//補正位置
@@ -455,6 +455,12 @@ float Charactor::Length(const VECTOR3 Position)
 	Vec = XMVector3Length(Vec);
 	XMStoreFloat(&L,Vec);
 	return L;
+}
+
+//CSVからデータを取り出して、ステータスの設定する。
+void Charactor::SetStatus(string SearchName)
+{
+
 }
 
 void Charactor::Move()

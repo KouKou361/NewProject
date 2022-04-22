@@ -32,7 +32,7 @@ public:
 	virtual ~BehaviorTree() {};
 
 	//ノードの追加
-	void AddNode(std::string searchName, std::string entryName, int priority, SelectRule selectRule, JudgementBase* judgment, ActionBase* action, bool onOff=false);
+	void AddNode(const std::string searchName, const std::string entryName, const int priority, const SelectRule selectRule, JudgementBase* judgment, ActionBase* action, const bool onOff=false);
 	// 実行ノードを推論する
 	NodeBase* ActiveNodeInference(Charactor* enemy, BehaviorData* data);
 	//実行

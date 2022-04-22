@@ -8,10 +8,10 @@ class SceneGame;
 //FunctionObject‚Ìó‘Ô
 enum ObjectFunctionState
 {
-	State_Start,
-	State_Run,
-	State_End,
-	State_None
+	STATE_START,
+	STATE_RUN,
+	STATE_END,
+	STATE_NONE
 };
 
 //ŠÖ”‚ÌŒÄ‚Ño‚µ
@@ -30,9 +30,6 @@ public:
 	};
 	ObjectFunctionBase() {}
 	virtual ~ObjectFunctionBase() {};
-protected:
-	ObjectFunctionState state;
-	IsFunction isFunction;
 public:
 	//‰Šú‰»ˆ—
 	virtual void Init() = 0;
@@ -69,6 +66,7 @@ private:
 protected:
 	SceneGame* sceneGame = nullptr;
 	float radius = 0;//”¼Œa
-
+	ObjectFunctionState state;
+	IsFunction isFunction;
 
 };

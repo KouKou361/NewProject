@@ -12,6 +12,7 @@ class ObjectManager;
 //class UIManager;
 class ObjectFunctionManager;
 class EXPManager;
+class ExportCSV;
 //Šî’êƒNƒ‰ƒX
 class Scene
 {
@@ -165,6 +166,7 @@ private:
 	shared_ptr<ObjectManager> objectManager;
 	shared_ptr<ObjectFunctionManager> objectFunctionManager;
 	shared_ptr<EXPManager>expManager;
+	shared_ptr<ExportCSV>exportSCV;
 
 	bool clearFlg = false;
 
@@ -234,7 +236,7 @@ public:
 	//UITimer* GetUiTimer() { return uiTimer.get(); }
 	EXPManager* GetExpManager() { return expManager.get(); }
 	//UIManager* GetUiManager() { return uiManager.get(); };
-
+	ExportCSV* GetexportSCV() { return exportSCV.get(); };
 };
 
 class SceneClear : public Scene

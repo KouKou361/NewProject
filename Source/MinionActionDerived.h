@@ -88,8 +88,8 @@ public:
 class MinionPursuitAction : public MinionActionBase
 {
 private:
-	bool SearchFlg;
-	VECTOR3 TargetPos;
+	bool searchFlg;
+	VECTOR3 targetPos;
 public:
 	MinionPursuitAction(MinionPlayer* minion) :MinionActionBase(minion) {}
 
@@ -168,8 +168,8 @@ public:
 class MinionDieAction : public MinionActionBase
 {
 private:
-	bool SearchFlg;
-	VECTOR3 TargetPos;
+	bool searchFlg;
+	VECTOR3 targetPos;
 public:
 	MinionDieAction(MinionPlayer* minion) :MinionActionBase(minion) {}
 
@@ -192,8 +192,8 @@ public:
 class MinionResuscitationAction : public MinionActionBase
 {
 private:
-	bool SearchFlg;
-	VECTOR3 TargetPos;
+	bool searchFlg;
+	VECTOR3 targetPos;
 public:
 	MinionResuscitationAction(MinionPlayer* minion) :MinionActionBase(minion) {}
 

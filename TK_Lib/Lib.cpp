@@ -202,7 +202,7 @@ namespace TK_Lib
         m.shader->Create(m.graphics->Get_device(), "./Shader/Sprite_vs.cso", "./Shader/Sprite_ps.cso",ShaderResource::TYPELayout::TYPE_Layout2DSprite);
 
         m.textureResourceManager = new TextureResourceManager();
-        m.textureResourceManager->Init(30);
+        m.textureResourceManager->Init(50);
 
         m.modelResourceManager = new ModelResourceManager();
         m.modelResourceManager->Init(100);

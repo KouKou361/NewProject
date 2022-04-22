@@ -11,19 +11,24 @@ void BossIdeiAction::Start()
 {
 	//アニメーションの再生
 	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->Idle), true);
-	timer = 0;
+	ideiTimer = 0;
 }
 
 //実行処理
 ActionBase::State BossIdeiAction::Run()
 {
-	timer++;
-	constexpr float TimeMax = 300;
-	if (timer >= TimeMax)
+	//待機終了時間
+	constexpr float TimeMax = 5;
+	//待機時間の更新処理
+	ideiTimer += TK_Lib::Window::GetElapsedTime();
+
+
+	if (ideiTimer >= TimeMax)
 	{
-		return ActionBase::State::Failed;
+		//待機終了！次のステートに移行
+		return ActionBase::State::FAILED;
 	}
-	return ActionBase::State::Run;
+	return ActionBase::State::RUN;
 
 }
 

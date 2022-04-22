@@ -94,6 +94,9 @@ public:
 
 	//プレイヤーのステージリセット処理
 	void ResetPlayer();
+	//CSVからデータを取り出して、ステータスの設定する。
+	void SetStatus(string SearchName);
+
 private:
 
 	//============入力=================

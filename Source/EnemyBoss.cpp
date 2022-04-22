@@ -12,11 +12,9 @@
 
 void EnemyBoss::Init()
 {
-	SetQuaternion({ 0,0,0,1 });
+	SetStatus("Boss");
 	SetPos({ 0,0,-40 });
-	SetScale({ 0.05f,0.05f,0.05f });
-	speed = 0.4f;
-	collisionRadius = 1.0f;
+
 	SetModel(TK_Lib::Load::GetModel("Boss"));
 	
 
@@ -61,7 +59,7 @@ void EnemyBoss::Init()
 	AttackMinions.clear();
 
 	SetTag(ObjectTag::TAG_ENEMY);
-	SetEnemyTag(EnemyTag::Boss);
+	SetEnemyTag(EnemyTag::BOSS);
 
 	//TK_Lib::Model::PlayAnimation(GetModel(),0,true);
 
@@ -110,7 +108,7 @@ void EnemyBoss::Init()
 
 void EnemyBoss::TargetComplete()
 {
-	targetFlg = TargetFlg::Failed;
+	targetFlg = TargetFlg::FAILED;
 
 	//子オブジェクトも攻撃目標から消す。
 	for (int i = 0; i < children.size(); i++)

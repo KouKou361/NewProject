@@ -3,28 +3,25 @@
 #include "MinionPlayerAI.h"
 #include "Animetion.h"
 #include "UIDerived.h"
+#include "ExportScript.h"
+#include "Scene.h"
 //初期化処理
 void MinionPlayer::Init(Player* pl)
 {
-	SetQuaternion({ 0,0,0,1 });
-	//pos = { 0,0,0 };
-	SetScale({ 0.4f,0.4f,0.4f });
-	speed = 0.7f;
-	collisionRadius = 2.0f;
-	weight = 0.2f;
+
+
 	SetModel(TK_Lib::Load::GetModel("MinionPlayer"));
 	//プレイヤーの登録
 	this->pl = pl;
-	Ai = make_shared<MinionPlayerAI>(this,pl);
+	SetStatus("Minion");
+	ai = make_shared<MinionPlayerAI>(this,pl);
 //	SetTeam(Team::TeamPlayer);
 	SetTeam(Team::TEAM_NEUTRAL);
-	SetHp(4);
-	SetMaxHp(GetHp());
-	ResuscitationTime = 0;
+	resuscitationTime = 0;
 
 	SetTag(ObjectTag::TAG_MINION);
 
-	ResuscitationFlg = false;
+	resuscitationFlg = false;
 	AttackMinions.clear();
 
 	anime = make_unique<Animetion>();
@@ -81,7 +78,7 @@ void MinionPlayer::Update()
 {
 	if (state != StateType::TYPE_DEAD)
 	{
-		Ai->Update();
+		ai->Update();
 	}
 
 	Turn(moveVec);
@@ -108,7 +105,7 @@ void MinionPlayer::Destroy()
 }
 void MinionPlayer::ResetNode()
 {	
-	Ai->ResetNode();
+	ai->ResetNode();
 }
 void MinionPlayer::HPRender(const int SpriteIndex, const VECTOR2 Pos)
 {
@@ -122,7 +119,7 @@ void MinionPlayer::Render()
 	if (GetState() == StateType::TYPE_RESUSCITATION ||
 		GetState() == StateType::TYPE_DEAD)
 	{
-		uiMinionDownHelp->SetValue(static_cast<float>(ResuscitationTime));
+		uiMinionDownHelp->SetValue(static_cast<float>(resuscitationTime));
 		uiMinionDownHelp->Render();
 	}
 	
@@ -133,10 +130,26 @@ void MinionPlayer::Render()
 void MinionPlayer::SetResuscitation()
 {
 	SetState(StateType::TYPE_RESUSCITATION);
-	ResuscitationFlg = true;
+	resuscitationFlg = true;
 }
 //蘇生ステート変換処理
 bool MinionPlayer::IsResuscitation()
 {
-	return ResuscitationFlg;
+	return resuscitationFlg;
 }
+
+//CSVからデータを取り出して、ステータスの設定する。
+void MinionPlayer::SetStatus(string SearchName)
+{
+	AlliesStatusData* data = GetPlayer()->GetSceneGame()->GetexportSCV()->GetAlliesStatusDataSearchName(SearchName);
+	SetQuaternion({ 0,0,0,1 });
+	SetMaxHp(data->GetHp());
+	SetHp(data->GetHp());
+	SetScale({ data->GetScale(),data->GetScale(),data->GetScale() });
+	speed = data->GetSpeed();
+	collisionRadius = data->GetCollisionRadius();
+	weight = data->GetWeight();
+	SetMaxInvincibleTime(data->GetMaxInvincibleTime());
+}
+
+

@@ -14,9 +14,9 @@ public:
 	// 実行情報
 	enum class State
 	{
-		Run,//実行中
-		Failed,		// 実行失敗
-		Complete,	// 実行成功
+		RUN,//実行中
+		FAILED,		// 実行失敗
+		COMPLETE,	// 実行成功
 	};
 
 	//実行開始処理

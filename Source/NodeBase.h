@@ -11,6 +11,8 @@ using namespace std;
 
 class NodeBase
 {
+public:
+	std::vector<shared_ptr<NodeBase>>   children;// 子ノード
 protected:
 
 	string                   name;	//ノードの名前
@@ -19,6 +21,7 @@ protected:
 
 	unique_ptr<ActionBase>   action = nullptr;//実行処理
 	unique_ptr<JudgementBase> judgement = nullptr;//判定処理
+
 	NodeBase* sibling = nullptr;		// 兄弟ノード
 
 	unsigned int			 priority;		// 優先順位
@@ -27,8 +30,8 @@ protected:
 public:
 	NodeBase() {};
 	 //コンストラクタ
-	NodeBase(std::string name, NodeBase* parent, NodeBase* sibling, int priority,
-		BehaviorTree::SelectRule selectRule, JudgementBase* judgment, ActionBase* action, int hierarchyNo, bool OnOff = true) :
+	NodeBase(std::string name, NodeBase* parent, NodeBase* sibling, const int priority,
+		BehaviorTree::SelectRule selectRule, JudgementBase* judgment, ActionBase* action, const  int hierarchyNo, const bool OnOff = true) :
 		name(name), parent(parent), sibling(sibling), priority(priority),
 		selectRule(selectRule), hierarchyNo(hierarchyNo), 
 		children(NULL), oldSelect(OnOff)
@@ -39,23 +42,21 @@ public:
 	// デストラクタ
 	~NodeBase() {};
 	// 名前ゲッター
-	std::string GetName() { return name; }
+	inline std::string GetName() { return name; }
 	// 親ノードゲッター
-	NodeBase* GetParent() { return parent; }
+	inline NodeBase* GetParent() { return parent; }
 	// 子ノードゲッター
-	NodeBase* GetChild(int index) { return children.at(index).get(); };
+	inline NodeBase* GetChild(const int index) { return children.at(index).get(); };
 	// 兄弟ノードゲッター
-	NodeBase* GetSibling() { return sibling; }
+	inline NodeBase* GetSibling() { return sibling; }
 	// ノード検索
 	NodeBase* SearchNode(std::string searchName);
 	// 階層番号ゲッター
-	int GetHirerchyNo() { return hierarchyNo; }
+	inline int GetHirerchyNo() { return hierarchyNo; }
 	// 優先順位ゲッター
-	int GetPriority() { return priority; }
+	inline int GetPriority() { return priority; }
 	// 子ノード追加
 	void AddChild(shared_ptr<NodeBase> child) { children.push_back(child); }
-
-	std::vector<shared_ptr<NodeBase>>   children;// 子ノード
 		//ノード推論
 	NodeBase* Inference(BehaviorData* data);
 	//ノードのアクション

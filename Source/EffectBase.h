@@ -19,7 +19,8 @@ public:
 
 	void Delete();
 
-	void SetPos(VECTOR3 pos) { pos = pos; };
+	inline void SetPos(const VECTOR3 pos) { this->pos = pos; };
+	//非表示に変換
 	void NotRender();
 protected:
 	//エフェクト番号

@@ -4,7 +4,7 @@
 //もし目標物が消えてしまった場合
 ActionBase::State ActionBase::DeleteTarget()
 {
-	return State::Failed;
+	return State::FAILED;
 }
 
 //もしターゲットがいなくなっていたら
@@ -12,6 +12,7 @@ bool ActionBase::CheakTarget(Charactor* chara)
 {
 	if (chara == nullptr)
 	{
-		return (DeleteTarget() == State::Failed) ? true:false;
+		return (DeleteTarget() == State::FAILED) ? true:false;
 	}
+	return false;
 }

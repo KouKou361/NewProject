@@ -6,21 +6,21 @@ class SceneGame;
 class UIMinionAttack;
 enum TargetFlg
 {
-	Complete,
-	Failed,
+	COMPLETE,
+	FAILED,
 };
 
 enum class EnemyTag
 {
-	None,
-	Boom,
-	BossSite,
-	Boss,
-	Cheast,
-	Dummy,
-	Slime,
-	TurtleShell,
-	End,
+	NONE,
+	BOMB,
+	BOSS_SITE,
+	BOSS,
+	CHEAST,
+	DUMMY_ENEMY,
+	SLIME,
+	TURTLESHELL,
+	END,
 };
 
 class EnemyBase :public Charactor
@@ -60,53 +60,58 @@ public:
 	bool SearchTarget(float L);
 
 	bool VsTargetAttackCircle(VECTOR3 Pos, float Radius);
+	//CSVからデータを取り出して、ステータスの設定する。
+	void SetStatus(string SearchName);
 
-	float GetSearchL() { return searchL; }
-	float GetAttackL() { return attackL; }
-	float GetAttackRadius() { return attackRadius; }
 
-	//死亡時間取得
-	int  GetDeathTime() { return DeathTime; }
-	//死亡時間設定
-	void SetDeathTime(const float time) { this->DeathTime = time; }
 	//死亡時間の更新
 	bool UpdateDeathTime();
 	//死亡フラグやダメージフラグが来ていないか確認
 	void ResetNode();
-	string GetAttackNode() { return AttackNode; }
 
 	bool AddDamage(int Damage, int MaxinvincibleTime = 0);
 
-	bool GetOldDamageFlg() { return oldDamageFlg; }
+
 	void ActionBehaviorTree();
 
 	virtual void TargetComplete();
 	void TargetFaild();
 
 	//行動開始処理(行動をするかどうか)
-	void SetActionFlg(bool flg) { actionFlg = flg; }
+	inline void SetActionFlg(const bool flg) { actionFlg = flg; }
 
 
-	SceneGame* GetSceneGame() { return sceneGame; };
+	inline SceneGame* GetSceneGame() { return sceneGame; };
 
-	TargetFlg GetTargetFlg() { return targetFlg; }
+	inline TargetFlg GetTargetFlg() { return targetFlg; }
+
+	//死亡時間取得
+	inline int  GetDeathTime() { return deathTime; }
+	inline void SetDeathTime(const float time) { this->deathTime = time; }
+
+	inline string GetAttackNode() { return attackNode; }
+	inline bool GetOldDamageFlg() { return oldDamageFlg; }
+
+	inline EnemyTag GetEnemyTag() { return enemyType; };
+	inline void SetEnemyTag(const EnemyTag tag) { enemyType = tag; };
+
+	inline float GetSearchL() { return searchL; }
+	inline float GetAttackL() { return attackL; }
+	inline float GetAttackRadius() { return attackRadius; }
+public:
 	EnemyBase* parent;//親設定
-
-	EnemyTag GetEnemyTag() { return enemyType; };
-	void SetEnemyTag(EnemyTag tag) { enemyType = tag; };
-
 protected:
-	TargetFlg targetFlg = TargetFlg::Complete;
-	EnemyTag enemyType = EnemyTag::None;
+	TargetFlg targetFlg = TargetFlg::COMPLETE;
+	EnemyTag enemyType = EnemyTag::NONE;
 
 	//索敵範囲
 	float searchL = 60.0f;
 	float attackL = 4.0f;
 	float attackRadius = 4.0f;
-	string AttackNode;
-	float DeathTime = 0;
+	string attackNode;
+	float deathTime = 0;
 	
-	NodeBase* ActionNode=nullptr;
+	NodeBase* actionNode=nullptr;
 	unique_ptr<BehaviorTree> behaviorTree=nullptr;
 	unique_ptr<BehaviorData> behaviordata=nullptr;
 	SceneGame* sceneGame = nullptr;

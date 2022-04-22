@@ -27,9 +27,9 @@ private:
 
 	static Collision* instance;
 	//ちょい上の方からレイをあてるための距離
-	static constexpr float rayUP = 3.0f;
+	static constexpr float RayUP = 3.0f;
 	//レイのY方向の終点位置距離
-	static constexpr float rayUnder = 3.0f;
+	static constexpr float RayUnder = 3.0f;
 public:
 	Collision();
 	~Collision() {}

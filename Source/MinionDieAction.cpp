@@ -22,9 +22,9 @@ ActionBase::State MinionDieAction::Run()
 {
 	if (minionOwner->GetState() != MinionPlayer::StateType::TYPE_DEAD)
 	{
-		return ActionBase::State::Failed;
+		return ActionBase::State::FAILED;
 	}
-	return ActionBase::State::Run;
+	return ActionBase::State::RUN;
 	
 
 	

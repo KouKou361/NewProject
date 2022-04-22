@@ -3,5 +3,5 @@
 ActionBase::State MinionActionBase::DeleteTarget()
 {
 	minionOwner->ResetNode();
-	return ActionBase::State::Failed;
+	return ActionBase::State::FAILED;
 }

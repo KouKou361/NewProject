@@ -18,31 +18,31 @@ void ObjectFunctionManager::Update()
 
 			if (obj->GetIsFunction() == IsFunction::IS_TRUE)
 			{
-				if (obj->GetState()!= ObjectFunctionState::State_Run)
+				if (obj->GetState()!= ObjectFunctionState::STATE_RUN)
 				{
-					obj->SetState(ObjectFunctionState::State_Start);
+					obj->SetState(ObjectFunctionState::STATE_START);
 				}
 
 				switch (obj->GetState())
 				{
-				case ObjectFunctionState::State_Start:obj->Start();
-					obj->SetState(ObjectFunctionState::State_Run);
+				case ObjectFunctionState::STATE_START:obj->Start();
+					obj->SetState(ObjectFunctionState::STATE_RUN);
 					break;
-				case ObjectFunctionState::State_Run:obj->Run();
+				case ObjectFunctionState::STATE_RUN:obj->Run();
 					break;
-				case ObjectFunctionState::State_End:
-				case ObjectFunctionState::State_None:
+				case ObjectFunctionState::STATE_END:
+				case ObjectFunctionState::STATE_NONE:
 					break;
 				}
 			}
 			//‚à‚µFunction‚ªŒÄ‚Î‚ê‚È‚¢‚È‚ç
 			else
 			{
-				if (obj->GetState() != ObjectFunctionState::State_None)
+				if (obj->GetState() != ObjectFunctionState::STATE_NONE)
 				{
 					//I—¹ˆ—
 					obj->End();
-					obj->SetState(ObjectFunctionState::State_None);
+					obj->SetState(ObjectFunctionState::STATE_NONE);
 				}
 
 			}

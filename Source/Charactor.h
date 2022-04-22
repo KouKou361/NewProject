@@ -20,7 +20,7 @@ protected:
 
 	//ちょっとだけ上の方からレイピックを取る
 	const float BesideRayPickUP = 5.0f;
-	const float BesideRayPickUnder = 20.5f;
+	const float BesideRayPickUnder = 50.5f;
 	//レイピックの判定
 	const float VerticalRayPickUnder = 2.0f;
 
@@ -99,6 +99,8 @@ public:
 
 	//指定された位置までの距離の算出
 	float Length(const VECTOR3 position);
+	//CSVからデータを取り出して、ステータスの設定する。
+	virtual void SetStatus(string SearchName);
 
 
 

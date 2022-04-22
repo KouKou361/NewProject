@@ -19,10 +19,10 @@ ActionBase::State MinionIdleAction::Run()
 	if (minionOwner->SearchPosition(minionOwner->FollowSerchL, minionOwner->GetPlayer()->GetPos()))
 	{
 		minionOwner->SetTeam(MinionPlayer::Team::TEAM_PLAYER);
-		return ActionBase::State::Failed;
+		return ActionBase::State::FAILED;
 	}
 
-	return ActionBase::State::Run;
+	return ActionBase::State::RUN;
 
 }
 

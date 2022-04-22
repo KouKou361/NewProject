@@ -45,7 +45,7 @@ NodeBase* BehaviorTree::Run(Charactor* enemy, NodeBase* actionNode, BehaviorData
 
 
 	// 正常終了
-	if (state == ActionBase::State::Complete)
+	if (state == ActionBase::State::COMPLETE)
 	{
 		// シーケンスの途中かを判断
 		NodeBase* sequenceNode = data->PopSequenceNode();
@@ -64,7 +64,7 @@ NodeBase* BehaviorTree::Run(Charactor* enemy, NodeBase* actionNode, BehaviorData
 		// 失敗は終了
 	}
 	//実行失敗
-	else if (state == ActionBase::State::Failed
+	else if (state == ActionBase::State::FAILED
 		) {
 		//実行終了処理
 		actionNode->NodeActionEnd();

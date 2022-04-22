@@ -10,8 +10,8 @@ void FunctionEnd::Init()
 {
 	isFunction = IsFunction::IS_FALSE;
 	radius = 20.0f;
-	SetState(ObjectFunctionState::State_None);
-	SpotLightHandle=TK_Lib::SpotLight::Create(GetPos(), { 1,1,0,1 }, 0.0f);
+	SetState(ObjectFunctionState::STATE_NONE);
+	spotLightHandle=TK_Lib::SpotLight::Create(GetPos(), { 1,1,0,1 }, 0.0f);
 	
 }
 
@@ -20,7 +20,7 @@ void FunctionEnd::Update()
 {
 	if (sceneGame->GetStageManager()->GetClearJudge())
 	{
-		TK_Lib::SpotLight::Set(SpotLightHandle,GetPos(), { 1,1,0,1 },80);
+		TK_Lib::SpotLight::Set(spotLightHandle,GetPos(), { 1,1,0,1 },80);
 		sceneGame->GetEffectManager()->GetEffectFromSerchKey("StageClear")->Play(GetPos(), 2);
 	}
 
@@ -41,7 +41,7 @@ void FunctionEnd::Judge()
 void FunctionEnd::Start()
 {
 
-//	if (sceneGame->GetStageManager()->GetClearJudge())
+	//if (sceneGame->GetStageManager()->GetClearJudge())
 	{
 		TK_Lib::Lib_Fade::FadeInBegin(0.02f);
 	}

@@ -117,7 +117,7 @@ ActionBase::State MinionStandByAction::Run()
 	//c•ûŒü‚Ì“–‚½‚è”»’èiY•ûŒüj
 	minionOwner->VerticalCollision();
 
-	return ActionBase::State::Run;
+	return ActionBase::State::RUN;
 }
 
 ActionBase::State MinionStandByAction::DeleteTarget()

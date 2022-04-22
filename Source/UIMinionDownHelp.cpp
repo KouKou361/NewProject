@@ -13,6 +13,7 @@ void UIMinionDownHelp::Update()
 //•`‰æˆ—
 void UIMinionDownHelp::Render()
 {
+	if(TK_Lib::Camera::IsCamera(chara->GetPos(),40))
 	{
 
 		VECTOR3 screenPos;

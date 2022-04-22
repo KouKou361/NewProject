@@ -10,18 +10,11 @@
 void EnemyTurtleShell::Init()
 {
 	
-	SetQuaternion({ 0,0,0,1 });
-//	pos = { 7,0,0 };
-	SetScale({ 0.025f, 0.025f, 0.025f });
-	//scale = { 0.025f,0.025f,0.025f };
-	speed = 0.6f;
-	collisionRadius = 1.0f;
-	SetHp(10);
-	SetMaxHp(GetHp());
+	//スライムのステータスの設定
+	SetStatus("TurtleShell");
 	SetModel(TK_Lib::Load::GetModel("TurtleShell"));
 	//攻撃のノード
 	//AttackNode = "RootNode/ChestMonsterRBR/Root/LowerTeethCTRL";
-	AttackNode = "Eyeball";
 	anime = make_unique<Animetion>();
 	//アニメーション番号
 	string AnimeIndex[] =
@@ -53,10 +46,9 @@ void EnemyTurtleShell::Init()
 	}
 
 	SetTag(ObjectTag::TAG_ENEMY);
-	SetEnemyTag(EnemyTag::TurtleShell);
+	SetEnemyTag(EnemyTag::TURTLESHELL);
 
-	//ミニオンが攻撃してくる最大数
-	SetMaxBeAttacked(5);
+	
 
 	AttackMinions.clear();
 
@@ -71,6 +63,5 @@ void EnemyTurtleShell::Init()
 
 	behaviorTree->AddNode("root", "idle", 5, BehaviorTree::SelectRule::NONE, new IdleJudgement(this), new IdleAction(this));
 	
-	//ミニオンが攻撃してくる最大数
-	SetMaxBeAttacked(5);
+
 }

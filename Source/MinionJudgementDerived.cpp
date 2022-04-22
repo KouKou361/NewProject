@@ -8,7 +8,6 @@
 //‘Ò‹@”»’èˆ—
 bool MinionIdleJudgement::Judgement()
 {
-
 	//–³ğŒ‚ÅTRUE
 	return true;
 }

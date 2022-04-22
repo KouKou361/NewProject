@@ -2,7 +2,7 @@
 //•ú•¨ü‚ğ“Š‚°‚é‚Ìc‚Ì‘å‚«‚³(‰‘¬“x)
 float Bullet::GetParabolaHieght(const float time)
 {
-	float f= (0.5f * gravity)* time* time;
+	float f= (0.5f * Gravity)* time* time;
 	return f;
 }
 

@@ -30,21 +30,21 @@ void EffectTowerBreak::Play(VECTOR3 Pos, int Num)
 			DirectX::XMFLOAT3 f = { 0,0,0 };
 			DirectX::XMFLOAT2 s = { 1.3f,1.3f };
 
-			p.x = Pos.x + (rand() % 10001 - 5000) * 0.00051f;
-			p.y = Pos.y + (rand() % 300) * 0.1f + 2.0f;
-			p.z = Pos.z + (rand() % 10001 - 5000) * 0.00051f;
+			p.x = Pos.x + (rand() % 10001 - 5000) * 0.00051f;//速度
+			p.y = Pos.y + (rand() % 300) * 0.1f + 2.0f;		 //加速度
+			p.z = Pos.z + (rand() % 10001 - 5000) * 0.00051f;//大きさ
 
-			v.x = (rand() % 10001 - 5000) * 0.0002f;
-			v.y = (rand() % 10001 - 5000) * 0.0002f;
-			v.z = (rand() % 10001 - 5000) * 0.0002f;
+			v.x = (rand() % 10001 - 5000) * 0.0002f;		 //位置の算出
+			v.y = (rand() % 10001 - 5000) * 0.0002f;		 //位置の算出
+			v.z = (rand() % 10001 - 5000) * 0.0002f;		 //位置の算出
 
-			f.x = (rand() % 10001 - 5000) * 0.0002f;
-			f.y = (rand() % 10001 - 5000) * 0.0005f;
-			f.z = (rand() % 10001 - 5000) * 0.0002f;
+			f.x = (rand() % 10001 - 5000) * 0.0002f;		 //速度の算出
+			f.y = (rand() % 10001 - 5000) * 0.0005f;		 //速度の算出
+			f.z = (rand() % 10001 - 5000) * 0.0002f;		 //速度の算出
 
-			spriteEffect->Set(2, 2.0f, p, v, f, s);
-			break;
-		}
+			spriteEffect->Set(2, 2.0f, p, v, f, s);			 
+			break;											 
+		}													 
 
 
 	}
@@ -76,6 +76,7 @@ void EffectTowerBreak::Update()
 		spriteEffect->w += 0.02f;
 		spriteEffect->color = { 0.4f,0.4f,0.4f,spriteEffect->alpha };
 
+		//非表示にする
 		if (spriteEffect->alpha <= 0) {
 			spriteEffect->type = -1;
 		}

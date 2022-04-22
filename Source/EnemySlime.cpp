@@ -7,22 +7,17 @@
 #include "NodeBase.h"
 #include "Animetion.h"
 
+
+
 void EnemySlime::Init()
 {
-	SetQuaternion({ 0,0,0,1 });
-	//pos = { 7,0,0 };
-	SetScale({ 0.025f,0.025f,0.025f });
-	speed = 0.4f;
-	collisionRadius = 1.0f;
-	SetModel(TK_Lib::Load::GetModel("Slime"));
 
-	SetHp(6);
-	SetMaxHp(GetHp());
 
 	SetTag(ObjectTag::TAG_ENEMY);
-	SetEnemyTag(EnemyTag::Slime);
-
-	AttackNode = "EyeBall";
+	SetEnemyTag(EnemyTag::SLIME);
+	//スライムのステータスの設定
+	SetStatus("Slime");
+	SetModel(TK_Lib::Load::GetModel("Slime"));
 
 	anime = make_unique<Animetion>();
 	//アニメーション番号
@@ -64,6 +59,5 @@ void EnemySlime::Init()
 	behaviorTree->AddNode("root", "pursuit", 4, BehaviorTree::SelectRule::NONE, new PursuitJudgement(this), new PursuitAction(this));
 	behaviorTree->AddNode("root", "idle", 5, BehaviorTree::SelectRule::NONE, new IdleJudgement(this), new IdleAction(this));
 
-	//ミニオンが攻撃してくる最大数
-	SetMaxBeAttacked(3);
+
 }

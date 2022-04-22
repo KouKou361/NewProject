@@ -12,8 +12,10 @@
 #include "UIDerived.h"
 
 #include "UIManager.h"
+#include "ExportScript.h"
 void Player::Init()
 {
+	SetStatus("Player");
 	SetModel(TK_Lib::Load::GetModel("Player"));
 
 	anime = make_shared<Animetion>();
@@ -33,8 +35,6 @@ void Player::Init()
 	{
 		anime->Register(i, AnimeIndex[i]);
 	}
-	SetHp(5);
-	SetMaxInvincibleTime(120);
 
 	SetTag(ObjectTag::TAG_PLAYER);
 
@@ -52,10 +52,6 @@ void Player::Init()
 
 
 	//TK_Lib::Model::PlayAnimation(modelIndex, anime->GetIndex("Attack"), true);
-	SetQuaternion({0,0,0,1});
-	SetScale({ 0.04f,0.04f,0.04f });
-	weight = 1.0f;
-	SetSpeed(0.6f);
 
 	SetOldPos(GetPos());
 	//ミニオンたちの初期化処理
@@ -113,7 +109,6 @@ void Player::Init()
 
 
 	//manager->Register(uiPlayerHP);
-
 
 }
 
@@ -299,7 +294,7 @@ bool Player::SetTargetActor()
 		{
 			EnemyBase* enm = enemyManager->GetEnemiesIndex(i);
 
-			if (enm->GetTargetFlg() == TargetFlg::Failed)continue;
+			if (enm->GetTargetFlg() == TargetFlg::FAILED)continue;
 			//最短距離までの長さ
 
 
@@ -691,6 +686,20 @@ bool Player::AddDamage(int Damage, int SetinvincibleTime)
 	//	SetDeadFlg(true);
 	//}
 	return true;
+}
+
+//CSVからデータを取り出して、ステータスの設定する。
+void Player::SetStatus(string SearchName)
+{
+	AlliesStatusData* data = sceneGame->GetexportSCV()->GetAlliesStatusDataSearchName(SearchName);
+	SetQuaternion({ 0,0,0,1 });
+	SetMaxHp(data->GetHp());
+	SetHp(data->GetHp());
+	SetScale({ data->GetScale(),data->GetScale(),data->GetScale() });
+	speed = data->GetSpeed();
+	collisionRadius = data->GetCollisionRadius();
+	weight = data->GetWeight();
+	SetMaxInvincibleTime(data->GetMaxInvincibleTime());
 }
 
 

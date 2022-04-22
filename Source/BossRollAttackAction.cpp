@@ -6,50 +6,62 @@
 #include "Collision.h"
 
 
-//開始処理
+//回転攻撃開始処理
 void BossRollAttackAction::Start()
 {
-	//アニメーションの再生
+	//回転攻撃アニメーションの再生
 	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->BossClose_RollLoop), true);
-	rollTimer = 0;
+	//プレイヤーは攻撃目標にできない！（回転中はミニオンたちの攻撃は受けない！）
 	owner->TargetFaild();
 
+	//回転攻撃サウンド
 	TK_Lib::Lib_Sound::SoundPlay("BossRoll", true);
 }
 
 //実行処理
 ActionBase::State BossRollAttackAction::Run()
 {
+	//攻撃
+	//owner->TargetFaild();
 
-	owner->TargetFaild();
-
+	//ボスの前進
 	Advance(4.0f);
-	rollTimer++;
+	//回転攻撃の処理
 	owner->AttackCircle(owner->GetPos(),10.0f);
 	
-	//レイピックして壁にぶつかったなら終了
 
-	VECTOR3 Start, End,Pos, Front;
-	Pos = owner->GetPos();
 
-	const float Scale = 20.0f;
-	const float Up = 5.0f;
-	//前方向ベクトルの取得
-	Front = owner->GetFront();
-	Front *= Scale;
 
-	Start = { Pos.x,         Pos.y + Up,Pos.z };
-	End   = { Pos.x+ Front.x,Pos.y + Up,Pos.z + Front.z };
-	RayOut ray;
-	Collision::Instance().RayPick(Start, End, ray);
 
-	TK_Lib::Debug3D::Line(Start,End);
-	//もし当たっているなら
-	if (ray.materialIndex >= 0)
+	//モデルのレイピック（壁にぶつかったら攻撃終了、状態変位）
 	{
-		TK_Lib::Lib_Sound::SoundStop("BossRoll");
-		return ActionBase::State::Complete;
+		//正面レイピックの長さ
+		constexpr float RayRickFrontLength = 20.0f;
+		//ちょっと上からレイピック
+		constexpr float RayRickUp = 5.0f;
+
+		VECTOR3 Start, End, Pos, Front;
+		Pos = owner->GetPos();
+		//前方向ベクトルの取得
+		Front = owner->GetFront();
+		Front *= RayRickFrontLength;
+		//レイピック開始位置
+		Start = { Pos.x,         Pos.y + RayRickUp,Pos.z };
+		//レイピック終了位置
+		End = { Pos.x + Front.x,Pos.y + RayRickUp,Pos.z + Front.z };
+		RayOut ray;
+		Collision::Instance().RayPick(Start, End, ray);
+		//TK_Lib::Debug3D::Line(Start, End);
+		
+		//もし当たっているなら
+		if (ray.materialIndex >= 0)
+		{
+			//攻撃終了！別の行動へ移行
+			TK_Lib::Lib_Sound::SoundStop("BossRoll");
+			return ActionBase::State::COMPLETE;
+		}
 	}
+	
 	//if (ray.materialIndex < -1);
 	//{
 	//	return ActionBase::State::Complete;
@@ -65,7 +77,7 @@ ActionBase::State BossRollAttackAction::Run()
 	//	return ActionBase::State::Run;
 	//
 	//}
-	return ActionBase::State::Run;
+	return ActionBase::State::RUN;
 	
 }
 
@@ -83,7 +95,7 @@ void BossRollAttackAction::DebugImgui()
 	ImGui::End();
 }
 
-//前進
+//前進する
 void BossRollAttackAction::Advance(const float AdvanceSpeed)
 {
 	VECTOR3 Front, MoveVec;

@@ -21,7 +21,7 @@ public:
 private:
 
 	
-	NodeBase* ActionNode = nullptr;
+	NodeBase* actionNode = nullptr;
 	unique_ptr<BehaviorTree> behaviorTree = nullptr;
 	unique_ptr<BehaviorData> behaviordata = nullptr;
 

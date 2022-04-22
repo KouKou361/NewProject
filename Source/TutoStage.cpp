@@ -62,8 +62,9 @@ void TutoStage::Init()
 
 	tutoManager.clear();
 
-	ExportScript* script;
-	script = new ExportScript("Data/Tuto/TutoScript.txt");
+
+	ExportText* script;
+	script = new ExportText("Data/Tuto/TutoScript.txt");
 	vector<string>* test = script->GetScripts();
 	
 	//チュートリアルへようこそ

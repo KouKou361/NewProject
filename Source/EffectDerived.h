@@ -4,7 +4,8 @@
 class EffectFire :public EffectBase
 {
 private:
-	int PointLight = 0;
+	int pointLight = 0;
+
 
 public:
 	EffectFire() {};
@@ -37,7 +38,8 @@ public:
 class EffectAttack :public EffectBase
 {
 private:
-
+	const float UpdateScale = 0.005f;//エフェクトが大きくなる
+	static constexpr float AlphaRate = 0.2f;
 public:
 	EffectAttack() {};
 	~EffectAttack() {};
@@ -101,8 +103,9 @@ public:
 class EffectBossFire :public EffectBase
 {
 private:
-	VECTOR2 testSlider  = {1,1};
-	VECTOR2 testSlider2 = {1,-1};
+	const VECTOR3   VelocityRate = { 15.9f,20.3f ,15.9f };
+	const VECTOR3 Acceleration = { 0.1f,-10.0f ,0.1f};
+	const float PosUP = 5.0f;
 public:
 	EffectBossFire() {};
 	~EffectBossFire() {};

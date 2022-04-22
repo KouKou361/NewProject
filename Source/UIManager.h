@@ -1,10 +1,10 @@
-#pragma once
-#include "UIBase.h"
-#include "Manager.h"
-#include <vector>
-#include <memory>
-using namespace std;
-class SceneGame;
+//#pragma once
+//#include "UIBase.h"
+//#include "Manager.h"
+//#include <vector>
+//#include <memory>
+//using namespace std;
+//class SceneGame;
 //
 //class UIManager :public Manager
 //{

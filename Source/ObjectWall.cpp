@@ -16,7 +16,7 @@ void ObjectWall::Init()
 	SetTag(ObjectTag::TAG_OBJECT);
 
 	collisionRadius = 5;
-	objectType = ObjectType::Wall;
+	objectType = ObjectType::WALL;
 
 
 	TK_Lib::Model::Tranceform(GetModel(), GetPos(), GetQuaternion(), GetScale());

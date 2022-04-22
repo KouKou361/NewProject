@@ -4,7 +4,7 @@
 class Bullet
 {
 private:
-	static constexpr float gravity = 0.2f;
+	static constexpr float Gravity = 0.2f;
 public:
 	//放物線を投げる時の縦の大きさ
 	static float GetParabolaHieght(const float time);
@@ -15,6 +15,6 @@ public:
 	//ある点からある点までにつく速度
 	static float GetSpeed(const VECTOR3 posA, const VECTOR3 posB, const float time);
 	//重力を受ける
-	static float GetGravity(){ return gravity; }
+	static float GetGravity(){ return Gravity; }
 
 };

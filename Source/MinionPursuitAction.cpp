@@ -14,7 +14,7 @@ void MinionPursuitAction::Start()
 //Àsˆ—
 ActionBase::State MinionPursuitAction::Run()
 {
-	return ActionBase::State::Run;
+	return ActionBase::State::RUN;
 }
 
 //I—¹ˆ—

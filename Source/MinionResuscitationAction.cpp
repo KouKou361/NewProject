@@ -12,7 +12,7 @@
 void MinionResuscitationAction::Start()
 {
 	minionOwner->SetMoveVec({ 0,0,0 });
-	minionOwner->ResuscitationTime = 0;
+	minionOwner->resuscitationTime = 0;
 }
 
 //実行処理
@@ -22,18 +22,18 @@ ActionBase::State MinionResuscitationAction::Run()
 	{
 		minionOwner->SetState(MinionPlayer::StateType::TYPE_DEAD);
 		//蘇生されていないなら
-		return ActionBase::State::Failed;
+		return ActionBase::State::FAILED;
 	}
 
 	//蘇生更新処理
 	UpdateResuscitation();
 	if (minionOwner->GetState() == MinionPlayer::StateType::TYPE_STAND_BY)
 	{
-		return ActionBase::State::Failed;
+		return ActionBase::State::FAILED;
 	}
 
-	minionOwner->ResuscitationFlg = false;
-	return ActionBase::State::Run;
+	minionOwner->resuscitationFlg = false;
+	return ActionBase::State::RUN;
 
 	
 }
@@ -41,7 +41,7 @@ ActionBase::State MinionResuscitationAction::Run()
 //蘇生処理
 void MinionResuscitationAction::Resuscitation()
 {
-	minionOwner->ResuscitationTime = 0;
+	minionOwner->resuscitationTime = 0;
 	minionOwner->SetHp(minionOwner->GetMaxHp());
 	minionOwner->SetState(MinionPlayer::StateType::TYPE_STAND_BY);
 }
@@ -49,10 +49,10 @@ void MinionResuscitationAction::Resuscitation()
 //蘇生更新処理
 void MinionResuscitationAction::UpdateResuscitation()
 {
-	minionOwner->ResuscitationTime++;
+	minionOwner->resuscitationTime++;
 	const int MaxResuscitationTime = 60;
 
-	if (minionOwner->ResuscitationTime >= MaxResuscitationTime)
+	if (minionOwner->resuscitationTime >= MaxResuscitationTime)
 	{
 		Resuscitation();
 	}
@@ -67,7 +67,7 @@ ActionBase::State MinionResuscitationAction::DeleteTarget()
 //終了処理
 void MinionResuscitationAction::End()
 {
-	minionOwner->ResuscitationTime = 0;
+	minionOwner->resuscitationTime = 0;
 }
 
 //Imguiデバッグ
@@ -75,6 +75,6 @@ void MinionResuscitationAction::DebugImgui()
 {
 	ImGui::Begin("Minion");
 	ImGui::Text("Resuscitation");
-	ImGui::Text("ResuscitationTime=%d", minionOwner->ResuscitationTime);
+	ImGui::Text("ResuscitationTime=%d", minionOwner->resuscitationTime);
 	ImGui::End();
 }

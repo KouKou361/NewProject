@@ -19,8 +19,6 @@ Stage::Stage(string RenderModel, string NoShadowRenderModel, string CollisionMod
 	TK_Lib::Model::PlayAnimation(StageIndex[StageType::RENDER_MODEL], 0, false);
 	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::RENDER_MODEL]);
 
-
-
 	//影なしステージ
 	TK_Lib::Model::Tranceform(StageIndex[StageType::NO_MAKE_SHADOW_MODEL], Pos, Angle, Scale);
 	TK_Lib::Model::PlayAnimation(StageIndex[StageType::NO_MAKE_SHADOW_MODEL], 0, false);
@@ -30,8 +28,6 @@ Stage::Stage(string RenderModel, string NoShadowRenderModel, string CollisionMod
 	TK_Lib::Model::Tranceform(StageIndex[StageType::NAV_MODEL], Pos, Angle, Scale);
 	TK_Lib::Model::PlayAnimation(StageIndex[StageType::NAV_MODEL], 0, false);
 	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::NAV_MODEL]);
-
-
 	
 	//当たり判定
 	TK_Lib::Model::Tranceform(StageIndex[StageType::COLISION_MODEL], Pos, Angle, Scale);
@@ -67,6 +63,7 @@ void Stage::Init()
 		minion = make_shared<MinionPlayer>();
 		minion->Init(sceneGame->GetPlayer());
 		minion->SetPos({ 5,0,static_cast<float>(i * 8) });
+		//ゲームシーンの設定
 		//	minion->pos = { 5,0,static_cast<float>(140) };
 		sceneGame->GetPlayer()->GetMinionManager()->Register(minion);
 	}

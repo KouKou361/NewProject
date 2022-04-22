@@ -13,21 +13,17 @@ void EnemyDummy::Init()
 	//pos = { 7,0,0 };
 
 	//SetPos({ 7,0,0 });
-	SetScale({ 0.025f,0.025f,0.025f });
-	speed = 0.4f;
-	collisionRadius = 1.0f;
+	
 	SetModel(TK_Lib::Load::GetModel("Dummy"));
 
-	SetHp(7);
-	SetMaxHp(GetHp());
 
 	SetTag(ObjectTag::TAG_ENEMY);
-	SetEnemyTag(EnemyTag::Dummy);
+	SetEnemyTag(EnemyTag::DUMMY_ENEMY);
 
 	//AttackNode = "EyeBall";
 
-	//ミニオンが攻撃してくる最大数
-	SetMaxBeAttacked(2);
+	//ステータスの設定
+	SetStatus("Dummy");
 
 	anime = make_unique<Animetion>();
 	//アニメーション番号

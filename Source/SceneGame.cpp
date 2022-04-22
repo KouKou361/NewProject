@@ -14,6 +14,7 @@
 #include "EXP.h"
 
 #include "UIDerived.h"
+#include "ExportScript.h"
 //モデルの読み込み
 void SceneGame::LoadModel()
 {
@@ -29,12 +30,12 @@ void SceneGame::LoadModel()
 	//敵スライム
 	model[ENEMY_SLIME_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Slime/Slime.mdl", "Slime");
 	TK_Lib::Model::SetModelTexture("Slime", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
-	//敵爆発
-	model[ENEMY_BOOM_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Boom/Boom.mdl", "Boom");
-	TK_Lib::Model::SetModelTexture("Boom", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
-	//敵浮遊
-	model[ENEMY_BEKOLDER_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Beholder/Beholder.mdl", "Beholder");
-	TK_Lib::Model::SetModelTexture("Beholder", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
+	////敵爆発
+	//model[ENEMY_BOOM_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Boom/Boom.mdl", "Boom");
+	//TK_Lib::Model::SetModelTexture("Boom", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
+	////敵浮遊
+	//model[ENEMY_BEKOLDER_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Beholder/Beholder.mdl", "Beholder");
+	//TK_Lib::Model::SetModelTexture("Beholder", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//敵宝箱
 	model[ENEMY_CHEST_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/ChestEnemy/ChestEnemy.mdl", "ChestEnemy");
 	TK_Lib::Model::SetModelTexture("ChestEnemy", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
@@ -281,6 +282,11 @@ void SceneGame::LoadEffect()
 //初期化処理
 void SceneGame::Initialize()
 {
+	//敵ステータス情報の取得
+	exportSCV = make_shared<ExportCSV>();
+	exportSCV->LoadAlliesStatusData("./Data/Status/AlliesData.csv");
+	exportSCV->LoadEnemyStatusData("./Data/Status/EnemyData.csv");
+
 	//モデルの読み込み
 	LoadModel();
 	//サウンドの読み込み

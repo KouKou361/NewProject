@@ -203,6 +203,12 @@
     <Filter Include="Library\Shader\Cascade\ToShadowMap">
       <UniqueIdentifier>{502847c7-7792-4a40-a0bd-e0c38e87b36c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Program\Source\ExportScript">
+      <UniqueIdentifier>{f3fa8c60-9752-47a2-8be5-aa81861d20ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\ExportScript">
+      <UniqueIdentifier>{8100ce61-8c5a-41d9-8268-77ea29a284df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\WinMain.cpp">
@@ -333,9 +339,6 @@
     </ClCompile>
     <ClCompile Include="TK_Lib\Lib_GamePad.cpp">
       <Filter>Library\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Export.cpp">
-      <Filter>Program\Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\Charactor.cpp">
       <Filter>Program\Source</Filter>
@@ -592,9 +595,6 @@
     <ClCompile Include="Source\UITuto.cpp">
       <Filter>Program\Source\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ExportScript.cpp">
-      <Filter>Program\Source</Filter>
-    </ClCompile>
     <ClCompile Include="Source\UINextMessage.cpp">
       <Filter>Program\Source\UI</Filter>
     </ClCompile>
@@ -672,6 +672,15 @@
     </ClCompile>
     <ClCompile Include="Source\UI2DDirection.cpp">
       <Filter>Program\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ExportText.cpp">
+      <Filter>Program\Source\ExportScript</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Export.cpp">
+      <Filter>Program\Source\ExportScript</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ExportCSV.cpp">
+      <Filter>Program\Source\ExportScript</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -770,9 +779,6 @@
     </ClInclude>
     <ClInclude Include="TK_Lib\Lib_GamePad.h">
       <Filter>Library\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Export.h">
-      <Filter>Program\Header</Filter>
     </ClInclude>
     <ClInclude Include="Source\Charactor.h">
       <Filter>Program\Header</Filter>
@@ -918,9 +924,6 @@
     <ClInclude Include="Source\TutoManager.h">
       <Filter>Program\Header\Tuto</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ExportScript.h">
-      <Filter>Program\Header</Filter>
-    </ClInclude>
     <ClInclude Include="TK_Lib\Lib_Sound.h">
       <Filter>Library\Header\Sound</Filter>
     </ClInclude>
@@ -932,6 +935,12 @@
     </ClInclude>
     <ClInclude Include="TK_Lib\Lib_CascadeShader.h">
       <Filter>Library\Header\ShaderSource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ExportScript.h">
+      <Filter>Program\Header\ExportScript</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Export.h">
+      <Filter>Program\Header\ExportScript</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

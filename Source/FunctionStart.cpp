@@ -5,7 +5,7 @@
 void FunctionStart::Init()
 {
 	isFunction = IsFunction::IS_FALSE;
-	SetState(ObjectFunctionState::State_None);
+	SetState(ObjectFunctionState::STATE_NONE);
 	sceneGame->GetPlayer()->SetPos(GetPos());
 }
 

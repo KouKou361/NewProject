@@ -14,18 +14,24 @@ public:
 
 	void SetManager(SceneGame* sceneGame) { scene = sceneGame; };
 	//初期化処理
-	void Init(VECTOR3 Pos);
+	void Init(const VECTOR3 pos);
 	//更新処理
 	void Update();
 	//更新処理
 	void Render();
 
 	void Delete();
-
-	VECTOR2 WorldToScreen(VECTOR3 Pos);
+	//ワールドからスクリーン座標に変換
+	VECTOR2 WorldToScreen(const VECTOR3 pos);
 protected:
 	//エフェクト番号
 	int spriteIndex;
+
+	float angle;
+	float speed = 0.0f;
+	float timer;
+
+
 
 	VECTOR2 pos;
 	VECTOR2 velocity = { 0,0 };
@@ -34,12 +40,8 @@ protected:
 	VECTOR2 targetPos = { 20,20 };
 
 	VECTOR4 cut;
-	float angle;
-	float speed = 0.0f;
 
 	SceneGame* scene;
-
-	float timer;
 
 
 

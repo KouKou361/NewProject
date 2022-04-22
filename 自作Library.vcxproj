@@ -222,7 +222,8 @@
     <ClCompile Include="Source\EXP.cpp" />
     <ClCompile Include="Source\EXPManager.cpp" />
     <ClCompile Include="Source\Export.cpp" />
-    <ClCompile Include="Source\ExportScript.cpp" />
+    <ClCompile Include="Source\ExportCSV.cpp" />
+    <ClCompile Include="Source\ExportText.cpp" />
     <ClCompile Include="Source\FrameWork.cpp" />
     <ClCompile Include="Source\FunctionEnd.cpp" />
     <ClCompile Include="Source\FunctionStart.cpp" />

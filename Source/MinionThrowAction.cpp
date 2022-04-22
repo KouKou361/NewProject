@@ -65,14 +65,14 @@ ActionBase::State MinionThrowAction::Run()
 	//“–‚½‚è”»’è
 	if (HitCollision())
 	{
-		return ActionBase::State::Complete;
+		return ActionBase::State::COMPLETE;
 	}
 	//‚à‚µ‰½‚©‚Ìo—ˆŽ–‚Å‰º‚És‚«‚»‚¤‚È‚ç‹AŠÒ
 	if (minionOwner->GetPos().y <= -0.5)
 	{
-		return ActionBase::State::Failed;
+		return ActionBase::State::FAILED;
 	}
-	return ActionBase::State::Run;
+	return ActionBase::State::RUN;
 }
 
 //“–‚½‚è”»’èˆ—
@@ -128,7 +128,7 @@ bool MinionThrowAction::HitCollision()
 			)
 		{
 
-			if (OutEnm->GetTargetFlg() == TargetFlg::Complete)
+			if (OutEnm->GetTargetFlg() == TargetFlg::COMPLETE)
 			{
 				if (OutEnm->GetDeadFlg() == false)
 				{
@@ -187,5 +187,5 @@ void MinionThrowAction::DebugImgui()
 ActionBase::State MinionThrowAction::DeleteTarget()
 {
 	//minionOwner->ResetNode();
-	return ActionBase::State::Complete;
+	return ActionBase::State::COMPLETE;
 }

@@ -4,7 +4,7 @@
 //初期化処理
 void EffectManager::Init()
 {
-	UpdatePlayEffectPoses.clear();
+	updatePlayEffectPoses.clear();
 	TK_Lib::Lib_Effect::Init(10);
 }
 //毎フレームエフェクトをだすデータ登録
@@ -12,20 +12,20 @@ void EffectManager::UpdateEffectRegister(VECTOR3 Pos, string name, int num)
 {
 	UpdatePlayEffect efc;
 
-	efc.Pos = Pos;
+	efc.pos = Pos;
 	efc.name = name;
 	efc.playNum = num;
 
-	UpdatePlayEffectPoses.push_back(efc);
+	updatePlayEffectPoses.push_back(efc);
 }
 //毎フレームエフェクトをだすエフェクトの更新処理
 void EffectManager::PlayUpdateEffect()
 {
-	for (int i = 0; i < UpdatePlayEffectPoses.size(); i++)
+	for (int i = 0; i < updatePlayEffectPoses.size(); i++)
 	{
-		UpdatePlayEffect UpdateEfc = UpdatePlayEffectPoses.at(i);
+		UpdatePlayEffect UpdateEfc = updatePlayEffectPoses.at(i);
 		EffectBase* efc= GetEffectFromSerchKey(UpdateEfc.name);
-		efc->Play(UpdateEfc.Pos, UpdateEfc.playNum);
+		efc->Play(UpdateEfc.pos, UpdateEfc.playNum);
 	}
 }
 //更新処理
@@ -75,7 +75,7 @@ void EffectManager::NotRender()
 		std::vector<shared_ptr<EffectBase>>::iterator it = std::find(effects.begin(), effects.end(), efc);
 		{
 			shared_ptr<EffectBase> e = efc;
-			e->NotRender();
+			e->NotRender();//非表示にする
 		}
 	}
 }
@@ -87,7 +87,7 @@ void EffectManager::StageReset()
 	//EffectIndexResources.clear();
 	//effects.clear();
 	remove.clear();
-	UpdatePlayEffectPoses.clear();
+	updatePlayEffectPoses.clear();
 }
 
 
@@ -98,10 +98,10 @@ void EffectManager::Clear()
 	{
 		GetEffectsIndex(i)->Delete();
 	}
-	EffectIndexResources.clear();
+	effectIndexResources.clear();
 	effects.clear();
 	remove.clear();
-	UpdatePlayEffectPoses.clear();
+	updatePlayEffectPoses.clear();
 	TK_Lib::Lib_Effect::Init(10);
 
 
@@ -109,12 +109,12 @@ void EffectManager::Clear()
 
 EffectBase* EffectManager::GetEffectFromSerchKey(const string& SearchName)
 {
-	return EffectIndexResources.at(SearchName);
+	return effectIndexResources.at(SearchName);
 }
 //登録
 void EffectManager::Register(shared_ptr<EffectBase> efc, const string RegisterName)
 {
 	efc->Init();
 	effects.emplace_back(efc);
-	EffectIndexResources.insert(make_pair(RegisterName, efc.get()));
+	effectIndexResources.insert(make_pair(RegisterName, efc.get()));
 }

@@ -58,7 +58,7 @@ void UITuto::Render()
 	
 	//Window‚Ì•`‰æ
 	TK_Lib::Draw::SliceUISprite(indexTexture, pos, size, s1, s2, centerScale);
-	TK_Lib::Draw::JapanFont(text,pos+ fontOffset);
+	TK_Lib::Draw::JapanFont(text,pos+ FontOffset);
 
 
 

@@ -13,7 +13,7 @@ float Mathf::RandomRange(float min, float max)
 
 	float Max = max * num;
 	float Min = min * num;
-	float dis = Max - Min;
+	float dis = abs(Max) + abs(Min);
 	float Rnd = rand() % static_cast<int>(dis);
 	Rnd /= num;//®”/®”‚µ‚Ä
 

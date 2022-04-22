@@ -52,19 +52,19 @@ MinionPlayerAI::MinionPlayerAI(
 //XVˆ—
 void MinionPlayerAI::Update()
 {
-	if (ActionNode == nullptr)
+	if (actionNode == nullptr)
 	{
-		ActionNode = behaviorTree->ActiveNodeInference(owner, behaviordata.get());
+		actionNode = behaviorTree->ActiveNodeInference(owner, behaviordata.get());
 	}
 
 
 
-	if (ActionNode != nullptr)
+	if (actionNode != nullptr)
 	{
 		
-		if (ActionNode)ActionNode->ImguiDebug();
+		if (actionNode)actionNode->ImguiDebug();
 		
-		ActionNode = behaviorTree->Run(owner, ActionNode, behaviordata.get());
+		actionNode = behaviorTree->Run(owner, actionNode, behaviordata.get());
 	}
 
 
@@ -72,8 +72,8 @@ void MinionPlayerAI::Update()
 void MinionPlayerAI::ResetNode()
 {
 	//ActionNode = nullptr;
-	ActionNode->NodeActionEnd();
-	ActionNode = behaviorTree->ActiveNodeInference(owner, behaviordata.get());
+	actionNode->NodeActionEnd();
+	actionNode = behaviorTree->ActiveNodeInference(owner, behaviordata.get());
 
 	//behaviordata->Init();
 }

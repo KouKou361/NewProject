@@ -132,7 +132,7 @@ public:
 
 class UINextMessage :public UIBase
 {
-	const VECTOR2 fontOffset = { 50,70 };
+	const VECTOR2 FontOffset = { 50,70 };
 	VECTOR2 centerScale;
 	VECTOR2 s1 = { 256 / 3,256 / 3 };
 	VECTOR2 s2 = { (256 / 3) * 2,(256 / 3) * 2 };
@@ -151,8 +151,8 @@ public:
 
 class UITuto :public UIBase
 {
-	const VECTOR2 fontOffset = { 50,100 };
-	const VECTOR2 nextFontOffset = { 1300,250 };
+	const VECTOR2 FontOffset = { 50,100 };
+	const VECTOR2 NextFontOffset = { 1300,250 };
 	VECTOR2 centerScale;
 	VECTOR2 s1 = { 256 / 3,256 / 3 };
 	VECTOR2 s2 = { (256 / 3) * 2,(256 / 3) * 2 };
@@ -180,7 +180,7 @@ class UI2DDirection :public UIBase
 	VECTOR3 targetWorldPos;
 	VECTOR2 targetScreenPos;
 	//”¼Œa
-	const float uiCenterR = 250.0f;
+	const float UiCenterR = 250.0f;
 	float targetAngle;
 
 

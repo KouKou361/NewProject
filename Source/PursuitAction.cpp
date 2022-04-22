@@ -27,7 +27,7 @@ ActionBase::State PursuitAction::Run()
 	//‚à‚µUŒ‚”ÍˆÍ“à‚É‚¢‚é‚È‚ç
 	if (owner->SearchTarget(owner->GetAttackL()))
 	{
-		return ActionBase::State::Failed;
+		return ActionBase::State::FAILED;
 	}
 	//õ“G”ÍˆÍ‚É‚¢‚é‚È‚ç
 	if (owner->SearchTarget(owner->GetSearchL()))
@@ -35,9 +35,9 @@ ActionBase::State PursuitAction::Run()
 		VECTOR3 Pos;
 		owner->RouteSearch(Pos);
 		owner->MoveOnPosition(Pos);
-		return ActionBase::State::Run;
+		return ActionBase::State::RUN;
 	}
-	return ActionBase::State::Failed;
+	return ActionBase::State::FAILED;
 
 
 }

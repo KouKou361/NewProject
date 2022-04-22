@@ -32,17 +32,17 @@ ActionBase::State MinionAttackAction::Run()
 {
 	if (minionOwner->GetTarget()==nullptr)
 	{
-		return ActionBase::State::Failed;
+		return ActionBase::State::FAILED;
 	}
 	minionOwner->SetMoveVec({ 0,0,0 });
 	if (minionOwner->GetHp() <= 0)
 	{
-		return ActionBase::State::Failed;
+		return ActionBase::State::FAILED;
 	}
 
 	if (minionOwner->GetTarget()->GetHp() <= 0)
 	{
-		return ActionBase::State::Failed;
+		return ActionBase::State::FAILED;
 	}
 
 	Stick();
@@ -66,7 +66,7 @@ ActionBase::State MinionAttackAction::Run()
 	minionOwner->AddDamage(1,120);
 
 	
-	return ActionBase::State::Run;
+	return ActionBase::State::RUN;
 }
 
 //ˆø‚Á•t‚«ˆ—

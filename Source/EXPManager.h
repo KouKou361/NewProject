@@ -24,7 +24,7 @@ public:
 	void Clear();
 
 	//“o˜^
-	void Register(shared_ptr<EXP> exp, VECTOR3 pos);
+	void Register(shared_ptr<EXP> exp, const VECTOR3 pos);
 	//”jŠüˆ—
 	void Destroy(EXP* exp);
 	//EXP‚Ì”‚Ìæ“¾

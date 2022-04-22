@@ -101,8 +101,8 @@ void UI2DDirection::SetTargetPos(const VECTOR3 TargetPos)
 	}
 
 	targetAngle -= XMConvertToRadians(90);
-	targetScreenPos.x = cosf(targetAngle) * uiCenterR;
-	targetScreenPos.y = sinf(targetAngle) * uiCenterR;
+	targetScreenPos.x = cosf(targetAngle) * UiCenterR;
+	targetScreenPos.y = sinf(targetAngle) * UiCenterR;
 
 	ImGui::Begin("a");
 	ImGui::Text("dor=%f", XMConvertToDegrees(dot));

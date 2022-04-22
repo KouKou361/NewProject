@@ -21,6 +21,7 @@ void EffectBase::NotRender()
 	for (int j = 0; j < spriteEffects->size(); j++)
 	{
 		EffectData* spriteEffect = &spriteEffects->at(j);
+		//”ñ•\Ž¦‚É‚·‚é
 		if (spriteEffect->type >= 0)
 		{
 			spriteEffect->type = -1;

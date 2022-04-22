@@ -3,8 +3,8 @@
 //初期化処理
 void EffectAttack::Init()
 {
-	pos = VECTOR3{ 11,0,-2 };
-	//	PointLight = TK_Lib::SpotLight::Create(Pos, {1,0,0,1},10);
+	//pos = VECTOR3{ 11,0,-2 };
+	//PointLight = TK_Lib::SpotLight::Create(Pos, {1,0,0,1},10);
 	//TK_Lib::Lib_Effect::GetSpriteEffect(EffectIndex)->Fire2({ 0,0,0 }, 2);
 	//TK_Lib::Lib_Effect::GetSpriteEffect(EffectIndex)->Fire2({ 0,0,0 }, 2);
 	//
@@ -22,22 +22,23 @@ void EffectAttack::Play(VECTOR3 Pos, int Num)
 			if (spriteEffect->type >= 0)continue;
 			if (!spriteEffect->IsCameraRender())continue;
 			DirectX::XMFLOAT3 p;
-			DirectX::XMFLOAT3 v = { 0,0,0 };
-			DirectX::XMFLOAT3 f = { 0,0,0 };
-			DirectX::XMFLOAT2 s = { .006f,.006f };
+			DirectX::XMFLOAT3 v = { 0,0,0 };	                  //速度
+			DirectX::XMFLOAT3 f = { 0,0,0 };	                  //加速度
+			DirectX::XMFLOAT2 s = { .006f,.006f };                //大きさ
+		
+			p.x = Pos.x + (rand() % 10001 - 5000) * 0.00031f;     //位置の算出
+			p.y = Pos.y + (rand() % 10001 - 5000) * 0.00031f+2.0f;//位置の算出
+			p.z = Pos.z + (rand() % 10001 - 5000) * 0.00031f;	  //位置の算出
 
-			p.x = Pos.x + (rand() % 10001 - 5000) * 0.00031f;
-			p.y = Pos.y + (rand() % 10001 - 5000) * 0.00031f+2.0f;
-			p.z = Pos.z + (rand() % 10001 - 5000) * 0.00031f;
+			v.x = (rand() % 10001 - 5000) * 0.0002f;              //速度の算出
+			v.y = (rand() % 10001 - 5000) * 0.0002f;              //速度の算出
+			v.z = (rand() % 10001 - 5000) * 0.0002f;              //速度の算出
+													              
+			f.x = (rand() % 10001 - 5000) * 0.0002f;              //加速度の算出
+			f.y = (rand() % 10001 - 5000) * 0.0002f;              //加速度の算出
+			f.z = (rand() % 10001 - 5000) * 0.0002f;              //加速度の算出
 
-			v.x = (rand() % 10001 - 5000) * 0.0002f;
-			v.y = (rand() % 10001 - 5000) * 0.0002f;
-			v.z = (rand() % 10001 - 5000) * 0.0002f;
-
-			f.x = (rand() % 10001 - 5000) * 0.0002f;
-			f.y = (rand() % 10001 - 5000) * 0.0002f;
-			f.z = (rand() % 10001 - 5000) * 0.0002f;
-
+			//設定
 			spriteEffect->Set(2, 0.3f, p, v, f, s);
 			
 			break;
@@ -63,10 +64,11 @@ void EffectAttack::Update()
 		spriteEffect->y += spriteEffect->vy * time;
 		spriteEffect->z += spriteEffect->vz * time;
 		spriteEffect->timer -= time;
-		spriteEffect->alpha = spriteEffect->timer / 0.2f;
-		spriteEffect->h += 0.005f;
-		spriteEffect->w += 0.005f;
+		spriteEffect->alpha = spriteEffect->timer / AlphaRate;
+		spriteEffect->h += UpdateScale;
+		spriteEffect->w += UpdateScale;
 
+		//非表示にする
 		if (spriteEffect->timer <= 0) {
 			spriteEffect->type = -1;
 		}

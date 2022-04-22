@@ -29,7 +29,7 @@ ActionBase::State BossSiteDieAction::Run()
 
 	
 
-	return ActionBase::State::Run;
+	return ActionBase::State::RUN;
 }
 
 //I—¹ˆ—

@@ -32,11 +32,14 @@ ActionBase::State MinionBackAction::Run()
 
 	minionOwner->SetMoveVec(Vec);
 
+	//c•ûŒü‚Ì“–‚½‚è”»’èiY•ûŒüj
+	minionOwner->VerticalCollision();
+
 	if (minionOwner->SearchPosition(minionOwner->StandBySerchL, minionOwner->GetPlayer()->GetPos()))
 	{
-		return ActionBase::State::Failed;
+		return ActionBase::State::FAILED;
 	}
-	return ActionBase::State::Run;
+	return ActionBase::State::RUN;
 }
 
 //‚à‚µ–Ú•W•¨‚ªÁ‚¦‚Ä‚µ‚Ü‚Á‚½ê‡

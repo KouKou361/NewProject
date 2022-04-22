@@ -38,7 +38,7 @@ public:
 		TypeEnd,
 	};
 private:
-	shared_ptr<MinionPlayerAI> Ai=nullptr;
+	shared_ptr<MinionPlayerAI> ai=nullptr;
 	shared_ptr<UIMinionDownHelp> uiMinionDownHelp = nullptr;
 
 	MinionManager* manager=nullptr;
@@ -46,7 +46,7 @@ private:
 	int index = 0;//自分の番号
 	Team team;//チーム
 	StateType state;//自分の状態
-	bool AttackStandBy=false;//攻撃可能な状態
+	bool attackStandBy=false;//攻撃可能な状態
 
 
 
@@ -78,15 +78,17 @@ public:
 	void SetState(StateType type) { this->state = type; };
 	StateType GetState() { return state; };
 	//攻撃可能な状態
-	void SetAttackStandBy(bool flg) { AttackStandBy = flg; }
-	bool GetAttackStandBy() { return AttackStandBy; }
+	void SetAttackStandBy(bool flg) { attackStandBy = flg; }
+	bool GetAttackStandBy() { return attackStandBy; }
 	//Aiの探索をリセットする
 	void ResetNode();
 	//蘇生ステート変換処理
 	void SetResuscitation();
 	//蘇生中かどうか
 	bool IsResuscitation();
-	//
+
+	//CSVからデータを取り出して、ステータスの設定する。
+	void SetStatus(string SearchName);
 
 	//仲間になる範囲
 	const float FollowSerchL = 20.0f;
@@ -97,9 +99,9 @@ public:
 	const int MaxAttackCoolTime = 0;
 public:
 	//復活時間
-	int ResuscitationTime = 0;
+	int resuscitationTime = 0;
 
-	bool ResuscitationFlg = false;
+	bool resuscitationFlg = false;
 };
 
 //ミニオン管理クラス
@@ -144,7 +146,7 @@ private:
 	vector<shared_ptr<MinionPlayer>>remove;
 	Charactor* Target;
 	//ミニオンたちの番号をふるための変数
-	int IndexMinion=0;
+	int indexMinion=0;
 
 
 };

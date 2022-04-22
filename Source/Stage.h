@@ -112,7 +112,7 @@ private:
 	std::vector<shared_ptr<Tuto>> tutoManager;
 	shared_ptr<Tuto> nowTuto = nullptr;
 
-	const int renderUiNumTower = 9;
+	const int RenderUiNumTower = 9;
 	//Boss
 	EnemyBase* enm = nullptr;
 	//ƒJƒƒ‰

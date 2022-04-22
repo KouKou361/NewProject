@@ -1,0 +1,10 @@
+Name,EffectType,Timer,Scale,PosRand(Start),PosRand(End),VelocityRand(Start),VelocityRand(End),Accel.x(Start),Accel.x(End),Accel.y(Start),Accel.y(End),Accel.z(Start),Accel.z(End),Color.x,Color.y,Color.z,Color.w
+Attack,2,0.3,0.006,1.5,-1.5,1,-1,1,-1,1,-1,1,-1,1,1,1,1
+BossDeadFire,,,,,,,,,,,,,,,,,
+BossDeadExplosion,,,,,,,,,,,,,,,,,
+BossSiteBreak,,,,,,,,,,,,,,,,,
+Fire,,,,,,,,,,,,,,,,,
+StageClear,,,,,,,,,,,,,,,,,
+ThowSmoke,,,,,,,,,,,,,,,,,
+Throw,,,,,,,,,,,,,,,,,
+TowerBreak,,,,,,,,,,,,,,,,,

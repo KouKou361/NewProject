@@ -55,10 +55,10 @@ ActionBase::State BossWalkAction::Run()
 
 	if (owner->Length(targetPos) <= CollisionRadius)
 	{
-		return ActionBase::State::Complete;
+		return ActionBase::State::COMPLETE;
 	}
 
-	return ActionBase::State::Run;
+	return ActionBase::State::RUN;
 
 	
 }

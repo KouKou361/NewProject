@@ -21,13 +21,13 @@ void EffectThrow::Play(VECTOR3 Pos, int Num)
 			DirectX::XMFLOAT3 f = { 0,-2.0f,0 };
 			DirectX::XMFLOAT2 s = { .4f,.4f };
 
-			p.x = Pos.x + (rand() % 10001 - 5000) * 0.0005f;
-			p.y = Pos.y + (rand() % 10001) * 0.0001f + 0.4f;
-			p.z = Pos.z + (rand() % 10001 - 5000) * 0.0005f;
+			p.x = Pos.x + (rand() % 10001 - 5000) * 0.0005f;//ˆÊ’u‚ÌŽZo
+			p.y = Pos.y + (rand() % 10001) * 0.0001f + 0.4f;//ˆÊ’u‚ÌŽZo
+			p.z = Pos.z + (rand() % 10001 - 5000) * 0.0005f;//ˆÊ’u‚ÌŽZo
 
-			v.x = (rand() % 10001 - 5000) * 0.0002f;
-			v.y = (rand() % 10001) * 0.0004f + 0.005f;
-			v.z = (rand() % 10001 - 5000) * 0.0002f;
+			v.x = (rand() % 10001 - 5000) * 0.0002f;		//‘¬“x‚ÌŽZo
+			v.y = (rand() % 10001) * 0.0004f + 0.005f;		//‘¬“x‚ÌŽZo
+			v.z = (rand() % 10001 - 5000) * 0.0002f;		//‘¬“x‚ÌŽZo
 
 			spriteEffect->Set(13, 100.0f, p, v, f, s);
 			break;
@@ -62,6 +62,7 @@ void EffectThrow::Update()
 		spriteEffect->color.w -= 0.01f;
 	//	spriteEffect->alpha = spriteEffect->timer / 0.2f;
 
+		//”ñ•\Ž¦‚É‚·‚é
 		if (spriteEffect->color.w <= 0) {
 			spriteEffect->type = -1;
 		}

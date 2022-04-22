@@ -19,9 +19,9 @@ ActionBase::State IdleAction::Run()
 	//õ“G“à‚É‚¢‚ê‚Îtrue‚ğ•Ô‚·
 	if (owner->SearchTarget(owner->GetSearchL()))
 	{
-		return ActionBase::State::Failed;
+		return ActionBase::State::FAILED;
 	}
-	return ActionBase::State::Run;
+	return ActionBase::State::RUN;
 }
 
 //I—¹ˆ—

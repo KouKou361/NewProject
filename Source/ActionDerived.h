@@ -153,7 +153,7 @@ class BossRollAttackAction : public ActionBase
 {
 private:
 	float rollTimer = 0;
-	static constexpr float rollTimerMax = 180;
+	static constexpr float RollTimerMax = 180;
 public:
 	BossRollAttackAction(EnemyBase* enemy) :ActionBase(enemy) {}
 
@@ -197,7 +197,7 @@ public:
 class BossIdeiAction :public ActionBase
 {
 private:
-	int timer=0;
+	float ideiTimer=0;
 public:
 	BossIdeiAction(EnemyBase* enemy) :ActionBase(enemy) {}
 

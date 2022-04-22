@@ -18,9 +18,9 @@ public:
 	// シーケンスノードのポップ
 	NodeBase* PopSequenceNode();
 	// シーケンスステップのゲッター
-	int GetSequenceStep(std::string name);
+	int GetSequenceStep(const std::string name);
 	// シーケンスステップのセッター
-	void SetSequenceStep(std::string name, int step);
+	void SetSequenceStep(const std::string name,const int step);
 	// 初期化
 	void Init();
 private:

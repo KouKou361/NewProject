@@ -26,21 +26,21 @@ void EffectBossExplosion::Play(VECTOR3 Pos, int Num)
 			if (spriteEffect->type >= 0)continue;
 
 			DirectX::XMFLOAT3 p;
-			DirectX::XMFLOAT3 v = { 0,0,0 };
-			DirectX::XMFLOAT3 f = { testSlider2.x,testSlider2.y,testSlider2.x };
-			DirectX::XMFLOAT2 s = { 12.0f,12.0f };
+			DirectX::XMFLOAT3 v = { 0,0,0 };                                       //速度
+			DirectX::XMFLOAT3 f = { testSlider2.x,testSlider2.y,testSlider2.x };   //加速度
+			DirectX::XMFLOAT2 s = { 12.0f,12.0f };								   //大きさ
 
-			p.x = Pos.x + (rand() % 10001 - 5000) * 0.00005f;
-			p.y = Pos.y + (rand() % 10001) * 0.0001f;
-			p.z = Pos.z + (rand() % 10001 - 5000) * 0.00005f;
+			p.x = Pos.x + (rand() % 10001 - 5000) * 0.00005f;					   //位置の算出
+			p.y = Pos.y + (rand() % 10001) * 0.0001f;							   //位置の算出
+			p.z = Pos.z + (rand() % 10001 - 5000) * 0.00005f;					   //位置の算出
 
-			v.x = (rand() % 10001 - 5000) * 0.0001f * testSlider.x;
-			v.y = (rand() % 10001) * 0.0001f * testSlider.y;
-			v.z = (rand() % 10001 - 5000) * 0.0001f * testSlider.x;
+			v.x = (rand() % 10001 - 5000) * 0.0001f * testSlider.x;				   //速度の算出
+			v.y = (rand() % 10001) * 0.0001f * testSlider.y;					   //速度の算出
+			v.z = (rand() % 10001 - 5000) * 0.0001f * testSlider.x;				   //速度の算出
 			spriteEffect->renderflg = true;
-			spriteEffect->Set(13, 4, p, v, f, s);
-			break;
-		}
+			spriteEffect->Set(13, 4, p, v, f, s);								   
+			break;																   
+		}																		   
 
 
 	}
@@ -74,7 +74,7 @@ void EffectBossExplosion::Update()
 		spriteEffect->color.w = spriteEffect->alpha;
 		spriteEffect->h -= 0.005f;
 		spriteEffect->w -= 0.005f;
-
+		//非表示にする
 		if (spriteEffect->h <= 0) {
 			spriteEffect->type = -1;
 		}

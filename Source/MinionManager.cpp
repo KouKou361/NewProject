@@ -5,7 +5,7 @@
 void MinionManager::Init()
 {
 	Clear();
-	IndexMinion = 0;
+	indexMinion = 0;
 }
 //XVˆ—
 void MinionManager::Update()
@@ -124,8 +124,8 @@ void MinionManager::Clear()
 //“o˜^
 void MinionManager::Register(shared_ptr<MinionPlayer> minion)
 {
-	minion->SetIndex(IndexMinion);
+	minion->SetIndex(indexMinion);
 	minion->SetManager(this);
 	minions.emplace_back(minion);
-	IndexMinion++;
+	indexMinion++;
 }

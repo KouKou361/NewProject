@@ -8,6 +8,7 @@
 #include "UIDerived.h"
 #include "MinionPlayer.h"
 #include "Scene.h"
+#include "ExportScript.h"
 
 //初期化処理
 void EnemyBase::Init()
@@ -29,6 +30,20 @@ void EnemyBase::Init()
 	behaviorTree->AddNode("root", "idle", 1, BehaviorTree::SelectRule::NONE,new IdleJudgement(this), new IdleAction(this));
 	behaviorTree->AddNode("root", "attack", 1, BehaviorTree::SelectRule::NONE, new AttackJudgement(this), new AttackAction(this));
 	behaviorTree->AddNode("root", "pursuit", 1, BehaviorTree::SelectRule::NONE, new PursuitJudgement(this), new PursuitAction(this));
+}
+
+//CSVからデータを取り出して、ステータスの設定する。
+void EnemyBase::SetStatus(string SearchName)
+{
+	EnemyStatusData* data = sceneGame->GetexportSCV()->GetEnemyStatusDataSearchName(SearchName);
+	SetQuaternion({ 0,0,0,1 });
+	SetScale({ data->GetScale(),data->GetScale(),data->GetScale() });
+	SetHp(data->GetHp());
+	SetMaxHp(GetHp());
+	SetMaxBeAttacked(data->GetMinionMaxBeAttacked());	//ミニオンが攻撃してくる最大数
+	attackNode = data->GetAttackNode();
+	speed = data->GetSpeed();
+	collisionRadius = data->GetCollisionRadius();
 }
 //更新処理
 void EnemyBase::Update()
@@ -109,7 +124,7 @@ void EnemyBase::AttackCircle(VECTOR3 pos, float circleL)
 
 void EnemyBase::ResetNode()
 {
-	ActionNode = nullptr;
+	actionNode = nullptr;
 	//behaviordata->Init();
 }
 
@@ -122,9 +137,9 @@ void EnemyBase::RouteSearch(VECTOR3& OutPos)
 //ImGuiのデバッグ
 void EnemyBase::ImguiDebug()
 {
-	if (ActionNode != nullptr)
+	if (actionNode != nullptr)
 	{
-		ActionNode->ImguiDebug();
+		actionNode->ImguiDebug();
 	}
 }
 
@@ -163,15 +178,15 @@ void EnemyBase::ActionBehaviorTree()
 
 	if (actionFlg == false)return;
 
-	if (ActionNode == nullptr)
+	if (actionNode == nullptr)
 	{
 
-		ActionNode = behaviorTree->ActiveNodeInference(this, behaviordata.get());
+		actionNode = behaviorTree->ActiveNodeInference(this, behaviordata.get());
 		//if(ActionNode)ActionNode->ImguiDebug();
 	}
-	if (ActionNode != nullptr)
+	if (actionNode != nullptr)
 	{
-		ActionNode = behaviorTree->Run(this, ActionNode, behaviordata.get());
+		actionNode = behaviorTree->Run(this, actionNode, behaviordata.get());
 	}
 
 
@@ -193,15 +208,13 @@ void  EnemyBase::Destroy()
 bool EnemyBase::UpdateDeathTime()
 {
 	float DeltaTimer = TK_Lib::Window::GetElapsedTime();
-	if (DeathTime > 0)
+	//死亡時間が経ったら
+	if (deathTime <= 0)
 	{
-		DeathTime -= DeltaTimer;
-		//死亡時間が経ったら
-		if (DeathTime <= 0)
-		{
-			return true;
-		}
+		return true;
 	}
+
+	deathTime -= DeltaTimer;	
 	return false;
 }
 //自分が視野角内に入っているかどうか
@@ -268,12 +281,12 @@ bool EnemyBase::AddDamage(int Damage, int MaxinvincibleTime)
 //攻撃目標にできようになる
 void EnemyBase::TargetComplete()
 {
-	targetFlg= TargetFlg::Complete;
+	targetFlg= TargetFlg::COMPLETE;
 }
 //攻撃目標にできないようになる
 void EnemyBase::TargetFaild()
 {
-	targetFlg = TargetFlg::Failed;
+	targetFlg = TargetFlg::FAILED;
 
 	//ミニオンの帰還
 	for (int i = 0; i < AttackMinions.size(); i++)

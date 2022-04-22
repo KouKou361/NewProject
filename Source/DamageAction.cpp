@@ -18,9 +18,9 @@ ActionBase::State DamageAction::Run()
 {
 	if (TK_Lib::Model::IsPlayAnimetion(owner->GetModel()))
 	{
-		return ActionBase::State::Run;
+		return ActionBase::State::RUN;
 	}
-	return ActionBase::State::Failed;
+	return ActionBase::State::FAILED;
 }
 
 //I—¹ˆ—

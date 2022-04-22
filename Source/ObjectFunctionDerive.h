@@ -27,7 +27,7 @@ public:
 class FunctionEnd :public ObjectFunctionBase
 {
 private: 
-	int SpotLightHandle = -1;
+	int spotLightHandle = -1;
 public:
 	FunctionEnd() {};
 	FunctionEnd(SceneGame* SceneGame) {

@@ -21,7 +21,7 @@ void ObjectTower::Init()
 
 	SetTag(ObjectTag::TAG_OBJECT);
 	collisionRadius = 5;
-	objectType = ObjectType::Tower;
+	objectType = ObjectType::TOWER;
 
 	spotLightHandle=TK_Lib::SpotLight::Create(GetPos(), { 1,0,1,1 }, 20.0f);
 

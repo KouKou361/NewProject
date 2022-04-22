@@ -87,7 +87,7 @@ void Collision::NacStageBuild()
 		navCollision->NavStageBuild(modelCollision.modelIndex);
 	}
 }
-
+//モデルの当たり判定描画（デバッグ用）
 void Collision::CollisionRender()
 {
 
@@ -98,6 +98,7 @@ void Collision::CollisionRender()
 	}
 
 }
+//ナビメッシュの描画（デバッグ用）
 void Collision::NavRender()
 {
 	navCollision->Render();
@@ -125,8 +126,8 @@ void Collision::DeleteCollisionModel(int modelIndex)
 //
 bool Collision::SearchRoat(const VECTOR3& Pos, VECTOR3& OutPos)
 {
-	VECTOR3 StartPos = { Pos.x,Pos.y + rayUP ,Pos.z };
-	VECTOR3 EndPos = { Pos.x,Pos.y - rayUnder ,Pos.z };
+	VECTOR3 StartPos = { Pos.x,Pos.y + RayUP ,Pos.z };
+	VECTOR3 EndPos = { Pos.x,Pos.y - RayUnder ,Pos.z };
 	NavEdge *edge = nullptr;
 	if (navCollision->GetOnNacMesh(StartPos, EndPos, edge))
 	{
@@ -206,8 +207,8 @@ bool Collision::SphereVsSphere(const VECTOR3& posA, const float& weghtA, const f
 void Collision::SetTarget(const VECTOR3& Pos)
 {
 
-	VECTOR3 StartPos = { Pos.x,Pos.y + rayUP ,Pos.z };
-	VECTOR3 EndPos = { Pos.x,Pos.y - rayUnder ,Pos.z };
+	VECTOR3 StartPos = { Pos.x,Pos.y + RayUP ,Pos.z };
+	VECTOR3 EndPos = { Pos.x,Pos.y - RayUnder ,Pos.z };
 	
 	navCollision->SetTarget(StartPos, EndPos);
 }

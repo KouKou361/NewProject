@@ -34,11 +34,11 @@ ActionBase::State BossRollAttackStartAction::Run()
 			}
 		}
 
-		return ActionBase::State::Run;
+		return ActionBase::State::RUN;
 
 	}
 
-	return ActionBase::State::Complete;
+	return ActionBase::State::COMPLETE;
 }
 
 //I—¹ˆ—

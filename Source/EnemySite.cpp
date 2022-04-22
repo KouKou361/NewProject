@@ -13,17 +13,13 @@
 
 void EnemySite::Init()
 {
-	SetQuaternion({ 0,0,0,1 });
-	SetPos({ 0,0,0 });
-	SetScale({ 0.05f,0.05f,0.05f });
+	SetStatus("Site");
+	
 
 	SetModel(-1);//-1は描画しない
-	SetHp(5);
-	SetMaxHp(GetHp());
-	speed = 0.4f;
-	collisionRadius = 1.0f;
+
 //	SetModel(TK_Lib::Load::GetModel("Boss"));
-	SetEnemyTag(EnemyTag::BossSite);
+	SetEnemyTag(EnemyTag::BOSS_SITE);
 
 	anime = make_unique<Animetion>();
 	//アニメーション番号
@@ -44,7 +40,6 @@ void EnemySite::Init()
 		anime->Register(i, AnimeIndex[i]);
 	}
 	SetTag(ObjectTag::TAG_ENEMY);
-	collisionRadius = 5;
 
 	AttackMinions.clear();
 	//SetCollisionRadius()

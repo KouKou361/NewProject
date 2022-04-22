@@ -110,7 +110,7 @@ int ObjectManager::GetTowerNum()
 	for (int i = 0; i < GetObjesSize(); i++)
 	{
 		ObjectBase* obj = GetObjesIndex(i);
-		if (obj->GetType() == ObjectType::Tower)
+		if (obj->GetType() == ObjectType::TOWER)
 		{
 			PotNum++;
 		}

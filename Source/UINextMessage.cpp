@@ -48,5 +48,5 @@ void UINextMessage::Render()
 	//
 	TK_Lib::Draw::SliceUISprite(indexTexture, pos, size, s1, s2, centerScale);
 	//Z‚ÅŸ‚Éi‚Ş
-	TK_Lib::Draw::JapanFont("Z‚ÅŸ‚Éi‚Ş", pos + fontOffset);
+	TK_Lib::Draw::JapanFont("Z‚ÅŸ‚Éi‚Ş", pos + FontOffset);
 }

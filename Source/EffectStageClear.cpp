@@ -26,21 +26,21 @@ void EffectStageClear::Play(VECTOR3 Pos, int Num)
 
 			if (spriteEffect->type >= 0)continue;
 		//	if (spriteEffect->IsCameraRender())continue;
-			DirectX::XMFLOAT3 p;
-			DirectX::XMFLOAT3 v = { 0,0,0 };
-			DirectX::XMFLOAT3 f = { 0,0,0 };
+			DirectX::XMFLOAT3 p;                            //速度
+			DirectX::XMFLOAT3 v = { 0,0,0 };				//加速度
+			DirectX::XMFLOAT3 f = { 0,0,0 };				//大きさ
 			DirectX::XMFLOAT2 s = { 2.4f,2.4f };
-			VECTOR4 color = { 0.2f,0.2f, 0.2f, 0.3f };
-
-			p.x = Pos.x + (rand() % 10001 - 5000) * 0.0005f;
-			p.y = Pos.y + (rand() % 10001 - 5000) * 0.0005f;
-			p.z = Pos.z + (rand() % 10001 - 5000) * 0.0005f;
-
-			v.x = (rand() % 10001-5000) * 0.003f ;
-			v.y = (rand() % 10001) * 0.001f ;
-			v.z = (rand() % 10001-5000) * 0.003f ;
-
-			float scale = (rand() % 300) * 0.01f;
+			VECTOR4 color = { 0.2f,0.2f, 0.2f, 0.3f };    	
+															
+			p.x = Pos.x + (rand() % 10001 - 5000) * 0.0005f;//位置の算出  
+			p.y = Pos.y + (rand() % 10001 - 5000) * 0.0005f;//位置の算出
+			p.z = Pos.z + (rand() % 10001 - 5000) * 0.0005f;//位置の算出
+															
+			v.x = (rand() % 10001 - 5000) * 0.003f;			//速度の算出
+			v.y = (rand() % 10001) * 0.001f;				//速度の算出
+			v.z = (rand() % 10001 - 5000) * 0.003f;			//速度の算出
+															
+			float scale = (rand() % 300) * 0.01f;			
 			s = { scale,scale };
 
 			spriteEffect->Set(13, 4, p, v, f, s, color);
@@ -74,6 +74,7 @@ void EffectStageClear::Update()
 		spriteEffect->h -= 0.0005f;
 		spriteEffect->w -= 0.0005f;
 
+		//非表示にする
 		if (spriteEffect->alpha <= 0) {
 			spriteEffect->type = -1;
 		}

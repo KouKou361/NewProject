@@ -9,18 +9,14 @@
 
 void EnemyChest::Init()
 {
-	SetQuaternion({ 0,0,0,1 });
-	//SetPos({ 7,0,0 });
-	SetScale({ 0.07f,0.07f,0.07f });
-	speed = 0.4f;
-	SetHp(20);
-	SetMaxHp(GetHp());
-	collisionRadius = 2.0f;
+	
 	SetModel(TK_Lib::Load::GetModel("ChestEnemy"));
 	SetTag(ObjectTag::TAG_ENEMY);
-	SetEnemyTag(EnemyTag::Cheast);
+	SetEnemyTag(EnemyTag::CHEAST);
 
-	AttackNode = "LowerTeethCTRL";
+	//ステータスの設定
+	SetStatus("Chest");
+
 	anime = make_unique<Animetion>();
 	//アニメーション番号
 	string AnimeIndex[] =
@@ -60,7 +56,4 @@ void EnemyChest::Init()
 	behaviorTree->AddNode("root", "attack", 3, BehaviorTree::SelectRule::NONE, new AttackJudgement(this), new AttackAction(this));
 	behaviorTree->AddNode("root", "pursuit", 4, BehaviorTree::SelectRule::NONE, new PursuitJudgement(this), new PursuitAction(this));
 	behaviorTree->AddNode("root", "idle", 5, BehaviorTree::SelectRule::NONE, new IdleJudgement(this), new IdleAction(this));
-
-	//ミニオンが攻撃してくる最大数
-	SetMaxBeAttacked(4);
 }

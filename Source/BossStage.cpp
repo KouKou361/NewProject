@@ -91,7 +91,7 @@ void BossStage::Init()
 	}
 
 
-	enm = sceneGame->GetEnemyManager()->SearchEnemyTag(EnemyTag::Boss);
+	enm = sceneGame->GetEnemyManager()->SearchEnemyTag(EnemyTag::BOSS);
 	camera = new CameraBossEntry(sceneGame->GetPlayer(), enm, this);
 
 	eventState = EventState::LOOK_PLAYER;
