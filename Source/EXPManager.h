@@ -24,11 +24,11 @@ public:
 	void Clear();
 
 	//“o˜^
-	void Register(shared_ptr<EXP> exp, const VECTOR3 pos);
+	void Register(const shared_ptr<EXP>& exp, const VECTOR3& pos);
 	//”jŠüˆ—
-	void Destroy(EXP* exp);
+	void Destroy(const EXP* exp);
 	//EXP‚Ì”‚Ìæ“¾
-	int GetexpesSize() { return expes.size(); }
+	int GetexpesSize() { return static_cast<int>(expes.size()); }
 	//EXP‚Ì”‚Ìæ“¾
 	EXP* GetexpesIndex(const int& index) { return expes.at(index).get(); }
 
@@ -37,6 +37,6 @@ private:
 	vector<shared_ptr<EXP>>expes;
 	vector<shared_ptr<EXP>>remove;
 
-	SceneGame* scene;
+	SceneGame* scene=nullptr;
 
 };

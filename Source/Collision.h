@@ -3,7 +3,7 @@
 using namespace std;
 class Actor;
 //当たり判定のモデルタイプ
-enum ModelCollisionType
+enum class ModelCollisionType
 {
 	COLLISION_MODEL,//レイピックに使うModel
 	NAV_MODEL,//キャラクターAIに対するナビModel

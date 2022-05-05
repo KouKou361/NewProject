@@ -22,13 +22,13 @@ void SceneGame::LoadModel()
 	//FontTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/fonts/font0.png");
 
 	//プレイヤー
-	model[PLAYER_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Player/Player.mdl", "Player");
+	model[static_cast<int>(ModelIndex::PLAYER_MODEL)] = TK_Lib::Load::LoadModel("./Data/Model/Player/Player.mdl", "Player");
 	TK_Lib::Model::SetModelTexture("Player", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//ミニオン
-	model[MINION_PLAYER_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/MinionPlayer/MinionPlayer.mdl", "MinionPlayer");
-	TK_Lib::Model::SetModelTexture("MinionPlayer", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
+	model[static_cast<int>(ModelIndex::SIROBO_PLAYER_MODEL)] = TK_Lib::Load::LoadModel("./Data/Model/Sirobo/Sirobo.mdl", "Sirobo");
+	TK_Lib::Model::SetModelTexture("Sirobo", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//敵スライム
-	model[ENEMY_SLIME_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Slime/Slime.mdl", "Slime");
+	model[static_cast<int>(ModelIndex::ENEMY_SLIME_MODEL)] = TK_Lib::Load::LoadModel("./Data/Model/Slime/Slime.mdl", "Slime");
 	TK_Lib::Model::SetModelTexture("Slime", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	////敵爆発
 	//model[ENEMY_BOOM_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Boom/Boom.mdl", "Boom");
@@ -37,16 +37,16 @@ void SceneGame::LoadModel()
 	//model[ENEMY_BEKOLDER_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Beholder/Beholder.mdl", "Beholder");
 	//TK_Lib::Model::SetModelTexture("Beholder", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//敵宝箱
-	model[ENEMY_CHEST_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/ChestEnemy/ChestEnemy.mdl", "ChestEnemy");
+	model[static_cast<int>(ModelIndex::ENEMY_CHEST_MODEL)] = TK_Lib::Load::LoadModel("./Data/Model/ChestEnemy/ChestEnemy.mdl", "ChestEnemy");
 	TK_Lib::Model::SetModelTexture("ChestEnemy", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//敵亀
-	model[ENEMY_TURTLESHELL_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/TurtleShell/TurtleShell.mdl", "TurtleShell");
+	model[static_cast<int>(ModelIndex::ENEMY_TURTLESHELL_MODEL)] = TK_Lib::Load::LoadModel("./Data/Model/TurtleShell/TurtleShell.mdl", "TurtleShell");
 	TK_Lib::Model::SetModelTexture("TurtleShell", "./Data/Model/TurtleShell/Textures/PBRTurtleShellNormal.png", 4);
 	//敵ボス
 	TK_Lib::Load::LoadModel("./Data/Model/Boss/Boss.mdl", "Boss");
 	TK_Lib::Model::SetModelTexture("Boss", "./Data/Model/Boss/Texture/NormalMap .png", 4);
 	//敵ダミー
-	model[TRANING_DUMMY] = TK_Lib::Load::LoadModel("./Data/Model/Training_Dummy/Training_dummy.mdl", "Dummy");
+	model[static_cast<int>(ModelIndex::TRANING_DUMMY)] = TK_Lib::Load::LoadModel("./Data/Model/Training_Dummy/Training_dummy.mdl", "Dummy");
 	TK_Lib::Model::SetModelTexture("Dummy", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 
 
@@ -55,18 +55,18 @@ void SceneGame::LoadModel()
 	//Model[StageModel] = TK_Lib::Load::LoadModel("./Data/Model/Stage/Panel01/StagePanel1.mdl", "Stage");
 	
 	//1ステージ
-	model[STAGE_COLLISION_MODEL1] = TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/CollisionStage01.mdl", "Collision1");
-	model[STAGE_NAV1] =            TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/NavStage01.mdl", "Nav1");
-	model[STAGE_MODEL2] =          TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/StageWall.mdl", "Stage1");
-	                              TK_Lib::Model::SetModelTexture("Stage1", "./Data/Model/Stage/NormalMap.png", 4);
+	model[static_cast<int>(ModelIndex::STAGE_COLLISION_MODEL1)] = TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/CollisionStage01.mdl", "Collision1");
+	model[static_cast<int>(ModelIndex::STAGE_NAV1)] =            TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/NavStage01.mdl", "Nav1");
+	model[static_cast<int>(ModelIndex::STAGE_MODEL2)] =          TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/StageWall.mdl", "Stage1");
+	TK_Lib::Model::SetModelTexture("Stage1", "./Data/Model/Stage/NormalMap.png", 4);
 
-	                              TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/StageGround.mdl", "Stage1NoMakeShadow");
-								  TK_Lib::Model::SetModelTexture("Stage1NoMakeShadow", "./Data/Model/Stage/NormalMap.png", 4);
+	TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel01/StageGround.mdl", "Stage1NoMakeShadow");
+	TK_Lib::Model::SetModelTexture("Stage1NoMakeShadow", "./Data/Model/Stage/NormalMap.png", 4);
 
 	//2ステージ
-	model[STAGE_COLLISION_MODEL2] = TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/CollisionStage02.mdl", "Collision2");
-	model[STAGE_NAV2] =            TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/NavStage02.mdl", "Nav2");
-	model[STAGE_MODEL2] =          TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/StageWall.mdl", "Stage2");
+	model[static_cast<int>(ModelIndex::STAGE_COLLISION_MODEL2)] = TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/CollisionStage02.mdl", "Collision2");
+	model[static_cast<int>(ModelIndex::STAGE_NAV2)] =            TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/NavStage02.mdl", "Nav2");
+	model[static_cast<int>(ModelIndex::STAGE_MODEL2)] =          TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/StageWall.mdl", "Stage2");
 	                              TK_Lib::Model::SetModelTexture("Stage2", "./Data/Model/Stage/NormalMap.png", 4);
 	                              TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/StageGround.mdl", "Stage2NoMakeShadow");
 								  TK_Lib::Model::SetModelTexture("Stage2NoMakeShadow", "./Data/Model/Stage/NormalMap.png", 4);
@@ -80,13 +80,13 @@ void SceneGame::LoadModel()
 	TK_Lib::Model::SetModelTexture("Stage3NoMakeShadow", "./Data/Model/Stage/NormalMap.png", 4);
 
 	//ポット
-	model[PAT] = TK_Lib::Load::LoadModel("./Data/Model/Pat/Pat.mdl", "Pat");
+	model[static_cast<int>(ModelIndex::PAT)] = TK_Lib::Load::LoadModel("./Data/Model/Pat/Pat.mdl", "Pat");
 	TK_Lib::Model::SetModelTexture("Pat", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//タワー
 	TK_Lib::Load::LoadModel("./Data/Model/Tower/Tower.mdl", "Tower");
 	TK_Lib::Model::SetModelTexture("Tower", "./Data/Model/Tower/Textures/NormalMap .png", 4);
 	//壁
-	model[WALL] = TK_Lib::Load::LoadModel("./Data/Model/Wall/Wall.mdl", "Wall");
+	model[static_cast<int>(ModelIndex::WALL)] = TK_Lib::Load::LoadModel("./Data/Model/Wall/Wall.mdl", "Wall");
 	TK_Lib::Model::SetModelTexture("Wall", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
 	//壁
 	TK_Lib::Load::LoadModel("./Data/Model/Wall/CollisionWall.mdl", "CollisionWall");
@@ -163,12 +163,12 @@ void SceneGame::LoadSound()
 	TK_Lib::Lib_Sound::SoundSetVolume("AllTowerBreak", SoundVolume);
 
 	//SE 
-	TK_Lib::Lib_Sound::RegisterSound("./Data/Sound/Game/SE/MinionAttack.wav", "MinionAttack");
-	TK_Lib::Lib_Sound::SoundSetVolume("MinionAttack", SoundVolume);
+	TK_Lib::Lib_Sound::RegisterSound("./Data/Sound/Game/SE/SiroboAttack.wav", "SiroboAttack");
+	TK_Lib::Lib_Sound::SoundSetVolume("SiroboAttack", SoundVolume);
 
 	//SE 
-	TK_Lib::Lib_Sound::RegisterSound("./Data/Sound/Game/SE/MinionDown.wav", "MinionDown");
-	TK_Lib::Lib_Sound::SoundSetVolume("MinionDown", SoundVolume);
+	TK_Lib::Lib_Sound::RegisterSound("./Data/Sound/Game/SE/SiroboDown.wav", "SiroboDown");
+	TK_Lib::Lib_Sound::SoundSetVolume("SiroboDown", SoundVolume);
 
 
 	//SE タワーの破壊
@@ -220,7 +220,10 @@ void SceneGame::LoadEffect()
 		shared_ptr<EffectFire> efc;
 		efc = make_shared<EffectFire>();
 		efc->Create("./Data/Efc/particle256x256.png", 3000, VECTOR2{ 64,64 }, VECTOR2{ 4,4 }, Bland_state::BS_ADD);
+		efc->SetStatus(this, "Fire");
+		efc->SetIsCameraUpdate(false);
 		effectManager->Register(efc, "Fire");
+		
 	}
 
 
@@ -228,6 +231,8 @@ void SceneGame::LoadEffect()
 		shared_ptr<EffectBossFire> efc;
 		efc = make_shared<EffectBossFire>();
 		efc->Create("./Data/Efc/particle256x256.png", 1000, VECTOR2{ 64,64 }, VECTOR2{ 4,4 }, Bland_state::BS_ADD);
+		efc->SetStatus(this, "BossDeadFire");
+		efc->SetIsCameraUpdate(true);
 		effectManager->Register(efc, "BossFire");
 	}
 
@@ -235,6 +240,8 @@ void SceneGame::LoadEffect()
 		shared_ptr<EffectBossExplosion> efc;
 		efc = make_shared<EffectBossExplosion>();
 		efc->Create("./Data/Efc/particle256x256.png", 1000, VECTOR2{ 64,64 }, VECTOR2{ 4,4 }, Bland_state::BS_ADD);
+		efc->SetStatus(this, "BossDeadExplosion");
+		efc->SetIsCameraUpdate(true);
 		effectManager->Register(efc, "BossExplosion");
 	}
 
@@ -242,6 +249,8 @@ void SceneGame::LoadEffect()
 		shared_ptr<EffectBossSiteBreak> efc;
 		efc = make_shared<EffectBossSiteBreak>();
 		efc->Create("./Data/Efc/particle256x256.png", 1000, VECTOR2{ 64,64 }, VECTOR2{ 4,4 }, Bland_state::BS_ALPHA);
+		efc->SetStatus(this, "BossSiteBreak");
+		efc->SetIsCameraUpdate(true);
 		effectManager->Register(efc, "BossSiteBreak");
 	}
 
@@ -249,6 +258,8 @@ void SceneGame::LoadEffect()
 		shared_ptr<EffectAttack> efc;
 		efc = make_shared<EffectAttack>();
 		efc->Create("./Data/Efc/bomb256x256.png", 100, VECTOR2{ 64,64 }, VECTOR2{ 4,4 }, Bland_state::BS_ADD);
+		efc->SetStatus(this, "Attack");
+		efc->SetIsCameraUpdate(true);
 		effectManager->Register(efc, "Attack");
 	}
 
@@ -256,6 +267,8 @@ void SceneGame::LoadEffect()
 		shared_ptr<EffectTowerBreak> efc;
 		efc = make_shared<EffectTowerBreak>();
 		efc->Create("./Data/Efc/TowerBreak.png", 50, VECTOR2{ 800,800 }, VECTOR2{ 1,1 }, Bland_state::BS_ADD);
+		efc->SetStatus(this, "TowerBreak");
+		efc->SetIsCameraUpdate(true);
 		effectManager->Register(efc, "TowerBreak");
 	}
 
@@ -263,21 +276,21 @@ void SceneGame::LoadEffect()
 		shared_ptr<EffectStageClear> efc;
 		efc = make_shared<EffectStageClear>();
 		efc->Create("./Data/Efc/StageClearEfc.png", 600, VECTOR2{ 1024,1024 }, VECTOR2{ 1,1 }, Bland_state::BS_ADD);
+		efc->SetStatus(this, "StageClear");
+		efc->SetIsCameraUpdate(false);
 		effectManager->Register(efc, "StageClear");
 	}
 
 
 	{
-		shared_ptr<EffectThrow> efc;
-		efc = make_shared<EffectThrow>();
+		shared_ptr<EffectEnemyDestroy> efc;
+		efc = make_shared<EffectEnemyDestroy>();
 		efc->Create("./Data/Efc/particle_boss.png", 1000, VECTOR2{ 64,64 }, VECTOR2{ 1,1 }, Bland_state::BS_ADD);
 		effectManager->Register(efc, "Destroy");
+		efc->SetIsCameraUpdate(true);
+		efc->SetStatus(this, "EnemyDestroy");
 	}
-
-
-
-
-
+	
 }
 //初期化処理
 void SceneGame::Initialize()
@@ -286,6 +299,14 @@ void SceneGame::Initialize()
 	exportSCV = make_shared<ExportCSV>();
 	exportSCV->LoadAlliesStatusData("./Data/Status/AlliesData.csv");
 	exportSCV->LoadEnemyStatusData("./Data/Status/EnemyData.csv");
+	exportSCV->LoadEffectStatusData("./Data/Status/EffectData.csv");
+	exportSCV->LoadObjectStatusData("./Data/Status/ObjectData.csv");
+
+	//エフェクト
+	effectManager = std::make_unique<EffectManager>();
+	effectManager->Init();
+	//エフェクトの読み込み
+	LoadEffect();
 
 	//モデルの読み込み
 	LoadModel();
@@ -302,22 +323,18 @@ void SceneGame::Initialize()
 	objectFunctionManager->Init();
 
 	//プレイヤーは初期化処理
-	mPlayer = std::make_unique<Player>();
+	player = std::make_unique<Player>();
 
 
 	//敵の初期化処理
 	enemyManager = std::make_shared<EnemyManager>(this);
 	enemyManager->Init();
 
-	//エフェクト
-	effectManager = std::make_unique<EffectManager>();
-	effectManager->Init();
-	//エフェクトの読み込み
-	LoadEffect();
+
 
 	//カメラマネージャー
 	cameraManager = std::make_unique<CameraManager>();
-	cameraManager->Init(mPlayer.get());
+	cameraManager->Init(player.get());
 	cameraManager->SetEnemyManager(enemyManager.get());
 
 
@@ -412,8 +429,8 @@ void SceneGame::Initialize()
 	TK_Lib::Light::SetLookAt({ 500, 800,500 }, { 0,0,100 }, { 0,1,0 });
 	TK_Lib::Camera::SetLookAt({ 0,5,-10 }, { 0,0,0 }, { 0,1,0 });
 	//プレイヤーにSceneGameを持たせる
-	mPlayer->SetSceneGame(this);
-	mPlayer->Init();
+	player->SetSceneGame(this);
+	player->Init();
 
 	stageManager->ChangeStage(stageIndex1);
 
@@ -492,17 +509,58 @@ void SceneGame::Update()
 	//	enemyManager->Register(enm);
 	//}
 	//
-	//
+	const char* EffectName[8] =
+	{
+		"Fire",
+		"BossFire",
+		"BossExplosion",
+		"BossSiteBreak",
+		"Attack",
+		"TowerBreak",
+		"StageClear",
+		"Destroy",
+	};
+	const char* Name[8] =
+	{
+			"Fire",
+			"BossDeadFire",
+			"BossDeadExplosion",
+			"BossSiteBreak",
+			"Attack",
+			"TowerBreak",
+			"StageClear",
+			"EnemyDestroy",
+	};
+	static int aiueo;
+	ImGui::Begin(u8"effect");
+	ImGui::InputInt(u8"effectType",&aiueo);
+	if(ImGui::Button("Play"))
+	{
+		GetEffectManager()->GetEffectFromSerchKey(EffectName[aiueo])->Play({ 0,0,0 }, 30);
+	}
+	if (ImGui::Button("Reload"))
+	{
+		exportSCV->LoadEffectStatusData("./Data/Status/EffectData.csv");
+		for (int i = 0; i < 8; i++)
+		{
+			GetEffectManager()->GetEffectFromSerchKey(EffectName[i])->SetStatus(this,Name[i]);
+		}
+
+	}
+	ImGui::End();
+
+
 	//if (TK_Lib::Gamepad::GetButtonDown(BTN::LB) == 1)
 	//{
-	//	shared_ptr<EnemyChest> enm;
-	//	enm = make_shared<EnemyChest>(enemyManager.get());
-	//	enm->SetPos({ 7,0,00 });
-	//	enemyManager->Register(enm);
+	////	shared_ptr<EnemyChest> enm;
+	////	enm = make_shared<EnemyChest>(enemyManager.get());
+	////	enm->SetPos({ 7,0,00 });
+	////	enemyManager->Register(enm);
+	//
 	//}
 	cameraManager->Update();
 	
-	mPlayer->Update();
+	player->Update();
 	//TK_Lib::Light::SetLookAt({ mPlayer->GetPos().x + 100, mPlayer->GetPos().y + 120,mPlayer->GetPos().z + 100}, mPlayer->GetPos(), { 0,1,0 });
 	//TK_Lib::Light::SetLookAt({ mPlayer->GetPos().x + 100, mPlayer->GetPos().y + 100,mPlayer->GetPos().z + 100 }, mPlayer->GetPos(), { 0,1,0 });
 	//	if (TK_Lib::Gamepad::GetButtonDown(BTN::Y) == 1)
@@ -538,15 +596,16 @@ void SceneGame::Update()
 
 
 
-	//if (TK_Lib::Gamepad::GetButtonDown(BTN::A) == 1)
-	//{
-	//	SceneManager::Instance().ChangeScene(new SceneClear);
-	//}
-	//
+
+	
 
 	if (GameClear())
 	{
 		SceneManager::Instance().ChangeScene(new SceneClear);
+	}
+	if (TK_Lib::Gamepad::GetButtonDown(BTN::A) == 1)
+	{
+		//SceneManager::Instance().ChangeScene(new SceneClear);
 	}
 
 
@@ -562,7 +621,7 @@ void SceneGame::Render()
 
 	//敵の更新処理
 	enemyManager->Render();
-	mPlayer->Render();
+	player->Render();
 
 
 
@@ -576,7 +635,7 @@ void SceneGame::Render()
 void SceneGame::ModelRender()
 {
 
-	 mPlayer->ModelRender();
+	 player->ModelRender();
 	stageManager->ModelRender();
 	
 	//オブジェクトの更新処理
@@ -593,7 +652,7 @@ void SceneGame::ModelRender()
 //	TK_Lib::Draw::Model(Model[StageCollisionModel], ShaderType::Shader_Shadow);
 
 //	TK_Lib::Draw::Model(Model[StageModel], ShaderType::Shader_Shadow);
-	//TK_Lib::Draw::Model(Model[MinionPlayerModel], ShaderType::Shader_Shadow);
+	//TK_Lib::Draw::Model(Model[SiroboPlayerModel], ShaderType::Shader_Shadow);
 	
 
 	
@@ -621,32 +680,32 @@ void SceneGame::DegugImgui()
 {
 	ImGui::Begin(u8"ゲーム");
 
-	const char* DebugName[DEBUG_END] = {
+	const char* DebugName[static_cast<int>(debugType::DEBUG_END)] = {
 	 "Parameter",
 	 "Collision",
 	 "Shader",
 	 "DebugNav",
 	 "DebugCamera",
 	};
-	for (int i = 0; i < DEBUG_END; i++)
+	for (int i = 0; i < static_cast<int>(debugType::DEBUG_END); i++)
 	{
 		ImGui::Checkbox(DebugName[i], &debugType[i]);
 	}
 
-	for (int i = 0; i < DEBUG_END; i++)
+	for (int i = 0; i < static_cast<int>(debugType::DEBUG_END); i++)
 	{
 		if (!debugType[i])continue;
 		switch (i)
 		{
-		case DEBUG_PARAMETER:ImguiParameter();
+		case static_cast<int>(debugType::DEBUG_PARAMETER):ImguiParameter();
 			break;
-		case DEBUG_COLLISION:ImguiCollision();
+		case static_cast<int>(debugType::DEBUG_COLLISION):ImguiCollision();
 			break;
-		case DEBUG_SHADER:ImguiShader();
+		case static_cast<int>(debugType::DEBUG_SHADER):ImguiShader();
 			break;
-		case DEBUG_NAV:ImguiNav();
+		case static_cast<int>(debugType::DEBUG_NAV):ImguiNav();
 			break;
-		case DEBUG_CAMERA:ImguiCamera();
+		case static_cast<int>(debugType::DEBUG_CAMERA):ImguiCamera();
 			break;
 		}
 	}
@@ -672,7 +731,7 @@ void SceneGame::ImguiParameter()
 void SceneGame::ImguiCollision()
 {
 	ImGui::Text("=============Collision=============");
-	mPlayer->CollisionDebug();
+	player->CollisionDebug();
 	enemyManager->CollisionDebug();
 	Collision::Instance().CollisionRender();
 }
@@ -698,7 +757,7 @@ void SceneGame::End()
 {
 	TK_Lib::Lib_Sound::SoundStop("Title");
 	Collision::Instance().Clear();
-	mPlayer->DeleteModel();
+	player->DeleteModel();
 	enemyManager->Clear();
 	effectManager->Clear();
 	stageManager->Clear();

@@ -58,11 +58,10 @@
 // TEXCOORD                 2   xyz         1     NONE   float   xyz 
 // TEXCOORD                 0   xy          2     NONE   float   xy  
 // COLOR                    0   xyzw        3     NONE   float   xyzw
-// TEXCOORD                 4   xyz         4     NONE   float       
-// NORMAL                   0   xyz         5     NONE   float   xyz 
-// TEXCOORD                 5   xyz         6     NONE   float   xyz 
-// TEXCOORD                 6   xyz         7     NONE   float   xyz 
-// TEXCOORD                 7   xyz         8     NONE   float   xyz 
+// NORMAL                   0   xyz         4     NONE   float   xyz 
+// TEXCOORD                 5   xyz         5     NONE   float   xyz 
+// TEXCOORD                 6   xyz         6     NONE   float   xyz 
+// TEXCOORD                 7   xyz         7     NONE   float   xyz 
 //
 vs_5_0
 dcl_globalFlags refactoringAllowed | skipOptimization
@@ -86,10 +85,10 @@ dcl_output_siv o0.xyzw, position
 dcl_output o1.xyz
 dcl_output o2.xy
 dcl_output o3.xyzw
+dcl_output o4.xyz
 dcl_output o5.xyz
 dcl_output o6.xyz
 dcl_output o7.xyz
-dcl_output o8.xyz
 dcl_temps 8
 //
 // Initial variable locations:
@@ -100,17 +99,16 @@ dcl_temps 8
 //   v4.x <- input.color.x; v4.y <- input.color.y; v4.z <- input.color.z; v4.w <- input.color.w; 
 //   v5.x <- input.boneWeights.x; v5.y <- input.boneWeights.y; v5.z <- input.boneWeights.z; v5.w <- input.boneWeights.w; 
 //   v6.x <- input.boneIndices.x; v6.y <- input.boneIndices.y; v6.z <- input.boneIndices.z; v6.w <- input.boneIndices.w; 
-//   o4.x <- <main return value>.vShadow.x; o4.y <- <main return value>.vShadow.y; o4.z <- <main return value>.vShadow.z; 
-//   o8.x <- <main return value>.VZ.x; o8.y <- <main return value>.VZ.y; o8.z <- <main return value>.VZ.z; 
-//   o7.x <- <main return value>.VY.x; o7.y <- <main return value>.VY.y; o7.z <- <main return value>.VY.z; 
-//   o6.x <- <main return value>.VX.x; o6.y <- <main return value>.VX.y; o6.z <- <main return value>.VX.z; 
-//   o5.x <- <main return value>.normal.x; o5.y <- <main return value>.normal.y; o5.z <- <main return value>.normal.z; 
+//   o7.x <- <main return value>.VZ.x; o7.y <- <main return value>.VZ.y; o7.z <- <main return value>.VZ.z; 
+//   o6.x <- <main return value>.VY.x; o6.y <- <main return value>.VY.y; o6.z <- <main return value>.VY.z; 
+//   o5.x <- <main return value>.VX.x; o5.y <- <main return value>.VX.y; o5.z <- <main return value>.VX.z; 
+//   o4.x <- <main return value>.normal.x; o4.y <- <main return value>.normal.y; o4.z <- <main return value>.normal.z; 
 //   o3.x <- <main return value>.color.x; o3.y <- <main return value>.color.y; o3.z <- <main return value>.color.z; o3.w <- <main return value>.color.w; 
 //   o2.x <- <main return value>.texcoord.x; o2.y <- <main return value>.texcoord.y; 
 //   o1.x <- <main return value>.Wposition.x; o1.y <- <main return value>.Wposition.y; o1.z <- <main return value>.Wposition.z; 
 //   o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w
 //
-#line 6 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Cascade_vs.hlsl"
+#line 6 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_vs.hlsl"
 itof r0.xyz, l(0, 0, 0, 0)  // r0.x <- p.x; r0.y <- p.y; r0.z <- p.z
 
 #line 7
@@ -230,10 +228,10 @@ mov r7.xy, v3.xyxx  // r7.x <- output.texcoord.x; r7.y <- output.texcoord.y
 mov o0.xyzw, r5.xyzw
 mov o3.xyzw, r6.xyzw
 mov o1.xyz, r3.xyzx
-mov o5.xyz, r2.xyzx
-mov o6.xyz, r0.xyzx
-mov o7.xyz, r1.xyzx
-mov o8.xyz, r4.xyzx
+mov o4.xyz, r2.xyzx
+mov o5.xyz, r0.xyzx
+mov o6.xyz, r1.xyzx
+mov o7.xyz, r4.xyzx
 mov o2.xy, r7.xyxx
 ret 
 // Approximately 87 instruction slots used

@@ -4,11 +4,12 @@
 using namespace std;
 class ObjectManager;
 class SceneGame;
-enum ObjectType
+enum class ObjectType
 {
 	WALL,
 	POT,
 	TOWER,
+	NONE,
 };
 
 
@@ -25,7 +26,7 @@ public:
 protected:
 public:
 	//当たり判定用のモデル
-	void SetCollisionModel(string CollisionModelKey);
+	void SetCollisionModel(const string& CollisionModelKey);
 	//初期化処理
 	virtual void Init()=0;
 	//更新処理
@@ -43,14 +44,17 @@ public:
 	//オブジェクトのダメージ処理
 	void Damage();
 
-	void HPRender(const int SpriteIndex, const VECTOR2 Pos);
-	bool AddDamage(int Damage, int MaxinvincibleTime = 0);
+	//ステータスの設定
+	void SetStatus(const string& name);
 
-	inline ObjectType GetType() { return objectType; }
+	void HPRender(const int &spriteIndex, const VECTOR2 &pos);
+	bool AddDamage(const int& damage, const float& maxInvincibleTime);
+
+	inline ObjectType GetType() { return static_cast<ObjectType>(objectType); }
 protected:
 	int collisionModel = -1;
 	ObjectManager* objectManager = nullptr;
 	SceneGame* scene = nullptr;
 
-	ObjectType objectType;
+	ObjectType objectType= ObjectType::NONE;
 };

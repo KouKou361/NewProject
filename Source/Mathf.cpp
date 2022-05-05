@@ -9,12 +9,15 @@ float Mathf::Lerp(float a, float b, float t)
 
 float Mathf::RandomRange(float min, float max)
 {
-	const float num = 100;//Š„‚èØ‚ç‚¹‚é”š
+	//‚à‚µ“¯‚¶”š‚È‚çƒŠƒ^[ƒ“
+	if (min - max == 0)return min;
+
+	const float num = 1000;//Š„‚èØ‚ç‚¹‚é”š
 
 	float Max = max * num;
 	float Min = min * num;
-	float dis = abs(Max) + abs(Min);
-	float Rnd = rand() % static_cast<int>(dis);
+	int dis = static_cast<int>(abs(Max)) + static_cast<int>(abs(Min));
+	float Rnd = static_cast<float>(rand() % static_cast<int>(dis));
 	Rnd /= num;//®”/®”‚µ‚Ä
 
 	return Rnd + min;

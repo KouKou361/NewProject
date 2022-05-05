@@ -28,7 +28,7 @@ dcl_temps 1
 //   v1.x <- input.Depth.x; v1.y <- input.Depth.y; v1.z <- input.Depth.z; v1.w <- input.Depth.w; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 4 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\ToShadowMap_ps.hlsl"
+#line 4 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\ToShadowMap_ps.hlsl"
 div r0.x, v1.z, v1.w  // r0.x <- LightDepth
 
 #line 5

@@ -3,7 +3,8 @@
 //初期化
 void UITargetCursur::Init()
 {
-
+	size = { 100,100 };
+	cut = { 0,0,256,256 };
 }
 //更新処理
 void UITargetCursur::Update()
@@ -21,6 +22,8 @@ void UITargetCursur::Render()
 
 	const float offsetX = -50;
 	const float offsetY = -75;
+
+	VECTOR2 pos = { screenPos.x + offsetX,screenPos.y + offsetY };
 	//目標のカーソル表示
-	TK_Lib::Draw::Sprite(indexTexture, VECTOR2{ screenPos.x + offsetX,screenPos.y + offsetY }, { 100,100 }, { 0,0,256,256 });
+	TK_Lib::Draw::Sprite(TextureIndex, pos, size, cut);
 }

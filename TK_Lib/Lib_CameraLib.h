@@ -68,8 +68,8 @@ private:
 	VECTOR3 front = { 0,0,0 };
 	VECTOR3 right = { 0,0,0 };
 
-	float m_near;
-	float m_far;
-	float fov;
-	float aspext;
+	float m_near=0;
+	float m_far = 0;
+	float fov = 0;
+	float aspext = 0;
 };

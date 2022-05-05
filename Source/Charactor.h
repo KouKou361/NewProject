@@ -14,7 +14,7 @@ private:
 	float canInclined = XMConvertToRadians(45);
 	//ひとつ前の地点
 	VECTOR3 oldPos = { 0,0,0 };
-	Actor* targetActor;
+	Actor* targetActor=nullptr;
 protected:
 
 
@@ -33,9 +33,9 @@ protected:
 	bool deadFlg = false;
 
 	//無敵時間
-	int invincibleTime = 0;
+	float invincibleTime = 0;
 	//攻撃クールタイム
-	int attackCoolTime = 0;
+	float attackCoolTime = 0;
 
 	//進むベクトル
 	VECTOR3 moveVec = { 0,0,0 };
@@ -73,9 +73,9 @@ public:
 	//ステージにはみ出ていないか補正(最終確認)
 	void StageOverhang();
 	//無敵時間の設定
-	void SetInvincibleTime(const int invincibleTime);
+	void SetInvincibleTime(const float& invincibleTime);
 	//速度に加算
-	void AddVelocity(const VECTOR3 velocity);
+	void AddVelocity(const VECTOR3& velocity);
 	//無敵時間の更新
 	void InvincibleTimeUpdate();
 	//動き
@@ -86,21 +86,21 @@ public:
 	virtual void ImguiDebug();
 
 	//索敵範囲にTargetがいればTRUEを返す
-	bool SearchPosition(const float L, const VECTOR3 position);
+	bool SearchPosition(const float& L, const VECTOR3& position);
 	//目標に進むベクトルの算出
-	bool MoveOnPosition(const VECTOR3 position);
+	bool MoveOnPosition(const VECTOR3& position);
 	//ダメージ受けた時の関数
-	bool AddDamage(const int damage, const int maxinvincibleTime=0);
+	bool AddDamage(const int& damage, const float& maxInvincibleTime=0);
 	//登れるかどうか
-	bool TryInclined(const VECTOR3 normal);
+	bool TryInclined(const VECTOR3& normal);
 
 	//指定された位置までのベクトルの算出
-	XMVECTOR Vector(const VECTOR3 position);
+	XMVECTOR Vector(const VECTOR3& position);
 
 	//指定された位置までの距離の算出
-	float Length(const VECTOR3 position);
+	float Length(const VECTOR3& position);
 	//CSVからデータを取り出して、ステータスの設定する。
-	virtual void SetStatus(string SearchName);
+	virtual void SetStatus(const string &searchName);
 
 
 
@@ -113,8 +113,8 @@ public:
 	inline  void SetTarget(Actor* target) { targetActor = target; }
 	inline  Actor* GetTarget() { return targetActor; }
 	//攻撃クールタイム
-	inline void SetAttackCoolTime(const int attackTime) { attackCoolTime = attackTime; }
-	inline int GetAttackCoolTime() { return attackCoolTime; }
+	inline void SetAttackCoolTime(const float attackTime) { attackCoolTime = attackTime; }
+	inline float GetAttackCoolTime() { return attackCoolTime; }
 	//ダメージフラグ
 	inline bool GetDamageFlg() { return damageFlg; };
 	virtual void SetDamageFlg(const bool flg) { damageFlg = flg; };

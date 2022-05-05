@@ -4,7 +4,8 @@ Actor::~Actor()
 {
 	DeleteModel();
 }
-void Actor::SetModel(int modelIndex)
+//モデルの設定
+void Actor::SetModel(const int& modelIndex)
 {
 	if (modelIndex <= -1)
 	{
@@ -13,22 +14,24 @@ void Actor::SetModel(int modelIndex)
 	}
 	this->modelIndex = TK_Lib::Load::CopyModel(modelIndex);
 }
+//モデルの削除
 void Actor::DeleteModel()
 {
 	if (modelIndex <= 0)return;
 	TK_Lib::Delete::DeleteModel(modelIndex);
 	modelIndex = -1;
 }
-void Actor::AttackMinionErase(MinionPlayer* minion)
+//攻撃しているシロボリストから指定されたシロボの削除処理
+void Actor::AttackSiroboErase(Sirobo* sirobo)
 {
 	//破棄処理
-	for (MinionPlayer* m_minion : AttackMinions)
+	for (Sirobo* mSirobo : attackSirobo)
 	{
 		//std::vectorから要素を破棄する場合はイレテーターで削除しなければならない
-		std::vector<MinionPlayer*>::iterator it = std::find(AttackMinions.begin(), AttackMinions.end(), minion);
-		if (it != AttackMinions.end())
+		std::vector<Sirobo*>::iterator it = std::find(attackSirobo.begin(), attackSirobo.end(), sirobo);
+		if (it != attackSirobo.end())
 		{
-			AttackMinions.erase(it);
+			attackSirobo.erase(it);
 		}
 	}
 

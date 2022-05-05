@@ -26,10 +26,15 @@ public:
 	//当たり判定デバッグ
 	void CollisionDebug();
 	//ObjectFunctionの数の取得
-	int GetobjectFunctionesSize() { return objectFunctiones.size(); }
+	int GetobjectFunctionesSize() { return static_cast<int>(objectFunctiones.size()); }
 	//ObjecttFunctionの数の取得
 	ObjectFunctionBase* GetobjectFunctionesIndex(const int& index) { return objectFunctiones.at(index).get(); }
 	SceneGame* GetSceneGama() { return sceneGame; };
+private:
+	//JudgeがTrueの場合
+	void FunctionIsTrue(ObjectFunctionBase* obj);
+	//JudgeがFalseの場合
+	void FunctionIsFalse(ObjectFunctionBase* obj);
 private:
 	SceneGame* sceneGame;
 	vector<shared_ptr<ObjectFunctionBase>>objectFunctiones;

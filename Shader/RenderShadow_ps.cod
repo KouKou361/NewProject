@@ -99,13 +99,13 @@ dcl_temps 10
 //   v5.x <- pin.normal.x; v5.y <- pin.normal.y; v5.z <- pin.normal.z; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 52 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow.hlsli"
+#line 52 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow.hlsli"
 mov r0.x, l(0.000010)  // r0.x <- Bias
 
-#line 11 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\PointLight.hlsli"
+#line 11 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\PointLight.hlsli"
 mov r0.y, l(8)  // r0.y <- POINTMAX
 
-#line 8 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow_ps.hlsl"
+#line 8 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
 sample_indexable(texture2d)(float,float,float,float) r1.xyzw, v2.xyxx, t0.xyzw, s0  // r1.x <- color.x; r1.y <- color.y; r1.z <- color.z; r1.w <- color.w
 
 #line 9
@@ -138,7 +138,7 @@ mov r4.xyz, r4.xyzx
 mov r5.xyz, r5.xyzx
 mov r6.xyz, r6.xyzx
 
-#line 59 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow.hlsli"
+#line 59 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow.hlsli"
 mov r7.xyz, -r4.xyzx
 dp3 r0.z, r2.xyzx, r7.xyzx  // r0.z <- D
 
@@ -155,7 +155,7 @@ add r0.z, r0.z, l(0.500000)  // r0.z <- D
 mul r7.xyz, r0.zzzz, r5.xyzx
 mul r6.xyz, r6.xyzx, r7.xyzx  // r6.x <- <Diffuse return value>.x; r6.y <- <Diffuse return value>.y; r6.z <- <Diffuse return value>.z
 
-#line 18 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow_ps.hlsl"
+#line 18 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
 mov r6.xyz, r6.xyzx  // r6.x <- D.x; r6.y <- D.y; r6.z <- D.z
 
 #line 21
@@ -169,7 +169,7 @@ mov r5.xyz, r5.xyzx
 mov r3.xyz, r3.xyzx
 mov r7.xyz, r7.xyzx
 
-#line 78 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow.hlsli"
+#line 78 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow.hlsli"
 mov r8.xyz, -r4.xyzx
 dp3 r0.z, r8.xyzx, r2.xyzx
 add r0.z, r0.z, r0.z
@@ -204,7 +204,7 @@ mul r3.xyz, r5.xyzx, r3.xyzx  // r3.x <- S.x; r3.y <- S.y; r3.z <- S.z
 #line 83
 mov r3.xyz, r3.xyzx  // r3.x <- <PhongSpecular return value>.x; r3.y <- <PhongSpecular return value>.y; r3.z <- <PhongSpecular return value>.z
 
-#line 22 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow_ps.hlsl"
+#line 22 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
 mov r3.xyz, r3.xyzx  // r3.x <- S.x; r3.y <- S.y; r3.z <- S.z
 
 #line 23
@@ -214,7 +214,7 @@ mov r4.xyz, r4.xyzx
 mov r5.xyz, r5.xyzx
 itof r7.xyz, l(1, 1, 1, 0)
 
-#line 95 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow.hlsli"
+#line 95 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow.hlsli"
 mov r4.xyz, -r4.xyzx
 dp3 r0.z, r2.xyzx, r4.xyzx  // r0.z <- D
 
@@ -226,14 +226,14 @@ add r0.z, r0.z, l(0.500000)  // r0.z <- D
 mul r2.xyz, r0.zzzz, r5.xyzx
 mul r2.xyz, r7.xyzx, r2.xyzx  // r2.x <- <HalfLambert return value>.x; r2.y <- <HalfLambert return value>.y; r2.z <- <HalfLambert return value>.z
 
-#line 23 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow_ps.hlsl"
+#line 23 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
 mov r2.xyz, r2.xyzx  // r2.x <- H.x; r2.y <- H.y; r2.z <- H.z
 
 #line 26
 nop 
 mov r4.xyz, v1.xyzx
 
-#line 58 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\PointLight.hlsli"
+#line 58 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\PointLight.hlsli"
 itof r5.xyz, l(0, 0, 0, 0)  // r5.x <- PD.x; r5.y <- PD.y; r5.z <- PD.z
 
 #line 59
@@ -300,7 +300,7 @@ endloop
 #line 78
 add r0.yzw, r7.xxyz, r8.xxyz  // r0.y <- <AddPointLight return value>.x; r0.z <- <AddPointLight return value>.y; r0.w <- <AddPointLight return value>.z
 
-#line 26 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow_ps.hlsl"
+#line 26 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
 mov r0.yzw, r0.yyzw  // r0.y <- PL.x; r0.z <- PL.y; r0.w <- PL.z
 
 #line 32
@@ -319,7 +319,7 @@ mov r0.y, v4.z
 mov r2.xyz, cb3[4].xyzx
 mov r0.x, r0.x
 
-#line 137 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow.hlsli"
+#line 137 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow.hlsli"
 sample_indexable(texture2d)(float,float,float,float) r0.zw, v4.xyxx, t1.zwyx, s1
 mov r0.zw, r0.zzzw  // r0.z <- d.y; r0.w <- d.x
 
@@ -356,7 +356,7 @@ add r0.yzw, r0.yyzw, r2.xxyz  // r0.y <- Scolor.x; r0.z <- Scolor.y; r0.w <- Sco
 #line 151
 max r0.xyz, r0.xxxx, r0.yzwy  // r0.x <- <GetShadow return value>.x; r0.y <- <GetShadow return value>.y; r0.z <- <GetShadow return value>.z
 
-#line 35 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow_ps.hlsl"
+#line 35 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
 mul r0.xyz, r0.xyzx, r1.xyzx  // r0.x <- color.x; r0.y <- color.y; r0.z <- color.z
 
 #line 51

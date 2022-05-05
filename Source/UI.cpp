@@ -12,6 +12,7 @@ void UIBase::SetChildren(UIBase* ui)
 	children.push_back(ui);
 }
 
+//ワールド空間からスクリーン座標に変換
 VECTOR2 UIBase::WorldToScreen(VECTOR3 Pos)
 {
 	XMVECTOR WorldPosition;

@@ -393,7 +393,7 @@ enum ImGuiPlotType
 
 enum ImGuiInputSource
 {
-    ImGuiInputSource_None = 0,
+    ImGuiInputSource_None,
     ImGuiInputSource_Mouse,
     ImGuiInputSource_Nav,
     ImGuiInputSource_NavKeyboard,   // Only used occasionally for storage, not tested/handled by most code
@@ -449,7 +449,7 @@ enum ImGuiNavForward
 
 enum ImGuiNavLayer
 {
-    ImGuiNavLayer_Main  = 0,    // Main scrolling layer
+    ImGuiNavLayer_Main  ,    // Main scrolling layer
     ImGuiNavLayer_Menu  = 1,    // Menu layer (access with Alt/ImGuiNavInput_Menu)
     ImGuiNavLayer_COUNT
 };

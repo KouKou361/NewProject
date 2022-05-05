@@ -3,104 +3,70 @@
 #include "Scene.h"
 #include "UIDerived.h"
 //初期化処理
-void EXP::Init(VECTOR3 Pos)
+void EXP::Init(const VECTOR3 &pos)
 {
+	//テクスチャの読み込み
 	spriteIndex = TK_Lib::Load::LoadTexture("./Data/Sprite/EXP.png");
 
+	//目標地点の算出
+	SetTargetPos();
 
-	targetPos = TK_Lib::Window::GetWindowSize();
+	//位置の算出
+	SetPos(pos);
 
-	targetPos.x = targetPos.x/2;
-	targetPos.y = 20;
-	//this->Pos = { 600,700 };
-	this->pos=WorldToScreen(Pos);
-	this->pos.y -= 10;
+	//向きの算出（３６０度）
+	angle = XMConvertToRadians(static_cast<float>(rand() % 360));
 
-	angle = XMConvertToRadians(rand() % 360);
-
+	//進む方向の算出
 	this->velocity = { sinf(angle),cosf(angle)};
 
-	timer = 0;
+	//速さの算出
 	speed = -10;
 
+	timer = 0;
 }
 //更新処理
 void EXP::Update()
 {
-	speed += 0.2f;
-	//念のため
-	timer += TK_Lib::Window::GetElapsedTime();
+	//ある適度時間が過ぎたら消える処理
+	DeleteToTimer();
 
-	if (timer >= TK_Lib::Window::GetElapsedTime() * 240)
-	{
-		Delete();
-	}
+	//ある適度目標に小さい場合消える処理
+	const float DeleteLength = 40.0f;
+	DeleteMinLength(DeleteLength);
 
-	if (speed >= 0)
-	{
+	//目標地点に進む
+	ModeToTarget();
 
-		angle = atan2f(targetPos.y - pos.y, targetPos.x - pos.x);
-
-
-		const VECTOR2 V = { cosf(angle), sinf(angle) };
-	
-
-		//if(timer>= TK_Lib::Window::GetElapsedTime()*120)
-		{
-			VECTOR2 Vec;
-			Vec.x = targetPos.x - pos.x;
-			Vec.y = targetPos.y - pos.y;
-			XMVECTOR V;
-			V = XMLoadFloat2(&Vec);
-			V = XMVector3Length(V);
-			float L; XMStoreFloat(&L, V);
-			//V = XMVector2Normalize(V);
-			//XMStoreFloat2(&Vec,V);
-			//
-			//Vec.x *= Speed_X;
-			//Vec.y *= Speed_X;
-			//
-			////Velocity += Vec;
-
-
-			if (L <= 40)
-			{
-				Delete();
-			}
-
-
-		}
-
-	}
-
-	const VECTOR2 V = { cosf(angle), sinf(angle) };
-	velocity = speed * V;
-
-	pos.x += velocity.x;
-	pos.y += velocity.y;
 }
+
 //更新処理
 void EXP::Render()
 {
-//	TK_Lib::Blender::SetBlender(Bland_state::BS_ADD);
-
-	TK_Lib::Draw::Sprite(spriteIndex, pos, size, VECTOR4{ 0,0,1024,1024 }, angle);
-	//TK_Lib::Draw::Sprite(SpriteIndex, TargetPos, Size, VECTOR4{ 0,0,1024,1024 }, Angle);
-
-//	TK_Lib::Blender::SetBlender(Bland_state::BS_NONE);
+	const VECTOR4 cut = { 0,0,1024,1024 };
+	//EXPの描画
+	TK_Lib::Draw::Sprite(spriteIndex, pos, size, cut, angle);
 }
 
+//破棄処理
 void EXP::Delete()
 {
+	//サウンド（チャリン）
 	TK_Lib::Lib_Sound::SoundPlay("GetCoin",false);
-	scene->GetStageManager()->GetNowStage()->GetUiTimer()->AddGameOverTimer(5);
+
+	//ゲームオーバータイマーの回復
+	const int AddGameOverTimerNum = 5;
+	scene->GetStageManager()->GetNowStage()->GetUiTimer()->AddGameOverTimer(AddGameOverTimerNum);
+
+	//自分自身の破棄
 	scene->GetExpManager()->Destroy(this);
 }
 
-VECTOR2 EXP::WorldToScreen(VECTOR3 Pos)
+//ワールドからスクリーン座標に変換
+VECTOR2 EXP::WorldToScreen(const VECTOR3& pos)
 {
 	XMVECTOR WorldPosition;
-	WorldPosition = XMLoadFloat3(&Pos);
+	WorldPosition = XMLoadFloat3(&pos);
 
 	//座標変換
 	XMMATRIX View = XMLoadFloat4x4(&TK_Lib::Camera::GetView());
@@ -116,4 +82,83 @@ VECTOR2 EXP::WorldToScreen(VECTOR3 Pos)
 	XMStoreFloat3(&screenPos, ScreenPosition);
 
 	return VECTOR2{ screenPos.x,screenPos.y };
+}
+
+//目標地点の算出
+void EXP::SetTargetPos()
+{
+	//目標の高さ
+	const float targetPosY = 20.0f;
+	//目標の横の半分
+	const float targetPosX = TK_Lib::Window::GetWindowSize().x/2;
+
+	targetPos.x = targetPosX;
+	targetPos.y = targetPosY;
+	
+}
+
+//位置の算出
+void EXP::SetPos(const VECTOR3& pos)
+{
+
+	//位置の算出
+	const float PosYScreenDown = 10.0f;//スクリーン座標に変換した時ちょっと上に上げる。
+	this->pos = WorldToScreen(pos);//ワールド座標からスクリーン座標
+	this->pos.y -= PosYScreenDown;
+	
+}
+
+//目標地点に進む
+void EXP::ModeToTarget()
+{
+	//加速度
+	const float AcceleSpeed = 0.2f;
+	speed += AcceleSpeed;//早くする
+
+	if (speed >= 0)
+	{
+		//角度の算出
+		angle = atan2f(targetPos.y - pos.y, targetPos.x - pos.x);
+	}
+
+	//進むベクトルの算出
+	const VECTOR2 V = { cosf(angle), sinf(angle) };
+	velocity = speed * V;
+
+	pos.x += velocity.x;	//位置の更新処理
+	pos.y += velocity.y;	//位置の更新処理
+}
+//ある適度時間が過ぎたら消える処理
+void EXP::DeleteToTimer()
+{
+	//念のため
+	timer += TK_Lib::Window::GetElapsedTime();
+
+	//消滅時間
+	const float DeleteTime = 4;
+	if (timer >= DeleteTime)
+	{
+		Delete();
+	}
+
+}
+
+//ある適度目標に小さい場合消える処理
+void EXP::DeleteMinLength(const float& DeleteLength)
+{
+	float l=0;
+	{
+		VECTOR2 Vec;
+		Vec.x = targetPos.x - pos.x;
+		Vec.y = targetPos.y - pos.y;
+		XMVECTOR V;
+		V = XMLoadFloat2(&Vec);
+		V = XMVector3Length(V);
+		XMStoreFloat(&l, V);
+	}
+	if (l <= DeleteLength)
+	{
+		Delete();
+	}
+
 }

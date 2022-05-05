@@ -3,22 +3,17 @@
 //初期化処理
 void ObjectWall::Init()
 {
-	SetQuaternion({ 0, 0, 0, 1 });
-	//SetPos({ 0,0,0 });
-	SetScale({ 0.1f,0.1f,0.1f });
-
+	//モデルの設定
 	SetCollisionModel("CollisionWall");
+
+	//ステータスデータの設定
 	SetModel(TK_Lib::Load::GetModel("Wall"));
 
-	SetHp(10);
-	SetMaxHp(GetHp());
-
+	//タグの設定
 	SetTag(ObjectTag::TAG_OBJECT);
-
-	collisionRadius = 5;
 	objectType = ObjectType::WALL;
 
-
+	//モデルの行列更新
 	TK_Lib::Model::Tranceform(GetModel(), GetPos(), GetQuaternion(), GetScale());
 	
 }

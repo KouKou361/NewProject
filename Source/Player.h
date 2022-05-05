@@ -3,13 +3,13 @@
 #include <string>
 #include "PlayerState.h"
 
-class MinionManager;
+class SiroboManager;
 class EnemyBase;
 class SceneGame;
 class UIPlayerHP;
 class UITargetCursur;
 class UITargetHP;
-class UIMinionAttack;
+class UISiroboAttack;
 
 
 class Player:public Charactor
@@ -26,7 +26,7 @@ private:
 	//std::shared_ptr<UIPlayerHP> uiPlayerHP;
 	std::shared_ptr<UITargetCursur> uiTargetCursur;
 	std::shared_ptr<UITargetHP> uiTargetHP;
-	shared_ptr<UIMinionAttack>   uiMinionAttack = nullptr;
+	shared_ptr<UISiroboAttack>   uiSiroboAttack = nullptr;
 
 
 	//AttackMaxLengthより遠い距離敵はターゲットのできない。
@@ -36,19 +36,19 @@ private:
 	//攻撃中はスピードが落ちる
 	const float AttackSpeedDown = 0.5f;
 
-	shared_ptr<MinionManager> minionManager;
+	shared_ptr<SiroboManager> siroboManager = nullptr;
 	//プレイヤーの動きステートマシン
-	PlayerState* stateMachine;
+	PlayerState* stateMachine = nullptr;
 	//SceneGameの更新
-	SceneGame* sceneGame;
+	SceneGame* sceneGame = nullptr;
 
 	//全ての行動
-	unique_ptr<PlayerState>   stateAttack;
-	unique_ptr<PlayerState>   stateDamage;
-	unique_ptr<PlayerState>   stateDead;
-	unique_ptr<PlayerState>   stateWait;
-	unique_ptr<PlayerState>   stateWalk;
-	unique_ptr<BossEntryPlayerState>   stateBossEntry;
+	unique_ptr<PlayerState>   stateAttack=nullptr;
+	unique_ptr<PlayerState>   stateDamage=nullptr;
+	unique_ptr<PlayerState>   stateDead=nullptr;
+	unique_ptr<PlayerState>   stateWait=nullptr;
+	unique_ptr<PlayerState>   stateWalk=nullptr;
+	unique_ptr<BossEntryPlayerState>   stateBossEntry = nullptr;
 public:
 
 
@@ -61,10 +61,11 @@ public:
 		WAIT,//待機
 		WALK,//移動
 		BOSS_ENTRY,//ボスの登場
+		NONE,
 	};
 
 
-	State state;
+	State state= State::NONE;
 
 public:
 	Player() {};
@@ -83,11 +84,11 @@ public:
 	void SetSceneGame(SceneGame* scene);
 	//状態マシンの変換
 	void ChangeState(PlayerState* state);
-	void ChangeState(State state, BossStage* stage =nullptr);
+	void ChangeState(const State& state, BossStage* stage =nullptr);
 	//ターゲットがある程度遠かった場合見失う
-	void ResetFarTarget(float L);
+	void ResetFarTarget(const float &l);
 
-	inline MinionManager* GetMinionManager() { return minionManager.get(); };
+	inline SiroboManager* GetSiroboManager() { return siroboManager.get(); };
 	inline State GetState() { return state; };
 	//ゲームシーンの設定
 	inline SceneGame* GetSceneGame() { return sceneGame; };
@@ -95,7 +96,7 @@ public:
 	//プレイヤーのステージリセット処理
 	void ResetPlayer();
 	//CSVからデータを取り出して、ステータスの設定する。
-	void SetStatus(string SearchName);
+	void SetStatus(const string &searchName);
 
 private:
 
@@ -109,11 +110,11 @@ private:
 	//入力攻撃
 	void InputAttack();
 	//ミニオンの帰還入力処理
-	void InputMinionBack();
+	void InputSiroboBack();
 	//Aimカメラの視点変更
 	bool ChangeCameraAim();
 	//ミニオンの蘇生入力処理
-	void InputMinionResuscitation();
+	void InputSiroboResuscitation();
 
 
 	//============当たり判定==============
@@ -127,11 +128,16 @@ private:
 	//カーソルの描画
 	void RenderCursur();
 	//目標のHPの表示
-	void RenderTargetHP(const VECTOR2 pos);
+	void RenderTargetHP(const VECTOR2& pos);
 	//目標の敵設定
 	void SetTargetEnemy(Actor* enm);
 	//プレイヤーの体力表示
-	void HPRender(const int spriteIndex, const VECTOR2 pos);
+	void HPRender(const int& spriteIndex, const VECTOR2& pos);
+	//アニメーション
+	void RegisterAnimetion();
+
+	//全ての行動を登録
+	void RegisterState();
 	
 	
 	//目標の敵の設定
@@ -141,5 +147,5 @@ private:
 	//速さ設定
 	inline void SetSpeed(const float speed) { this->speed = speed; };
 	//ダメージ
-	bool AddDamage(int damage, int setinvincibleTime);
+	bool AddDamage(const int& damage, const float& setInvincibleTime);
 };

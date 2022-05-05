@@ -22,13 +22,16 @@ Lib_CascadeShader::Lib_CascadeShader(ID3D11Device* device)
 	//カスケードシャドウテクスチャ作成
 	for (int i = 0; i < NUM_SHADOW_MAP; i++)
 	{
+		u_int shadowMapSizeX = static_cast<u_int>(shadowSize[i].x);
+		u_int shadowMapSizeY = static_cast<u_int>(shadowSize[i].y);
+
 		shadow_Texture[i] = std::make_shared<TextureResource>();
-		shadow_Texture[i]->Create(device, shadowSize[i].x, shadowSize[i].y, DXGI_FORMAT_R32G32_FLOAT);
-		shadow_Texture[i]->CreateDepth(device, shadowSize[i].x, shadowSize[i].y, DXGI_FORMAT_R32G32_FLOAT);
+		shadow_Texture[i]->Create(device, shadowMapSizeX, shadowMapSizeY, DXGI_FORMAT_R32G32_FLOAT);
+		shadow_Texture[i]->CreateDepth(device, shadowMapSizeX, shadowMapSizeY, DXGI_FORMAT_R32G32_FLOAT);
 
 		Gauss_Texture[i] = std::make_shared<TextureResource>();
-		Gauss_Texture[i]->Create(device, shadowSize[i].x, shadowSize[i].y, DXGI_FORMAT_R32G32_FLOAT);
-		Gauss_Texture[i]->CreateDepth(device, shadowSize[i].x, shadowSize[i].y, DXGI_FORMAT_R32G32_FLOAT);
+		Gauss_Texture[i]->Create(device, shadowMapSizeX, shadowMapSizeY, DXGI_FORMAT_R32G32_FLOAT);
+		Gauss_Texture[i]->CreateDepth(device, shadowMapSizeX, shadowMapSizeY, DXGI_FORMAT_R32G32_FLOAT);
 	}
 
 //	depth_Texture = std::make_shared<TextureResource>();
@@ -346,9 +349,9 @@ void Lib_CascadeShader::CascadeShadowBegin(ID3D11DeviceContext* context, const C
 
 
 	SetShadowConstan2(context,
-		DirectX::XMFLOAT4{ 0.6f,0.6f, 0.6f, 1.0 },
+		DirectX::XMFLOAT4{ 0.6f,0.6f, 0.6f, 1.0f },
 		LightDirection,
-		DirectX::XMFLOAT4{ 0.6,0.6, 0.6, 1.0 });
+		DirectX::XMFLOAT4{ 0.6f,0.6f, 0.6f, 1.0f });
 	Begin(context);
 
 	context->OMSetBlendState(BlendState::Instance().GetBlendState(Bland_state::BS_ALPHA), nullptr, 0xffffffff);
@@ -363,12 +366,14 @@ void Lib_CascadeShader::CascadeShadowEnd(ID3D11DeviceContext* context)
 {
 	for (int i = 0; i < NUM_SHADOW_MAP; i++)
 	{
-		TK_Lib::Draw::Sprite(shadow_Texture[i].get(), VECTOR2(0, 200 * i + 5 * i), VECTOR2(200, 200), VECTOR4(0, 0, shadow_Texture[i]->GetWidth(), shadow_Texture[i]->GetHeight()), 0.0f, VECTOR4(1, 1, 1, 1));
+		float PosY=static_cast<float>(200 * i) + static_cast<float>(5 * i);
+		TK_Lib::Draw::Sprite(shadow_Texture[i].get(), VECTOR2(0, PosY), VECTOR2(200, 200), VECTOR4(0, 0, static_cast<float>(shadow_Texture[i]->GetWidth()), static_cast<float>(shadow_Texture[i]->GetHeight())), 0.0f, VECTOR4(1, 1, 1, 1));
 	}
 
 	for (int i = 0; i < NUM_SHADOW_MAP; i++)
 	{
-		TK_Lib::Draw::Sprite(Gauss_Texture[i].get(), VECTOR2(1720, 200 * i + 5 * i), VECTOR2(200, 200), VECTOR4(0, 0, shadow_Texture[i]->GetWidth(), shadow_Texture[i]->GetHeight()), 0.0f, VECTOR4(1, 1, 1, 1));
+		float PosY = static_cast<float>(200 * i) + static_cast<float>(5 * i);
+		TK_Lib::Draw::Sprite(Gauss_Texture[i].get(), VECTOR2(1720, PosY), VECTOR2(200, 200), VECTOR4(0, 0, static_cast<float>(shadow_Texture[i]->GetWidth()), static_cast<float>(shadow_Texture[i]->GetHeight())), 0.0f, VECTOR4(1, 1, 1, 1));
 	}
 
 	shadowShader->Inactivate(context);

@@ -1,27 +1,20 @@
 #include "ObjectDerived.h"
 #include "Collision.h"
 #include "Scene.h"
-#include "MinionPlayer.h"
+#include "SiroboPlayer.h"
 
 //初期化処理
 void ObjectPot::Init()
 {
-	SetQuaternion({ 0, 0, 0, 1 });
-	//SetPos({ 0,0,0 });
-	SetScale({ 0.1f,0.1f,0.1f });
-
-	//SetCollisionModel("Pat");
+	//モデルの設定
 	SetModel(TK_Lib::Load::GetModel("Pat"));
-
-	SetHp(10);
-	SetMaxHp(GetHp());
-
-
+	//ステータスデータの設定
+	SetStatus("Pot");
+	//タグの設定
 	SetTag(ObjectTag::TAG_OBJECT);
-	collisionRadius = 5;
 	objectType = ObjectType::POT;
 
-
+	//モデルの行列更新
 	TK_Lib::Model::Tranceform(GetModel(), GetPos(), GetQuaternion(), GetScale());
 
 }
@@ -31,7 +24,7 @@ void ObjectPot::Update()
 
 }
 
-bool ObjectPot::AddDamage(int Damage, int MaxinvincibleTime)
+bool ObjectPot::AddDamage(int Damage, float MaxinvincibleTime)
 {
 	//体力が0以下なら
 	if (GetHp() <= 0)return false;
@@ -44,20 +37,23 @@ bool ObjectPot::AddDamage(int Damage, int MaxinvincibleTime)
 	}
 	else//死亡しているなら
 	{
-
-		{
-			//ミニオンの召喚
-			shared_ptr<MinionPlayer> minion;
-			minion = make_shared<MinionPlayer>();
-			minion->Init(scene->GetPlayer());
-			minion->SetPos(this->GetPos());
-			//	minion->pos = { 5,0,static_cast<float>(140) };
-			scene->GetPlayer()->GetMinionManager()->Register(minion);
-		}
-
-		
+		//ミニオンの召喚
+		SummonSirobo();
+	
 		//ダメージフラグのオン
 		Dead();
 	}
 	return true;
+}
+
+//シロボの召喚
+void ObjectPot::SummonSirobo()
+{
+	shared_ptr<Sirobo> sirobo;
+	sirobo = make_shared<Sirobo>();
+	sirobo->Init(scene->GetPlayer());
+	sirobo->SetPos(this->GetPos());
+	//	sirobo->pos = { 5,0,static_cast<float>(140) };
+	scene->GetPlayer()->GetSiroboManager()->Register(sirobo);
+
 }

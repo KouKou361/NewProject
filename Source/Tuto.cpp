@@ -2,8 +2,8 @@
 
 Tuto::Tuto(SceneGame* sceneGame)
 {
-	ui = make_unique<UITuto>();
-	ui->Init();
+	TutoWindowUI = make_unique<UITuto>();
+	TutoWindowUI->Init();
 
 
 	uiNextMessage = std::make_unique<UINextMessage>();
@@ -11,17 +11,22 @@ Tuto::Tuto(SceneGame* sceneGame)
 
 	this->sceneGame = sceneGame;
 }
+
 //初期化処理
 void Tuto::Init()
 {
+	TutoWindowUI->Init();
+	TutoWindowUI->Update();
 
 	textIndex = 0;
 }
+
+//
 void Tuto::Update()
 {
-	ui->Update();
+	TutoWindowUI->Update();
 	uiNextMessage->Update();
-	uiTimer++;
+	uiTimer+=TK_Lib::Window::GetElapsedTime();
 }
 
 //初期化処理
@@ -46,17 +51,22 @@ bool Tuto::Judge()
 //描画
 void Tuto::Render()
 {
-	ui->SetText(textes.at(textIndex));
-	ui->Render();
+	TutoWindowUI->SetText(textes.at(textIndex));
+	TutoWindowUI->Render();
 
 
-	bool DrawFlg = true;
-	if (uiTimer >= 300)
+	//bool DrawFlg = true;
+
+	//[○]で次に進むチカチカ処理
+	const float uiRenderTimer = 6;
+	const int FrashTime = 2;
+
+	if (uiTimer >= uiRenderTimer)
 	{
-		if (uiTimer % 100 <= 25)
+		if (static_cast<int>(uiTimer) % FrashTime <= 0)
 		{
-			DrawFlg = false;
+			uiNextMessage->Render();
 		}
 	}
-	if (DrawFlg)	uiNextMessage->Render();
+	//if (DrawFlg)	uiNextMessage->Render();
 }

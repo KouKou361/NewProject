@@ -95,7 +95,7 @@ dcl_temps 6
 //   o1.x <- <main return value>.texcoord.x; o1.y <- <main return value>.texcoord.y; o1.z <- <main return value>.power; 
 //   o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w
 //
-#line 5 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Lambert_vs.hlsl"
+#line 5 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Lambert_vs.hlsl"
 itof r0.xyz, l(0, 0, 0, 0)  // r0.x <- p.x; r0.y <- p.y; r0.z <- p.z
 
 #line 6
@@ -179,8 +179,8 @@ itof r1.y, l(0)
 max r1.x, r1.x, r1.y  // r1.x <- vout.power
 
 #line 21
-itof r1.y, l(1)
-mul r1.yzw, r1.xxxx, r1.yyyy  // r1.y <- vout.color.x; r1.z <- vout.color.y; r1.w <- vout.color.z
+itof r1.yzw, l(0, 1, 1, 1)
+mul r1.yzw, r1.xxxx, r1.yyzw  // r1.y <- vout.color.x; r1.z <- vout.color.y; r1.w <- vout.color.z
 
 #line 22
 mov r2.x, cb2[0].w  // r2.x <- vout.color.w

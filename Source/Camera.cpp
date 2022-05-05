@@ -1,74 +1,63 @@
 #include "CameraController.h"
 #include "Lib.h"
-#include "Collision.h"
-//視点移動更新処理
-bool Camera::LerpCameraUpdate()
-{
-	return LerpTargetCamera(lerpSpeed);
-}
-//視点移動
+//カメラの注視点移動(補完)
 bool Camera::LerpTargetCamera(const float time)
 {
-	VECTOR3 v = endTargetPos - startTargetPos;
-	XMVECTOR Vec=XMLoadFloat3(&v);
-	Vec = XMVector3Length(Vec);
-	float L;
-	XMStoreFloat(&L, Vec);
-	if (1>=L)
+	
+	//minLよりも小さい場合線上補完しない
+	const float minL = 1.0f;
+
+	VECTOR3 outpos;
+	//線上補完の算出
+	if (LerpCamera(outpos, startTargetPos, endTargetPos, minL, time))
 	{
-		return true;
+		SetTarget(outpos);
+		startTargetPos = targetPos;
+		return false;
 	}
-	VECTOR3 Pos;
-	Pos.x = Mathf::Lerp(startTargetPos.x, endTargetPos.x, time);
-	Pos.y = Mathf::Lerp(startTargetPos.y, endTargetPos.y, time);
-	Pos.z = Mathf::Lerp(startTargetPos.z, endTargetPos.z, time);
-	SetTarget(Pos);
 
-	startTargetPos = targetPos;
-	return false;
-}
-//レイピック
-void Camera::RayPick()
-{
-	VECTOR3 Start,End;
-	Start = targetPos;
-	End = eye;
-
-	VECTOR3 v;
-	v = { End - Start };
-	XMVECTOR V= XMLoadFloat3(&v);
-	XMVector3Normalize(V);
-	XMStoreFloat3(&v,V);
-
-
-	//RayOut ray;
-	//Collision::Instance().RayPick(Start,Start+v,ray);
-	////もし当たっているなら
-	//if (ray.materialIndex >= 0)
-	//{
-	//	eye.x = ray.Pos.x;
-	//	eye.z = ray.Pos.z;
-	//}
-
+	return true;
 }
 //カメラの視点移動(補完)
 bool Camera::LerpEyeCamera(const float time)
 {
-	VECTOR3 v = endEyePos - startEyePos;
+
+	//minLよりも小さい場合線上補完しない
+	const float minL = 1.0f;
+
+	VECTOR3 outpos;
+	//線上補完の算出
+	if (LerpCamera(outpos, startEyePos, endEyePos, minL, time))
+	{
+		eye = outpos;
+		startEyePos = eye;
+		return false;
+	}
+	return true;
+
+
+}
+//長さを取得
+float Camera::GetLength(VECTOR3 startPos, VECTOR3 endPos)
+{
+	//endTargetPosまでの長さ
+	float l;
+	VECTOR3 v = startPos - endPos;
 	XMVECTOR Vec = XMLoadFloat3(&v);
 	Vec = XMVector3Length(Vec);
-	float L;
-	XMStoreFloat(&L, Vec);
-	if (1 >= L)
-	{
-		return true;
-	}
-	VECTOR3 Pos;
-	Pos.x = Mathf::Lerp(startEyePos.x, endEyePos.x, time);
-	Pos.y = Mathf::Lerp(startEyePos.y, endEyePos.y, time);
-	Pos.z = Mathf::Lerp(startEyePos.z, endEyePos.z, time);
-	eye = Pos;
+	XMStoreFloat(&l, Vec);
+	return l;
+}
+bool Camera::LerpCamera(VECTOR3& outpos, const VECTOR3 startPos, const VECTOR3& endPos, const float& minL, const float& time)
+{
+	//minよりも小さい場合線上補完しない
+	float l = GetLength(startPos, endPos);
+	if (minL >= l)	return false;
 
-	startEyePos = eye;
-	return false;
+	//線上補完
+	outpos.x = Mathf::Lerp(startPos.x, endPos.x, time);
+	outpos.y = Mathf::Lerp(startPos.y, endPos.y, time);
+	outpos.z = Mathf::Lerp(startPos.z, endPos.z, time);
+	
+	return true;
 }

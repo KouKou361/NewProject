@@ -1,6 +1,7 @@
 #pragma once
 #include "UIBase.h"
 
+//(没データ)
 //プレイヤーの体力
 class UIPlayerHP:public UIBase
 {
@@ -45,14 +46,18 @@ public:
 	void Update();
 	//描画処理
 	void Render();
+private:
+	VECTOR4 GageCut = {0,0,0,0};
+	VECTOR4 GageblackCut = { 0,0,0,0 };
+	
 };
 
 //ミニオンのダウン状態のヘルプアイコン
-class UIMinionDownHelp :public UIBase
+class UISiroboDownHelp :public UIBase
 {
 public:
-	UIMinionDownHelp() {};
-	~UIMinionDownHelp() {};
+	UISiroboDownHelp() {};
+	~UISiroboDownHelp() {};
 
 	//初期化
 	void Init();
@@ -63,11 +68,11 @@ public:
 };
 
 //敵に攻撃しているミニオンの数
-class UIMinionAttack :public UIBase
+class UISiroboAttack :public UIBase
 {
 public:
-	UIMinionAttack() {};
-	~UIMinionAttack() {};
+	UISiroboAttack() {};
+	~UISiroboAttack() {};
 
 	//初期化
 	void Init();
@@ -97,6 +102,9 @@ public:
 	void Render();
 
 	inline void SetBlinkingTimer(float timer) { breakingTimer = timer; }
+private:
+	//テキストの表示
+	void RenderText();
 };
 
 
@@ -105,9 +113,8 @@ class UITimer :public UIBase
 {
 private:
 	int fontUI=-1;
-	int gameTimer=0;
-	int maxGameTimer = 0;
-	float frameTimer=0;
+	float gameTimer=0;
+	float maxGameTimer = 0;
 	float fontScaleTimer = 0;
 public:
 	UITimer() {};
@@ -123,10 +130,23 @@ public:
 	void Render();
 
 	//ゲームオーバーの時間設定
-	void SetGameOverTimer(int timer);
+	void SetGameOverTimer(float timer);
 
-	void AddGameOverTimer(int addTimer);
-	inline  int GetGameTimer() { return gameTimer; }
+	void AddGameOverTimer(float addTimer);
+	inline  float GetGameTimer() { return gameTimer; }
+private:
+	//フォントの大きさの更新処理
+	void UpdateFontScaleTimer();
+
+	//ゲージの表示
+	void GaugeRender();
+	//ゲームオーバータイマーの表示
+	void TextRender();
+	//スクリーンいっぱいに出るおおきなゲームオーバータイマーの表示
+	void BigGameOverTimeText(float RenderTime);
+	//ゲームオーバーテキスト
+	void GameOverText();
+
 };
 
 
@@ -177,11 +197,10 @@ public:
 //スクリーンに方向を示す
 class UI2DDirection :public UIBase
 {
-	VECTOR3 targetWorldPos;
-	VECTOR2 targetScreenPos;
-	//半径
-	const float UiCenterR = 250.0f;
-	float targetAngle;
+	VECTOR3 targetWorldPos = {0,0,0};
+	VECTOR2 targetScreenPos = {0,0};
+
+	float targetAngle=0;
 
 
 public:
@@ -197,6 +216,10 @@ public:
 	void Update();
 	//描画処理
 	void Render();
+private:
+	//スクリーン座標でターゲットの向きを算出
+	void SetTargetAngle();
+
 };
 
 

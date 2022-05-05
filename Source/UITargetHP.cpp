@@ -3,7 +3,13 @@
 //初期化
 void UITargetHP::Init()
 {
-	indexTexture=TK_Lib::Load::LoadTexture("./Data/Sprite/HP_gage.png");
+	TextureIndex=TK_Lib::Load::LoadTexture("./Data/Sprite/HP_gage.png");
+
+	const float CutX = 0;
+	const VECTOR2 ChipSize = { 314,15 };
+
+	GageblackCut = VECTOR4{ CutX,ChipSize.y * 3,   ChipSize.x,ChipSize.y };
+	GageCut      = VECTOR4{ CutX,             0,   ChipSize.x,ChipSize.y };
 }
 //更新処理
 void UITargetHP::Update()
@@ -26,9 +32,11 @@ void UITargetHP::Render()
 	screenPos.y -= offsetY;
 
 	const float HpSize = 70;
-	const  float TargetHpRatio = (static_cast<float>(chara->GetTarget()->GetHp()) / static_cast<float>(chara->GetTarget()->GetMaxHp())) * HpSize;
+	const float TargetHpRatio = (static_cast<float>(chara->GetTarget()->GetHp()) / static_cast<float>(chara->GetTarget()->GetMaxHp())) * HpSize;
+	const VECTOR2 GaugeChipSize = VECTOR2{ 314,15 };
+	const float SizeY = 10.0f;
 	//黒
-	TK_Lib::Draw::Sprite(indexTexture, { screenPos.x,screenPos.y }, VECTOR2{ HpSize       ,10 }, VECTOR4{ 0,(60 / 4) * 3,942 / 3,60 / 4 });
-	//ゲージ
-	TK_Lib::Draw::Sprite(indexTexture, { screenPos.x,screenPos.y }, VECTOR2{ TargetHpRatio,10 }, VECTOR4{ 0,0,942 / 3,60 / 4 });
+	TK_Lib::Draw::Sprite(TextureIndex, { screenPos.x,screenPos.y }, VECTOR2{ HpSize       ,SizeY }, VECTOR4{ 0,GaugeChipSize.y * 3,GaugeChipSize.x,GaugeChipSize.y });
+	//ゲージ																																	
+	TK_Lib::Draw::Sprite(TextureIndex, { screenPos.x,screenPos.y }, VECTOR2{ TargetHpRatio,SizeY }, VECTOR4{ 0,                  0,GaugeChipSize.x,GaugeChipSize.y });
 }

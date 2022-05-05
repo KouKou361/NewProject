@@ -25,13 +25,19 @@ public:
 	Animetion() { Clear(); };
 	~Animetion() { Clear(); };
 
-	//モデルアニメーション登録
-	void Register(const int animeindex,const string animeKey);
+
 	//モデルアニメーション番号の取得
 	int GetIndex(const string animeKey);
 	//アニメーション中かどうか
 	bool IsAnimetion(const string animeKey);
 	//モデルアニメーションのクリア
 	void Clear();
+	//アニメションの登録(これでまとめて一括読み込み)
+	void AllAnimetionKey(string* Nameregister);
 
+	
+private:
+	
+	//モデルアニメーション登録
+	void Register(const int animeindex, const string animeKey);
 };

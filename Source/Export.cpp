@@ -87,19 +87,19 @@ void ExportActor::serialize(Archive& archive, int version)
 		CEREAL_NVP(filename),
 		CEREAL_NVP(type),
 		CEREAL_NVP(name),
-		CEREAL_NVP(Pos),
-		CEREAL_NVP(Angle),
-		CEREAL_NVP(Scale),
-		CEREAL_NVP(Color),
-		CEREAL_NVP(Select)
+		CEREAL_NVP(pos),
+		CEREAL_NVP(angle),
+		CEREAL_NVP(scale),
+		CEREAL_NVP(color),
+		CEREAL_NVP(select)
 	);
 }
-void Export::Loading(std::string filename)
+void Export::Loading(const std::string filename)
 {
 	//=====================
-		//バイナリファイルの読み取り
-		//=====================	
-		// デシリアライズ
+	//バイナリファイルの読み取り
+	//=====================	
+	// デシリアライズ
 	std::ifstream istream(filename, std::ios::binary);
 	if (istream.is_open())
 	{
@@ -124,90 +124,86 @@ void Export::Loading(std::string filename)
 	}
 }
 
+//オブジェクトの配置
 void Export::ObjectSet()
 {
-
-
-
 	for (int i = 0; i < exportActorList.size(); i++)
 	{
 		ExportActor* ExportActor = &exportActorList.at(i);
 
-		if ("ENEMY" == ExportActor->type)     SetEnemy(ExportActor);
-		if ("OBJECT" == ExportActor->type)    SetObject(ExportActor);
-		if ("STAGE" == ExportActor->type)     SetStage(ExportActor);
-		if ("POINTLIGHT" == ExportActor->type)SetPointLight(ExportActor);
-		if ("FUNCTION" == ExportActor->type)  SetFunction(ExportActor);
-		if ("EFFECT" == ExportActor->type)    SetEffeect(ExportActor);
+		if ("ENEMY"      == ExportActor->type)  SetEnemy(ExportActor);      //敵配置の設定へ
+		if ("OBJECT"     == ExportActor->type)  SetObject(ExportActor);		//オブジェクト配置の設定へ
+		if ("STAGE"      == ExportActor->type)  SetStage(ExportActor);		//ステート配置の設定へ
+		if ("POINTLIGHT" == ExportActor->type)  SetPointLight(ExportActor);	//ポイントライト配置の設定へ
+		if ("FUNCTION"   == ExportActor->type)  SetFunction(ExportActor);	//関数配置の設定へ
+		if ("EFFECT"     == ExportActor->type)  SetEffeect(ExportActor);	//エフェクト配置の設定へ
 	}	
 }
 
-//敵のセットする
-void Export::SetEnemy(ExportActor* ExportActor)
+//敵の配置する
+void Export::SetEnemy(ExportActor* exportActor)
 {
 	EnemyManager* enemyManager = sceneGame->enemyManager.get();
 	shared_ptr<EnemyBase> enm=nullptr;
 
-	if ("Slime" == ExportActor->name)enm=std::make_shared<EnemySlime>(sceneGame);
-	if ("Boom" == ExportActor->name)enm = std::make_shared<EnemyBoom>(sceneGame);
-	if ("ChestEnemy" == ExportActor->name)enm = std::make_shared<EnemyChest>(sceneGame);
-	if ("TurtleShell" == ExportActor->name)enm = std::make_shared<EnemyTurtleShell>(sceneGame);
-	if ("Boss" == ExportActor->name)enm = std::make_shared<EnemyBoss>(sceneGame);
+	if ("Slime"       == exportActor->name)enm = std::make_shared<EnemySlime>(sceneGame);	   //スライム
+	//if ("Boom"        == ExportActor->name)enm = std::make_shared<EnemyBoom> (sceneGame);	   //
+	if ("ChestEnemy"  == exportActor->name)enm = std::make_shared<EnemyChest>(sceneGame);	   //宝箱モンスター
+	if ("TurtleShell" == exportActor->name)enm = std::make_shared<EnemyTurtleShell>(sceneGame);//亀
+	if ("Boss"        == exportActor->name)enm = std::make_shared<EnemyBoss> (sceneGame);	   //ボス
 
 	//敵がnullの時はreturn
 	if (enm == nullptr) {
 		assert(!"名前が見当たりません");
 		return;
 	}
-	enm->SetPos(ExportActor->Pos);
 
+	enm->SetPos(exportActor->pos);
 	enemyManager->Register(enm);
 }
 //オブジェクトのセットする
-void Export::SetObject(ExportActor* ExportActor)
+void Export::SetObject(ExportActor* exportActor)
 {
 	ObjectManager* objectManager = sceneGame->objectManager.get();
 	shared_ptr<ObjectBase> obj = nullptr;
 
-	if ("Wall" == ExportActor->name)obj = std::make_shared<ObjectWall>(objectManager,sceneGame);
-	if ("Pat" == ExportActor->name)obj = std::make_shared<ObjectPot>(objectManager, sceneGame);
-	if ("Tower" == ExportActor->name)obj = std::make_shared<ObjectTower>(objectManager, sceneGame);
-	//if ("ChestEnemy" == ExportActor->name)obj = std::make_shared<EnemyChest>(objectManager);
-	//if ("TurtleShell" == ExportActor->name)obj = std::make_shared<EnemyTurtleShell>(objectManager);
+	if ("Wall"  == exportActor->name)obj = std::make_shared<ObjectWall> (objectManager, sceneGame);//壁
+	if ("Pat"   == exportActor->name)obj = std::make_shared<ObjectPot>  (objectManager, sceneGame);//ポット
+	if ("Tower" == exportActor->name)obj = std::make_shared<ObjectTower>(objectManager, sceneGame);//タワー
 
 	//敵がnullの時はreturn
 	if (obj == nullptr) {
 		assert(!"名前が見当たりません");
 		return;
 	}
-	obj->SetPos(ExportActor->Pos);
 
+	obj->SetPos(exportActor->pos);
 	objectManager->Register(obj);
 }
 
 //ステージのセットする
-void Export::SetStage(ExportActor* ExportActor)
+void Export::SetStage(ExportActor* exportActor)
 {
 
 }
 
 //敵のセットする
-void Export::SetPointLight(ExportActor* ExportActor)
+void Export::SetPointLight(ExportActor* exportActor)
 {
 	//とりあえず適当にセットしておく
-	TK_Lib::SpotLight::Create(ExportActor->Pos,ExportActor->Color,ExportActor->Scale.x);
+	TK_Lib::SpotLight::Create(exportActor->pos,exportActor->color,exportActor->scale.x);
 }
 
 //エフェクトの設定
-void Export::SetEffeect(ExportActor* ExportActor)
+void Export::SetEffeect(ExportActor* exportActor)
 {
 
 	EffectManager* effectManager = sceneGame->effectManager.get();
 	
 	int ret=-1;
 
-	if ("Fire" == ExportActor->name)ret = 0;
-	if ("Destroy" == ExportActor->name)ret = 0;
+	if ("Fire" == exportActor->name)ret = 0;
+	if ("Destroy" == exportActor->name)ret = 0;
 
 	//敵がnullの時はreturn
 	if (ret == -1) {
@@ -215,18 +211,18 @@ void Export::SetEffeect(ExportActor* ExportActor)
 		return;
 	}
 	const int PlayNum = 1;
-	effectManager->UpdateEffectRegister(ExportActor->Pos, ExportActor->name, PlayNum);
+	effectManager->UpdateEffectRegister(exportActor->pos, exportActor->name, PlayNum);
 }
 
 //関数の設定
-void Export::SetFunction(ExportActor* ExportActor)
+void Export::SetFunction(ExportActor* exportActor)
 {
 
 	ObjectFunctionManager* objectFunctionManager = sceneGame->GetObjectFunctionManager();
 	shared_ptr<ObjectFunctionBase> objFunction = nullptr;
 
-	if ("Start" == ExportActor->name)objFunction=make_shared<FunctionStart>(sceneGame);
-	if ("End" == ExportActor->name)objFunction = make_shared<FunctionEnd>(sceneGame);
+	if ("Start" == exportActor->name)objFunction=make_shared<FunctionStart>(sceneGame);
+	if ("End" == exportActor->name)objFunction = make_shared<FunctionEnd>(sceneGame);
 	//if ("Boom" == ExportActor->name)obj = std::make_shared<EnemyBoom>(objectManager);
 	//if ("ChestEnemy" == ExportActor->name)obj = std::make_shared<EnemyChest>(objectManager);
 	//if ("TurtleShell" == ExportActor->name)obj = std::make_shared<EnemyTurtleShell>(objectManager);
@@ -235,8 +231,8 @@ void Export::SetFunction(ExportActor* ExportActor)
 		assert(!"名前が見当たりません");
 		return;
 	}
-	objFunction->SetPos(ExportActor->Pos);
-	objFunction->SetRadius(ExportActor->Scale.x);
+	objFunction->SetPos(exportActor->pos);
+	objFunction->SetRadius(exportActor->scale.x);
 
 	objectFunctionManager->Register(objFunction);
 }

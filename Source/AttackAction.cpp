@@ -8,8 +8,10 @@ class EnemyBase;
 //開始処理
 void AttackAction::Start()
 {
+	//攻撃アニメーション番号の取得
+	const int AttackAnimetionIndex = owner->GetAnime()->GetIndex(owner->GetAnime()->Attack1);
 	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->Attack1), false);
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), AttackAnimetionIndex, false);
 }
 
 //実行処理
@@ -27,6 +29,7 @@ ActionBase::State AttackAction::Run()
 		constexpr float AttackStartTime = 0.0f;
 		//攻撃終了レート
 		constexpr float AttackEndTime   = 0.5f;
+
 		//攻撃処理
 		owner->AttackCircleNode(owner->GetAttackNode(), owner->GetAttackRadius(), AttackStartTime, AttackEndTime);
 		return ActionBase::State::RUN;

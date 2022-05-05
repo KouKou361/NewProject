@@ -6,41 +6,44 @@
 #include "NodeBase.h"
 #include "Animetion.h"
 #include "UIDerived.h"
-#include "MinionPlayer.h"
+#include "SiroboPlayer.h"
 #include "Scene.h"
 #include "ExportScript.h"
 
-//初期化処理
-void EnemyBase::Init()
-{
-	SetQuaternion({ 0,0,0,1 });
-	SetPos({ 7,0,0 });
-	SetScale({ 0.025f,0.025f,0.025f });
-	speed = 0.4f;
-	collisionRadius = 1.0f;
-	SetModel(TK_Lib::Load::GetModel("Slime"));
-
-	anime = make_unique<Animetion>();
-
-	SetTag(ObjectTag::TAG_ENEMY);
-	
-	behaviorTree = make_unique<BehaviorTree>();
-	behaviordata = make_unique<BehaviorData>();
-	behaviorTree->AddNode("","root",1, BehaviorTree::SelectRule::PRIORITY,nullptr,nullptr);
-	behaviorTree->AddNode("root", "idle", 1, BehaviorTree::SelectRule::NONE,new IdleJudgement(this), new IdleAction(this));
-	behaviorTree->AddNode("root", "attack", 1, BehaviorTree::SelectRule::NONE, new AttackJudgement(this), new AttackAction(this));
-	behaviorTree->AddNode("root", "pursuit", 1, BehaviorTree::SelectRule::NONE, new PursuitJudgement(this), new PursuitAction(this));
-}
+////初期化処理
+//void EnemyBase::Init()
+//{
+//	SetQuaternion({ 0,0,0,1 });
+//	SetPos({ 7,0,0 });
+//	SetScale({ 0.025f,0.025f,0.025f });
+//	speed = 0.4f;
+//	collisionRadius = 1.0f;
+//	SetModel(TK_Lib::Load::GetModel("Slime"));
+//
+//	anime = make_unique<Animetion>();
+//
+//	SetTag(ObjectTag::TAG_ENEMY);
+//	
+//	behaviorTree = make_unique<BehaviorTree>();
+//	behaviordata = make_unique<BehaviorData>();
+//	behaviorTree->AddNode("","root",1, BehaviorTree::SelectRule::PRIORITY,nullptr,nullptr);
+//	behaviorTree->AddNode("root", "idle", 1, BehaviorTree::SelectRule::NONE,new IdleJudgement(this), new IdleAction(this));
+//	behaviorTree->AddNode("root", "attack", 1, BehaviorTree::SelectRule::NONE, new AttackJudgement(this), new AttackAction(this));
+//	behaviorTree->AddNode("root", "pursuit", 1, BehaviorTree::SelectRule::NONE, new PursuitJudgement(this), new PursuitAction(this));
+//}
 
 //CSVからデータを取り出して、ステータスの設定する。
-void EnemyBase::SetStatus(string SearchName)
+void EnemyBase::SetStatus(const string& searchName)
 {
-	EnemyStatusData* data = sceneGame->GetexportSCV()->GetEnemyStatusDataSearchName(SearchName);
+	//データの取得
+	EnemyStatusData* data = sceneGame->GetexportSCV()->GetEnemyStatusDataSearchName(searchName);
+
+	//ステータスの設定
 	SetQuaternion({ 0,0,0,1 });
 	SetScale({ data->GetScale(),data->GetScale(),data->GetScale() });
 	SetHp(data->GetHp());
 	SetMaxHp(GetHp());
-	SetMaxBeAttacked(data->GetMinionMaxBeAttacked());	//ミニオンが攻撃してくる最大数
+	SetMaxBeAttacked(data->GetSiroboMaxBeAttacked());	//ミニオンが攻撃してくる最大数
 	attackNode = data->GetAttackNode();
 	speed = data->GetSpeed();
 	collisionRadius = data->GetCollisionRadius();
@@ -51,14 +54,15 @@ void EnemyBase::Update()
 
 	//死亡フラグやダメージフラグが来ていないか確認
 	FlgCheak();
-
+	//進む方向の初期化
 	SetMoveVec({ 0,0,0 });
 
 	//ビヘイビアツリーの行動処理
 	ActionBehaviorTree();
 	//地面の補正
 	//VerticalCollision();
-	//敵の回転
+	
+	//敵の進む方向に回転
 	Turn(moveVec);
 	//敵の移動
 	Move();
@@ -72,56 +76,66 @@ void EnemyBase::FlgCheak()
 {
 	if (GetDamageFlg() == true)
 	{
+		//行動をリセット
 		ResetNode();
 	}
 	if (GetDeadFlg() == true)
 	{
+		//行動をリセット
 		ResetNode();
 	}
 
 }
 
 
-//当たり判定
-void EnemyBase::AttackCircleNode(string nodeName, float circleL, float startTime, float EndTime)
+//敵のボーンを取得して攻撃（当たり判定）
+void EnemyBase::AttackCircleNode(const string& nodeName, const float& circleL, const float& startTime,const float& endTime)
 {
+	
+	//アニメーション中かどうかを確かめる。（もしアニメーション外ならreturn）
+	{
+		const float endAnimetionTime = TK_Lib::Model::GetEndAnimetionTime(GetModel());
+		float AnimetionTime = TK_Lib::Model::GetAnimetionTime(GetModel());
+
+		if (endAnimetionTime == 0)assert(L"0で割り算しようとしました");
+		//アニメーションタイムの0～1までの比率に直す
+		AnimetionTime /= endAnimetionTime;
+
+		if (AnimetionTime <= startTime)return;
+		if (AnimetionTime >= endTime)return;
+	}
 
 
-	float endAnimetionTime = TK_Lib::Model::GetEndAnimetionTime(GetModel());
-	float AnimetionTime= TK_Lib::Model::GetAnimetionTime(GetModel());
 
-	if (endAnimetionTime == 0)assert(L"0で割り算しようとしました");
-	//アニメーションタイムの0～1までの比率に直す
-	AnimetionTime /= endAnimetionTime;
-
-	if (AnimetionTime <= startTime)return;
-	if (AnimetionTime >= EndTime)return;
-
-
+	//ボーンのノード取得
 	ModelResource::NodeTest* node = nullptr;
 	node = TK_Lib::Model::FindNode(GetModel(), nodeName.c_str());
 	if (node == nullptr)assert(!L"nodeがnullptrです");
-
 
 	VECTOR3 Pos;
 	Pos.x = node->worldTransform._41;
 	Pos.y = node->worldTransform._42;
 	Pos.z = node->worldTransform._43;
 
+	//攻撃する
 	AttackCircle(Pos, circleL);
 }
 
-
-void EnemyBase::AttackCircle(VECTOR3 pos, float circleL)
+//攻撃目標に対して攻撃！
+void EnemyBase::AttackCircle(const VECTOR3 &pos, const float& circleL)
 {
+	//攻撃力（まあこのゲームに攻撃力なんて存在しないが、とりあえず用意しておく。）
+	const int AttackVolume = 1;
+
 	//もし攻撃が目標に当たった場合
 	if (VsTargetAttackCircle(pos, circleL))
 	{
-		GetTarget()->AddDamage(1, GetTarget()->GetMaxinvincibleTime());
+		GetTarget()->AddDamage(AttackVolume, GetTarget()->GetMaxinvincibleTime());
 	}
-	TK_Lib::Debug3D::Circle(pos, circleL, VECTOR4{ 0,1,0,1 });
+	//TK_Lib::Debug3D::Circle(pos, circleL, VECTOR4{ 0,1,0,1 });
 }
 
+//別の行動へ移行させる。
 void EnemyBase::ResetNode()
 {
 	actionNode = nullptr;
@@ -143,23 +157,23 @@ void EnemyBase::ImguiDebug()
 	}
 }
 
-bool EnemyBase::VsTargetAttackCircle(VECTOR3 Pos, float Radius)
+bool EnemyBase::VsTargetAttackCircle(const VECTOR3& pos, const float& radius)
 {
 	//目標までの距離を算出
 	float TargetL;
 	{
-		VECTOR3 vec = GetTarget()->GetPos() - Pos;
+		VECTOR3 vec = GetTarget()->GetPos() - pos;
 		XMVECTOR Vec = XMLoadFloat3(&vec);
 		Vec = XMVector3Length(Vec);
 		XMStoreFloat(&TargetL, Vec);
 	}
 	//目標までの距離と比べる
-	return TargetL <= Radius;
+	return TargetL <= radius;
 }
 
 
 //索敵範囲にTargetがいればTRUEを返す
-bool EnemyBase::SearchTarget(float L)
+bool EnemyBase::SearchTarget(const float &l)
 {
 	Actor* Target = GetTarget();
 	//もし目標がいなかったらエラー
@@ -169,7 +183,7 @@ bool EnemyBase::SearchTarget(float L)
 		return false;
 	}
 	//索敵範囲にいるかどうかを判断
-	return SearchPosition(L,Target->GetPos());
+	return SearchPosition(l,Target->GetPos());
 
 }
 //ビヘイビアツリーの行動処理
@@ -178,12 +192,14 @@ void EnemyBase::ActionBehaviorTree()
 
 	if (actionFlg == false)return;
 
+	//もし行動決まっていないなら新しく思考する。
 	if (actionNode == nullptr)
 	{
 
 		actionNode = behaviorTree->ActiveNodeInference(this, behaviordata.get());
 		//if(ActionNode)ActionNode->ImguiDebug();
 	}
+	//行動を開始
 	if (actionNode != nullptr)
 	{
 		actionNode = behaviorTree->Run(this, actionNode, behaviordata.get());
@@ -191,10 +207,8 @@ void EnemyBase::ActionBehaviorTree()
 
 
 }
-void EnemyBase::SetDamageFlg(bool flg) { 
-	damageFlg = flg;
-}
-void EnemyBase::SetDeadFlg(bool flg) { deadFlg = flg; };
+
+//消滅処理
 void  EnemyBase::Destroy()
 {
 	//子オブジェクトも削除
@@ -205,9 +219,10 @@ void  EnemyBase::Destroy()
 
      GetSceneGame()->GetEnemyManager()->Destroy(this);
 }
+//死亡する時間の更新処理
 bool EnemyBase::UpdateDeathTime()
 {
-	float DeltaTimer = TK_Lib::Window::GetElapsedTime();
+	const float DeltaTimer = TK_Lib::Window::GetElapsedTime();
 	//死亡時間が経ったら
 	if (deathTime <= 0)
 	{
@@ -218,9 +233,9 @@ bool EnemyBase::UpdateDeathTime()
 	return false;
 }
 //自分が視野角内に入っているかどうか
-bool EnemyBase::IsDotAngle(const VECTOR3 Pos, const VECTOR3 vec, const float Angle)
+bool EnemyBase::IsDotAngle(const VECTOR3& pos, const VECTOR3& vec, const float& angle)
 {
-	VECTOR3 v =  GetPos()-Pos;
+	VECTOR3 v =  GetPos()-pos;
 	XMVECTOR Vec1 = XMLoadFloat3(&v);
 	XMVECTOR NVec1 = XMVector3Normalize(Vec1);
 	XMStoreFloat3(&v,NVec1);
@@ -238,7 +253,7 @@ bool EnemyBase::IsDotAngle(const VECTOR3 Pos, const VECTOR3 vec, const float Ang
 	//ImGui::Text("angle=%f", dot);
 	//ImGui::Text("flg=%d", Angle >= dot);
 	//ImGui::End();
-	if (Angle >= dot)
+	if (angle >= dot)
 	{
 		return true;
 	}
@@ -247,7 +262,7 @@ bool EnemyBase::IsDotAngle(const VECTOR3 Pos, const VECTOR3 vec, const float Ang
 	
 }
 
-void EnemyBase::HPRender(const int SpriteIndex, const VECTOR2 Pos)
+void EnemyBase::HPRender(const int& spriteIndex, const VECTOR2& pos)
 {
 	//const float HpSize = 70;
 	//const  float TargetHpRatio = (static_cast<float>(GetHp()) / static_cast<float>(GetMaxHp())) * HpSize;
@@ -257,12 +272,12 @@ void EnemyBase::HPRender(const int SpriteIndex, const VECTOR2 Pos)
 	//TK_Lib::Draw::Sprite(SpriteIndex, { Pos.x,Pos.y }, VECTOR2{ TargetHpRatio,10 }, VECTOR4{ 0,0,942 / 3,60 / 4 });
 }
 
-bool EnemyBase::AddDamage(int Damage, int MaxinvincibleTime)
+bool EnemyBase::AddDamage(int damage, float maxInvincibleTime)
 {
 	//体力が0以下なら
 	if (GetHp() <= 0)return false;
 
-	hp -= Damage;
+	hp -= damage;
 	//もし生き残っていたなら
 	if (hp >= 1)
 	{
@@ -289,10 +304,10 @@ void EnemyBase::TargetFaild()
 	targetFlg = TargetFlg::FAILED;
 
 	//ミニオンの帰還
-	for (int i = 0; i < AttackMinions.size(); i++)
+	for (int i = 0; i < attackSirobo.size(); i++)
 	{
-		MinionPlayer* minion = AttackMinions.at(i);
-		minion->ResetNode();
+		Sirobo* sirobo = attackSirobo.at(i);
+		sirobo->ResetNode();
 	}
 
 	//子オブジェクトも攻撃目標から消す。

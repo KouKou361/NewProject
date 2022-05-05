@@ -1,35 +1,36 @@
 #pragma once
 #include "Lib.h"
 //オブジェクトのタイプ
-enum ObjectTag
+enum class ObjectTag
 {
 	TAG_PLAYER,
-	TAG_MINION,
+	TAG_SIROBO,
 	TAG_OBJECT,
 	TAG_ENEMY,
+	TAG_NONE,
 };
-class MinionPlayer;
+class Sirobo;
 class Actor
 {
 private:
 	friend class Charactor;
 private:
 	//QuaternionがPrivateなのはSet関数を必ず経由してほしいから
-	VECTOR4 quaternion;
+	VECTOR4 quaternion = {0,0,0,1};
 
-	VECTOR3 front;
-	VECTOR3 right;
-	VECTOR3 up;
+	VECTOR3 front = { 0,0,0};
+	VECTOR3 right = { 0,0,0 };
+	VECTOR3 up = { 0,0,0 };
 
-	VECTOR3 pos;
-	VECTOR3 scale;
+	VECTOR3 pos = { 0,0,0 };
+	VECTOR3 scale = { 0,0,0 };
 
 	//モデルの番号
 	int modelIndex=-1;
 	//ダメージ受けた時の無敵時間
-	int maxInvincibleTime = 0;
+	float maxInvincibleTime = 0;
 	//オブジェクトの種類
-	ObjectTag tag;
+	ObjectTag tag=static_cast<ObjectTag>(ObjectTag::TAG_NONE);
 	
 
 protected:
@@ -44,7 +45,7 @@ protected:
 
 public:
 	//攻撃されているミニオン
-	vector<MinionPlayer*> AttackMinions;
+	vector<Sirobo*> attackSirobo;
 
 public:
 	Actor() {};
@@ -57,13 +58,13 @@ public:
 	inline void SetMaxHp(const int setHp) { maxHp = setHp; }
 
 	//HPの表示
-	virtual void HPRender(const int spriteIndex, const VECTOR2 pos)=0;
+	virtual void HPRender(const int &spriteIndex, const VECTOR2 &pos)=0;
 
-	void SetModel(int modelIndex);
+	void SetModel(const int& modelIndex);
 	int GetModel() { return modelIndex; }
 	void DeleteModel();
 
-	void AttackMinionErase(MinionPlayer* minion);
+	void AttackSiroboErase(Sirobo* sirobo);
 
 	void SetQuaternion(const VECTOR4& quaternion);
 	inline VECTOR4 GetQuaternion() { return quaternion; }
@@ -72,25 +73,25 @@ public:
 	inline VECTOR3 GetUp() { return up; }
 	
 	inline VECTOR3 GetPos() { return pos; };
-	inline void SetPos(const VECTOR3 pos) { this->pos = pos; };
+	inline void SetPos(const VECTOR3& pos) { this->pos = pos; };
 	inline VECTOR3 GetScale() { return scale; };
-	inline void SetScale(const VECTOR3 scale) { this->scale = scale; };
-	virtual bool AddDamage(const int damage, const int maxinvincibleTime = 0)=0;
+	inline void SetScale(const VECTOR3& scale) { this->scale = scale; };
+	virtual bool AddDamage(const int& damage, const float& maxinvincibleTime = 0)=0;
 
-	inline void  SetMaxInvincibleTime(const int maxInvincibleTime) { this->maxInvincibleTime = maxInvincibleTime; }
+	inline void  SetMaxInvincibleTime(const float& maxInvincibleTime) { this->maxInvincibleTime = maxInvincibleTime; }
 	inline float GetMaxinvincibleTime() { return maxInvincibleTime; }
 	 
 	inline float GetWeight() { return weight; }
 	inline float GetCollisionRadius() { return collisionRadius; }
 	 
-	inline void SetTag(const ObjectTag tag) { this->tag = tag; };
+	inline void SetTag(const ObjectTag& tag) { this->tag = tag; };
 	inline ObjectTag GetTag() { return tag; };
 	 
 	inline int GetNumBeAttacked() { return numBeAttacked; }
 	inline int GetMaxBeAttacked() { return maxBeAttacked; }
 
-	inline void SetNumBeAttacked(const int num) { numBeAttacked = num; }
-	inline void SetMaxBeAttacked(const int num) { maxBeAttacked = num; }
+	inline void SetNumBeAttacked(const int& num) { numBeAttacked = num; }
+	inline void SetMaxBeAttacked(const int& num) { maxBeAttacked = num; }
 
 
 	

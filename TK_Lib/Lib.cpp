@@ -50,14 +50,14 @@ namespace TK_Lib
     class Fade
     {
     public:
-        enum FadeType
+        enum class FADE_TYPE
         {
             FadeOut,
             FadeIn,
             NONE,
             End,
         };
-        FadeType type=NONE;
+        FADE_TYPE type= FADE_TYPE::NONE;
         float fadeVolumu = 0;
         int fadeTexture;
         float fadeSpeed = 0;
@@ -103,7 +103,7 @@ namespace TK_Lib
         //前までuniqueにしていたが、参照の仕方（都合の悪い方が先に消えてしまう）
         //が悪いので安定のnewをしている。
 
-        Graphics* graphics = nullptr;
+        Graphics* graphics ;
 
         Sampler*    sampler = nullptr;
         Rasterizer* rasterizer = nullptr;
@@ -126,28 +126,28 @@ namespace TK_Lib
 
         Gauss* gauss = nullptr;
 
-        LightController* lightController;
+        LightController* lightController = nullptr;
 
-        Lib_PointLightManager* pointLightManager;
+        Lib_PointLightManager* pointLightManager = nullptr;
 
-        DepthStencil* depthStencil;
+        DepthStencil* depthStencil = nullptr;
 
-        Lib_EffectManager* effectManager;
+        Lib_EffectManager* effectManager = nullptr;
 
-        GamePad* gamepad;
+        GamePad* gamepad = nullptr;
 
         //フレームタイマー
-        HighResolutionTimer timer;
+        HighResolutionTimer timer = {};
         // //ウィンドウサイズ
-        VECTOR2 windowSize;
-        Lib_TargetScreenShader* targetScreenShader;
+        VECTOR2 windowSize{};
+        Lib_TargetScreenShader* targetScreenShader = nullptr;
 
         //日本語Font
-        JapanFont* japanFont;
+        JapanFont* japanFont = nullptr;
         //サウンド
-        SoundManager* soundManager;
+        SoundManager* soundManager = nullptr;
 
-        Fade fade;
+        Fade fade = {};
         
 
 
@@ -174,7 +174,7 @@ namespace TK_Lib
         //   unique_ptr<Gauss> gauss = nullptr;
     };
   
-    static Member m;
+    static Member m = {};
 
  
 
@@ -342,6 +342,11 @@ namespace TK_Lib
 
         //ゲームパッドの更新
         m.gamepad->Update();
+
+        //スクリーンのクリア（リセット）
+        TK_Lib::Screen::Clear(VECTOR4{ 0,0,0,1 });
+        TK_Lib::Blender::SetBlender(Bland_state::BS_ALPHA);
+
 #if IMGUI
         TK_Lib::Imgui::UpdateStart();
         TK_Lib::Imgui::Update();
@@ -531,7 +536,7 @@ namespace TK_Lib
 #if defined(DEBUG) | defined(_DEBUG)
             _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
             //もしメモリーリークした時にここに値をいれるといいよ
-         //   _CrtSetBreakAlloc(36446);
+            //_CrtSetBreakAlloc(1427);
 #endif
             WNDCLASSEX wcex;
             wcex.cbSize = sizeof(WNDCLASSEX);
@@ -1502,7 +1507,7 @@ namespace TK_Lib
     {
         void Box(VECTOR3 Pos, VECTOR3 Size, float angle, VECTOR4 color, bool FillFlg)
         {
-            m.primitive3DDebugRender->DrawBox(Pos, Size, angle, color, FillFlg);
+      //      m.primitive3DDebugRender->DrawBox(Pos, Size, angle, color, FillFlg);
         }
         void Circle(VECTOR3 pos, float radius, VECTOR4 color, bool FillFlg)
         {
@@ -1510,7 +1515,7 @@ namespace TK_Lib
         }
         void Line(VECTOR3 pos, VECTOR3 pos2, VECTOR4 color, bool FillFlg)
         {
-            m.primitive3DDebugRender->DrawLine(pos, pos2, color, FillFlg);
+        //    m.primitive3DDebugRender->DrawLine(pos, pos2, color, FillFlg);
         }
     }
 
@@ -1707,34 +1712,34 @@ namespace TK_Lib
         void FadeInBegin(float Speed)
         {
             m.fade.fadeSpeed = Speed;
-            m.fade.type = Fade::FadeType::FadeIn;
+            m.fade.type = Fade::FADE_TYPE::FadeIn;
         }
     
         void FadeOutBegin(float Speed)
         {
             m.fade.fadeSpeed = Speed;
-            m.fade.type = Fade::FadeType::FadeOut;
+            m.fade.type = Fade::FADE_TYPE::FadeOut;
         }
 
         void FadeUpdate()
         {
             switch (m.fade.type)
             {
-            case Fade::FadeType::FadeIn:
+            case Fade::FADE_TYPE::FadeIn:
                 m.fade.fadeVolumu += m.fade.fadeSpeed;
                 if (m.fade.fadeVolumu >= 1)m.fade.fadeVolumu = 1;
                 break;
-            case Fade::FadeType::FadeOut:
+            case Fade::FADE_TYPE::FadeOut:
                 m.fade.fadeVolumu -= m.fade.fadeSpeed;
                 if (m.fade.fadeVolumu <= 0) {
                     m.fade.fadeVolumu = 0;
-                    m.fade.type = Fade::FadeType::NONE;
+                    m.fade.type = Fade::FADE_TYPE::NONE;
                 }
                 break;
-            case Fade::FadeType::NONE:
+            case Fade::FADE_TYPE::NONE:
                 m.fade.fadeVolumu = 0;
                 break;
-            case Fade::FadeType::End:
+            case Fade::FADE_TYPE::End:
                 break;
             }
         }

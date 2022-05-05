@@ -3,6 +3,7 @@
 #include "EnemyBase.h"
 #include <assert.h>
 
+// ノード検索
 NodeBase* NodeBase::SearchNode(std::string searchName)
 {
 	if (name == searchName)return this;
@@ -24,6 +25,7 @@ NodeBase* NodeBase::SearchNode(std::string searchName)
 	return nullptr;
 }
 
+//ノードのアクション
 ActionBase::State NodeBase::Run(Charactor* enemy)
 {
 	if (enemy)
@@ -38,7 +40,7 @@ ActionBase::State NodeBase::Run(Charactor* enemy)
 		return action->Run();
 	}
 	
-		
+		//次の行動に移行！
 	else 	return ActionBase::State::FAILED;
 }
 
@@ -141,34 +143,29 @@ NodeBase* NodeBase::SelectPriority(std::vector<NodeBase*> *list)
 // シーケンス
 NodeBase* NodeBase::SelectSequence(std::vector<NodeBase*>* list, BehaviorData* data)
 {
-	// シーケンス処理でノードを指定するコードを自分で考えて補完してください。
-	// ヒントとして手順を記載しています。
-	// 手順①：現在のノードのシーケンスのステップを取得
-	//		   ステップはint型、シーケンスステップの取得にはdata->GetSequenceStep()を使用すること
+	
 	int step = 0;
 	step = data->GetSequenceStep(GetName());
 
-	// 手順①で取得したステップ数が子ノード数を超えているか
 	if (step >= (int)children.size())
 	{
 		if (selectRule == BehaviorTree::SelectRule::SEQUETIAL_LOOPING)step = 0;
 		else return NULL;
-		// 手順②：selectRuleがSEQUENTIAL_LOOPINGの場合、stepに0を代入
-		// 		  それ以外はNULLをリターンしなさい
+		
 	}
 
-	// ③step番号のノードを検索
+
 	for (auto itr = list->begin(); itr != list->end(); itr++)
 	{
-		//自身の子ノードのstep番目のノードが、現在の実行可能ノードにあるか検索
+	
 		if (children.at(step)->GetName() == (*itr)->GetName())
 		{
 
-			// ④検索した結果、該当データがあれば自身をdataのsequenceStackに追加
+		
 			data->PushSequenceNode(this);
-			// ⑤data->setSequenceStepでgetName()のキーデータにステップ＋１をセットする
+		
 			data->SetSequenceStep(GetName(), step + 1);
-			// ⑥自身の子ノードのstep番目のノードをリターン
+
 			return children.at(step).get();
 		}
 	}

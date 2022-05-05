@@ -9,10 +9,10 @@ void ObjectFunctionBase::CollisionRender()
 //ImGuiのデバッグ
 void ObjectFunctionBase::ImguiDebug()
 {
-	ImGui::Begin("ObjectFunction");
-	ImGui::Text("Pos=%f,%f,%f", pos.x, pos.y, pos.z);
-	ImGui::Text("Radius=%f",radius);
-	ImGui::End();
+	//ImGui::Begin("ObjectFunction");
+	//ImGui::Text("Pos=%f,%f,%f", pos.x, pos.y, pos.z);
+	//ImGui::Text("Radius=%f",radius);
+	//ImGui::End();
 }
 //オブジェクトの破棄処理
 void ObjectFunctionBase::Destroy()

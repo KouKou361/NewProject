@@ -123,7 +123,7 @@ namespace TK_Lib
 
         const VECTOR3& GetRight();
         //ƒJƒƒ‰‚É‰f‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
-        const bool IsCamera(const VECTOR3& Position,const float R=25.0f);
+        const bool IsCamera(const VECTOR3& Position,const float R=35.0f);
 
     }
 

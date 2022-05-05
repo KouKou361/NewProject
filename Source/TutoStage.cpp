@@ -9,32 +9,32 @@
 TutoStage::TutoStage(string RenderModel, string NoShadowRenderModel, string CollisionModel, string NavModel, VECTOR3 Pos, VECTOR3 Angle, VECTOR3 Scale, string SetData, SceneGame* scene)
 {
 	//データの登録
-	StageIndex[StageType::RENDER_MODEL] = TK_Lib::Load::GetModel(RenderModel);
-	StageIndex[StageType::NO_MAKE_SHADOW_MODEL] = TK_Lib::Load::GetModel(NoShadowRenderModel);
-	StageIndex[StageType::COLISION_MODEL] = TK_Lib::Load::GetModel(CollisionModel);
-	StageIndex[StageType::NAV_MODEL] = TK_Lib::Load::GetModel(NavModel);
+	StageIndex[static_cast<int>(StageType::RENDER_MODEL)] = TK_Lib::Load::GetModel(RenderModel);
+	StageIndex[static_cast<int>(StageType::NO_MAKE_SHADOW_MODEL)] = TK_Lib::Load::GetModel(NoShadowRenderModel);
+	StageIndex[static_cast<int>(StageType::COLISION_MODEL)] = TK_Lib::Load::GetModel(CollisionModel);
+	StageIndex[static_cast<int>(StageType::NAV_MODEL)] = TK_Lib::Load::GetModel(NavModel);
 
 	//ステージ
-	TK_Lib::Model::Tranceform(StageIndex[StageType::RENDER_MODEL], Pos, Angle, Scale);
-	TK_Lib::Model::PlayAnimation(StageIndex[StageType::RENDER_MODEL], 0, false);
-	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::RENDER_MODEL]);
+	TK_Lib::Model::Tranceform(     StageIndex[static_cast<int>(StageType::RENDER_MODEL)], Pos, Angle, Scale);
+	TK_Lib::Model::PlayAnimation(  StageIndex[static_cast<int>(StageType::RENDER_MODEL)], 0, false);
+	TK_Lib::Model::AnimetionUpdate(StageIndex[static_cast<int>(StageType::RENDER_MODEL)]);
 
 	//影なしステージ
-	TK_Lib::Model::Tranceform(StageIndex[StageType::NO_MAKE_SHADOW_MODEL], Pos, Angle, Scale);
-	TK_Lib::Model::PlayAnimation(StageIndex[StageType::NO_MAKE_SHADOW_MODEL], 0, false);
-	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::NO_MAKE_SHADOW_MODEL]);
+	TK_Lib::Model::Tranceform(     StageIndex[static_cast<int>(StageType::NO_MAKE_SHADOW_MODEL)], Pos, Angle, Scale);
+	TK_Lib::Model::PlayAnimation(  StageIndex[static_cast<int>(StageType::NO_MAKE_SHADOW_MODEL)], 0, false);
+	TK_Lib::Model::AnimetionUpdate(StageIndex[static_cast<int>(StageType::NO_MAKE_SHADOW_MODEL)]);
 
 	//Navメッシュ
-	TK_Lib::Model::Tranceform(StageIndex[StageType::NAV_MODEL], Pos, Angle, Scale);
-	TK_Lib::Model::PlayAnimation(StageIndex[StageType::NAV_MODEL], 0, false);
-	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::NAV_MODEL]);
+	TK_Lib::Model::Tranceform(     StageIndex[static_cast<int>(StageType::NAV_MODEL)], Pos, Angle, Scale);
+	TK_Lib::Model::PlayAnimation(  StageIndex[static_cast<int>(StageType::NAV_MODEL)], 0, false);
+	TK_Lib::Model::AnimetionUpdate(StageIndex[static_cast<int>(StageType::NAV_MODEL)]);
 
 
 
 	//当たり判定
-	TK_Lib::Model::Tranceform(StageIndex[StageType::COLISION_MODEL], Pos, Angle, Scale);
-	TK_Lib::Model::PlayAnimation(StageIndex[StageType::COLISION_MODEL], 0, false);
-	TK_Lib::Model::AnimetionUpdate(StageIndex[StageType::COLISION_MODEL]);
+	TK_Lib::Model::Tranceform(     StageIndex[static_cast<int>(StageType::COLISION_MODEL)], Pos, Angle, Scale);
+	TK_Lib::Model::PlayAnimation(  StageIndex[static_cast<int>(StageType::COLISION_MODEL)], 0, false);
+	TK_Lib::Model::AnimetionUpdate(StageIndex[static_cast<int>(StageType::COLISION_MODEL)]);
 
 	//ステージのオブジェクト配置
 	stageExport = std::make_unique<Export>();
@@ -51,9 +51,9 @@ void TutoStage::Init()
 	
 	{
 		//当たり判定登録
-		Collision::Instance().RegisterModel(StageIndex[StageType::COLISION_MODEL], ModelCollisionType::COLLISION_MODEL, nullptr);
-		//ナビメッシュ登録
-		Collision::Instance().RegisterModel(StageIndex[StageType::NAV_MODEL], ModelCollisionType::NAV_MODEL, nullptr);
+		Collision::Instance().RegisterModel(StageIndex[static_cast<int>(StageType::COLISION_MODEL)], ModelCollisionType::COLLISION_MODEL, nullptr);
+		//ナビメッシュ登録							   
+		Collision::Instance().RegisterModel(StageIndex[static_cast<int>(StageType::NAV_MODEL)], ModelCollisionType::NAV_MODEL, nullptr);
 		//ナビメッシュの構成
 		Collision::Instance().NacStageBuild();
 		//ステージのオブジェクト配置
@@ -65,86 +65,86 @@ void TutoStage::Init()
 
 	ExportText* script;
 	script = new ExportText("Data/Tuto/TutoScript.txt");
-	vector<string>* test = script->GetScripts();
+	vector<string>* readScripts = script->GetScripts();
 	
 	//チュートリアルへようこそ
 	{
 		shared_ptr<Tuto> tuto = std::make_shared<Tuto>(sceneGame);
-		tuto->AddText(test->at(0));
-		tuto->AddText(test->at(1));
+		tuto->AddText(readScripts->at(0));
+		tuto->AddText(readScripts->at(1));
 		tutoManager.push_back(tuto);
 	}
 
 	//球に移動
 	{
 		shared_ptr<MoveTuto> tuto = std::make_shared<MoveTuto>(sceneGame);
-		tuto->AddText(test->at(2));
+		tuto->AddText(readScripts->at(2));
 		tutoManager.push_back(tuto);
 	}
 
 	{
 		shared_ptr<Tuto> tuto = std::make_shared<Tuto>(sceneGame);
-		tuto->AddText(test->at(3));
-		tuto->AddText(test->at(4));
+		tuto->AddText(readScripts->at(3));
+		tuto->AddText(readScripts->at(4));
 		tutoManager.push_back(tuto);
 	}
 	//シロボを仲間に
 	{
-		shared_ptr<GetMinionTuto> tuto = std::make_shared<GetMinionTuto>(sceneGame);
-		tuto->AddText(test->at(5));
+		shared_ptr<GetSiroboTuto> tuto = std::make_shared<GetSiroboTuto>(sceneGame);
+		tuto->AddText(readScripts->at(5));
 		tutoManager.push_back(tuto);
 	}
 
 	{
 		shared_ptr<Tuto> tuto = std::make_shared<Tuto>(sceneGame);
-		tuto->AddText(test->at(6));
-		tuto->AddText(test->at(7));
-		tuto->AddText(test->at(8));
-		tuto->AddText(test->at(9));
-		tuto->AddText(test->at(10));
+		tuto->AddText(readScripts->at(6));
+		tuto->AddText(readScripts->at(7));
+		tuto->AddText(readScripts->at(8));
+		tuto->AddText(readScripts->at(9));
+		tuto->AddText(readScripts->at(10));
 		tutoManager.push_back(tuto);
 	}
 	//チュートリアルの敵に攻撃
 	{
 		shared_ptr<KillDummyEnemyTuto> tuto = std::make_shared<KillDummyEnemyTuto>(sceneGame);
-		tuto->AddText(test->at(11));
+		tuto->AddText(readScripts->at(11));
 		tutoManager.push_back(tuto);
 	}
 
 	{
 		shared_ptr<Tuto> tuto = std::make_shared<Tuto>(sceneGame);
-		tuto->AddText(test->at(12));
-		tuto->AddText(test->at(13));
-		tuto->AddText(test->at(14));
+		tuto->AddText(readScripts->at(12));
+		tuto->AddText(readScripts->at(13));
+		tuto->AddText(readScripts->at(14));
 		tutoManager.push_back(tuto);
 	}
 
 	//蘇生
 	{
-		shared_ptr<ResurectionMinionTuto> tuto = std::make_shared<ResurectionMinionTuto>(sceneGame);
-		tuto->AddText(test->at(15));
+		shared_ptr<ResurectionSiroboTuto> tuto = std::make_shared<ResurectionSiroboTuto>(sceneGame);
+		tuto->AddText(readScripts->at(15));
 		tutoManager.push_back(tuto);
 	}
 
 	{
 		shared_ptr<Tuto> tuto = std::make_shared<Tuto>(sceneGame);
-		tuto->AddText(test->at(16));
-		tuto->AddText(test->at(17));
+		tuto->AddText(readScripts->at(16));
+		tuto->AddText(readScripts->at(17));
 		tutoManager.push_back(tuto);
 	}
 
 	//操作に慣れよう
 	{
 		shared_ptr<KillEnemyTuto> tuto = std::make_shared<KillEnemyTuto>(sceneGame);
-		tuto->AddText(test->at(18));
+		tuto->AddText(readScripts->at(18));
 		tutoManager.push_back(tuto);
 	}
 
 	{
 		shared_ptr<Tuto> tuto = std::make_shared<Tuto>(sceneGame);
-		tuto->AddText(test->at(19));
-		tuto->AddText(test->at(20));
-		tuto->AddText(test->at(21));
+		tuto->AddText(readScripts->at(19));
+		tuto->AddText(readScripts->at(20));
+		tuto->AddText(readScripts->at(21));
 		tutoManager.push_back(tuto);
 	}
 
@@ -191,11 +191,10 @@ void TutoStage::Update()
 		NextTuto();
 	}
 
+	//復活
+	DeadIsResurection();
 	//ゲームオーバータイマーが回復
-	if (sceneGame->GetStageManager()->GetNowStage()->GetUiTimer()->GetGameTimer() <= 50)
-	{
-		sceneGame->GetStageManager()->GetNowStage()->GetUiTimer()->AddGameOverTimer(10);
-	}
+	ResurectionGameOverTime(50);
 
 	//UIの更新
 	uiTimer->Update();
@@ -210,6 +209,7 @@ void TutoStage::NextTuto()
 		return;
 	}
 
+
 	nowTuto = tutoManager.at(tutoIndex);
 	nowTuto->Init();
 }
@@ -217,6 +217,9 @@ void TutoStage::NextTuto()
 //描画
 void TutoStage::Render()
 {
+	//死亡時の救済措置
+	DeadIsResurection();
+
 	if (tutoIndex>= renderUiNumTower)
 	{
 		uiNumTower->Render();
@@ -226,21 +229,6 @@ void TutoStage::Render()
 	nowTuto->Render();
 
 	uiTimer->Render();
-
-
-
-	//デバッグ
-//死亡時の救済措置
-	if (sceneGame->GetPlayer()->GetState() == Player::State::DEAD)
-	{
-		VECTOR2 Window = TK_Lib::Window::GetWindowSize();
-		if (TK_Lib::Gamepad::GetButtonDown(BTN::A) >= 50)
-		{
-			sceneGame->GetPlayer()->ChangeState(Player::State::WAIT);
-			uiTimer->AddGameOverTimer(100);
-		}
-		TK_Lib::Draw::JapanFont("「〇キー」長押しで救済措置", { Window.x / 2 - 100, Window.y / 2 - 100 });
-	}
 }
 
 void TutoStage::ModelRender()
@@ -260,4 +248,13 @@ bool TutoStage::ClearJudge()
 {
 	if (nowTuto == nullptr)return true;
 	return false;
+}
+
+//ゲームオーバータイマーが回復
+void TutoStage::ResurectionGameOverTime(const float time)
+{
+	if (uiTimer->GetGameTimer() <= time)
+	{
+		uiTimer->AddGameOverTimer(10);
+	}
 }

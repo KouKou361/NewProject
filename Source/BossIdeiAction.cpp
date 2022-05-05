@@ -9,8 +9,10 @@
 //開始処理
 void BossIdeiAction::Start()
 {
+	//ボスの待機モーションの取得
+	const int BossIdeiAnimetion = owner->GetAnime()->GetIndex(owner->GetAnime()->Idle);
 	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->Idle), true);
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), BossIdeiAnimetion, true);
 	ideiTimer = 0;
 }
 

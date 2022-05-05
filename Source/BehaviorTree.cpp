@@ -7,7 +7,7 @@
 BehaviorTree::BehaviorTree()
 {
 }
-
+//ÉmÅ[ÉhÇÃí«â¡
 void BehaviorTree::AddNode(std::string searchName, std::string entryName, int priority, SelectRule selectRule, JudgementBase* judgment, ActionBase* action,bool OnOff)
 {
 	if (searchName != "")

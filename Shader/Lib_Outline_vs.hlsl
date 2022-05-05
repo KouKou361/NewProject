@@ -21,7 +21,7 @@ GSInput main(VSInput input)
     float3 L = normalize(-lightDirection.xyz);
     float d = dot(L, N) * 0.5f + 0.5f;
     vout.power = max(0, d);
-    vout.color.xyz = (1, 1, 1) * vout.power;
+    vout.color.xyz = float3(1, 1, 1) * vout.power;
     vout.color.w = materialColor.w;
     vout.texcoord = input.texcoord;
 

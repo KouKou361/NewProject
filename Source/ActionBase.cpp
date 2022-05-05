@@ -1,5 +1,5 @@
 #include "ActionBase.h"
-#include "MinionPlayer.h"
+#include "SiroboPlayer.h"
 
 //もし目標物が消えてしまった場合
 ActionBase::State ActionBase::DeleteTarget()
@@ -7,8 +7,8 @@ ActionBase::State ActionBase::DeleteTarget()
 	return State::FAILED;
 }
 
-//もしターゲットがいなくなっていたら
-bool ActionBase::CheakTarget(Charactor* chara)
+//もしターゲットがいなくなっているかどうか
+bool ActionBase::CheakTarget(const Charactor* chara)
 {
 	if (chara == nullptr)
 	{

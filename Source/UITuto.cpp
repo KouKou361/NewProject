@@ -4,7 +4,7 @@
 //‰Šú‰»
 void UITuto::Init()
 {
-	indexTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/MessageWindow.png");
+	TextureIndex = TK_Lib::Load::LoadTexture("./Data/Sprite/MessageWindow.png");
 	//NextWindow = TK_Lib::Load::LoadTexture("./Data/Sprite/NotificationWindow.png");
 
 
@@ -22,8 +22,10 @@ void UITuto::Init()
 //XVˆ—
 void UITuto::Update()
 {
-	constexpr float MaxCenterScaleX=18.0f;
-	centerScale.x += 0.3f;
+	const float MaxCenterScaleX=18.0f;
+	const float UpdateScale = 0.3f;
+
+	centerScale.x += UpdateScale;
 	if (centerScale.x >= MaxCenterScaleX)
 	{
 		centerScale.x = MaxCenterScaleX;
@@ -57,7 +59,7 @@ void UITuto::Render()
 
 	
 	//Window‚Ì•`‰æ
-	TK_Lib::Draw::SliceUISprite(indexTexture, pos, size, s1, s2, centerScale);
+	TK_Lib::Draw::SliceUISprite(TextureIndex, pos, size, s1, s2, centerScale);
 	TK_Lib::Draw::JapanFont(text,pos+ FontOffset);
 
 

@@ -23,12 +23,11 @@ void BossSiteDieAction::Start()
 //実行処理
 ActionBase::State BossSiteDieAction::Run()
 {
-
-	owner->GetSceneGame()->GetEffectManager()->GetEffectFromSerchKey("BossSiteBreak")->Play(owner->GetPos(), 1);
-
-
-	
-
+	//エフェクトの数
+	const int EffectNum = 1;
+	//煙エフェクトの出現
+	owner->GetSceneGame()->GetEffectManager()->GetEffectFromSerchKey("BossSiteBreak")->Play(owner->GetPos(), EffectNum);
+	//行動続行
 	return ActionBase::State::RUN;
 }
 

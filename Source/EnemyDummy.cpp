@@ -9,21 +9,30 @@
 
 void EnemyDummy::Init()
 {
-	SetQuaternion({ 0,0,0,1 });
-	//pos = { 7,0,0 };
-
-	//SetPos({ 7,0,0 });
-	
+	//ステータスの設定
+	SetStatus("Dummy");
+	//モデル生成
 	SetModel(TK_Lib::Load::GetModel("Dummy"));
+	//アニメション設定
+	SetAnimetion();
 
-
+	//タグ付き
 	SetTag(ObjectTag::TAG_ENEMY);
 	SetEnemyTag(EnemyTag::DUMMY_ENEMY);
 
-	//AttackNode = "EyeBall";
+	//シロボ達の攻撃を受けるリストをクリア（念のため）
+	attackSirobo.clear();
 
-	//ステータスの設定
-	SetStatus("Dummy");
+	//behaviorTreeの設定
+	SetBehaviorTree();
+
+
+}
+
+
+//アニメション設定
+void EnemyDummy::SetAnimetion()
+{
 
 	anime = make_unique<Animetion>();
 	//アニメーション番号
@@ -48,20 +57,18 @@ void EnemyDummy::Init()
 		anime->End//"End",
 	};
 	//アニメーションの登録
-	for (int i = 0; anime->End != AnimeIndex[i]; i++)
-	{
-		anime->Register(i, AnimeIndex[i]);
-	}
+	anime->AllAnimetionKey(&AnimeIndex[0]);
 
-	AttackMinions.clear();
-
-	behaviorTree = make_unique<BehaviorTree>();
-	behaviordata = make_unique<BehaviorData>();
-	behaviorTree->AddNode("", "root", 0, BehaviorTree::SelectRule::PRIORITY, nullptr, nullptr);
-	behaviorTree->AddNode("root", "damage", 1, BehaviorTree::SelectRule::NONE, new DamageJudgement(this), new DamageAction(this));
-	behaviorTree->AddNode("root", "dead", 2, BehaviorTree::SelectRule::NONE, new DeadJudgement(this), new DeadAction(this));
-	//behaviorTree->AddNode("root", "attack", 3, BehaviorTree::SelectRule::Non, new AttackJudgement(this), new AttackAction(this));
-	//behaviorTree->AddNode("root", "pursuit", 4, BehaviorTree::SelectRule::Non, new PursuitJudgement(this), new PursuitAction(this));
-	//behaviorTree->AddNode("root", "idle", 5, BehaviorTree::SelectRule::Non, new IdleJudgement(this), new IdleAction(this));
 
 }
+
+//behaviorTreeの設定
+void EnemyDummy::SetBehaviorTree()
+{
+	behaviorTree = make_unique<BehaviorTree>();
+	behaviordata = make_unique<BehaviorData>();
+	behaviorTree->AddNode("", "root",       0, BehaviorTree::SelectRule::PRIORITY, nullptr,                   nullptr);
+	behaviorTree->AddNode("root", "damage", 1, BehaviorTree::SelectRule::NONE,     new DamageJudgement(this), new DamageAction(this));
+	behaviorTree->AddNode("root", "dead",   2, BehaviorTree::SelectRule::NONE,     new DeadJudgement(this),   new DeadAction(this));
+}
+

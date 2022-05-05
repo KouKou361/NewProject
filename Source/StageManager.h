@@ -31,7 +31,7 @@ public:
 	bool GetClearJudge() { return nowStage->ClearJudge(); }
 
 	//“G‚Ì”‚Ìæ“¾
-	int GetStageSize() { return stages.size(); }
+	int GetStageSize() { return static_cast<int>(stages.size()); }
 	//“G‚Ì”‚Ìæ“¾
 	Stage* GetStgeIndex(const int& index) { return stages.at(index).get(); }
 

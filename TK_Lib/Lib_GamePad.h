@@ -3,7 +3,7 @@
 using GamePadButton = unsigned int;
 
 
-enum BTN
+enum class BTN
 {
 	UP,
 	RIGHT,
@@ -44,7 +44,7 @@ class GamePad
 	static const GamePadButton BTN_RT    = (1 << 15);
 private:
 	static GamePad* instance;
-	int Buttonstate[BTN::END];
+	int Buttonstate[static_cast<int>(BTN::END)];
 	const float AxisTolerance = 0.1f;
 public:
 
@@ -64,7 +64,7 @@ public:
 
 	// ボタン押下状態の取得
 	int GetButtonDown(BTN button) const {
-		return Buttonstate[button];
+		return Buttonstate[static_cast<int>(button)];
 	}
 
 	// ボタン押上状態の取得

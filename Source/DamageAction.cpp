@@ -8,8 +8,12 @@ class EnemyBase;
 //開始処理
 void DamageAction::Start()
 {
-	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->Damage), false);
+	//ボスの回転攻撃終了モーションの取得
+	const int BossDamageAnimetion = owner->GetAnime()->GetIndex(owner->GetAnime()->Damage);
+	//ダメージを受けるアニメーションの再生
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), BossDamageAnimetion, false);
+
+	//ダメージ通知
 	owner->SetDamageFlg(false);
 }
 
@@ -18,8 +22,11 @@ ActionBase::State DamageAction::Run()
 {
 	if (TK_Lib::Model::IsPlayAnimetion(owner->GetModel()))
 	{
+		//行動続行
 		return ActionBase::State::RUN;
 	}
+
+	//行動に移行
 	return ActionBase::State::FAILED;
 }
 

@@ -5,7 +5,7 @@
 void UINextMessage::Init()
 {
 	
-	indexTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/NotificationWindow.png");
+	TextureIndex = TK_Lib::Load::LoadTexture("./Data/Sprite/NotificationWindow.png");
 
 	//pos = { 1300,520 };
 	pos = { 1300,820 };
@@ -46,7 +46,7 @@ void UINextMessage::Render()
 	//	ImGui::End();
 
 	//
-	TK_Lib::Draw::SliceUISprite(indexTexture, pos, size, s1, s2, centerScale);
+	TK_Lib::Draw::SliceUISprite(TextureIndex, pos, size, s1, s2, centerScale);
 	//ÅZÇ≈éüÇ…êiÇﬁ
 	TK_Lib::Draw::JapanFont("ÅZÇ≈éüÇ…êiÇﬁ", pos + FontOffset);
 }

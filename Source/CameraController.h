@@ -8,11 +8,11 @@ class BossStage;
 enum class EventState;
 class EnemyBase;
 
+//カメラの基底クラス
 class Camera
 {
 	friend class CameraManager;
 protected:
-	float lerpSpeed = 0.02f;
 	//補完用（注視点）
 	VECTOR3 startTargetPos;
 	VECTOR3 endTargetPos;
@@ -42,22 +42,25 @@ public:
 	virtual void UpdateEye() = 0;
 	//注視点を決める更新
 	virtual void UpdateTarget() = 0;
-	//視点移動更新処理
-	virtual bool LerpCameraUpdate();
 	//終了処理
 	virtual void End() = 0;
 	//Imgui
 	virtual void Imgui()=0;
 	//カメラの注視点移動(補完)
 	bool LerpTargetCamera(const float time);
-	//レイピック
-	void RayPick();
 	//カメラの視点移動(補完)
 	bool LerpEyeCamera(const float time);
-	inline void SetTarget(const VECTOR3 TargetPos) { this->targetPos = TargetPos; };
+
+
+	inline void SetTarget(const VECTOR3& targetPos) { this->targetPos = targetPos; };
 	inline void SetOnwer(Actor* owner) { this->owner = owner; };
 	inline Actor* GetActor() { return targetChara; }
 	inline void SetActor(Actor* Actor) {targetChara=Actor; }
+private:
+	//長さを取得
+	float GetLength(const VECTOR3 startPos, const VECTOR3 endPos);
+	//カメラの線上補完
+	bool LerpCamera(VECTOR3& outpos, const VECTOR3 startPos, const VECTOR3 &endPos,const float &minL,const float &time);
 };
 
 //通常モード コントローラーでカメラの視点を変える
@@ -96,7 +99,7 @@ private:
 public:
 	CameraAim() {};
 	CameraAim(Actor* owner, Actor* targetChara, EnemyManager* enemyManager);
-	void ChangeTargetChara();
+	//void ChangeTargetChara();
 	//初期化処理
 	void Init();
 	//更新処理
@@ -110,6 +113,10 @@ public:
 	void UpdateEye();
 	//注視点を決める更新
 	void UpdateTarget();
+
+private:
+	//エイムカメラのキャンセル
+	void CanselCamera();
 };
 
 //BOSS演出用カメラ
@@ -135,6 +142,7 @@ public:
 	//注視点を決める更新
 	void UpdateTarget();
 
+
 	//Ownerの方に向いておく
 	bool LookatOwner();
 	//敵の方向に向く
@@ -153,31 +161,40 @@ class CameraManager
 
 private:
 
-	EnemyManager* enemyManager;
+	EnemyManager* enemyManager=nullptr;
 	std::unique_ptr<Camera> currentCamera = nullptr;
 
 
 public:
-	enum  CameraType
+	enum class CameraType
 	{
 		TYPE_NORMAL,
 		TYPE_AIM,
 		TYPE_BOSS,
-		TYPE_END
+		TYPE_NONE,
+		TYPE_END,
 	};
-	CameraType cameraType;
+	CameraType cameraType=static_cast<CameraType>(CameraType::TYPE_NONE);
 	CameraManager() {};
 	~CameraManager() {};
+	//初期化
 	void Init(Actor* ower);
+	//更新処理
 	void Update();
+	//カメラが切り替わった時の後始末処理
 	void End();
+	//デバッグ
 	void Imgui();
-	inline CameraType GetNowType() { return cameraType; }
+	//カメラの切り替え
+	void ChangeCamera(Camera* newScene);
+	//カメラの切り替え（Pos指定あり）
+	void ChangeCamera(Camera* newScene, const VECTOR3 cameraPos);
+
+	inline CameraType GetNowType() { return static_cast<CameraType>(cameraType); }
 	//カメラの目標のキャラクターのセット
 	inline Actor* GetTargetChractor() {return currentCamera->GetActor(); }
 	inline void SetTarget(const VECTOR3 targetPos) { currentCamera->SetTarget(targetPos); };
 	inline void SetOwner(Actor* owner) { currentCamera->SetOnwer(owner); };
-	void ChangeCamera(Camera* newScene);
-	void ChangeCamera(Camera* newScene,const VECTOR3 cameraPos);
+
 	inline void SetEnemyManager(EnemyManager* enemyManager) { this->enemyManager = enemyManager; }
 };

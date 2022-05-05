@@ -15,8 +15,8 @@ public:
 	std::vector<shared_ptr<NodeBase>>   children;// 子ノード
 protected:
 
-	string                   name;	//ノードの名前
-	BehaviorTree::SelectRule selectRule;//ノードの選択ルール
+	string                   name="";	//ノードの名前
+	BehaviorTree::SelectRule selectRule= BehaviorTree::SelectRule::NONE;//ノードの選択ルール
 	NodeBase* parent = nullptr;//親ノード
 
 	unique_ptr<ActionBase>   action = nullptr;//実行処理
@@ -24,8 +24,8 @@ protected:
 
 	NodeBase* sibling = nullptr;		// 兄弟ノード
 
-	unsigned int			 priority;		// 優先順位
-	int						 hierarchyNo;	// 階層番号
+	unsigned int			 priority=0;		// 優先順位
+	int						 hierarchyNo=0;	// 階層番号
 	bool                     oldSelect = true;     //過去に選択されたかどうか
 public:
 	NodeBase() {};

@@ -5,14 +5,15 @@
 void EffectManager::Init()
 {
 	updatePlayEffectPoses.clear();
-	TK_Lib::Lib_Effect::Init(10);
+	TK_Lib::Lib_Effect::Init(10);//エフェクトの設定
 }
+
 //毎フレームエフェクトをだすデータ登録
-void EffectManager::UpdateEffectRegister(VECTOR3 Pos, string name, int num)
+void EffectManager::UpdateEffectRegister(const VECTOR3& pos, const string &name,const int& num)
 {
 	UpdatePlayEffect efc;
 
-	efc.pos = Pos;
+	efc.pos = pos;
 	efc.name = name;
 	efc.playNum = num;
 
@@ -24,13 +25,21 @@ void EffectManager::PlayUpdateEffect()
 	for (int i = 0; i < updatePlayEffectPoses.size(); i++)
 	{
 		UpdatePlayEffect UpdateEfc = updatePlayEffectPoses.at(i);
-		EffectBase* efc= GetEffectFromSerchKey(UpdateEfc.name);
-		efc->Play(UpdateEfc.pos, UpdateEfc.playNum);
+		EffectBase* efc= GetEffectFromSerchKey(UpdateEfc.name);		
+
+		if (TK_Lib::Camera::IsCamera(UpdateEfc.pos))
+		{
+			efc->Play(UpdateEfc.pos, UpdateEfc.playNum);
+		}
+
+		
+
 	}
 }
 //更新処理
 void EffectManager::Update()
 {
+	//毎フレームエフェクトをだすエフェクトの更新処理
 	PlayUpdateEffect();
 
 	for (shared_ptr<EffectBase> efc : effects)
@@ -55,14 +64,14 @@ void EffectManager::Update()
 
 }
 //破棄処理
-void EffectManager::Destroy(EffectBase* Efc)
+void EffectManager::Destroy(const EffectBase* efc)
 {
-	for (shared_ptr<EffectBase> efc : effects)
+	for (shared_ptr<EffectBase> m_efc : effects)
 	{
-		std::vector<shared_ptr<EffectBase>>::iterator it = std::find(effects.begin(), effects.end(), efc);
-		if (it->get() == Efc)
+		std::vector<shared_ptr<EffectBase>>::iterator it = std::find(effects.begin(), effects.end(), m_efc);
+		if (it->get() == efc)
 		{
-			shared_ptr<EffectBase> e = efc;
+			shared_ptr<EffectBase> e = m_efc;
 			remove.emplace_back(e);
 		}
 	}
@@ -83,9 +92,7 @@ void EffectManager::NotRender()
 //ステージのリセット
 void EffectManager::StageReset()
 {
-	NotRender();
-	//EffectIndexResources.clear();
-	//effects.clear();
+	NotRender();//全て非表示にする
 	remove.clear();
 	updatePlayEffectPoses.clear();
 }
@@ -106,15 +113,15 @@ void EffectManager::Clear()
 
 
 }
-
-EffectBase* EffectManager::GetEffectFromSerchKey(const string& SearchName)
+//登録した名前からエフェクト取得
+EffectBase* EffectManager::GetEffectFromSerchKey(const string& searchName)
 {
-	return effectIndexResources.at(SearchName);
+	return effectIndexResources.at(searchName);
 }
-//登録
-void EffectManager::Register(shared_ptr<EffectBase> efc, const string RegisterName)
+//エフェクト登録
+void EffectManager::Register(const shared_ptr<EffectBase>& efc, const string& registerName)
 {
 	efc->Init();
 	effects.emplace_back(efc);
-	effectIndexResources.insert(make_pair(RegisterName, efc.get()));
+	effectIndexResources.insert(make_pair(registerName, efc.get()));
 }

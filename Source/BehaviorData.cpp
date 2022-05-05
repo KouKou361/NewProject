@@ -27,8 +27,6 @@ int BehaviorData::GetSequenceStep(std::string name)
 {
 	if (runSequenceStepMap.count(name) == 0)
 	{
-		//		runSequenceStepMap.at(name) = 0;
-
 		runSequenceStepMap.insert(std::make_pair(name, 0));
 	}
 

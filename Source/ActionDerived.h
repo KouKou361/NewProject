@@ -27,8 +27,8 @@ public:
 class PursuitAction : public ActionBase
 {
 private:
-	bool searchFlg;
-	VECTOR3 targetPos;
+	bool searchFlg=false;
+	VECTOR3 targetPos = { 0,0,0 };
 public:
 	PursuitAction(EnemyBase* enemy) :ActionBase(enemy) {}
 
@@ -43,6 +43,11 @@ public:
 
 	//Imguiデバッグ
 	void DebugImgui();
+
+private:
+
+	//ターゲットに向かって進む。
+	bool PursuitTarget();
 
 
 };
@@ -142,18 +147,22 @@ public:
 	//終了処理
 	void End();
 
-	void PlayerToTurn();
+
 
 	//Imguiデバッグ
 	void DebugImgui();
+private:
+	//
+	void PlayerToTurn();
+	//着地サウンド
+	void BossJumpDownSound();
 };
 
 //回転攻撃
 class BossRollAttackAction : public ActionBase
 {
 private:
-	float rollTimer = 0;
-	static constexpr float RollTimerMax = 180;
+
 public:
 	BossRollAttackAction(EnemyBase* enemy) :ActionBase(enemy) {}
 
@@ -163,14 +172,17 @@ public:
 	//実行処理
 	ActionBase::State Run();
 
-	//前進
-	void Advance(const float AdvanceSpeed);
-
 	//終了処理
 	void End();
 
 	//Imguiデバッグ
 	void DebugImgui();
+
+private:
+	//壁にぶつかったかどうか
+	bool ContactWall();
+	//前進
+	void Advance(const float AdvanceSpeed);
 };
 
 //回転攻撃終了
@@ -190,6 +202,10 @@ public:
 
 	//Imguiデバッグ
 	void DebugImgui();
+
+private:
+	//着地サウンド
+	void BossJumpDownSound();
 };
 
 
@@ -237,6 +253,8 @@ public:
 	void DebugImgui();
 
 	void Advance(const float AdvanceSpeed);
+private:
+	void SetTargetPos();
 };
 
 
@@ -246,12 +264,13 @@ class BossDeadAction : public ActionBase
 private:
 	enum class EventDeleteState
 	{
+		NONE,
 		STOP,//止まる
 		FIRE,//燃える
 		EXPLOSION,//爆発
 		END,
 	};
-	EventDeleteState state;
+	EventDeleteState state= EventDeleteState::NONE;
 public:
 	BossDeadAction(EnemyBase* enemy) :ActionBase(enemy) {}
 

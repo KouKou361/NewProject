@@ -25,7 +25,7 @@ float4 main(PSInput pin) : SV_TARGET
    // float3 N = normalize(pin.normal);
     float3 E = normalize(EyePos.xyz - pin.position.xyz);
     float3 L = normalize(lightDirection.xyz);
-    float3 P = pin.position;
+    float3 P = float3(pin.position.x, pin.position.y, pin.position.z);
 
 	
 	//ŠgŽU”½ŽË

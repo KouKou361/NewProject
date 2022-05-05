@@ -12,17 +12,19 @@ class Tuto
 
 	
 protected:
-	SceneGame* sceneGame;
-	unique_ptr<UITuto>  ui;
-	std::unique_ptr<UINextMessage> uiNextMessage;
+	SceneGame* sceneGame=nullptr;
+	unique_ptr<UITuto>  TutoWindowUI = nullptr;
+	std::unique_ptr<UINextMessage> uiNextMessage = nullptr;
 	std::vector <string>textes;
 	int textIndex = 0;
-	int uiTimer = 0;
-	std::shared_ptr<UI2DDirection> ui2DDirection;
+	float uiTimer = 0;
+	std::shared_ptr<UI2DDirection> ui2DDirection = nullptr;
 public:
 	Tuto() {};
 	Tuto(SceneGame* sceneGame);
 	~Tuto() {};
+
+
 	//初期化処理
 	virtual void Init();
 	//更新処理
@@ -35,9 +37,9 @@ public:
 	//テキストの追加
 	inline void AddText(const string text) { textes.push_back(text); };
 	//テキスト
-	inline void SetText(const string text) { this->ui->SetText(text); }
+	inline void SetText(const string text) { this->TutoWindowUI->SetText(text); }
 
-	inline UITuto* GetUi() { return ui.get(); };
+	inline UITuto* GetUi() { return TutoWindowUI.get(); };
 
 };
 class MoveTuto:public Tuto
@@ -45,11 +47,11 @@ class MoveTuto:public Tuto
 	class ClearCircle
 	{
 	public:
-		VECTOR3 pos;
-		float radius;
-		float weight;
+		VECTOR3 pos = {0,0,0};
+		float radius=0;
+		float weight = 0;
 	};
-	ClearCircle circle;
+	ClearCircle circle = {};
 public:
 	MoveTuto(SceneGame* sceneGame);
 	~MoveTuto() {};
@@ -62,11 +64,11 @@ public:
 	//描画
 	void Render();
 };
-class GetMinionTuto :public Tuto
+class GetSiroboTuto :public Tuto
 {
 public:
-	GetMinionTuto(SceneGame* sceneGame);
-	~GetMinionTuto() {};
+	GetSiroboTuto(SceneGame* sceneGame);
+	~GetSiroboTuto() {};
 	//初期化処理
 	void Init();
 	//更新処理
@@ -75,10 +77,12 @@ public:
 	bool Judge();
 	//描画
 	void Render();
+private:
+	void SummonSirobo();
 };
 class KillDummyEnemyTuto :public Tuto
 {
-	enum
+	enum class TutoStep
 	{
 		STEP_TARGET_ENEMY,
 		STEP_TARGET_CAMERA,
@@ -86,8 +90,8 @@ class KillDummyEnemyTuto :public Tuto
 		STEP_END,
 	};
 private:
-	int attackTutoStep = 0;
-	int tutoTexture[STEP_END];
+	TutoStep attackTutoStep = TutoStep::STEP_TARGET_ENEMY;
+	int tutoTexture[static_cast<int>(TutoStep::STEP_END)];
 public:
 	KillDummyEnemyTuto(SceneGame* sceneGame);
 	~KillDummyEnemyTuto() {};
@@ -99,12 +103,15 @@ public:
 	bool Judge();
 	//描画
 	void Render();
+private:
+	//ダミー敵の生成
+	void SummonDummyEnemy();
 };
-class ResurectionMinionTuto :public Tuto
+class ResurectionSiroboTuto :public Tuto
 {
 public:
-	ResurectionMinionTuto(SceneGame* sceneGame);
-	~ResurectionMinionTuto() {};
+	ResurectionSiroboTuto(SceneGame* sceneGame);
+	~ResurectionSiroboTuto() {};
 	//初期化処理
 	void Init();
 	//更新処理
@@ -130,6 +137,11 @@ public:
 	bool Judge();
 	//描画
 	void Render();
+private:
+	//敵の生成
+	void SummonEnemy();
+	//オブジェクトの生成
+	void SummonObject();
 };
 
 

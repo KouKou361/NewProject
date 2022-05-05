@@ -18,7 +18,7 @@ PSInput main(VSInput input)
     float3 L = normalize(-lightDirection.xyz);
     float d = dot(L, N) * 0.5f + 0.5f;
     vout.power = max(0, d);
-    vout.color = (1, 1, 1, 1);
+    vout.color = float4(1, 1, 1, 1);
     vout.texcoord = input.texcoord;
 
     return vout;

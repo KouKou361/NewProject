@@ -1,7 +1,7 @@
 #pragma once
 #include "EnemyManager.h"
 #include "Collision.h"
-#include "MinionPlayer.h"
+#include "SiroboPlayer.h"
 #include "Player.h"
 #include "CameraController.h"
 #include "EffectManager.h"
@@ -13,7 +13,7 @@
 //初期化処理
 void EnemyManager::Init()
 {
-	Target = scene->GetPlayer();
+	target = scene->GetPlayer();
 }
 //更新処理
 void EnemyManager::Update()
@@ -22,11 +22,8 @@ void EnemyManager::Update()
 	{
 		if (enm)
 		{
+			//更新処理
 			enm->Update();
-
-			ImGui::Begin("Attack");
-			ImGui::Text("AttackMinion=%d", enm->AttackMinions.size());
-			ImGui::End();
 		}
 	
 	}
@@ -34,7 +31,6 @@ void EnemyManager::Update()
 //更新処理が終わった後に破棄リストに積まれたオブジェクトを削除する。
 	for (shared_ptr<EnemyBase> enm : remove)
 	{
-		//std::vectorから要素を破棄する場合はイレテーターで削除しなければならない
 		std::vector<shared_ptr<EnemyBase>>::iterator it = std::find(enemies.begin(), enemies.end(), enm);
 		if (it != enemies.end())
 		{
@@ -70,33 +66,30 @@ void EnemyManager::ModelRender()
 	}
 }
 //破棄処理
-void EnemyManager::Destroy(EnemyBase* Enm)
+void EnemyManager::Destroy(EnemyBase* enm)
 {
-	for (shared_ptr<EnemyBase> enm : enemies)
+	//破棄リストに追加
+	for (shared_ptr<EnemyBase> Enm : enemies)
 	{
-		std::vector<shared_ptr<EnemyBase>>::iterator it = std::find(enemies.begin(), enemies.end(), enm);
-		if (it->get() == Enm)
+		std::vector<shared_ptr<EnemyBase>>::iterator it = std::find(enemies.begin(), enemies.end(), Enm);
+		if (it->get() == enm)
 		{
-			shared_ptr<EnemyBase> e = enm;
+			shared_ptr<EnemyBase> e = Enm;
 			remove.emplace_back(e);
 		}
 	}
 
-	TK_Lib::Lib_Sound::SoundPlay("SummonEXP", false);
-	for(int i=0;i<5;i++)
-	{
-		shared_ptr<EXP> m_exp = make_shared<EXP>();
-		scene->GetExpManager()->Register(m_exp,Enm->GetPos());
-	}
+	//経験値のだす
+	SummonEXP(enm);
 
-	scene->GetEffectManager()->GetEffectFromSerchKey("Destroy")->Play(Enm->GetPos(),20);
-
-	//削除するので目標にしていたキャラクターたちの
-	//目標リセット
-	ResetTheTargetCharacter(Enm);
+	//破壊エフェクト
+	SummonDestoryEffect(enm);
+	
+	//削除するので目標にしていたキャラクターたちの目標をリセット
+	ResetTheTargetCharacter(enm);
 
 }
-bool EnemyManager::CollisionEnemy(const VECTOR3 pos,const float weight,const float collisionRadius,VECTOR3& OutPos,EnemyBase*& SaveEnm)
+bool EnemyManager::CollisionEnemy(const VECTOR3& pos,const float& weight,const float& collisionRadius,VECTOR3& outPos,EnemyBase*& saveEnm)
 {
 	VECTOR3 OutPosB;
 	bool hitFlg = false;
@@ -104,12 +97,12 @@ bool EnemyManager::CollisionEnemy(const VECTOR3 pos,const float weight,const flo
 	for (int i = 0; i <GetEnemiesSize(); i++)
 	{
 		EnemyBase* enm = GetEnemiesIndex(i);
-		if (Collision::Instance().SphereVsSphere(pos, weight, collisionRadius, enm->GetPos(), enm->GetWeight(), enm->GetCollisionRadius(), OutPos, OutPosB))
+		if (Collision::Instance().SphereVsSphere(pos, weight, collisionRadius, enm->GetPos(), enm->GetWeight(), enm->GetCollisionRadius(), outPos, OutPosB))
 		{
 			//enm->SetPos(OutPosB);
 			//pos = OutPosB;
 			hitFlg= true;
-			SaveEnm = enm;
+			saveEnm = enm;
 		}
 
 	}
@@ -149,25 +142,25 @@ void EnemyManager::SetEnemyActive(bool flg)
 	}
 }
 //登録
-void EnemyManager::Register(shared_ptr<EnemyBase> enm)
+void EnemyManager::Register(const shared_ptr<EnemyBase>& enm)
 {
 	enm->Init();
-	enm->SetTarget(Target);
+	enm->SetTarget(target);
 	enemies.emplace_back(enm);
 }
-void EnemyManager::ResetTheTargetCharacter(EnemyBase* enm)
+void EnemyManager::ResetTheTargetCharacter(const EnemyBase* enm)
 {
-	MinionManager* minionManager = scene->GetPlayer()->GetMinionManager();
+	SiroboManager* siroboManager = scene->GetPlayer()->GetSiroboManager();
 	//ミニオンの目標リセット
-	for (int i = 0; i < minionManager->GetMinionsSize(); i++)
+	for (int i = 0; i < siroboManager->GetSiroboSize(); i++)
 	{
 		//ミニオンの取得
-		MinionPlayer* minion= minionManager->GetMinionIndex(i);
+		Sirobo* sirobo= siroboManager->GetSiroboIndex(i);
 		//もしミニオンの目標が指定された敵(引数)ならば
-		if (minion->GetTarget() == enm)
+		if (sirobo->GetTarget() == enm)
 		{
 			//目標のリセット
-			minion->SetTarget(nullptr);
+			sirobo->SetTarget(nullptr);
 		}
 	}
 
@@ -184,7 +177,7 @@ void EnemyManager::ResetTheTargetCharacter(EnemyBase* enm)
 	}
 }
 //タグから検索していき、最初に検索に当たったEnemyを返す
-EnemyBase* EnemyManager::SearchEnemyTag(const EnemyTag searchTag)
+EnemyBase* EnemyManager::SearchEnemyTag(const EnemyTag& searchTag)
 {
 	for (int i = 0; i < GetEnemiesSize(); i++)
 	{
@@ -195,4 +188,28 @@ EnemyBase* EnemyManager::SearchEnemyTag(const EnemyTag searchTag)
 		}
 	}
 	return nullptr;
+}
+//経験値のだす
+void EnemyManager::SummonEXP(EnemyBase* enm)
+{
+	//サウンド（ピロン）
+	TK_Lib::Lib_Sound::SoundPlay("SummonEXP", false);
+
+	//経験値の出現
+	for (int i = 0; i < enm->GetExpNum(); i++)
+	{
+		shared_ptr<EXP> m_exp = make_shared<EXP>();
+		scene->GetExpManager()->Register(m_exp, enm->GetPos());
+	}
+}
+
+//破壊エフェクトをだす
+void EnemyManager::SummonDestoryEffect(EnemyBase* enm)
+{
+	//破壊エフェクト
+	{
+		//エフェクトの数
+		const int EffectNum = 20;
+		scene->GetEffectManager()->GetEffectFromSerchKey("Destroy")->Play(enm->GetPos(), EffectNum);
+	}
 }

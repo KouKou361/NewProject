@@ -13,6 +13,12 @@ public:
 
 	//初期化処理
 	void Init();
+
+private:
+	//アニメション設定
+	void SetAnimetion();
+	//behaviorTreeの設定
+	void SetBehaviorTree();
 };
 
 //亀敵
@@ -27,6 +33,11 @@ public:
 
 	//初期化処理
 	void Init();
+private:
+	//アニメション設定
+	void SetAnimetion();
+	//behaviorTreeの設定
+	void SetBehaviorTree();
 };
 
 //浮遊敵
@@ -40,6 +51,11 @@ public:
 
 	//初期化処理
 	void Init();
+private:
+	//アニメション設定
+	void SetAnimetion();
+	//behaviorTreeの設定
+	void SetBehaviorTree();
 };
 
 //宝箱敵
@@ -53,6 +69,11 @@ public:
 
 	//初期化処理
 	void Init();
+private:
+	//アニメション設定
+	void SetAnimetion();
+	//behaviorTreeの設定
+	void SetBehaviorTree();
 };
 
 //爆弾敵
@@ -66,9 +87,14 @@ public:
 
 	//初期化処理
 	void Init();
+private:
+	//アニメション設定
+	void SetAnimetion();
+	//behaviorTreeの設定
+	void SetBehaviorTree();
 };
 
-//爆弾敵
+//トレーニングダミー
 class EnemyDummy :public EnemyBase
 {
 public:
@@ -79,6 +105,11 @@ public:
 
 	//初期化処理
 	void Init();
+private:
+	//アニメション設定
+	void SetAnimetion();
+	//behaviorTreeの設定
+	void SetBehaviorTree();
 };
 
 //ボス敵
@@ -102,8 +133,20 @@ public:
 	//描画処理
 	void ModelRender();
 
+
+
+private:
+	//アニメション設定
+	void SetAnimetion();
+	//部位の追加
+	void AddSite(string setSiteName);
 	//もし子オブジェクトが死亡しているなら
 	void CheakChildrenDie();
+	//部位達の位置更新処理
+	void UpdateAllSiteSetPosition();
+	//behaviorTreeの設定
+	void SetBehaviorTree();
+
 };
 
 //爆弾敵
@@ -121,10 +164,16 @@ public:
 	//更新処理
 	void Update();
 
-
-
 	//ダメージを判定
-	bool AddDamage(int Damage, int SetinvincibleTime);
+	bool AddDamage(int damage, float setinvincibleTime);
+	
+	//部位あたる名前
+	string siteName;
+private:
+	//アニメション設定
+	void SetAnimetion();
+	//behaviorTreeの設定
+	void SetBehaviorTree();
 };
 
 

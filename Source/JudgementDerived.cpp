@@ -23,6 +23,7 @@ bool PursuitJudgement::Judgement()
 //UŒ‚”»’èˆ—
 bool AttackJudgement::Judgement()
 {
+	//UŒ‚‚Å‚«‚é”ÍˆÍ‚É‚¢‚é‚È‚ç
 	if (owner->SearchTarget(owner->GetAttackL()))
 	{
 		return true;
@@ -41,7 +42,7 @@ bool DeadJudgement::Judgement()
 	return owner->GetDeadFlg();
 }
 
-//‰ñ“]UŒ‚”»’èˆ—
+//‰ñ“]UŒ‚”»’èˆ—iƒ{ƒXê—pj
 bool BossRollAttackJudgement::Judgement()
 {
 	return true;

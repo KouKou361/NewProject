@@ -8,8 +8,12 @@ void PursuitAction::Start()
 {
 	searchFlg = true;
 	targetPos = { 0,0,0 };
-	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->Run), true);
+
+	//追尾（走る）モーションの取得
+	const int RunAnimetionIndex = owner->GetAnime()->GetIndex(owner->GetAnime()->Run);
+	//走るアニメーション再生
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), RunAnimetionIndex, true);
+
 }
 
 //実行処理
@@ -24,22 +28,40 @@ ActionBase::State PursuitAction::Run()
 	//	return ActionBase::State::Run;
 	//}
 
-	//もし攻撃範囲内にいるなら
+		//もし攻撃範囲内にいるなら
 	if (owner->SearchTarget(owner->GetAttackL()))
 	{
 		return ActionBase::State::FAILED;
 	}
-	//索敵範囲にいるなら
-	if (owner->SearchTarget(owner->GetSearchL()))
+
+	//目的地に移動！（経路探索）
+	if (PursuitTarget())
 	{
-		VECTOR3 Pos;
-		owner->RouteSearch(Pos);
-		owner->MoveOnPosition(Pos);
+		//索敵範囲にいるなら
 		return ActionBase::State::RUN;
 	}
+
+
+	
 	return ActionBase::State::FAILED;
 
 
+}
+
+//ターゲットに向かって進む。
+bool PursuitAction::PursuitTarget()
+{
+	//索敵範囲にいるなら（経路探索）
+	if (owner->SearchTarget(owner->GetSearchL()))
+	{
+		//進む
+		VECTOR3 Pos;
+		owner->RouteSearch(Pos);
+		owner->MoveOnPosition(Pos);
+		return true;
+
+	}
+	return false;
 }
 
 //終了処理

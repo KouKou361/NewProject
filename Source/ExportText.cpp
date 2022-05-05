@@ -47,7 +47,7 @@ std::string WStringToString(std::wstring oWString)
 }
 
 
-
+//.txtから文字列の取得。
 ExportText::ExportText(string fileName)
 {
 	//初期化
@@ -83,7 +83,7 @@ ExportText::ExportText(string fileName)
 		}
 	
 		//ここで改行コードがあるなら変換する
-		int Index = str.find('\\', 0);
+		int Index = static_cast<int>(str.find('\\', 0));
 		if (Index != -1)
 		{
 			if (str.find("n", 1) != -1)

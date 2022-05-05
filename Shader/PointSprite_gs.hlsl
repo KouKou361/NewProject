@@ -18,10 +18,11 @@ void main(
 
 	//UV。色を計算して出力
     PSInput Out = (PSInput) 0;
-    int type = int(In[0].Tex.x);
+    uint type = int(In[0].Tex.x);
+    
 	//UV座標
-    float u = (type % (int)TextureNum.x) * TextureSize.x;
-    float v = (type / (int)TextureNum.y) * TextureSize.y;
+    float u = float(type % (uint)TextureNum.x) * TextureSize.x;
+    float v = float(type / (uint)TextureNum.y) * TextureSize.y;
 
     Out.Color = In[0].Color;
 	

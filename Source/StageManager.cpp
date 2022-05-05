@@ -104,7 +104,7 @@ void StageManager::ChangeStage(int StageIndex)
 //“o˜^
 int StageManager::Register(shared_ptr<Stage> stage)
 {
-	int size = stages.size();
+	int size = static_cast<int>(stages.size());
 	stages.emplace_back(stage);
 	//¡‚Ì”Ô†‚ğ•Ô‚·
 	return size;

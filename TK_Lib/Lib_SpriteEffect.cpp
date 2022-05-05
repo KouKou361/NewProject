@@ -96,11 +96,16 @@ void SpriteEffect::SetNum(int MaxNum)
 void SpriteEffect::SetUseLastEffectIndex()
 {
 	int i=0;
-	for (i = spriteEffects.size()-1; i > 0; i--) {
+	for (i = static_cast<int>(spriteEffects.size())-1; i > 0; i--) {
 		EffectData* spriteEffect = &spriteEffects.at(i);
 		if (spriteEffect->type >= 0) break;
 	}
-	UseLastEffectIndex = i;
+	if (i + 1 >= spriteEffects.size())
+	{
+		UseLastEffectIndex = i;
+		return;
+	}
+	UseLastEffectIndex = i+1;
 }
 //
 //void SpriteEffect::Update(float time)

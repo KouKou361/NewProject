@@ -22,3 +22,12 @@ void Animetion::Clear()
 {
 	animeData.clear();
 }
+void Animetion::AllAnimetionKey(string* Nameregister)
+{
+	//アニメーションの登録
+	for (int i = 0; End != *Nameregister; i++)
+	{
+		Register(i, *Nameregister);
+		Nameregister++;
+	}
+}

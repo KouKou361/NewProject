@@ -62,7 +62,7 @@ dcl_maxout 4
 //   v[0][2].x <- In[0].Tex.x; v[0][2].y <- In[0].Tex.y; v[0][2].z <- In[0].Tex.z; v[0][2].w <- In[0].Tex.w; 
 //   v[0][3].x <- In[0].Color.x; v[0][3].y <- In[0].Color.y; v[0][3].z <- In[0].Color.z; v[0][3].w <- In[0].Color.w
 //
-#line 9 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\PointSprite_gs.hlsl"
+#line 9 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\PointSprite_gs.hlsl"
 mul r0.xyzw, cb0[0].xyzw, v[0][0].xxxx
 mul r1.xyzw, cb0[1].xyzw, v[0][0].yyyy
 add r0.xyzw, r0.xyzw, r1.xyzw
@@ -99,39 +99,22 @@ add r0.xyzw, r0.xyzw, r5.xyzw  // r0.x <- pos_right_bottom.x; r0.y <- pos_right_
 #line 21
 ftoi r1.x, v[0][2].x  // r1.x <- type
 
-#line 23
-ftoi r1.y, cb0[8].z
-ineg r1.z, r1.x
-ineg r1.w, r1.y
-and r5.x, r1.x, l(0x80000000)
-imax r1.z, r1.x, r1.z
-imax r1.y, r1.y, r1.w
-udiv null, r1.y, r1.z, r1.y
-ineg r1.z, r1.y
-ine r1.w, l(0, 0, 0, 0), r5.x
-movc r1.y, r1.w, r1.z, r1.y
-itof r1.y, r1.y
+#line 24
+ftou r1.y, cb0[8].z
+udiv null, r1.y, r1.x, r1.y
+utof r1.y, r1.y
 mul r5.x, r1.y, cb0[8].x  // r5.x <- u
 
-#line 24
-ftoi r1.y, cb0[8].w
-ineg r1.z, r1.x
-ineg r1.w, r1.y
-xor r5.z, r1.y, r1.x
-imax r1.x, r1.x, r1.z
-imax r1.y, r1.y, r1.w
+#line 25
+ftou r1.y, cb0[8].w
 udiv r1.x, null, r1.x, r1.y
-ineg r1.y, r1.x
-and r1.z, r5.z, l(0x80000000)
-ine r1.z, l(0, 0, 0, 0), r1.z
-movc r1.x, r1.z, r1.y, r1.x
-itof r1.x, r1.x
+utof r1.x, r1.x
 mul r5.y, r1.x, cb0[8].y  // r5.y <- v
 
-#line 26
+#line 27
 mov r1.xyzw, v[0][3].xyzw  // r1.x <- Out.Color.x; r1.y <- Out.Color.y; r1.z <- Out.Color.z; r1.w <- Out.Color.w
 
-#line 29
+#line 30
 mul r6.xyzw, r2.xxxx, cb0[4].xyzw
 mul r7.xyzw, r2.yyyy, cb0[5].xyzw
 add r6.xyzw, r6.xyzw, r7.xyzw
@@ -140,17 +123,17 @@ add r6.xyzw, r6.xyzw, r7.xyzw
 mul r2.xyzw, r2.wwww, cb0[7].xyzw
 add r2.xyzw, r2.xyzw, r6.xyzw  // r2.x <- Out.Position.x; r2.y <- Out.Position.y; r2.z <- Out.Position.z; r2.w <- Out.Position.w
 
-#line 30
+#line 31
 mov r5.x, r5.x  // r5.x <- Out.Tex.x
 mov r5.y, r5.y  // r5.y <- Out.Tex.y
 
-#line 31
+#line 32
 mov o0.xyzw, r2.xyzw
 mov o1.xy, r5.xyxx
 mov o2.xyzw, r1.xyzw
 emit 
 
-#line 33
+#line 34
 mul r2.xyzw, r4.xxxx, cb0[4].xyzw
 mul r6.xyzw, r4.yyyy, cb0[5].xyzw
 add r2.xyzw, r2.xyzw, r6.xyzw
@@ -159,17 +142,17 @@ add r2.xyzw, r2.xyzw, r6.xyzw
 mul r4.xyzw, r4.wwww, cb0[7].xyzw
 add r2.xyzw, r2.xyzw, r4.xyzw  // r2.x <- Out.Position.x; r2.y <- Out.Position.y; r2.z <- Out.Position.z; r2.w <- Out.Position.w
 
-#line 34
+#line 35
 add r4.x, r5.x, cb0[8].x  // r4.x <- Out.Tex.x
 mov r4.y, r5.y  // r4.y <- Out.Tex.y
 
-#line 35
+#line 36
 mov o0.xyzw, r2.xyzw
 mov o1.xy, r4.xyxx
 mov o2.xyzw, r1.xyzw
 emit 
 
-#line 38
+#line 39
 mul r2.xyzw, r3.xxxx, cb0[4].xyzw
 mul r4.xyzw, r3.yyyy, cb0[5].xyzw
 add r2.xyzw, r2.xyzw, r4.xyzw
@@ -178,17 +161,17 @@ add r2.xyzw, r2.xyzw, r4.xyzw
 mul r3.xyzw, r3.wwww, cb0[7].xyzw
 add r2.xyzw, r2.xyzw, r3.xyzw  // r2.x <- Out.Position.x; r2.y <- Out.Position.y; r2.z <- Out.Position.z; r2.w <- Out.Position.w
 
-#line 40
+#line 41
 add r3.y, r5.y, cb0[8].y  // r3.y <- Out.Tex.y
 mov r3.x, r5.x  // r3.x <- Out.Tex.x
 
-#line 41
+#line 42
 mov o0.xyzw, r2.xyzw
 mov o1.xy, r3.xyxx
 mov o2.xyzw, r1.xyzw
 emit 
 
-#line 44
+#line 45
 mul r2.xyzw, r0.xxxx, cb0[4].xyzw
 mul r3.xyzw, r0.yyyy, cb0[5].xyzw
 add r2.xyzw, r2.xyzw, r3.xyzw
@@ -197,19 +180,19 @@ add r2.xyzw, r2.xyzw, r3.xyzw
 mul r0.xyzw, r0.wwww, cb0[7].xyzw
 add r0.xyzw, r0.xyzw, r2.xyzw  // r0.x <- Out.Position.x; r0.y <- Out.Position.y; r0.z <- Out.Position.z; r0.w <- Out.Position.w
 
-#line 45
+#line 46
 add r2.x, r5.x, cb0[8].x  // r2.x <- Out.Tex.x
 add r2.y, r5.y, cb0[8].y  // r2.y <- Out.Tex.y
 
-#line 46
+#line 47
 mov o0.xyzw, r0.xyzw
 mov o1.xy, r2.xyxx
 mov o2.xyzw, r1.xyzw
 emit 
 
-#line 51
+#line 52
 cut 
 
-#line 54
+#line 55
 ret 
-// Approximately 101 instruction slots used
+// Approximately 84 instruction slots used

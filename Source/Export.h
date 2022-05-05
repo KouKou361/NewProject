@@ -9,11 +9,11 @@ public:
 	std::string filename;//ファイルパス
 	std::string name;//名前
 	std::string type;
-	VECTOR3 Pos;//座標
-	VECTOR3 Angle;//回転
-	VECTOR3 Scale;//大きさ
-	VECTOR4 Color;//色
-	bool Select;//選択フラグ
+	VECTOR3 pos;//座標
+	VECTOR3 angle;//回転
+	VECTOR3 scale;//大きさ
+	VECTOR4 color;//色
+	bool select;//選択フラグ
 
 public:
 	template<class Archive>
@@ -30,15 +30,16 @@ private:
 	std::vector<ExportActor> exportActorList;
 public:
 
-	void Loading(std::string filename);
+	void Loading(const std::string filename);
+	//オブジェクトの配置
 	void ObjectSet();
-	//敵のセットする
+	//敵の配置する
 	void SetEnemy(ExportActor *exportActor);
 	//オブジェクト配置
 	void SetObject(ExportActor *exportActor);
-	//ステージのセット
+	//ステージの配置
 	void SetStage (ExportActor *exportActor);
-	//ポイントライトのセット
+	//ポイントライトの配置
 	void SetPointLight(ExportActor* exportActor);
 	//エフェクトの設定
 	void SetEffeect(ExportActor* exportActor);

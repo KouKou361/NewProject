@@ -3,8 +3,8 @@
 #include "BehaviorTree.h"
 #include "BehaviorData.h"
 class SceneGame;
-class UIMinionAttack;
-enum TargetFlg
+class UISiroboAttack;
+enum class TargetFlg
 {
 	COMPLETE,
 	FAILED,
@@ -33,35 +33,34 @@ public:
 	virtual ~EnemyBase() {};
 public:
 	//初期化処理
-	void Init();
+	virtual void Init()=0;
 	//更新処理
 	void Update();
 	//経路探索
-	void RouteSearch(VECTOR3& Target);
+	void RouteSearch(VECTOR3& target);
 	//ImGuiのデバッグ
 	void ImguiDebug();
 	//削除
 	void Destroy();
 	//自分が視野角内に入っているかどうか
 	//指定された視野角内にいるかどうか(視点位置,視点のベクトル,視野角)
-	bool IsDotAngle(const VECTOR3 Pos,const VECTOR3 vec,const float Angle);
+	bool IsDotAngle(const VECTOR3& pos,const VECTOR3& vec,const float& angle);
 	//フラグが来ていないか確認
 	void FlgCheak();
 	//当たり判定
-	void AttackCircleNode(string nodeName,float circleL,float startTime, float EndTime);
-	void AttackCircle(VECTOR3 pos, float circleL);
+	void AttackCircleNode(const string& nodeName, const float& circleL, const float& startTime, const float& EndTime);
+	void AttackCircle(const VECTOR3& pos, const float& circleL);
 
-	void SetDamageFlg(bool flg)override;
-	void SetDeadFlg(bool flg)override;
+	inline void SetDamageFlg(const bool flg) { damageFlg = flg; };
+	inline void SetDeadFlg(const bool flg) { deadFlg = flg; }; 
 
-	void HPRender(const int SpriteIndex, const VECTOR2 Pos);
+	void HPRender(const int &spriteIndex, const VECTOR2& pos);
 	
 	//索敵範囲にTargetがいればTRUEを返す
-	bool SearchTarget(float L);
+	bool SearchTarget(const float &l);
 
-	bool VsTargetAttackCircle(VECTOR3 Pos, float Radius);
-	//CSVからデータを取り出して、ステータスの設定する。
-	void SetStatus(string SearchName);
+	bool VsTargetAttackCircle(const VECTOR3& pos, const float& radius);
+
 
 
 	//死亡時間の更新
@@ -69,9 +68,9 @@ public:
 	//死亡フラグやダメージフラグが来ていないか確認
 	void ResetNode();
 
-	bool AddDamage(int Damage, int MaxinvincibleTime = 0);
+	bool AddDamage(const int damage, const float setInvincibleTime=0);
 
-
+	//ビヘイビアツリーの行動処理
 	void ActionBehaviorTree();
 
 	virtual void TargetComplete();
@@ -86,20 +85,28 @@ public:
 	inline TargetFlg GetTargetFlg() { return targetFlg; }
 
 	//死亡時間取得
-	inline int  GetDeathTime() { return deathTime; }
+	inline float  GetDeathTime() { return deathTime; }
 	inline void SetDeathTime(const float time) { this->deathTime = time; }
 
 	inline string GetAttackNode() { return attackNode; }
 	inline bool GetOldDamageFlg() { return oldDamageFlg; }
 
 	inline EnemyTag GetEnemyTag() { return enemyType; };
-	inline void SetEnemyTag(const EnemyTag tag) { enemyType = tag; };
+	inline void SetEnemyTag(const EnemyTag& tag) { enemyType = tag; };
 
 	inline float GetSearchL() { return searchL; }
 	inline float GetAttackL() { return attackL; }
 	inline float GetAttackRadius() { return attackRadius; }
+	inline int GetExpNum() { return ExpNum; }
+protected:
+	//アニメション設定
+	virtual void SetAnimetion() = 0;
+	//CSVからデータを取り出して、ステータスの設定する。
+	void SetStatus(const string& searchName);
+	//behaviorTreeの設定
+	virtual void SetBehaviorTree()=0;
 public:
-	EnemyBase* parent;//親設定
+	EnemyBase* parent=nullptr;//親設定
 protected:
 	TargetFlg targetFlg = TargetFlg::COMPLETE;
 	EnemyTag enemyType = EnemyTag::NONE;
@@ -108,8 +115,9 @@ protected:
 	float searchL = 60.0f;
 	float attackL = 4.0f;
 	float attackRadius = 4.0f;
-	string attackNode;
 	float deathTime = 0;
+	string attackNode="";
+
 	
 	NodeBase* actionNode=nullptr;
 	unique_ptr<BehaviorTree> behaviorTree=nullptr;
@@ -119,6 +127,9 @@ protected:
 	//過去にダメージを受けたかどうか
 	bool oldDamageFlg = false;
 	bool actionFlg = true;
+
+	//経験値の数
+	int ExpNum = 5;
 
 	std::vector<EnemyBase*> children;
 

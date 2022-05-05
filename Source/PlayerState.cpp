@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "Collision.h"
 #include "Animetion.h"
-#include "MinionPlayer.h"
+#include "SiroboPlayer.h"
 #include "Scene.h"
 #include "EnemyManager.h"
 //=============================
@@ -12,6 +12,7 @@
 //初期化
 void AttackState::Start(Player* pl)
 {
+	//攻撃アニメーション
 	TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Attack1),false);
 	pl->state = Player::State::ATTACK;
 
@@ -58,7 +59,7 @@ void AttackState::Run(Player* pl)
 	{
 		if (attackFlg == true)
 		{
-			pl->minionManager->OneAttack(nullptr);
+			pl->siroboManager->OneAttack(nullptr);
 		}
 
 		//攻撃出来る状態をfalseにする
@@ -90,6 +91,7 @@ void DamageState::Start(Player* pl)
 	pl->moveVec = { 0,0,0 };
 	pl->state = Player::State::DAMAGE;
 	pl->SetDamageFlg(false);
+	//ダメージアニメーション
 	TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Damage), false);
 }
 //更新
@@ -117,6 +119,7 @@ void DeadState::Start(Player* pl)
 	pl->moveVec = { 0,0,0 };
 	pl->state = Player::State::DEAD;
 	pl->SetDeadFlg(false);
+	//死亡アニメーション
 	TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Die), false);
 	pl->sceneGame->GetEnemyManager()->SetEnemyActive(false);
 }
@@ -143,6 +146,7 @@ void DeadState::End(Player* pl)
 void WaitState::Start(Player* pl)
 {
 	pl->state = Player::State::WAIT;
+	//待機アニメーション
 	TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Idle), true);
 }
 //更新
@@ -153,7 +157,7 @@ void WaitState::Run(Player* pl)
 	//プレイヤーの回転
 	pl->Turn(pl->moveVec);
 	
-	//もし移動
+	//もし移動したなら
 	if (fabsf(pl->moveVec.x) + fabsf(pl->moveVec.y) + fabsf(pl->moveVec.z) > 0)
 	{
 		pl->ChangeState(pl->stateWalk.get());
@@ -173,6 +177,7 @@ void WaitState::End(Player* pl)
 void WalkState::Start(Player* pl)
 {
 	pl->state = Player::State::WALK;
+	//走るアニメーション
 	TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Run), true);
 }
 //更新
@@ -203,6 +208,41 @@ void WalkState::End(Player* pl)
 {
 
 }
+
+
+//=============================
+//プレイヤーのボス専登場演出クラス
+//=============================
+
+//初期化
+void BossEntryPlayerState::Start(Player* pl)
+{
+	pl->state = Player::State::BOSS_ENTRY;
+	//歩くアニメーション
+	TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Run), true);
+	//ボス登場ムーブ中、ちょっと前進しておく。
+	pl->moveVec = { 0,0,-0.1f };
+}
+//更新
+void BossEntryPlayerState::Run(Player* pl)
+{
+	//ボスの方向に向くイベントに移行した時
+	if (stage->GetEventState() == EventState::TURN_CAMERA_LOOK_FRONT)
+	{
+		//前に進むことをやめる。
+		TK_Lib::Model::PlayAnimation(pl->GetModel(), pl->anime->GetIndex(pl->anime->Idle), true);
+		pl->moveVec = { 0,0,0 };
+	}
+
+	pl->Move();
+}
+//終了
+void BossEntryPlayerState::End(Player* pl)
+{
+
+}
+
+
 
 
 

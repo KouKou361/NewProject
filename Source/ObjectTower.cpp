@@ -8,43 +8,54 @@
 //初期化処理
 void ObjectTower::Init()
 {
-	SetQuaternion({ 0, 0, 0, 1 });
-	//SetPos({ 0,0,0 });
-	SetScale({ 0.1f,0.1f,0.1f });
-
-	//SetCollisionModel("Pat");
+	//モデルの設定
 	SetModel(TK_Lib::Load::GetModel("Tower"));
 
-	SetHp(10);
-	SetMaxHp(GetHp());
+	//ステータスデータの設定
+	SetStatus("Tower");
 
-
+	//タグの設定
 	SetTag(ObjectTag::TAG_OBJECT);
-	collisionRadius = 5;
 	objectType = ObjectType::TOWER;
 
+	//スポットライトの作成
 	spotLightHandle=TK_Lib::SpotLight::Create(GetPos(), { 1,0,1,1 }, 20.0f);
 
-
+	//モデルの行列更新
 	TK_Lib::Model::Tranceform(GetModel(), GetPos(), GetQuaternion(), GetScale());
-	timer = 0.0f;
+
+	//ライトの明るさ
 	spotLightRadius = 10.0f;
+
+	timer = 0.0f;
 }
 //更新処理
 void ObjectTower::Update()
 {
+	//時間の更新処理
 	timer += TK_Lib::Window::GetElapsedTime();
 	
+	//スポットライトの更新処理
 	TK_Lib::SpotLight::Set(spotLightHandle, GetPos(), { 1,0,1,1 }, sinf(timer)* spotLightRadius+20.0f);
 	
 }
 //オブジェクトの死亡処理
 void ObjectTower::Dead()
 {
-	scene->GetStageManager()->GetNowStage()->GetNumTower()->SetBlinkingTimer(10.0f);
-	scene->GetEffectManager()->GetEffectFromSerchKey("TowerBreak")->Play(GetPos(), 30);
+	//タワーの数を知らせる点滅タイマー
+	const float blinkingTimer = 10.0f;
+	scene->GetStageManager()->GetNowStage()->GetNumTower()->SetBlinkingTimer(blinkingTimer);
+
+	//エフェクトの数（タワーの破棄エフェクトをだす）
+	const int EffectNum = 30;
+	scene->GetEffectManager()->GetEffectFromSerchKey("TowerBreak")->Play(GetPos(), EffectNum);
+
+	//タワーのサウンド
 	TK_Lib::Lib_Sound::SoundPlay("TowerBreak",false);
 	TK_Lib::Lib_Sound::SoundPlay("TowerBreak2", false);
+
+	//スポットライトの破棄
 	TK_Lib::SpotLight::Delete(spotLightHandle);
+
 	Destroy();
 }

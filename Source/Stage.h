@@ -17,7 +17,7 @@ class Stage
 protected:
 
 	//ステージタイプ
-	enum StageType
+	enum class StageType
 	{
 		RENDER_MODEL,//描画
 		NO_MAKE_SHADOW_MODEL,//影を生成しない描画
@@ -26,14 +26,14 @@ protected:
 		END_MODEL,
 	};
 
-	int StageIndex[StageType::END_MODEL];
+	int StageIndex[static_cast<int>(StageType::END_MODEL)] = {};
 	int skyModel = 0;
 
-	SceneGame* sceneGame;
+	SceneGame* sceneGame=nullptr;
 
-	unique_ptr<Export> stageExport;
-	std::shared_ptr<UINumTower> uiNumTower;
-	std::shared_ptr<UITimer> uiTimer;
+	unique_ptr<Export> stageExport=nullptr;
+	std::shared_ptr<UINumTower> uiNumTower = nullptr;
+	std::shared_ptr<UITimer> uiTimer = nullptr;
 
 
 
@@ -55,8 +55,18 @@ public:
 	//クリア判定
 	virtual bool ClearJudge();
 
+
+
 	inline UITimer* GetUiTimer() { return uiTimer.get(); }
 	inline UINumTower* GetNumTower() { return uiNumTower.get(); }
+protected:
+	//死亡時の救済措置
+	void DeadIsResurection();
+private:
+	//スカイドームの生成
+	void CreateSky();
+	//シロボの生成
+	void SummonSirobo();
 };
 
 class TutoStage: public Stage
@@ -88,6 +98,10 @@ public:
 
 	//クリア判定
 	bool ClearJudge();
+private:
+	//ゲームオーバータイマーが回復
+	void ResurectionGameOverTime(const float time);
+
 };
 
 enum class EventState
@@ -96,6 +110,7 @@ enum class EventState
 	TURN_CAMERA_LOOK_FRONT,//カメラが回転して正面を見る
 	LOOK_ENEMY,
 	BACK_CAMERA,
+	NONE,
 	END
 };
 
@@ -107,7 +122,7 @@ private:
 	float timer = 0;
 	
 	int smoke_driftTexture = -1;
-	EventState eventState;
+	EventState eventState= EventState::NONE;
 	int tutoIndex = 0;
 	std::vector<shared_ptr<Tuto>> tutoManager;
 	shared_ptr<Tuto> nowTuto = nullptr;
@@ -138,4 +153,13 @@ public:
 
 	//現在進行中のイベントを返す
 	inline EventState GetEventState() { return eventState; }
+private:
+	//UIの作成
+	void CreateUI();
+	//スカイドームの作成
+	void CreateSky();
+	//ボスカメラの初期設定
+	void InitBossCamera();
+	//シロボの召喚
+	void SummonSirobo();
 };

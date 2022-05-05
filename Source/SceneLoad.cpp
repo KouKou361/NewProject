@@ -12,28 +12,17 @@ void SceneLoad::LoadingThread(SceneLoad* scene)
 //初期化処理
 void SceneLoad::Initialize()
 {
-  //  MaskTexture[MaskSIROBO] = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/MaskSIROBO.png");
-  //  MaskTexture[MaskEnemy]  = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/MaskEnemy.png");
-  //  MaskTexture[MaskPlayer] = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/MaskPlayer.png");
-  //  MaskTexture[MaskEnd]    = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/MaskSIROBO.png");
-  //
-  //  LineTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/MaskLine.png");
-  //
-  //
-  //  VECTOR2 ScreenSize = TK_Lib::Window::GetWindowSize();
-  //  LinePos = -ScreenSize.x;
-  //
     text = "ロード中";
 
-    maskTexture[LOADING_ICON] = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/LoadingIcon.png");
-    maskTexture[SIROBO] = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/SiroboAnimetion.png");
+    Texture[static_cast<int>(TextureNum::LOADING_ICON)] = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/LoadingIcon.png");
+    Texture[static_cast<int>(TextureNum::SIROBO)]       = TK_Lib::Load::LoadTexture("./Data/Sprite/ScreenLoad/SiroboAnimetion.png");
     
-    
+    //フェードアウト
+    const float FadeVulome = 0.02f;
+    TK_Lib::Lib_Fade::FadeOutBegin(FadeVulome);
 
-    TK_Lib::Lib_Fade::FadeOutBegin(0.02f);
     //スレッド開始
     std::thread thread(LoadingThread, this);
-    //                  関数ポインタ　引数 
   
     //この関数が抜けてもLoadingThead()を実行させるために手放す
     thread.detach();//終了
@@ -41,33 +30,26 @@ void SceneLoad::Initialize()
 //更新処理
 void SceneLoad::Update()
 {
-    timer += TK_Lib::Window::GetElapsedTime();
-    if (static_cast<int>(timer*60) % 10 == 1)
-    {
-        text += ".";
-    }
-
-    if (static_cast<int>(timer * 60) % 60 == 1)
-    {
-        text = "ロード中";
-    }
-
-
-
-    linePos += maskSpeed;
-    VECTOR2 ScreenSize = TK_Lib::Window::GetWindowSize();
-    if (linePos >= ScreenSize.x) {
-        linePos = -ScreenSize.x;
-    }
+    //テキストの更新処理
+    TextUpdate();
 
     if (nextScene->initialized)
     {
         TK_Lib::Lib_Fade::FadeInBegin(0.02f);
-        if (TK_Lib::Lib_Fade::GetFadeVolume()>=1.0f)
+        if (TK_Lib::Lib_Fade::GetFadeVolume() >= 1.0f)
         {
             SceneManager::Instance().ChangeScene(nextScene.release());
         }
     }
+
+
+  //  linePos += maskSpeed;
+   // VECTOR2 ScreenSize = TK_Lib::Window::GetWindowSize();
+   // if (linePos >= ScreenSize.x) {
+   //     linePos = -ScreenSize.x;
+   // }
+
+ 
  
 }
 //描画処理
@@ -85,12 +67,12 @@ void SceneLoad::Render()
 
    // TK_Lib::Draw::JapanFont("シロボ軍団", { 100,100 });
 
-    TK_Lib::Draw::Sprite(maskTexture[LOADING_ICON], { ScreenSize.x - 100,ScreenSize.y-100 }, { 48,48 }, { LoadPos,0,48,48 });
+    TK_Lib::Draw::Sprite(Texture[static_cast<int>(TextureNum::LOADING_ICON)], { ScreenSize.x - 100,ScreenSize.y-100 }, { 48,48 }, { LoadPos,0,48,48 });
 
-    const float LoadSiroboIconIndexX = (static_cast<int>((timer*60) / 5) / 7 )* 256;
-    const float LoadSiroboIconIndexY = (static_cast<int>((timer*60) / 5) % 6 )*256;
+    const float LoadSiroboIconIndexX = static_cast<float>(static_cast<int>((timer*60) / 5) / 7 )* 256;
+    const float LoadSiroboIconIndexY = static_cast<float>(static_cast<int>((timer*60) / 5) % 6 )*256;
  //   const float LoadPos = static_cast<float> (48 * LoadIconI)ndex);
-    TK_Lib::Draw::Sprite(maskTexture[SIROBO], { ScreenSize.x - 500,ScreenSize.y - 150 }, { 100,100 }, { LoadSiroboIconIndexX,LoadSiroboIconIndexY,256,256 });
+    TK_Lib::Draw::Sprite(Texture[static_cast<int>(TextureNum::SIROBO)], { ScreenSize.x - 500,ScreenSize.y - 150 }, { 100,100 }, { LoadSiroboIconIndexX,LoadSiroboIconIndexY,256,256 });
 
  
 
@@ -111,4 +93,24 @@ void SceneLoad::ModelRender()
 void SceneLoad::End()
 {
 
+}
+
+//テキストの更新処理
+void SceneLoad::TextUpdate()
+{
+    //一秒
+    const float Seconds = 60.0f;
+    //シロボが描画される時間
+    const float AddText = 10.0f;
+
+    timer += TK_Lib::Window::GetElapsedTime();
+    if (static_cast<int>(timer * Seconds) % static_cast<int>(AddText) == 1)
+    {
+        text += ".";
+    }
+
+    if (static_cast<int>(timer * Seconds) % static_cast<int>(Seconds) == 1)
+    {
+        text = "ロード中";
+    }
 }

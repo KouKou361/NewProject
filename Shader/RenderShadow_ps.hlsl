@@ -9,7 +9,7 @@ float4 main(PSInput pin) : SV_TARGET
 	float3 N = normalize(pin.normal);
 	float3 E = normalize(EyePos.xyz - pin.position.xyz);
 	float3 L = normalize(lightDirection.xyz);
-    float3 P = pin.position;
+    float3 P = pin.position.xyz;
 
 	
 	//拡散反射
@@ -33,7 +33,7 @@ float4 main(PSInput pin) : SV_TARGET
 
 	// シャドウマップ適用
     color.rgb *= GetShadow(Shadow_map, shadowmapSamplerState,
-    		pin.vShadow, ShadowColor, Bias);
+    		pin.vShadow, ShadowColor.xyz, Bias);
 	
 
 	

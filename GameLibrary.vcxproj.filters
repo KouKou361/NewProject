@@ -1,0 +1,1082 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Library">
+      <UniqueIdentifier>{f203b8f9-200f-400e-a781-cb4bc6520d96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Header">
+      <UniqueIdentifier>{b3c8c251-ae33-4c08-9de4-858721ab268f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Source">
+      <UniqueIdentifier>{baf7d12a-8e8a-4290-97b9-16af28a412a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Library\Shader">
+      <UniqueIdentifier>{bb4c0637-dcd5-4694-90fe-1044bc776355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\Sprite">
+      <UniqueIdentifier>{f0d5ac1d-06f6-41c1-bc8d-db8a1a35cab0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\Primitive2D">
+      <UniqueIdentifier>{d1a0ea67-f040-4aa2-8ec8-0ef36a5576c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\Primitive3D">
+      <UniqueIdentifier>{09887921-444f-409e-b8eb-14c733382612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Source\ShaderSource">
+      <UniqueIdentifier>{8512f00b-e217-4db4-82b5-e92d7e4308dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Header\ShaderSource">
+      <UniqueIdentifier>{9d64b260-9459-448b-aad3-da169b26cdba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\Lambert">
+      <UniqueIdentifier>{fbfcc26a-9d94-4cf2-9710-b1a307ce777b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Source\Model">
+      <UniqueIdentifier>{7ce36ba2-fe7b-4095-bf4c-d48eb01dd611}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Header\Model">
+      <UniqueIdentifier>{5c7820ba-2ec0-4695-b3e3-968e51754ce8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\Gaussian">
+      <UniqueIdentifier>{ed96731d-a500-4526-a0dd-6a129af6b52e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\Shadow">
+      <UniqueIdentifier>{618901bd-3a14-49b5-ab38-1d609de7f6f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\VarianceShadowMap">
+      <UniqueIdentifier>{5b88ba5a-7a1c-4077-a153-f48d60d59e59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\Light">
+      <UniqueIdentifier>{45fb3eb6-fe8d-475d-b962-19186120aa7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Header\Light">
+      <UniqueIdentifier>{4fa61186-fea4-4a9f-b755-ef4ec6258ef9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Source\Light">
+      <UniqueIdentifier>{38d182fe-f00c-4d91-9767-4cebfc5c0c56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\PointSprite">
+      <UniqueIdentifier>{e0f4ade6-7465-4d1b-b498-aea43c984f55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Source\Effect">
+      <UniqueIdentifier>{2102c2d5-70b3-4fcc-a84f-f359c1c37b75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Header\Effect">
+      <UniqueIdentifier>{e79fce5d-398d-4c88-983a-75a5e17fe6cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Imgui">
+      <UniqueIdentifier>{aea17cfd-fe1e-4111-939e-fb0341ad16e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source">
+      <UniqueIdentifier>{9c63bf61-bbb5-48c9-b951-86ed68db489a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header">
+      <UniqueIdentifier>{6af84ee0-bb4d-4ead-9219-56f79a0f57bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\Outline">
+      <UniqueIdentifier>{3145099a-bc4e-4482-98a6-07d275064ce9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\Scene">
+      <UniqueIdentifier>{075a6ee7-06dc-414a-9c08-8acf352924b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\Enemy">
+      <UniqueIdentifier>{fa6cf7b9-81dd-4485-9ddd-53d1633ebdb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\Enemy">
+      <UniqueIdentifier>{6a870aa0-0dca-45a1-9914-2880f787b83c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\AI">
+      <UniqueIdentifier>{0e8e666f-d3cb-44bc-926b-a2c67e6a0546}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\AI">
+      <UniqueIdentifier>{89639289-1445-44de-bb08-fc5953d362a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\AI\Action">
+      <UniqueIdentifier>{39158e63-fca3-4f3f-ac67-57123529bd8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\AI\Action">
+      <UniqueIdentifier>{ce96c1c4-1bb5-46cb-a8d5-4f3574dd4938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\AI\Judgment">
+      <UniqueIdentifier>{65349eeb-5851-4e44-b99f-baa7b0924c9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\AI\Judgment">
+      <UniqueIdentifier>{caa29df6-8be4-4cbc-bbeb-094b11907288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\Enemy\Dirived">
+      <UniqueIdentifier>{d6c428d7-3146-4577-97a2-554bbdd2c835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\Player">
+      <UniqueIdentifier>{0eeee925-cb3c-4858-9591-9dc66bee9aca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\Player">
+      <UniqueIdentifier>{a8ee76e4-2b95-4e42-a0fe-d2f737198504}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\Camera">
+      <UniqueIdentifier>{f21a13fa-749a-4635-bb78-9427e4435e88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\Effect">
+      <UniqueIdentifier>{42ffa09a-933e-443f-ad61-70c6b83c8120}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\Stage">
+      <UniqueIdentifier>{b086dacc-fbe8-4f66-aba3-31506ac2136c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\Stage">
+      <UniqueIdentifier>{c4e0da1d-ed98-4883-99fb-5ca670e9c121}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\Object">
+      <UniqueIdentifier>{cdcff976-7b64-4220-9c15-c53f019dbd2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\Object">
+      <UniqueIdentifier>{79e056ed-ce5c-4906-aece-4e2ae1444094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\ObjectFunction">
+      <UniqueIdentifier>{8fc87e63-3c76-450e-af84-6baa9b618864}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\ObjectFunction">
+      <UniqueIdentifier>{776352aa-064f-4c58-938f-3b2e88e04a42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\TargetScreen">
+      <UniqueIdentifier>{93ec9199-5344-4e38-a218-78b20d7edd99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\UI">
+      <UniqueIdentifier>{4314710c-b6a4-45c5-80b4-1ddf544b15f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\UI">
+      <UniqueIdentifier>{9739f004-e798-42fc-bc12-4e449b7223eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\3DEffect">
+      <UniqueIdentifier>{4552d875-3b76-466c-b4bf-6136a5cbb692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\2DEXP">
+      <UniqueIdentifier>{e8bbc608-f06e-4add-b606-e4e475fec0dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\EXP">
+      <UniqueIdentifier>{a7f5756e-ff12-4590-8505-2ea8076fbc8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\JapanFont">
+      <UniqueIdentifier>{31552dd8-0258-4e28-a1cb-0fe63f29dfd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\Tuto">
+      <UniqueIdentifier>{d61b32ce-6067-420a-a419-100fd34cfd54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\Tuto">
+      <UniqueIdentifier>{942998e9-fe28-460d-93e4-186672dad5f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Header\Sound">
+      <UniqueIdentifier>{9702f5ec-5dd7-43b9-b97b-bd82525a4007}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Source\Sound">
+      <UniqueIdentifier>{ddcd9bd1-79f1-4b11-9244-c042e3af4422}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\NoLight">
+      <UniqueIdentifier>{bf8c7b51-ea1e-4339-a162-c34ef97259f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\Cascade">
+      <UniqueIdentifier>{c6b6cf06-bcfc-4008-9e0e-e7719922fd00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\Cascade\RunCascade">
+      <UniqueIdentifier>{4c774190-094a-46d9-b789-aba0bb9e1c18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\Cascade\ToShadowMap">
+      <UniqueIdentifier>{502847c7-7792-4a40-a0bd-e0c38e87b36c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\ExportScript">
+      <UniqueIdentifier>{f3fa8c60-9752-47a2-8be5-aa81861d20ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\ExportScript">
+      <UniqueIdentifier>{8100ce61-8c5a-41d9-8268-77ea29a284df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\Player\Sirobo">
+      <UniqueIdentifier>{4447e365-a389-45be-a8d1-372377b8dfec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\Player\Sirobo\Judgement">
+      <UniqueIdentifier>{6aa0d05d-cedf-4c32-800c-3c96d2e293ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Header\Player\Sirobo\Action">
+      <UniqueIdentifier>{db197e20-332e-4536-8f24-f958557bb4de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\Player\Sirobo">
+      <UniqueIdentifier>{d09cb3cd-1241-47cb-ab6a-b26dc633e469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\Player\Sirobo\Judgement">
+      <UniqueIdentifier>{4f4d0209-adb5-46cc-810c-768bf35240c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program\Source\Player\Sirobo\Action">
+      <UniqueIdentifier>{aede908f-2ca1-4299-8829-ff4f0ebdb5a4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\WinMain.cpp">
+      <Filter>Program</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Vector.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_Graphics.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_DirectXFunctions.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_Sampler.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_Rasterizer.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_Sprite.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_Texture.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_ShaderResource.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_TextureResourceManager.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_Blender.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_DebugRender.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_Primitive2D_DebugRender.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_Primitive3D_DebugRender.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_CameraLib.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_BaseShader.cpp">
+      <Filter>Library\Source\ShaderSource</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_ModelResource.cpp">
+      <Filter>Library\Source\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_ModelResourceManager.cpp">
+      <Filter>Library\Source\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_LambertShader.cpp">
+      <Filter>Library\Source\ShaderSource</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_ShadowShader.cpp">
+      <Filter>Library\Source\ShaderSource</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_Gauss.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_Light.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_PointLight.cpp">
+      <Filter>Library\Source\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_LightManager.cpp">
+      <Filter>Library\Source\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_DepthStencil.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imGui\imgui.cpp">
+      <Filter>Library\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imGui\imgui_demo.cpp">
+      <Filter>Library\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imGui\imgui_draw.cpp">
+      <Filter>Library\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imGui\imgui_impl_dx11.cpp">
+      <Filter>Library\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imGui\imgui_impl_win32.cpp">
+      <Filter>Library\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imGui\imgui_widgets.cpp">
+      <Filter>Library\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_OutlineShader.cpp">
+      <Filter>Library\Source\ShaderSource</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_EffectManager.cpp">
+      <Filter>Library\Source\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_SpriteEffect.cpp">
+      <Filter>Library\Source\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneTitle.cpp">
+      <Filter>Program\Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneLoad.cpp">
+      <Filter>Program\Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneGame.cpp">
+      <Filter>Program\Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneOver.cpp">
+      <Filter>Program\Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneClear.cpp">
+      <Filter>Program\Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Program\Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FrameWork.cpp">
+      <Filter>Program\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_GamePad.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Charactor.cpp">
+      <Filter>Program\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraController.cpp">
+      <Filter>Program\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mathf.cpp">
+      <Filter>Program\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collision.cpp">
+      <Filter>Program\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Navigation.cpp">
+      <Filter>Program\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyBase.cpp">
+      <Filter>Program\Source\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyManager.cpp">
+      <Filter>Program\Source\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Manager.cpp">
+      <Filter>Program\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BehaviorTree.cpp">
+      <Filter>Program\Source\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ActionBase.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\JudgementBase.cpp">
+      <Filter>Program\Source\AI\Judgment</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NodBase.cpp">
+      <Filter>Program\Source\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BehaviorData.cpp">
+      <Filter>Program\Source\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\JudgementDerived.cpp">
+      <Filter>Program\Source\AI\Judgment</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\IdleAction.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PursuitAction.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AttackAction.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyChest.cpp">
+      <Filter>Program\Source\Enemy\Dirived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyBeholder.cpp">
+      <Filter>Program\Source\Enemy\Dirived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemySlime.cpp">
+      <Filter>Program\Source\Enemy\Dirived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyTurtleShell.cpp">
+      <Filter>Program\Source\Enemy\Dirived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyBoom.cpp">
+      <Filter>Program\Source\Enemy\Dirived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>Program\Source\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraNormal.cpp">
+      <Filter>Program\Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraManager.cpp">
+      <Filter>Program\Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraAim.cpp">
+      <Filter>Program\Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Program\Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboJudgementBase.cpp">
+      <Filter>Program\Source\Player\Sirobo\Judgement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboJudgementDerived.cpp">
+      <Filter>Program\Source\Player\Sirobo\Judgement</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Bullet.cpp">
+      <Filter>Program\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animetion.cpp">
+      <Filter>Program\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DeadAction.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DamageAction.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EffectBase.cpp">
+      <Filter>Program\Source\3DEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EffectManager.cpp">
+      <Filter>Program\Source\3DEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EffectFire.cpp">
+      <Filter>Program\Source\3DEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EffectEnemyDestroy.cpp">
+      <Filter>Program\Source\3DEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboManager.cpp">
+      <Filter>Program\Source\Player\Sirobo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboPlayer.cpp">
+      <Filter>Program\Source\Player\Sirobo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerState.cpp">
+      <Filter>Program\Source\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Stage.cpp">
+      <Filter>Program\Source\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StageManager.cpp">
+      <Filter>Program\Source\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyDummy.cpp">
+      <Filter>Program\Source\Enemy\Dirived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboIdleAction.cpp">
+      <Filter>Program\Source\Player\Sirobo\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboAttackAction.cpp">
+      <Filter>Program\Source\Player\Sirobo\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboBackAction.cpp">
+      <Filter>Program\Source\Player\Sirobo\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboDieAction.cpp">
+      <Filter>Program\Source\Player\Sirobo\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboPursuitAction.cpp">
+      <Filter>Program\Source\Player\Sirobo\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboStandByAction.cpp">
+      <Filter>Program\Source\Player\Sirobo\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboThrowAction.cpp">
+      <Filter>Program\Source\Player\Sirobo\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboActionBase.cpp">
+      <Filter>Program\Source\Player\Sirobo\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboResuscitationAction.cpp">
+      <Filter>Program\Source\Player\Sirobo\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actor.cpp">
+      <Filter>Program\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ObjectBase.cpp">
+      <Filter>Program\Source\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ObjectManager.cpp">
+      <Filter>Program\Source\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ObjectWall.cpp">
+      <Filter>Program\Source\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ObjectFunctionBase.cpp">
+      <Filter>Program\Source\ObjectFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ObjectFunctionManager.cpp">
+      <Filter>Program\Source\ObjectFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FunctionStart.cpp">
+      <Filter>Program\Source\ObjectFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FunctionEnd.cpp">
+      <Filter>Program\Source\ObjectFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_TargetScreenShader.cpp">
+      <Filter>Library\Source\ShaderSource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI.cpp">
+      <Filter>Program\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIManager.cpp">
+      <Filter>Program\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIPlayerHP.cpp">
+      <Filter>Program\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UITargetCursur.cpp">
+      <Filter>Program\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UITargetHP.cpp">
+      <Filter>Program\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UISiroboDownHelp.cpp">
+      <Filter>Program\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UISiroboAttack.cpp">
+      <Filter>Program\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyBoss.cpp">
+      <Filter>Program\Source\Enemy\Dirived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UITimer.cpp">
+      <Filter>Program\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EXPManager.cpp">
+      <Filter>Program\Source\EXP</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EXP.cpp">
+      <Filter>Program\Source\EXP</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemySite.cpp">
+      <Filter>Program\Source\Enemy\Dirived</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossRollAttackStartAction.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossRollAttackAction.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossRollAttackEndAction.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossEntry.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ObjectPot.cpp">
+      <Filter>Program\Source\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UINumTower.cpp">
+      <Filter>Program\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ObjectTower.cpp">
+      <Filter>Program\Source\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_Japanese.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TutoStage.cpp">
+      <Filter>Program\Source\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Tuto.cpp">
+      <Filter>Program\Source\Tuto</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TutoManager.cpp">
+      <Filter>Program\Source\Tuto</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UITuto.cpp">
+      <Filter>Program\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UINextMessage.cpp">
+      <Filter>Program\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MoveTuto.cpp">
+      <Filter>Program\Source\Tuto</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GetSiroboTuto.cpp">
+      <Filter>Program\Source\Tuto</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\KillDummyEnemyTuto.cpp">
+      <Filter>Program\Source\Tuto</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\KillEnemyTuto.cpp">
+      <Filter>Program\Source\Tuto</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ResurectionSiroboTuto.cpp">
+      <Filter>Program\Source\Tuto</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_Sound.cpp">
+      <Filter>Library\Source\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboPlayerAI.cpp">
+      <Filter>Program\Source\Player\Sirobo</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_NoLight.cpp">
+      <Filter>Library\Source\ShaderSource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossIdeiAction.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossWalkAction.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossDeadAction.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossStage.cpp">
+      <Filter>Program\Source\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_FadeOut.cpp">
+      <Filter>Library\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TK_Lib\Lib_CascadeShader.cpp">
+      <Filter>Library\Source\ShaderSource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EffectThowSmoke.cpp">
+      <Filter>Program\Source\3DEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EffectAttack.cpp">
+      <Filter>Program\Source\3DEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EffectTowerBreak.cpp">
+      <Filter>Program\Source\3DEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EffectStageClear.cpp">
+      <Filter>Program\Source\3DEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraBossEntry.cpp">
+      <Filter>Program\Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EffectBossDeadFire.cpp">
+      <Filter>Program\Source\3DEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EffectBossExplosion.cpp">
+      <Filter>Program\Source\3DEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EffectBossSiteBreak.cpp">
+      <Filter>Program\Source\3DEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BossSiteDieAction.cpp">
+      <Filter>Program\Source\AI\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI2DDirection.cpp">
+      <Filter>Program\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ExportText.cpp">
+      <Filter>Program\Source\ExportScript</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Export.cpp">
+      <Filter>Program\Source\ExportScript</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ExportCSV.cpp">
+      <Filter>Program\Source\ExportScript</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TK_Lib\Lib.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Vector.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_Graphics.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_DirectXFunctions.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_misc.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_highResolutionTimer.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Delete.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_Sampler.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_Rasterizer.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_Sprite.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_Texture.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_ResoureManager.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_ShaderResource.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_TextureResourceManager.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_Blender.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_DebugRender.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_CameraLib.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_BaseShader.h">
+      <Filter>Library\Header\ShaderSource</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_ModelResource.h">
+      <Filter>Library\Header\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_ModelResourceManager.h">
+      <Filter>Library\Header\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_LambertShader.h">
+      <Filter>Library\Header\ShaderSource</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_ShadowShader.h">
+      <Filter>Library\Header\ShaderSource</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_Gauss.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_Light.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_PointLight.h">
+      <Filter>Library\Header\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_LightManager.h">
+      <Filter>Library\Header\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_DepthStencil.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_OutlineShader.h">
+      <Filter>Library\Header\ShaderSource</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_EffectManager.h">
+      <Filter>Library\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_SpriteEffect.h">
+      <Filter>Library\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Program\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_GamePad.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Charactor.h">
+      <Filter>Program\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CameraController.h">
+      <Filter>Program\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mathf.h">
+      <Filter>Program\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collision.h">
+      <Filter>Program\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Navigation.h">
+      <Filter>Program\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyManager.h">
+      <Filter>Program\Header\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyBase.h">
+      <Filter>Program\Header\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Manager.h">
+      <Filter>Program\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BehaviorTree.h">
+      <Filter>Program\Header\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ActionBase.h">
+      <Filter>Program\Header\AI\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\JudgementBase.h">
+      <Filter>Program\Header\AI\Judgment</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NodeBase.h">
+      <Filter>Program\Header\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BehaviorData.h">
+      <Filter>Program\Header\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ActionDerived.h">
+      <Filter>Program\Header\AI\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\JudgementDerived.h">
+      <Filter>Program\Header\AI\Judgment</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FrameWork.h">
+      <Filter>Program\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyDerived.h">
+      <Filter>Program\Header\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player.h">
+      <Filter>Program\Header\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SiroboActionBase.h">
+      <Filter>Program\Header\Player\Sirobo\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SiroboJudgementBase.h">
+      <Filter>Program\Header\Player\Sirobo\Judgement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SiroboActionDerived.h">
+      <Filter>Program\Header\Player\Sirobo\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SiroboJudgementDerived.h">
+      <Filter>Program\Header\Player\Sirobo\Judgement</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Bullet.h">
+      <Filter>Program\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animetion.h">
+      <Filter>Program\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EffectBase.h">
+      <Filter>Program\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EffectManager.h">
+      <Filter>Program\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EffectDerived.h">
+      <Filter>Program\Header\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SiroboPlayerAI.h">
+      <Filter>Program\Header\Player\Sirobo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SiroboPlayer.h">
+      <Filter>Program\Header\Player\Sirobo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerState.h">
+      <Filter>Program\Header\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Stage.h">
+      <Filter>Program\Header\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StageManager.h">
+      <Filter>Program\Header\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ObjectManager.h">
+      <Filter>Program\Header\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ObjectBase.h">
+      <Filter>Program\Header\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actor.h">
+      <Filter>Program\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ObjectDerived.h">
+      <Filter>Program\Header\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ObjectFunctionBase.h">
+      <Filter>Program\Header\ObjectFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ObjectFunctionManager.h">
+      <Filter>Program\Header\ObjectFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ObjectFunctionDerive.h">
+      <Filter>Program\Header\ObjectFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_TargetScreenShader.h">
+      <Filter>Library\Header\ShaderSource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIBase.h">
+      <Filter>Program\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIManager.h">
+      <Filter>Program\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIDerived.h">
+      <Filter>Program\Header\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EXP.h">
+      <Filter>Program\Header\2DEXP</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EXPManager.h">
+      <Filter>Program\Header\2DEXP</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_Japanese.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tuto.h">
+      <Filter>Program\Header\Tuto</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TutoManager.h">
+      <Filter>Program\Header\Tuto</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_Sound.h">
+      <Filter>Library\Header\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_NoLight.h">
+      <Filter>Library\Header\ShaderSource</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_FadeOut.h">
+      <Filter>Library\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TK_Lib\Lib_CascadeShader.h">
+      <Filter>Library\Header\ShaderSource</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ExportScript.h">
+      <Filter>Program\Header\ExportScript</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Export.h">
+      <Filter>Program\Header\ExportScript</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\Sprite.hlsli">
+      <Filter>Library\Shader\Sprite</Filter>
+    </None>
+    <None Include="Shader\Primitive2D.hlsli">
+      <Filter>Library\Shader\Primitive2D</Filter>
+    </None>
+    <None Include="Shader\Primitive3D.hlsli">
+      <Filter>Library\Shader\Primitive3D</Filter>
+    </None>
+    <None Include="Shader\Lambert.hlsli">
+      <Filter>Library\Shader\Lambert</Filter>
+    </None>
+    <None Include="Shader\Gaussian.hlsli">
+      <Filter>Library\Shader\Gaussian</Filter>
+    </None>
+    <None Include="Shader\RenderShadow.hlsli">
+      <Filter>Library\Shader\Shadow</Filter>
+    </None>
+    <None Include="Shader\VarianceShadowMap.hlsli">
+      <Filter>Library\Shader\VarianceShadowMap</Filter>
+    </None>
+    <None Include="Shader\PointLight.hlsli">
+      <Filter>Library\Shader\Light</Filter>
+    </None>
+    <None Include="Shader\PointSprite.hlsli">
+      <Filter>Library\Shader\PointSprite</Filter>
+    </None>
+    <None Include="Shader\Lib_Outline.hlsli">
+      <Filter>Library\Shader\Outline</Filter>
+    </None>
+    <None Include="Shader\TargetScreen.hlsli">
+      <Filter>Library\Shader\TargetScreen</Filter>
+    </None>
+    <None Include="Shader\JapanFont.hlsli">
+      <Filter>Library\Shader\JapanFont</Filter>
+    </None>
+    <None Include="Shader\NoLight.hlsli">
+      <Filter>Library\Shader\NoLight</Filter>
+    </None>
+    <None Include="Shader\Cascade.hlsli">
+      <Filter>Library\Shader\Cascade\RunCascade</Filter>
+    </None>
+    <None Include="Shader\ToShadowMap.hlsli">
+      <Filter>Library\Shader\Cascade\ToShadowMap</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\Sprite_ps.hlsl">
+      <Filter>Library\Shader\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Sprite_vs.hlsl">
+      <Filter>Library\Shader\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Primitive2D_ps.hlsl">
+      <Filter>Library\Shader\Primitive2D</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Primitive2D_vs.hlsl">
+      <Filter>Library\Shader\Primitive2D</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Primitive3D_ps.hlsl">
+      <Filter>Library\Shader\Primitive3D</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Primitive3D_vs.hlsl">
+      <Filter>Library\Shader\Primitive3D</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Lambert_ps.hlsl">
+      <Filter>Library\Shader\Lambert</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Lambert_vs.hlsl">
+      <Filter>Library\Shader\Lambert</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Gaussian_vs.hlsl">
+      <Filter>Library\Shader\Gaussian</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Gaussian_ps.hlsl">
+      <Filter>Library\Shader\Gaussian</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\RenderShadow_vs.hlsl">
+      <Filter>Library\Shader\Shadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\RenderShadow_ps.hlsl">
+      <Filter>Library\Shader\Shadow</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\VarianceShadowMap_ps.hlsl">
+      <Filter>Library\Shader\VarianceShadowMap</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\VarianceShadowMap_vs.hlsl">
+      <Filter>Library\Shader\VarianceShadowMap</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\PointSprite_ps.hlsl">
+      <Filter>Library\Shader\PointSprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\PointSprite_vs.hlsl">
+      <Filter>Library\Shader\PointSprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\PointSprite_gs.hlsl">
+      <Filter>Library\Shader\PointSprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Lib_Outline_ps.hlsl">
+      <Filter>Library\Shader\Outline</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Lib_Outline_vs.hlsl">
+      <Filter>Library\Shader\Outline</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Lib_Outline_gs.hlsl">
+      <Filter>Library\Shader\Outline</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\TargetScreen_ps.hlsl">
+      <Filter>Library\Shader\TargetScreen</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\TargetScreen_vs.hlsl">
+      <Filter>Library\Shader\TargetScreen</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\JapanFont_PS.hlsl">
+      <Filter>Library\Shader\JapanFont</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\JapanFont_VS.hlsl">
+      <Filter>Library\Shader\JapanFont</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\NoLight_vs.hlsl">
+      <Filter>Library\Shader\NoLight</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\NoLight_ps.hlsl">
+      <Filter>Library\Shader\NoLight</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Cascade_vs.hlsl">
+      <Filter>Library\Shader\Cascade\RunCascade</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\Cascade_ps.hlsl">
+      <Filter>Library\Shader\Cascade\RunCascade</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ToShadowMap_ps.hlsl">
+      <Filter>Library\Shader\Cascade\ToShadowMap</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ToShadowMap_vs.hlsl">
+      <Filter>Library\Shader\Cascade\ToShadowMap</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

@@ -34,8 +34,10 @@ public:
 	void Init();
 	//更新処理
 	void Update();
-
-	bool AddDamage(int Damage, int MaxinvincibleTime);
+	//ダメージを受けた時
+	bool AddDamage(int Damage, float SetInvincibleTime);
+	//シロボの召喚
+	void SummonSirobo();
 
 };
 

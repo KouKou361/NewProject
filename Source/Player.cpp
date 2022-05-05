@@ -4,7 +4,7 @@
 #include "Mathf.h"
 #include "Collision.h"
 #include "EnemyManager.h"
-#include "MinionPlayer.h"
+#include "SiroboPlayer.h"
 #include "CameraController.h"
 #include "Animetion.h"
 #include "Scene.h"
@@ -15,72 +15,40 @@
 #include "ExportScript.h"
 void Player::Init()
 {
+	//ステータス設定
 	SetStatus("Player");
+
+	//モデル生成
 	SetModel(TK_Lib::Load::GetModel("Player"));
 
-	anime = make_shared<Animetion>();
-
-	//アニメーション番号
-	string AnimeIndex[] =
-	{
-		anime->Attack1,//"Attack",
-		anime->Damage,//"Damage",
-		anime->Die,//Dead
-		anime->Idle,//"Wait",
-		anime->Run,//"Walk",
-		anime->End,//"End",
-	};
 	//アニメーションの登録
-	for (int i = 0; "End" != AnimeIndex[i]; i++)
-	{
-		anime->Register(i, AnimeIndex[i]);
-	}
-
+	RegisterAnimetion();
+	
+	//タグづけ
 	SetTag(ObjectTag::TAG_PLAYER);
 
-	//全ての状態を先に登録しておく
-	stateAttack = make_unique<AttackState>();
-	stateDamage = make_unique<DamageState>();
-	stateDead = make_unique<DeadState>();
-	stateWait = make_unique<WaitState>();
-	stateWalk = make_unique<WalkState>();
-	stateBossEntry = make_unique<BossEntryPlayerState>();
+	//アニメーション
+	RegisterAnimetion();
+
+	//全ての行動を登録
+	RegisterState();
 	
-	stateMachine = nullptr;
-	ChangeState(stateWalk.get());
-	//stateMachine = stateWalk.get();
 
-
-	//TK_Lib::Model::PlayAnimation(modelIndex, anime->GetIndex("Attack"), true);
-
-	SetOldPos(GetPos());
 	//ミニオンたちの初期化処理
-	minionManager = make_unique<MinionManager>();
-	minionManager->Init();
-	//テクスチャの設定
+	siroboManager = make_unique<SiroboManager>();
+	siroboManager->Init();
+
+	//テクスチャの読み込み、設定
 	int TargetCursurSprite = TK_Lib::Load::LoadTexture("./Data/Sprite/TargetCursor.png");
-//	int TargetHPGageSprite = TK_Lib::Load::LoadTexture("./Data/Sprite/HP_gage.png");
 	int HealthPointSprite = TK_Lib::Load::LoadTexture("./Data/Sprite/Game/HealthPoint.png");
 
 	//敵マネージャーの設定
 	EnemyManager* enemyManager = sceneGame->GetEnemyManager();
-	minionManager->SetEnemyManager(enemyManager);
+	siroboManager->SetEnemyManager(enemyManager);
 
 	//マネージャーの設定
 	ObjectManager* objectManager = sceneGame->GetObjectManager();
-	minionManager->SetObjectManager(objectManager);
-
-
-	//UIManager* manager= sceneGame->GetUiManager();
-	//std::shared_ptr<UIPlayerHP> uiPlayerHP = make_shared<UIPlayerHP>(manager);
-	
-	//プレイヤーのHPの表示UIの生成
-	{
-		//uiPlayerHP = make_shared<UIPlayerHP>();
-		//uiPlayerHP->SetTexture(HealthPointSprite);
-		//uiPlayerHP->SetCharactor(this);
-		
-	}
+	siroboManager->SetObjectManager(objectManager);
 
 	//攻撃目標の表示UIの生成
 	{
@@ -99,16 +67,55 @@ void Player::Init()
 
 	//敵に攻撃しているミニオンの数
 	{
-		uiMinionAttack = make_shared<UIMinionAttack>();
-		uiMinionAttack->Init();
-		uiMinionAttack->SetCharactor(this);
+		uiSiroboAttack = make_shared<UISiroboAttack>();
+		uiSiroboAttack->Init();
+		uiSiroboAttack->SetCharactor(this);
 	}
 
-	AttackMinions.clear();
+	//シロボ達の攻撃を受けるリストをクリア（念のため）
+	attackSirobo.clear();
 
-
+	SetOldPos(GetPos());
 
 	//manager->Register(uiPlayerHP);
+
+}
+void Player::Update()
+{
+	//ダメージ確認
+	if (GetDamageFlg() == true)
+	{
+		ChangeState(stateDamage.get());
+	}
+	//死亡確認
+	if (GetDeadFlg() == true)
+	{
+		ChangeState(stateDead.get());
+	}
+
+
+	stateMachine->Run(this);
+
+	//敵との当たり判定
+	VsEnemy();
+
+	//Navメッシュに現在地を更新する
+	Collision::Instance().SetTarget(GetPos());
+
+	//過去の地点の保存
+	SetOldPos(GetPos());
+
+	//ターゲットの見失う
+	ResetFarTarget(LossTargetFar);
+
+	//ミニオンたちの更新処理
+	siroboManager->Update();
+
+	//無敵時間の更新
+	InvincibleTimeUpdate();
+
+	//行列などの更新処理
+	Charactor::Update();
 
 }
 
@@ -117,38 +124,42 @@ void Player::Input()
 {
 	//プレイヤーの移動入力処理
 	InputMove();
+
 	//敵目標の設定
 	SetTargetActor();
+
 	//プレイヤーのカメラ入力処理
 	InputCamera();
+
 	//攻撃入力処理
 	InputAttack();
+
 	//ミニオンの帰還入力処理
-	InputMinionBack();
+	InputSiroboBack();
+
 	//ミニオンの蘇生処理
-	InputMinionResuscitation();
+	InputSiroboResuscitation();
 	
 }
 //シーンゲームの設定
 void Player::SetSceneGame(SceneGame* scene) {
 	this->sceneGame = scene;
-
-	
-	
 }
 
-void Player::InputMinionBack()
+//RBで全てのシロボの帰還
+void Player::InputSiroboBack()
 {
-	//if (TK_Lib::Gamepad::GetButtonDown(BTN::X) == 1)
 	if (TK_Lib::Gamepad::GetButtonDown(BTN::RB) == 1)
 	{
-		minionManager->AllBack();
+		siroboManager->AllBack();
 	}
 }
+
 //入力攻撃
 void Player::InputAttack()
 {
 	CameraManager* cameraManager = sceneGame->GetCameraManager();
+
 	//もしAimカメラ時ではない状態ならreturn 
 	if (cameraManager->GetNowType() != CameraManager::CameraType::TYPE_AIM)return;
 	//もし攻撃モードならreturn;
@@ -162,6 +173,7 @@ void Player::InputAttack()
 
 
 }
+
 //入力処理(入力された数値はmoveVecに入れられる)
 void Player::InputMove()
 {
@@ -204,41 +216,45 @@ void Player::InputCamera()
 		CameraManager* cameraManager = sceneGame->GetCameraManager();
 		//もしAimカメラ時ではない状態ならreturn 
 		if (cameraManager->GetNowType() == CameraManager::CameraType::TYPE_AIM)return;
+		//Aimカメラに移行
 		ChangeCameraAim();
 	}
 }
 
-//ミニオンの蘇生入力処理
-void Player::InputMinionResuscitation()
+//シロボの蘇生入力処理
+void Player::InputSiroboResuscitation()
 {
+	//シロボ達、蘇生範囲
 	const float ResuscitationLength = 10.0f;
 	//TK_Lib::Debug3D::Circle(GetPos(), ResuscitationLength, {0,1,0,1});
 	//if (TK_Lib::Gamepad::GetButtonDown(BTN::Y) <= 0)return;
 	float NearPos = FLT_MAX;
-	MinionPlayer* ResuscitationTarget = nullptr;
+	Sirobo* ResuscitationTarget = nullptr;
 
-	for (int i = 0;i < minionManager->GetMinionsSize(); i++)
+	for (int i = 0;i < siroboManager->GetSiroboSize(); i++)
 	{
-		MinionPlayer* minion=minionManager->GetMinionIndex(i);
+		Sirobo* sirobo=siroboManager->GetSiroboIndex(i);
+
 		//死亡のミニオンのみ
-		if (minion->GetState() == MinionPlayer::StateType::TYPE_DEAD ||
-			minion->GetState() == MinionPlayer::StateType::TYPE_RESUSCITATION
+		if (sirobo->GetState() == Sirobo::StateType::TYPE_DEAD ||
+			sirobo->GetState() == Sirobo::StateType::TYPE_RESUSCITATION
 			)
 		{
-			float L = Length(minion->GetPos());
+			const float L = Length(sirobo->GetPos());
 			//蘇生範囲に入っていたなら
 			if (ResuscitationLength <= L)continue;
 			//最短距離のミニオンを蘇生ターゲットにする
 			if (NearPos >= L)
 			{
 				NearPos = L;
-				ResuscitationTarget = minion;
+				ResuscitationTarget = sirobo;
 			}
 
 		}
 
 	}
 
+	//蘇生状態に移行！
 	if (ResuscitationTarget != nullptr)
 	{
 		ResuscitationTarget->SetResuscitation();
@@ -263,13 +279,13 @@ void Player::CollisionDebug()
 
 	TK_Lib::Debug3D::Line(Start, End, { 0,1,0,1 });
 
-	for (int i = 0; i < minionManager->GetMinionsSize(); i++)
+	for (int i = 0; i < siroboManager->GetSiroboSize(); i++)
 	{
-		MinionPlayer* minion = minionManager->GetMinionIndex(i);
-		minion->CollisionDebug();
+		Sirobo* sirobo = siroboManager->GetSiroboIndex(i);
+		sirobo->CollisionDebug();
 
 		//当たり判定
-		TK_Lib::Debug3D::Circle(GetPos(), minion->StandBySerchL);
+		TK_Lib::Debug3D::Circle(GetPos(), sirobo->StandBySerchL);
 	}
 }
 //目標の敵の設定
@@ -439,39 +455,6 @@ void Player::VsEnemy()
 		SetPos(OutPos);
 	}
 }
-void Player::Update()
-{
-
-	if (GetDamageFlg() == true)
-	{
-		ChangeState(stateDamage.get());
-	}
-	if (GetDeadFlg() == true)
-	{
-		ChangeState(stateDead.get());
-	}
-
-
-	stateMachine->Run(this);
-
-	//敵との当たり判定
-	VsEnemy();
-	//レイピックによる位置補正
-	//UpdateCollision();
-	//Navメッシュに現在地を更新する
-	Collision::Instance().SetTarget(GetPos());
-	//過去の地点の保存
-	SetOldPos(GetPos());
-	//ターゲットの見失う
-	ResetFarTarget(LossTargetFar);
-	//ミニオンたちの更新処理
-	minionManager->Update();
-	//無敵時間の更新
-	InvincibleTimeUpdate();
-	//行列などの更新処理
-	Charactor::Update();
-
-}
 
 //状態マシンの変換
 void Player::ChangeState(PlayerState* state)
@@ -485,7 +468,7 @@ void Player::ChangeState(PlayerState* state)
 }
 
 //状態マシンの変換
-void Player::ChangeState(State state,BossStage* stage)
+void Player::ChangeState(const State &state,BossStage* stage)
 {
 	PlayerState* playerstate=nullptr;
 	switch (state)
@@ -516,7 +499,7 @@ void Player::ChangeState(State state,BossStage* stage)
 	ChangeState(playerstate);
 }
 //ターゲットがある程度遠かった場合見失う
-void Player::ResetFarTarget(float L)
+void Player::ResetFarTarget(const float &L)
 {
 
 	if (GetTarget() == nullptr)
@@ -541,12 +524,12 @@ void Player::SetTargetEnemy(Actor* enm) {
 	SetTarget(enm);
 
 	//ミニオンにも攻撃対象を変える
-	for (int i = 0; i < minionManager->GetMinionsSize(); i++)
+	for (int i = 0; i < siroboManager->GetSiroboSize(); i++)
 	{
-		MinionPlayer* minion = minionManager->GetMinionIndex(i);
-		if (minion->GetState() == MinionPlayer::StateType::TYPE_STAND_BY)
+		Sirobo* sirobo = siroboManager->GetSiroboIndex(i);
+		if (sirobo->GetState() == Sirobo::StateType::TYPE_STAND_BY)
 		{
-			minion->SetTarget(enm);
+			sirobo->SetTarget(enm);
 		}
 	}
 }
@@ -556,7 +539,7 @@ void Player::ModelRender()
 {
 	TK_Lib::Draw::Model(GetModel(), ShaderType::Shader_MakeShadow);
 	//ミニオンたちのモデル描画処理
-	minionManager->ModelRender();
+	siroboManager->ModelRender();
 }
 //カーソルの描画
 void Player::RenderCursur()
@@ -586,7 +569,7 @@ void Player::RenderCursur()
 	//RenderTargetHP({ screenPos.x - 50,screenPos.y - 80 });
 }
 //目標のHPの表示
-void Player::RenderTargetHP(const VECTOR2 Pos)
+void Player::RenderTargetHP(const VECTOR2& Pos)
 {
 	//if (GetTarget()->GetHp() <= 0)return;
 	//GetTarget()->HPRender(TargetHPGageSprite, Pos);
@@ -601,20 +584,20 @@ void Player::Render()
 	//目標のHP
 	uiTargetHP->Render();
 
-	uiMinionAttack->Render();
+	uiSiroboAttack->Render();
 	
 	//HPRender(HealthPointSprite, {0,0});
 	//目標の標準
 	//RenderCursur();
 	//ミニオンたちの2Dなどの描画処理
-	minionManager->Render();
+	siroboManager->Render();
 
 
 
 }
 
 //プレイヤーの体力表示
-void Player::HPRender(const int SpriteIndex, const VECTOR2 Pos)
+void Player::HPRender(const int &spriteIndex, const VECTOR2& pos)
 {
 //	VECTOR2 HPPosition= Pos;
 //	const VECTOR2 SpriteSize = { 150,150 };
@@ -637,30 +620,31 @@ void Player::HPRender(const int SpriteIndex, const VECTOR2 Pos)
 //プレイヤーのステージリセット処理
 void Player::ResetPlayer()
 {
-	minionManager->Clear();
+	siroboManager->Clear();
 	sceneGame->GetCameraManager()->ChangeCamera(new CameraNormal(this), GetPos());
 	
 	//for (int i = 0; i < 4; i++)
 	//{
-	//	shared_ptr<MinionPlayer> minion;
-	//	minion = make_shared<MinionPlayer>();
-	//	minion->Init(this);
-	//	minion->SetPos({ 5,0,static_cast<float>(i * 8) });
-	//	//	minion->pos = { 5,0,static_cast<float>(140) };
-	//	minionManager->Register(minion);
+	//	shared_ptr<SiroboPlayer> sirobo;
+	//	sirobo = make_shared<SiroboPlayer>();
+	//	sirobo->Init(this);
+	//	sirobo->SetPos({ 5,0,static_cast<float>(i * 8) });
+	//	//	sirobo->pos = { 5,0,static_cast<float>(140) };
+	//	siroboManager->Register(sirobo);
 	//}
 }
 
 //ダメージを判定
-bool Player::AddDamage(int Damage, int SetinvincibleTime)
+bool Player::AddDamage(const int &damage, const float &setInvincibleTime)
 {
 	//体力が0以下なら
 	if (GetHp() <= 0)return false;
 	//無敵中なら
 	if (invincibleTime > 0)return false;
 
-	invincibleTime = SetinvincibleTime;
-	sceneGame->GetStageManager()->GetNowStage()->GetUiTimer()->AddGameOverTimer(-10);
+	invincibleTime = setInvincibleTime;
+	const float SubtractTime = -10;
+	sceneGame->GetStageManager()->GetNowStage()->GetUiTimer()->AddGameOverTimer(SubtractTime);
 	TK_Lib::Lib_Sound::SoundPlay("PlayerDamage", false);
 	
 
@@ -689,9 +673,9 @@ bool Player::AddDamage(int Damage, int SetinvincibleTime)
 }
 
 //CSVからデータを取り出して、ステータスの設定する。
-void Player::SetStatus(string SearchName)
+void Player::SetStatus(const string &searchName)
 {
-	AlliesStatusData* data = sceneGame->GetexportSCV()->GetAlliesStatusDataSearchName(SearchName);
+	AlliesStatusData* data = sceneGame->GetexportSCV()->GetAlliesStatusDataSearchName(searchName);
 	SetQuaternion({ 0,0,0,1 });
 	SetMaxHp(data->GetHp());
 	SetHp(data->GetHp());
@@ -700,6 +684,39 @@ void Player::SetStatus(string SearchName)
 	collisionRadius = data->GetCollisionRadius();
 	weight = data->GetWeight();
 	SetMaxInvincibleTime(data->GetMaxInvincibleTime());
+}
+//アニメーションの設定
+void Player::RegisterAnimetion()
+{
+	anime = make_shared<Animetion>();
+
+	//アニメーション番号
+	string AnimeIndex[] =
+	{
+		anime->Attack1,//"Attack",
+		anime->Damage,//"Damage",
+		anime->Die,//Dead
+		anime->Idle,//"Wait",
+		anime->Run,//"Walk",
+		anime->End,//"End",
+	};
+	//アニメーションの登録
+	anime->AllAnimetionKey(&AnimeIndex[0]);
+}
+
+//全てのモーションを登録
+void Player::RegisterState()
+{
+	//全ての状態を先に登録しておく
+	stateAttack = make_unique<AttackState>();
+	stateDamage = make_unique<DamageState>();
+	stateDead = make_unique<DeadState>();
+	stateWait = make_unique<WaitState>();
+	stateWalk = make_unique<WalkState>();
+	stateBossEntry = make_unique<BossEntryPlayerState>();
+
+	stateMachine = nullptr;
+	ChangeState(stateWalk.get());
 }
 
 

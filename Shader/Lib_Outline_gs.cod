@@ -77,9 +77,9 @@ dcl_maxout 6
 //   v[2][3].x <- input[2].color.x; v[2][3].y <- input[2].color.y; v[2][3].z <- input[2].color.z; v[2][3].w <- input[2].color.w; 
 //   v[2][1].z <- input[2].power
 //
-#line 10 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Lib_Outline_gs.hlsl"
-mov r0.x, l(0)
-mov r0.y, r0.x
+#line 10 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Lib_Outline_gs.hlsl"
+mov r0.x, l(0)  // r0.x <- i
+mov r0.y, r0.x  // r0.y <- i
 loop 
   mov r0.z, l(3)
   ult r0.z, r0.y, r0.z
@@ -118,8 +118,8 @@ endloop
 cut_stream m0
 
 #line 23
-mov r0.x, l(0)  // r0.x <- i
-mov r0.y, r0.x  // r0.y <- i
+mov r0.x, l(0)  // r0.x <- k
+mov r0.y, r0.x  // r0.y <- k
 loop 
   ilt r0.z, r0.y, l(3)
   breakc_z r0.z

@@ -43,12 +43,12 @@ public:
 class SceneTitle :public Scene
 {
 private:
-	int fontTexture;
-	int titleSceneBackTitleTexture;
-	int smoke_driftTexture;
-	int titleLogoTexture;
-	int playerTexture;
-	int minionTextue;
+	int fontTexture=0;
+	int titleSceneBackTitleTexture = 0;
+	int smoke_driftTexture = 0;
+	int titleLogoTexture = 0;
+	int playerTexture = 0;
+	int siroboTextue = 0;
 
 public:
 	SceneTitle() {};
@@ -66,32 +66,55 @@ public:
 	void ModelRender() override;
 	//終了処理
 	void End() override;
-
+private:
+	//テクスチャの読み込み
+	void LoadTexture();
+	//サウンドの読み込み
+	void LoadSound();
+	//バックスクリーン
+	void RenderBackScreen();
+	//シロボ
+	void RenderSirobo();
+	//プレイヤー
+	void RenderPlayer();
+	//シロボ２
+	void RenderSirobo2();
+	//煙
+	void RenderSmoke();
+	//タイトルフォント
+	void RenderTitleFont();
+	//スタートフォント
+	void RenderStartFont();
 };
 
 class SceneLoad : public Scene
 {
-	enum
+//	enum class TextureNum
+//	{
+//		MASK_SIROBO,
+//		MASK_ENEMY,
+//		MASK_PLAYER,
+//		LOADING_ICON,
+//		SIROBO,
+//		MASK_END,
+//	};
+	enum class TextureNum
 	{
-		MASK_SIROBO,
-		MASK_ENEMY,
-		MASK_PLAYER,
 		LOADING_ICON,
 		SIROBO,
-		MASK_END,
+		TEXTURE_END,
 	};
 private:
-
-	int maskTexture[MASK_END];
-	int lineTexture;
-
-	float angle = 0;
-	float linePos;
-	static constexpr float maskSpeed = 3.0f;
+	int Texture[static_cast<int>(TextureNum::TEXTURE_END)] = {};
+//	int lineTexture=0;
+//
+//	float angle = 0;
+//	float linePos=0;
+//	static constexpr float maskSpeed = 3.0f;
 	
-	string text;
 
-	unique_ptr<Scene> nextScene;
+	string text = "";
+	unique_ptr<Scene> nextScene=nullptr;
 public:
 	SceneLoad(Scene* nextScene)
 	{//ローディング後遷移するシーンを保持
@@ -116,6 +139,7 @@ private:
 
 	static void LoadingThread(SceneLoad* scene);
 
+	void TextUpdate();
 };
 
 
@@ -126,10 +150,10 @@ class SceneGame : public Scene
 public:
 
 	//モデル番号
-	enum ModelIndex
+	enum class ModelIndex
 	{
 		PLAYER_MODEL,
-		MINION_PLAYER_MODEL,
+		SIROBO_PLAYER_MODEL,
 		ENEMY_SLIME_MODEL,
 		ENEMY_TURTLESHELL_MODEL,
 		ENEMY_BEKOLDER_MODEL,
@@ -154,19 +178,19 @@ public:
 private:
 
 
-	int modelTexture[MODEL_END];
-	int model[MODEL_END];
+	int modelTexture[static_cast<int>(ModelIndex::MODEL_END)] = {};
+	int model[static_cast<int>(ModelIndex::MODEL_END)] = {};
 
 	
-	unique_ptr<Player> mPlayer;
-	unique_ptr<StageManager> stageManager;
-	shared_ptr<EnemyManager>enemyManager;
-	unique_ptr<CameraManager> cameraManager;
-	shared_ptr<EffectManager> effectManager;
-	shared_ptr<ObjectManager> objectManager;
-	shared_ptr<ObjectFunctionManager> objectFunctionManager;
-	shared_ptr<EXPManager>expManager;
-	shared_ptr<ExportCSV>exportSCV;
+	unique_ptr<Player> player=nullptr;
+	unique_ptr<StageManager> stageManager = nullptr;
+	shared_ptr<EnemyManager>enemyManager = nullptr;
+	unique_ptr<CameraManager> cameraManager = nullptr;
+	shared_ptr<EffectManager> effectManager = nullptr;
+	shared_ptr<ObjectManager> objectManager = nullptr;
+	shared_ptr<ObjectFunctionManager> objectFunctionManager = nullptr;
+	shared_ptr<EXPManager>expManager = nullptr;
+	shared_ptr<ExportCSV>exportSCV = nullptr;
 
 	bool clearFlg = false;
 
@@ -175,7 +199,7 @@ private:
 	
 	//デバッグ用
 
-	enum debugType
+	enum class debugType
 	{
 		DEBUG_PARAMETER,
 		DEBUG_COLLISION,
@@ -184,7 +208,7 @@ private:
 		DEBUG_CAMERA,
 		DEBUG_END
 	};
-	bool debugType[DEBUG_END];
+	bool debugType[static_cast<int>(debugType::DEBUG_END)] = {};
 public:
 	SceneGame() {};
 	~SceneGame() {};
@@ -226,7 +250,7 @@ public:
 	void End() override;
 
 	//取得関数
-	Player* GetPlayer() { return mPlayer.get(); };
+	Player* GetPlayer() { return player.get(); };
 	EnemyManager* GetEnemyManager(){ return enemyManager.get(); };
 	CameraManager* GetCameraManager() { return cameraManager.get(); };
 	EffectManager* GetEffectManager() { return effectManager.get(); };
@@ -242,9 +266,9 @@ public:
 class SceneClear : public Scene
 {
 private:
-	enum TextureData
+	enum class TextureData
 	{
-		FONT,
+		CLEAR_TITLE,
 		BACK,
 		BACK1,
 		BACK2,
@@ -252,7 +276,7 @@ private:
 		SIROBO_ANIMETION,
 		TEXTURE_END,
 	};
-	int texture[TextureData::TEXTURE_END];
+	int texture[static_cast<int>(TextureData::TEXTURE_END)] = {};
 public:
 	SceneClear() {};
 	~SceneClear() {};
@@ -268,12 +292,18 @@ public:
 	void ModelRender() override;
 	//終了処理
 	void End() override;
+private:
+	//サウンドの読み込み
+	void CreateSound();
+
+	//シロボの描画
+	void RenderSirobo();
 };
 
 class SceneOver : public Scene
 {
 private:
-	int fontTexture;
+	int fontTexture=0;
 public:
 	SceneOver() {};
 	~SceneOver() {};

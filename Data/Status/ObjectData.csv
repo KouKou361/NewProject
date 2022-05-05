@@ -1,0 +1,3 @@
+Name,HP,CollisionRadius,Scale
+Tower,10,5,0.1
+Pot,10,10,0.1

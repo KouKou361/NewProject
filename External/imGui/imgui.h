@@ -1605,13 +1605,13 @@ struct ImGuiStorage
 {
     struct Pair
     {
-        ImGuiID key;
+        ImGuiID key=0;
         union { int val_i; float val_f; void* val_p; };
         Pair(ImGuiID _key, int _val_i)   { key = _key; val_i = _val_i; }
         Pair(ImGuiID _key, float _val_f) { key = _key; val_f = _val_f; }
         Pair(ImGuiID _key, void* _val_p) { key = _key; val_p = _val_p; }
     };
-    ImVector<Pair>      Data;
+    ImVector<Pair>      Data = {};
 
     // - Get***() functions find pair, never add/allocate. Pairs are sorted so a query is O(log N)
     // - Set***() functions find pair, insertion on demand if missing.

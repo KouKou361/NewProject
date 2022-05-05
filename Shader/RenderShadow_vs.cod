@@ -114,7 +114,7 @@ dcl_temps 9
 //   o1.x <- <main return value>.Wposition.x; o1.y <- <main return value>.Wposition.y; o1.z <- <main return value>.Wposition.z; 
 //   o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w
 //
-#line 6 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow_vs.hlsl"
+#line 6 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_vs.hlsl"
 itof r0.xyz, l(0, 0, 0, 0)  // r0.x <- p.x; r0.y <- p.y; r0.z <- p.z
 
 #line 7
@@ -213,7 +213,7 @@ mov r3.x, r3.x
 mov r3.y, r3.y
 mov r3.z, r3.z
 
-#line 108 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow.hlsli"
+#line 108 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow.hlsli"
 mov r3.xyz, r3.xyzx  // r3.x <- wvpPos.x; r3.y <- wvpPos.y; r3.z <- wvpPos.z
 
 #line 109
@@ -239,7 +239,7 @@ add r5.xy, r4.zwzz, l(0.500000, 0.500000, 0.000000, 0.000000)  // r5.y <- wvpPos
 mov r5.xy, r5.xyxx  // r5.x <- <GetShadowTex return value>.x; r5.y <- <GetShadowTex return value>.y
 mov r5.z, r5.z  // r5.z <- <GetShadowTex return value>.z
 
-#line 22 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\RenderShadow_vs.hlsl"
+#line 22 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_vs.hlsl"
 mov r5.xyz, r5.xyzx  // r5.x <- output.vShadow.x; r5.y <- output.vShadow.y; r5.z <- output.vShadow.z
 
 #line 24

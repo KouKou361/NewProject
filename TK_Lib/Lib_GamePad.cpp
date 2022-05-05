@@ -78,7 +78,7 @@ void GamePad::Update()
 		if (joyGetPosEx(slot, &joyInfo) == JOYERR_NOERROR)
 		{
 			// 製品IDをチェックしてPS4コントローラーだけ対応する
-			static const WORD PS4_PID = 19311090011552;
+			//static const WORD PS4_PID = 19311090011552;
 
 			JOYCAPS joy_caps;
 			if (joyGetDevCaps(slot, &joy_caps, sizeof(JOYCAPS)) == JOYERR_NOERROR)
@@ -186,7 +186,7 @@ void GamePad::Update()
 		buttonDown = ~buttonState[1] & newButtonState;	// 押した瞬間
 		buttonUp = ~newButtonState & buttonState[1];	// 離した瞬間
 	}
-	GamePadButton buttinData[BTN::END] =
+	GamePadButton buttinData[static_cast<int>(BTN::END)] =
 	{
 	BTN_UP,
 		BTN_RIGHT,
@@ -206,7 +206,7 @@ void GamePad::Update()
 		BTN_RT,
 	};
 
-	for (int i = 0; i < BTN::END; i++)
+	for (int i = 0; i < static_cast<int>(BTN::END); i++)
 	{
 		int test = buttonState[0] & buttinData[i];
 		if (test == buttinData[i])

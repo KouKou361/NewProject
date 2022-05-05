@@ -1,7 +1,7 @@
 #pragma once
 #include "ObjectManager.h"
 #include "Collision.h"
-#include "MinionPlayer.h"
+#include "SiroboPlayer.h"
 #include "Player.h"
 #include "CameraController.h"
 #include "EffectManager.h"
@@ -82,7 +82,9 @@ void ObjectManager::Destroy(ObjectBase* obj)
 	ResetTheTargetCharacter(obj);
 
 }
-bool ObjectManager::CollisionObject(const VECTOR3 pos, const float weight, const float collisionRadius, VECTOR3& OutPos, ObjectBase*& Saveobj)
+
+//全てのオブジェクトの当たり判定（円と円）
+bool ObjectManager::CollisionCircleObject(const VECTOR3 pos, const float weight, const float collisionRadius, VECTOR3& OutPos, ObjectBase*& Saveobj)
 {
 	VECTOR3 OutPosB;
 	bool hitFlg = false;
@@ -119,7 +121,7 @@ int ObjectManager::GetTowerNum()
 
 }
 
-
+//当たり判定のモデル描画
 void ObjectManager::CollisionDebug()
  {
 	for (shared_ptr<ObjectBase> obj : objes)
@@ -149,18 +151,19 @@ void ObjectManager::Register(shared_ptr<ObjectBase> obj)
 	obj->Init();
 	objes.emplace_back(obj);
 }
+//目標にしているシロボ達、攻撃中のシロボ達、カメラを全てのキャンセルする。
 void ObjectManager::ResetTheTargetCharacter(ObjectBase* obj)
 {
 	//ミニオンの目標リセット
-	for (int i = 0; i < sceneGame->GetPlayer()->GetMinionManager()->GetMinionsSize(); i++)
+	for (int i = 0; i < sceneGame->GetPlayer()->GetSiroboManager()->GetSiroboSize(); i++)
 	{
 		//ミニオンの取得
-		MinionPlayer* minion = sceneGame->GetPlayer()->GetMinionManager()->GetMinionIndex(i);
+		Sirobo* sirobo = sceneGame->GetPlayer()->GetSiroboManager()->GetSiroboIndex(i);
 		//もしミニオンの目標が指定された敵(引数)ならば
-		if (minion->GetTarget() == obj)
+		if (sirobo->GetTarget() == obj)
 		{
 			//目標のリセット
-			minion->SetTarget(nullptr);
+			sirobo->SetTarget(nullptr);
 		}
 	}
 

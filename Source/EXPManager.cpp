@@ -12,10 +12,12 @@ void EXPManager::Update()
 	{
 		if (exp)
 		{
+			//更新処理
 			exp->Update();
 		}
 
 	}
+
 	//破棄処理
 //更新処理が終わった後に破棄リストに積まれたオブジェクトを削除する。
 	for (shared_ptr<EXP> exp : remove)
@@ -56,14 +58,15 @@ void EXPManager::Clear()
 }
 
 //登録
-void EXPManager::Register(shared_ptr<EXP> exp,VECTOR3 Pos)
+void EXPManager::Register(const shared_ptr<EXP> &exp, const VECTOR3 &pos)
 {
-	exp->Init(Pos);
+	exp->Init(pos);
 	exp->SetManager(scene);
 	expes.emplace_back(exp);
 }
+
 //破棄処理
-void EXPManager::Destroy(EXP* m_exp)
+void EXPManager::Destroy(const EXP* m_exp)
 {
 	for (shared_ptr<EXP> exp : expes)
 	{

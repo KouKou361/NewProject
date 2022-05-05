@@ -13,44 +13,25 @@
 
 void EnemySite::Init()
 {
+	//ステータス設定
 	SetStatus("Site");
-	
-
+	//モデル生成
 	SetModel(-1);//-1は描画しない
 
-//	SetModel(TK_Lib::Load::GetModel("Boss"));
-	SetEnemyTag(EnemyTag::BOSS_SITE);
+	//アニメション設定
+	SetAnimetion();
 
-	anime = make_unique<Animetion>();
-	//アニメーション番号
-	string AnimeIndex[] =
-	{
-		"Open",
-		"OpenGoToRoll",
-		"Idle",
-		"CloseStopRoll",
-		"Walk",
-		"Close_RollLoop",
-		"Close",
-		anime->End,
-	};
-	//アニメーションの登録
-	for (int i = 0; anime->End != AnimeIndex[i]; i++)
-	{
-		anime->Register(i, AnimeIndex[i]);
-	}
+	//タグ付き
+	SetEnemyTag(EnemyTag::BOSS_SITE);
 	SetTag(ObjectTag::TAG_ENEMY);
 
-	AttackMinions.clear();
-	//SetCollisionRadius()
+	//シロボ達の攻撃を受けるリストをクリア（念のため）
+	attackSirobo.clear();
 
-	//TK_Lib::Model::PlayAnimation(GetModel(), 2, true);
+	//behaviorTreeの設定
+	SetBehaviorTree();
 
-
-	behaviorTree = make_unique<BehaviorTree>();
-	behaviordata = make_unique<BehaviorData>();
-	behaviorTree->AddNode("", "root", 1, BehaviorTree::SelectRule::PRIORITY, nullptr, nullptr);
-	behaviorTree->AddNode("root", "Die", 0, BehaviorTree::SelectRule::NONE, new DeadJudgement(this), new BossSiteDieAction(this));
+	
 }
 
 
@@ -88,7 +69,7 @@ void EnemySite::Update()
 
 
 //ダメージを判定
-bool EnemySite::AddDamage(int Damage, int SetinvincibleTime)
+bool EnemySite::AddDamage(int Damage, float SetinvincibleTime)
 {
 	//体力が0以下なら
 	if (GetHp() <= 0)return false;
@@ -113,5 +94,36 @@ bool EnemySite::AddDamage(int Damage, int SetinvincibleTime)
 	}
 	return true;
 }
+
+//アニメション設定
+void EnemySite::SetAnimetion()
+{
+	anime = make_unique<Animetion>();
+	//アニメーション番号
+	string AnimeIndex[] =
+	{
+		"Open",
+		"OpenGoToRoll",
+		"Idle",
+		"CloseStopRoll",
+		"Walk",
+		"Close_RollLoop",
+		"Close",
+		anime->End,
+	};
+	//アニメーションの登録
+	anime->AllAnimetionKey(&AnimeIndex[0]);
+}
+
+//behaviorTreeの設定
+void EnemySite::SetBehaviorTree()
+{
+	behaviorTree = make_unique<BehaviorTree>();
+	behaviordata = make_unique<BehaviorData>();
+	behaviorTree->AddNode("",     "root", 1, BehaviorTree::SelectRule::PRIORITY, nullptr,                 nullptr);
+	behaviorTree->AddNode("root", "Die" , 0, BehaviorTree::SelectRule::NONE,     new DeadJudgement(this), new BossSiteDieAction(this));
+}
+
+
 
 

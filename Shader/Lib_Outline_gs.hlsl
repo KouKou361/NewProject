@@ -20,9 +20,9 @@ void main(
 		//追加した頂点で新しいプリミティブを生成する
    output.RestartStrip();
 	//新しい面の生成
-    for (int i = 0; i < 3; i++)
+    for (int k = 0; k < 3; k++)
     {
-        int j = 2 - i;
+        int j = 2 - k;
 		//3D座標変換
         float4 Pos;
         Pos.xyz = (input[j].normal.xyz * 0.1f)+input[j].pos.xyz;

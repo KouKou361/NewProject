@@ -29,13 +29,14 @@ public:
 	virtual void End() = 0;
 	//Imgui
 	virtual void DebugImgui()=0;
-	//DebugRender
+	//デバッグ用
 	virtual void DebugRender() {};
 
 	//もし目標物が消えてしまった場合
 	virtual ActionBase::State DeleteTarget();
 
-	bool CheakTarget(Charactor* chara);
+	//もしターゲットがいなくなっているかどうか
+	bool CheakTarget(const Charactor* chara);
 
 
 

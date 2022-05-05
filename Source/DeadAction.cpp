@@ -3,16 +3,25 @@
 #include "Lib.h"
 #include "Animetion.h"
 
-
 class EnemyBase;
 
 //開始処理
 void DeadAction::Start()
 {
-	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->Die), false);
+
+	//ボスの回転攻撃終了モーションの取得
+	const int BossDamageAnimetion = owner->GetAnime()->GetIndex(owner->GetAnime()->Die);
+
+	//アニメーションの死亡モーション再生
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), BossDamageAnimetion, false);
+
 	owner->SetDeadFlg(false);
-	owner->SetDeathTime(1.0f);
+
+	//目標にされなくする。
+	owner->TargetFaild();
+	//死亡時間の設定
+	const float DeathTime = 1.0f;
+	owner->SetDeathTime(DeathTime);
 }
 
 //実行処理
@@ -25,12 +34,13 @@ ActionBase::State DeadAction::Run()
 		//死亡時間の更新
 		if (owner->UpdateDeathTime())
 		{
+			//死亡時間になったら
 			owner->Destroy();
 			return ActionBase::State::FAILED;
 		}
 	}
 
-
+	//次の行動に移行
 	return ActionBase::State::RUN;
 }
 

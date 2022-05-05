@@ -5,16 +5,18 @@
 
 MoveTuto::MoveTuto(SceneGame* sceneGame)
 {
-	ui = make_unique<UITuto>();
-	ui->Init();
+	TutoWindowUI = make_unique<UITuto>();
+	TutoWindowUI->Init();
 
 	this->sceneGame = sceneGame;
 }
 //‰Šú‰»ˆ—
 void MoveTuto::Init()
 {
-	ui = make_unique<UITuto>();
-	ui->Init();
+	//ui = make_unique<UITuto>();
+	TutoWindowUI->Init();
+	TutoWindowUI->Update();
+
 	textIndex = 0;
 
 	circle.pos = { 0,0,0 };
@@ -30,10 +32,9 @@ void MoveTuto::Init()
 }
 void MoveTuto::Update()
 {
-	ui->Update();
+	TutoWindowUI->Update();
 
 	ui2DDirection->Update();
-	ui2DDirection->SetTargetPos({ circle.pos });
 }
 
 //‰Šú‰»ˆ—
@@ -57,8 +58,8 @@ bool MoveTuto::Judge()
 //•`‰æ
 void MoveTuto::Render()
 {
-	ui->SetText(textes.at(textIndex));
-	ui->Render();
+	TutoWindowUI->SetText(textes.at(textIndex));
+	TutoWindowUI->Render();
 	ui2DDirection->Render();
 
 	TK_Lib::Debug3D::Circle(circle.pos, circle.radius);

@@ -16,10 +16,13 @@ void CameraBossEntry::Init()
 	if (this->owner == nullptr)assert(!"ownerがnull");
 	if (this->state == nullptr)assert(!"stateがnull");
 	if (this->enm == nullptr)assert(!"enmがnull");
+
 	manager->cameraType = CameraManager::CameraType::TYPE_BOSS;
-	//	Angle.x = DirectX::XMConvertToRadians(10);
-	angle.y = DirectX::XMConvertToRadians(15);
-	angle.x = DirectX::XMConvertToRadians(45);
+
+	const float AngleY = 15;
+	const float AngleX = 45;
+	angle.y = DirectX::XMConvertToRadians(AngleY);
+	angle.x = DirectX::XMConvertToRadians(AngleX);
 
 	endTargetPos = owner->GetPos();
 	startEyePos = { 0,100,100 };
@@ -32,61 +35,20 @@ void CameraBossEntry::Init()
 //視点位置を決める更新
 void CameraBossEntry::UpdateEye()
 {
-
-	////カメラとonwerとの距離
-	//constexpr float L = 100.0f;
-	////カメラの最大Y軸
-	//constexpr float MaxAngleY = 0.5f;
-
-
-	//float ax = TK_Lib::Gamepad::GetAxisRX() * DirectX::XMConvertToRadians(2);
-	//float ay = TK_Lib::Gamepad::GetAxisRY() * DirectX::XMConvertToRadians(2);
-	//float az = 0.0f;
-
-	//angle.x += ax;
-	//angle.y -= ay;//入力とは逆の方向にしている
-	//angle.z += az;
-
-	//if (angle.y >= MaxAngleY) angle.y = MaxAngleY;
-	//if (angle.y <= -MaxAngleY)angle.y = -MaxAngleY;
-
-
-
-
-	////回転行列に変換する
-	//DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.y, angle.x, angle.z);
-
-	////前方ベクトルの算出
-	//DirectX::XMVECTOR Front = Transform.r[2];
-	////
-	//VECTOR3 front; DirectX::XMStoreFloat3(&front, Front);
-
-
-	//endEyePos.x = owner->GetPos().x - front.x * L;
-	//endEyePos.y = owner->GetPos().y - front.y * L;
-	//endEyePos.z = owner->GetPos().z - front.z * L;
-
-	//LerpEyeCamera(0.2f);
+	//BossEntryActionが状況に応じて操作してくれるので
+	//記入なし
 }
 //注視点を決める更新
 void CameraBossEntry::UpdateTarget()
 {
-
-	targetPos = owner->GetPos();
-	//SetTarget(owner->pos);
-	//LerpTargetCamera(0.05f);
+	//BossEntryActionが状況に応じて操作してくれるので
+    //記入なし
 }
-
 //更新処理
 void CameraBossEntry::Update()
 {
-	////視点位置を決める更新
-	//UpdateEye();
-	////注視点を決める更新
-	//UpdateTarget();
-
-	//地面とレイピック
-	//RayPick();
+	//BossEntryActionが状況に応じて操作してくれるので
+    //記入なし
 }
 //終了処理
 void CameraBossEntry::End()
@@ -108,75 +70,87 @@ void CameraBossEntry::Imgui()
 //Ownerの方に向いておく
 bool CameraBossEntry::LookatOwner()
 {
-	lookAtOwnerTimer += TK_Lib::Window::GetElapsedTime();
-	if (lookAtOwnerTimer >= 3.0f)
+	//次の状態に移行するまでの時間
 	{
-		lookAtOwnerTimer = 0.0f;
-		return true;
+		const float NextTimer = 3.0f;
+
+		lookAtOwnerTimer += TK_Lib::Window::GetElapsedTime();
+		if (lookAtOwnerTimer >= NextTimer)
+		{
+			lookAtOwnerTimer = 0.0f;
+			return true;
+		}
 	}
+	
 	//カメラの注視点
-	targetPos = owner->GetPos();
+	{
+		targetPos = owner->GetPos();
+	}
 
-	//カメラとonwerとの距離
-	static float L = 60.0f;
+	//カメラの位置の算出
+	{
+		//カメラとonwerとの距離
+		static float L = 60.0f;
 
-	ImGui::Begin("EvectBossCamera");
-	ImGui::SliderAngle("angle_Y", &angle.y);
-	ImGui::SliderAngle("angle_X", &angle.x);
-	ImGui::SliderFloat("Length", &L,0.0f,500.0f);
-	ImGui::End();
+		//回転行列に変換する
+		DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.y, angle.x, angle.z);
 
+		//前方ベクトルの算出
+		DirectX::XMVECTOR Front = Transform.r[2];
+		//
+		VECTOR3 front; DirectX::XMStoreFloat3(&front, Front);
 
+		eye.x = owner->GetPos().x - front.x * L;
+		eye.y = owner->GetPos().y - front.y * L;
+		eye.z = owner->GetPos().z - front.z * L;
 
+		startTargetPos = owner->GetPos();
+		endTargetPos = enm->GetPos();
+	}
 
-	//回転行列に変換する
-	DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.y, angle.x, angle.z);
-
-	//前方ベクトルの算出
-	DirectX::XMVECTOR Front = Transform.r[2];
-	//
-	VECTOR3 front; DirectX::XMStoreFloat3(&front, Front);
-
-
-	eye.x = owner->GetPos().x - front.x * L;
-	eye.y = owner->GetPos().y - front.y * L;
-	eye.z = owner->GetPos().z - front.z * L;
-
-	startTargetPos = owner->GetPos();
-	endTargetPos = enm->GetPos();
-
+	
+	
+	VECTOR3 Vup = { 0,1,0 };
 	//カメラの設定
-	TK_Lib::Camera::SetLookAt(eye, targetPos, { 0,1,0 });
+	TK_Lib::Camera::SetLookAt(eye, targetPos, Vup);
 
 	return false;
 }
 //敵の方向に向く
 bool CameraBossEntry::LookatOwnerFront()
 {
+	//敵の方向に向くカメラの移動スピード
+	constexpr float CameraXSpeed = XMConvertToRadians(0.4f);
+	//次のカメラ状態に遷移する角度
+	constexpr float NextCameraMax = XMConvertToRadians(170);
+	//線上補完の時間
+	const float LerpSpeed = 0.004f;
 
-	angle.x += XMConvertToRadians(0.4f);
-	if (angle.x >= XMConvertToRadians(170))
+	//カメラの位置算出
 	{
-		angle.x = XMConvertToRadians(170);
-		return true;
+		angle.x += CameraXSpeed;
+		if (angle.x >= NextCameraMax)
+		{
+			angle.x = NextCameraMax;
+			return true;
+		}
+
+		//回転行列に変換する
+		DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.y, angle.x, angle.z);
+
+		//前方ベクトルの算出
+		DirectX::XMVECTOR Front = Transform.r[2];
+		VECTOR3 front; DirectX::XMStoreFloat3(&front, Front);
+
+		//カメラとonwerとの距離
+		static float L = 60.0f;
+		eye.x = owner->GetPos().x - front.x * L;
+		eye.y = owner->GetPos().y - front.y * L;
+		eye.z = owner->GetPos().z - front.z * L;
 	}
 
-	//カメラとonwerとの距離
-	static float L = 60.0f;
-
-	//回転行列に変換する
-	DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.y, angle.x, angle.z);
-
-	//前方ベクトルの算出
-	DirectX::XMVECTOR Front = Transform.r[2];
-	VECTOR3 front; DirectX::XMStoreFloat3(&front, Front);
-
-
-	eye.x = owner->GetPos().x - front.x * L;
-	eye.y = owner->GetPos().y - front.y * L;
-	eye.z = owner->GetPos().z - front.z * L;
-
-	LerpTargetCamera(0.004f);
+	//カメラの注視点の算出
+	LerpTargetCamera(LerpSpeed);
 
 	//カメラの設定
 	TK_Lib::Camera::SetLookAt(eye, targetPos, { 0,1,0 });
@@ -187,28 +161,41 @@ bool CameraBossEntry::LookatBoss()
 {
 	//カメラとonwerとの距離
 	static float L = 60.0f;
-
-	angle.x = XMConvertToRadians(180);
-	angle.y = XMConvertToRadians(15);
-
-	//回転行列に変換する
-	DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.y, angle.x, angle.z);
-
-	//前方ベクトルの算出
-	DirectX::XMVECTOR Front = Transform.r[2];
-	VECTOR3 front; DirectX::XMStoreFloat3(&front, Front);
+	//敵の方向に向くカメラの移動スピード
+	constexpr float CameraX = XMConvertToRadians(180);
+	//次のカメラ状態に遷移する角度
+	constexpr float CameraY = XMConvertToRadians(15);
+	//注視点のY
+	const float TargetPosY = 13.0f;
 
 
-	eye.x = enm->GetPos().x - front.x * L;
-	eye.y = enm->GetPos().y - front.y * L;
-	eye.z = enm->GetPos().z - front.z * L;
+	
+	
+	angle.x = CameraX;
+	angle.y = CameraY;
+	
+	//カメラの位置算出
+	{
+		//回転行列に変換する
+		DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.y, angle.x, angle.z);
 
-	targetPos = enm->GetPos();
-	targetPos.y = 13.0f;
+		//前方ベクトルの算出
+		DirectX::XMVECTOR Front = Transform.r[2];
+		VECTOR3 front; DirectX::XMStoreFloat3(&front, Front);
 
-	startEyePos=eye ;
-	//LerpTargetCamera(0.004f);
-	//Lear(0.004f);
+
+		eye.x = enm->GetPos().x - front.x * L;
+		eye.y = enm->GetPos().y - front.y * L;
+		eye.z = enm->GetPos().z - front.z * L;
+		startEyePos = eye;
+	}
+
+	//カメラの注視点の算出
+	{
+		targetPos = enm->GetPos();
+		targetPos.y = TargetPosY;
+	}
+
 	//カメラの設定
 	TK_Lib::Camera::SetLookAt(eye, targetPos, { 0,1,0 });
 
@@ -217,31 +204,51 @@ bool CameraBossEntry::LookatBoss()
 //ボスからカメラが離れる
 bool CameraBossEntry::BackCamera()
 {
-	lookAtOwnerTimer += TK_Lib::Window::GetElapsedTime();
-	if (lookAtOwnerTimer >= 1.0f)
-	{
-		enm->SetActionFlg(true);
-		angle.y = DirectX::XMConvertToRadians(10);
-		angle.z = DirectX::XMConvertToRadians(10);
-	
-	}
+	//敵が動きだす時間
+	const float enmActionTimer = 1.0f;
+	//カメラの固定角度
+	const float AngleY = 10.0f;
+	const float AngleZ = 10.0f;
+	//線上補完の時間
+	const float LerpTimer = 0.026f;
 	//カメラとonwerとの距離
 	const float L = 100.0f;
 
-	//回転行列に変換する
-	DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.y, angle.x, angle.z);
-
-	//前方ベクトルの算出
-	DirectX::XMVECTOR Front = Transform.r[2];
-	VECTOR3 front; DirectX::XMStoreFloat3(&front, Front);
 
 
-	endEyePos.x = owner->GetPos().x - front.x * L;
-	endEyePos.y = owner->GetPos().y - front.y * L;
-	endEyePos.z = owner->GetPos().z - front.z * L;
-
-	if (LerpEyeCamera(0.026f))
+	lookAtOwnerTimer += TK_Lib::Window::GetElapsedTime();
+	//時間が来たなら
+	if (lookAtOwnerTimer >= enmActionTimer)
 	{
+		enm->SetActionFlg(true);//敵行動可能の通知
+		angle.y = DirectX::XMConvertToRadians(AngleY);
+		angle.z = DirectX::XMConvertToRadians(AngleZ);
+	
+	}
+
+	//endEyePosの算出
+	{
+		//回転行列に変換する
+		DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.y, angle.x, angle.z);
+
+		//前方ベクトルの算出
+		DirectX::XMVECTOR Front = Transform.r[2];
+		VECTOR3 front; DirectX::XMStoreFloat3(&front, Front);
+
+
+		endEyePos.x = owner->GetPos().x - front.x * L;
+		endEyePos.y = owner->GetPos().y - front.y * L;
+		endEyePos.z = owner->GetPos().z - front.z * L;
+	}
+	//カメラの注視点の算出
+	{
+		targetPos = enm->GetPos();
+	}
+
+	//線上補完
+	if (LerpEyeCamera(LerpTimer))
+	{
+		//線上補完終了
 		return true;
 	}
 	TK_Lib::Camera::SetLookAt(eye, targetPos, { 0,1,0 });

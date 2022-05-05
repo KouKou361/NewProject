@@ -30,12 +30,12 @@ public:
 	//当たり判定デバッグ
 	void CollisionDebug();
 	//Objectの数の取得
-	int GetObjesSize() { return objes.size(); }
+	int GetObjesSize() { return static_cast<int>(objes.size()); }
 	//Objectの数の取得
 	ObjectBase* GetObjesIndex(const int& index) { return objes.at(index).get(); }
 	//Objectがやられた時、目標にしていたキャラクターの目標のリセット
 	void ResetTheTargetCharacter(ObjectBase* enm);
-	bool CollisionObject(const VECTOR3 pos, const float weight, const float collisionRadius, VECTOR3& OutPos, ObjectBase*& Saveobj);
+	bool CollisionCircleObject(const VECTOR3 pos, const float weight, const float collisionRadius, VECTOR3& OutPos, ObjectBase*& Saveobj);
 	//現在のタワーの数
 	int GetTowerNum();
 

@@ -4,8 +4,11 @@
 //初期化処理
 void FunctionStart::Init()
 {
+	//現在の状態：関数オブジェクトに入っていない
 	isFunction = IsFunction::IS_FALSE;
+
 	SetState(ObjectFunctionState::STATE_NONE);
+
 	sceneGame->GetPlayer()->SetPos(GetPos());
 }
 
@@ -29,18 +32,17 @@ void FunctionStart::Judge()
 //開始処理
 void FunctionStart::Start()
 {
-	int test=0;
 
 }
 
 //更新処理
 void FunctionStart::Run()
 {
-	int test = 0;
+
 }
 
 //終了処理
 void FunctionStart::End()
 {
-	int test = 0;
+	
 }

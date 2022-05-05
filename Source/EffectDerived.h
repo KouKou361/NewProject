@@ -12,27 +12,25 @@ public:
 	~EffectFire() {};
 
 	//初期化処理
-	void Init();
+	//void Init();
+
 	//更新処理
-	void Play(VECTOR3 Pos, int Num);
-	//更新処理
-	void Update();
+	//void Update();
 };
 
-class EffectThrow :public EffectBase
+class EffectEnemyDestroy :public EffectBase
 {
 private:
 
 public:
-	EffectThrow() {};
-	~EffectThrow() {};
+	EffectEnemyDestroy() {};
+	~EffectEnemyDestroy() {};
 
 	//初期化処理
-	void Init();
+	//void Init();
+
 	//更新処理
-	void Play(VECTOR3 Pos, int Num);
-	//更新処理
-	void Update();
+	//void Update();
 };
 
 class EffectAttack :public EffectBase
@@ -45,11 +43,10 @@ public:
 	~EffectAttack() {};
 
 	//初期化処理
-	void Init();
+	//void Init();
+
 	//更新処理
-	void Play(VECTOR3 Pos, int Num);
-	//更新処理
-	void Update();
+	//void Update();
 };
 
 class EffectThowSmoke :public EffectBase
@@ -61,11 +58,10 @@ public:
 	~EffectThowSmoke() {};
 
 	//初期化処理
-	void Init();
+	//void Init();
+
 	//更新処理
-	void Play(VECTOR3 Pos, int Num);
-	//更新処理
-	void Update();
+	//void Update();
 };
 
 class EffectTowerBreak :public EffectBase
@@ -77,11 +73,10 @@ public:
 	~EffectTowerBreak() {};
 
 	//初期化処理
-	void Init();
+	//void Init();
+
 	//更新処理
-	void Play(VECTOR3 Pos, int Num);
-	//更新処理
-	void Update();
+	//void Update();
 };
 
 class EffectStageClear :public EffectBase
@@ -93,29 +88,27 @@ public:
 	~EffectStageClear() {};
 
 	//初期化処理
-	void Init();
+	//void Init();
+
 	//更新処理
-	void Play(VECTOR3 Pos, int Num);
-	//更新処理
-	void Update();
+	//void Update();
 };
 
 class EffectBossFire :public EffectBase
 {
 private:
-	const VECTOR3   VelocityRate = { 15.9f,20.3f ,15.9f };
-	const VECTOR3 Acceleration = { 0.1f,-10.0f ,0.1f};
-	const float PosUP = 5.0f;
+//	const VECTOR3   VelocityRate = { 15.9f,20.3f ,15.9f };
+//	const VECTOR3 Acceleration = { 0.1f,-10.0f ,0.1f};
+//	const float PosUP = 5.0f;
 public:
 	EffectBossFire() {};
 	~EffectBossFire() {};
 
 	//初期化処理
-	void Init();
+	//void Init();
+
 	//更新処理
-	void Play(VECTOR3 Pos, int Num);
-	//更新処理
-	void Update();
+	//void Update();
 };
 
 class EffectBossExplosion :public EffectBase
@@ -128,11 +121,10 @@ public:
 	~EffectBossExplosion() {};
 
 	//初期化処理
-	void Init();
+	//void Init();
+
 	//更新処理
-	void Play(VECTOR3 Pos, int Num);
-	//更新処理
-	void Update();
+	//void Update();
 };
 
 class EffectBossSiteBreak :public EffectBase
@@ -145,10 +137,9 @@ public:
 	~EffectBossSiteBreak() {};
 
 	//初期化処理
-	void Init();
+	//void Init();
+	
 	//更新処理
-	void Play(VECTOR3 Pos, int Num);
-	//更新処理
-	void Update();
+	//void Update();
 };
 

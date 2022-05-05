@@ -22,7 +22,7 @@ struct PSInput
     float3 Wposition : TEXCOORD2;
     float2 texcoord : TEXCOORD;
     float4 color : COLOR;
-    float3 vShadow : TEXCOORD4;
+   // float3 vShadow : TEXCOORD4;
     float3 normal : NORMAL;
     
     float3 VX : TEXCOORD5; //接空間用X軸
@@ -133,6 +133,11 @@ float3 GetShadowTex(float4x4 vp, float3 wPos)
 //ライト空間
 float3 GetShadow(Texture2D st, SamplerState ss, float3 Tex, float3 Scolor, float Bias)
 {
+    //ここで謎の警告！
+    //反復を伴うループで使用される事で警告されているらしい。
+    //for文を使わないようにしたら治りそうだが、
+    //ソースコードの綺麗さを保つ為に今回はこの警告を逃しておく。
+    
     //シャドウマップ
     float d = st.Sample(ss, Tex.xy).r;
     //シャドウマップマップの深度
@@ -156,22 +161,44 @@ float3 GetShadow(Texture2D st, SamplerState ss, float3 Tex, float3 Scolor, float
     //return max(Scolor, p_max);
 
 }
+
 float3 GetCascadeShadow(float3 P)
 {
     //シャドウマップ
-    Texture2D shadowTexure[] = { ShadowTexture0, ShadowTexture1, ShadowTexture2 };
+    Texture2D shadowTexure[3] = { ShadowTexture0, ShadowTexture1, ShadowTexture2 };
+
+    float3 color = { 1,1,1 };
+
     for (int j = 0; j < 3; ++j)
     {
         
         float3 vShadow = GetShadowTex(LightViewProjection[j], P);
         float3 ShadowTexcoord = vShadow;
+
         if (ShadowTexcoord.z >= 0 && ShadowTexcoord.z <= 1 &&
             ShadowTexcoord.x >= 0 && ShadowTexcoord.x <= 1 &&
             ShadowTexcoord.y >= 0 && ShadowTexcoord.y <= 1)
         {
-            return GetShadow(shadowTexure[j], shadowmapSamplerState, vShadow, ShadowColor.xyz, Bias[j]);
+
+            //switch文でするよりこちらの方がソースコードが綺麗になるが、
+            //なぜか警告が出てしまう。（Texture2DArrayを使えば行けそうだが）
+            //今回はswitch文にする。
+            // 
+            //color = GetShadow(shadowTexure[j], shadowmapSamplerState, vShadow, ShadowColor.xyz, Bias[j]);
+
+            switch (j)
+            {
+            case 0:        color= GetShadow(shadowTexure[0], shadowmapSamplerState, vShadow, ShadowColor.xyz, Bias[0]);
+                break;
+            case 1:        color = GetShadow(shadowTexure[1], shadowmapSamplerState, vShadow, ShadowColor.xyz, Bias[1]);
+                break;
+            case 2:        color = GetShadow(shadowTexure[2], shadowmapSamplerState, vShadow, ShadowColor.xyz, Bias[2]);
+                break;
+            }
+            break;
+    
         }
     }
-    return 1;
+    return color;
 
 }

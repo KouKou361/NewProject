@@ -16,8 +16,11 @@ void BossDeadAction::Start()
 {
 	//サウンド終了
 	TK_Lib::Lib_Sound::SoundStop("BossRun");
+
+	//待機モーション番号の取得
+	const int BossDeadIdeiIndex = owner->GetAnime()->GetIndex(owner->GetAnime()->Idle);
 	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->Idle), false);
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), BossDeadIdeiIndex, false);
 	state = EventDeleteState::STOP;
 }
 
@@ -38,60 +41,13 @@ ActionBase::State BossDeadAction::Run()
 		break;
 	case EventDeleteState::END://終了
 		StateEnd();
+		//次の行動に移行
 		return ActionBase::State::FAILED;
 		break;
 	}
 
 
 	return ActionBase::State::RUN;
-}
-//止まる状態
-void BossDeadAction::StateStop()
-{
-	//死亡時間の更新
-	if (owner->UpdateDeathTime())
-	{
-		//体力が０になってから消えてしまうまでの時間
-		constexpr float DeathTime = 2.0f;
-		//死亡タイムの設定
-		owner->SetDeathTime(DeathTime);
-		//次の状態へ
-		state = EventDeleteState::FIRE;
-	}
-}
-//燃える状態
-void BossDeadAction::StateFire()
-{
-	//炎エフェクト
-	owner->GetSceneGame()->GetEffectManager()->GetEffectFromSerchKey("BossFire")->Play(owner->GetPos(), 3);
-	//死亡時間の更新
-	if (owner->UpdateDeathTime())
-	{
-		//体力が０になってから消えてしまうまでの時間
-		constexpr float DeathTime = 3.0f;
-		//死亡タイムの設定
-		owner->SetDeathTime(DeathTime);
-		// 次の状態へ
-		state = EventDeleteState::EXPLOSION;
-	}
-}
-//爆発状態
-void BossDeadAction::StateExplosion()
-{
-	owner->GetSceneGame()->GetEffectManager()->GetEffectFromSerchKey("BossExplosion")->Play(owner->GetPos(), 5);
-
-	//死亡時間の更新
-	if (owner->UpdateDeathTime())
-	{
-		// 次の状態へ
-		state = EventDeleteState::END;
-	}
-}
-//終了状態
-void BossDeadAction::StateEnd()
-{
-	//消滅処理
-	owner->Destroy();
 }
 
 //終了処理
@@ -113,3 +69,68 @@ void BossDeadAction::DebugImgui()
 	ImGui::Text("BossDeadAction");
 	ImGui::End();
 }
+
+
+//止まる状態
+void BossDeadAction::StateStop()
+{
+	//死亡時間の更新
+	if (owner->UpdateDeathTime())
+	{
+		//体力が０になってから消えてしまうまでの時間
+		constexpr float DeathTime = 2.0f;
+		//死亡タイムの設定
+		owner->SetDeathTime(DeathTime);
+		//次の状態へ
+		state = EventDeleteState::FIRE;
+	}
+}
+//燃える状態
+void BossDeadAction::StateFire()
+{
+	//炎エフェクト
+	{
+		//エフェクトの出す数
+		const int EffectPlayNum = 3;
+		//炎エフェクトの出現
+		owner->GetSceneGame()->GetEffectManager()->GetEffectFromSerchKey("BossFire")->Play(owner->GetPos(), EffectPlayNum);
+	}
+
+	//死亡時間の更新
+	if (owner->UpdateDeathTime())
+	{
+		//体力が０になってから消えてしまうまでの時間
+		constexpr float DeathTime = 3.0f;
+		//死亡タイムの設定
+		owner->SetDeathTime(DeathTime);
+		// 次の状態へ
+		state = EventDeleteState::EXPLOSION;
+	}
+}
+//爆発状態
+void BossDeadAction::StateExplosion()
+{
+	//爆発エフェクト
+	{
+		//エフェクトの出す数
+		const int EffectPlayNum = 3;
+		//炎エフェクトの出現
+		owner->GetSceneGame()->GetEffectManager()->GetEffectFromSerchKey("BossExplosion")->Play(owner->GetPos(), EffectPlayNum);
+	}
+
+
+
+	//死亡時間の更新
+	if (owner->UpdateDeathTime())
+	{
+		// 次の状態へ
+		state = EventDeleteState::END;
+	}
+}
+//終了状態
+void BossDeadAction::StateEnd()
+{
+	//消滅処理
+	owner->Destroy();
+}
+

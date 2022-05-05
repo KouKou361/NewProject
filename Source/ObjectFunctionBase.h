@@ -6,7 +6,7 @@ class ObjectFunctionManager;
 class SceneGame;
 
 //FunctionObjectの状態
-enum ObjectFunctionState
+enum class ObjectFunctionState
 {
 	STATE_START,
 	STATE_RUN,
@@ -15,7 +15,7 @@ enum ObjectFunctionState
 };
 
 //関数の呼び出し
-enum IsFunction
+enum class IsFunction
 {
 	IS_TRUE,
 	IS_FALSE
@@ -62,11 +62,13 @@ public:
 	void  SetGetIsFunction(IsFunction isFunction) { this->isFunction = isFunction; };
 	IsFunction GetIsFunction() { return this->isFunction; }
 private:
-	VECTOR3 pos;
+	VECTOR3 pos = {0,0,0};
 protected:
 	SceneGame* sceneGame = nullptr;
 	float radius = 0;//半径
-	ObjectFunctionState state;
-	IsFunction isFunction;
+	//現在の状態
+	ObjectFunctionState state=static_cast<ObjectFunctionState>(ObjectFunctionState::STATE_NONE);
+	//関数オブジェクトに入っているかどうか
+	IsFunction isFunction = static_cast<IsFunction>(IsFunction::IS_FALSE);
 
 };

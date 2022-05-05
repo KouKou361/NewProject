@@ -5,7 +5,7 @@
 //初期化
 void UI2DDirection::Init()
 {
-	indexTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/Tuto/BossdirectionUI.png");
+	TextureIndex = TK_Lib::Load::LoadTexture("./Data/Sprite/Tuto/BossdirectionUI.png");
 
 	pos = { 500,500 };
 	cut = { 0,0,57,116 };
@@ -18,6 +18,28 @@ void UI2DDirection::Init()
 //更新処理
 void UI2DDirection::Update()
 {
+
+	//スクリーン座標でターゲットの向きを算出
+	SetTargetAngle();
+
+	//半径
+	const float UiCenterR = 250.0f;
+	const VECTOR2 offset = { -10.0f,-30.0f };
+	
+	targetScreenPos.x = cosf(targetAngle) * UiCenterR;
+	targetScreenPos.y = sinf(targetAngle) * UiCenterR;
+
+	//ImGui::Begin("a");
+	//ImGui::Text("dor=%f", XMConvertToDegrees(dot));
+	//ImGui::Text("targetAngle=%f", XMConvertToDegrees(targetAngle));
+	//static VECTOR2 p = TK_Lib::Window::GetWindowSize() / 2;
+	//ImGui::SliderFloat2("pos", &p.x, 0, 1920);
+	//ImGui::End();
+	const VECTOR2 p = TK_Lib::Window::GetWindowSize() / 2;
+	//TK_Lib::Debug2D::Circle(p, 0.2f);
+	targetScreenPos.x += p.x - offset.x;
+	targetScreenPos.y += p.y - offset.y;
+
 
 
 }
@@ -43,15 +65,8 @@ void UI2DDirection::Render()
 	//	ImGui::SliderFloat2("centerScale", &centerScale.x, 0, 20);
 	//	ImGui::End();
 
-
-
 	//Windowの描画
-	TK_Lib::Draw::Sprite(indexTexture, targetScreenPos, size, cut, targetAngle);
-
-	//Windowの描画
-	//TK_Lib::Draw::Sprite(indexTexture, targetScreenPos, size, cut, targetAngle, {1,0,0,1});
-
-
+	TK_Lib::Draw::Sprite(TextureIndex, targetScreenPos, size, cut, targetAngle);
 }
 
 //位置の設定
@@ -59,12 +74,16 @@ void UI2DDirection::SetTargetPos(const VECTOR3 TargetPos)
 {
 	targetWorldPos = TargetPos;
 	targetWorldPos.y = 0.0f;
+	
+}
+
+//スクリーン座標でターゲットの向きを算出
+void UI2DDirection::SetTargetAngle()
+{
 	//プレイヤーの位置の取得(XZ方向)
 	XMVECTOR PlayerPos;
 	{
 		VECTOR3 PlPos = scene->GetPlayer()->GetPos();
-		VECTOR3 cameraPos = TK_Lib::Camera::GetPos();
-		cameraPos.y = 0.0f;
 		PlayerPos = XMLoadFloat3(&PlPos);
 	}
 
@@ -75,10 +94,11 @@ void UI2DDirection::SetTargetPos(const VECTOR3 TargetPos)
 		cameraFront.y = 0.0f;
 		CameraFront = XMLoadFloat3(&cameraFront);
 	}
+
 	//プレイヤーと目標地点のベクトル
 	XMVECTOR Vec;
 	{
-		XMVECTOR targetPos=XMLoadFloat3(&targetWorldPos);
+		XMVECTOR targetPos = XMLoadFloat3(&targetWorldPos);
 		Vec = XMVectorSubtract(targetPos, PlayerPos);
 	}
 
@@ -87,32 +107,21 @@ void UI2DDirection::SetTargetPos(const VECTOR3 TargetPos)
 	CameraFront = XMVector3Normalize(CameraFront);
 	Vec = XMVector3Normalize(Vec);
 
-	XMVECTOR Dot= XMVector3Dot(Vec,CameraFront);
+	XMVECTOR Dot = XMVector3Dot(Vec, CameraFront);
 	float dot;
 	XMStoreFloat(&dot, Dot);
 	targetAngle = acosf(dot);
 
-	XMVECTOR Cross = XMVector3Cross(CameraFront,Vec);
+	XMVECTOR Cross = XMVector3Cross(CameraFront, Vec);
 	VECTOR3 cross;
-	XMStoreFloat3(&cross,Cross);
+	XMStoreFloat3(&cross, Cross);
 	if (cross.y <= 0)
 	{
 		targetAngle = -targetAngle;
 	}
 
-	targetAngle -= XMConvertToRadians(90);
-	targetScreenPos.x = cosf(targetAngle) * UiCenterR;
-	targetScreenPos.y = sinf(targetAngle) * UiCenterR;
+	//テクスチャが真横なので調整するため
+	constexpr float Radians= XMConvertToRadians(90);
 
-	ImGui::Begin("a");
-	ImGui::Text("dor=%f", XMConvertToDegrees(dot));
-	ImGui::Text("targetAngle=%f", XMConvertToDegrees(targetAngle));
-	static VECTOR2 p = TK_Lib::Window::GetWindowSize()/2;
-	ImGui::SliderFloat2("pos",&p.x, 0, 1920);
-	ImGui::End();
-	TK_Lib::Debug2D::Circle(p,0.2f);
-	targetScreenPos.x += p.x - 10.0f;
-	targetScreenPos.y += p.y-30.0f;
-
-
+	targetAngle -= Radians;
 }

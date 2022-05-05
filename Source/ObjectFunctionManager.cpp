@@ -12,42 +12,21 @@ void ObjectFunctionManager::Update()
 		shared_ptr<ObjectFunctionBase> obj = objectFunctiones.at(i);
 		if (obj)
 		{
+			//更新処理
 			obj->Update();
-
+			//関数オブジェクトを呼ぶか決める処理
 			obj->Judge();
-
+		
 			if (obj->GetIsFunction() == IsFunction::IS_TRUE)
 			{
-				if (obj->GetState()!= ObjectFunctionState::STATE_RUN)
-				{
-					obj->SetState(ObjectFunctionState::STATE_START);
-				}
-
-				switch (obj->GetState())
-				{
-				case ObjectFunctionState::STATE_START:obj->Start();
-					obj->SetState(ObjectFunctionState::STATE_RUN);
-					break;
-				case ObjectFunctionState::STATE_RUN:obj->Run();
-					break;
-				case ObjectFunctionState::STATE_END:
-				case ObjectFunctionState::STATE_NONE:
-					break;
-				}
+				//JudgeがTrueの場合
+				FunctionIsTrue(obj.get());
 			}
-			//もしFunctionが呼ばれないなら
 			else
 			{
-				if (obj->GetState() != ObjectFunctionState::STATE_NONE)
-				{
-					//終了処理
-					obj->End();
-					obj->SetState(ObjectFunctionState::STATE_NONE);
-				}
-
+				//JudgeがFalseの場合
+				FunctionIsFalse(obj.get());
 			}
-
-		
 		}
 	
 	}
@@ -90,4 +69,38 @@ void ObjectFunctionManager::CollisionDebug()
 		ObjectFunctionBase* objFunction = GetobjectFunctionesIndex(i);
 		objFunction->CollisionRender();
 	}
+}
+
+//JudgeがTrueの場合
+void ObjectFunctionManager::FunctionIsTrue(ObjectFunctionBase* obj)
+{
+
+	if (obj->GetState() != ObjectFunctionState::STATE_RUN)
+	{
+		obj->SetState(ObjectFunctionState::STATE_START);
+	}
+
+	switch (obj->GetState())
+	{
+	case ObjectFunctionState::STATE_START:obj->Start();
+		obj->SetState(ObjectFunctionState::STATE_RUN);
+		break;
+	case ObjectFunctionState::STATE_RUN:
+		obj->Run();
+		break;
+	case ObjectFunctionState::STATE_END:
+		break;
+	case ObjectFunctionState::STATE_NONE:
+		break;
+	}
+
+}
+//JudgeがFalseの場合
+void ObjectFunctionManager::FunctionIsFalse(ObjectFunctionBase* obj)
+{
+	
+	//終了処理
+	obj->End();
+	obj->SetState(ObjectFunctionState::STATE_NONE);
+	
 }

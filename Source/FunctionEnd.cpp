@@ -8,9 +8,16 @@
 //初期化処理
 void FunctionEnd::Init()
 {
+	//現在の状態：関数オブジェクトに入っていない
 	isFunction = IsFunction::IS_FALSE;
+
+	//当たり判定の大きさ
 	radius = 20.0f;
+
+	//現在の状態：なし
 	SetState(ObjectFunctionState::STATE_NONE);
+
+	//スポットライトの生成
 	spotLightHandle=TK_Lib::SpotLight::Create(GetPos(), { 1,1,0,1 }, 0.0f);
 	
 }
@@ -18,10 +25,18 @@ void FunctionEnd::Init()
 //更新処理
 void FunctionEnd::Update()
 {
+	//ゲームのクリア条件を達しているかどうか？
 	if (sceneGame->GetStageManager()->GetClearJudge())
 	{
-		TK_Lib::SpotLight::Set(spotLightHandle,GetPos(), { 1,1,0,1 },80);
-		sceneGame->GetEffectManager()->GetEffectFromSerchKey("StageClear")->Play(GetPos(), 2);
+		//スポットライトの色
+		const VECTOR4 SpotLightRedColor = { 1,1,0,1 };
+		//スポットライトの大きさ
+		const float SpotLightRange = 80;
+		TK_Lib::SpotLight::Set(spotLightHandle,GetPos(), SpotLightRedColor, SpotLightRange);
+
+		//ゲームクリアエフェクト
+		const int EffectNum = 2;
+		sceneGame->GetEffectManager()->GetEffectFromSerchKey("StageClear")->Play(GetPos(), EffectNum);
 	}
 
 }
@@ -32,8 +47,10 @@ void FunctionEnd::Judge()
 	//範囲内にいるなら
 	if (IsCircle(sceneGame->GetPlayer()->GetPos()))
 	{
+		//現在の状態：現在入っている
 		isFunction = IsFunction::IS_TRUE;
 	}
+	//現在の状態：なし
 	else isFunction = IsFunction::IS_FALSE;
 }
 
@@ -43,7 +60,9 @@ void FunctionEnd::Start()
 
 	//if (sceneGame->GetStageManager()->GetClearJudge())
 	{
-		TK_Lib::Lib_Fade::FadeInBegin(0.02f);
+		//フェードインの強さ
+		const float FadeInVolume = 0.02f;
+		TK_Lib::Lib_Fade::FadeInBegin(FadeInVolume);
 	}
 
 }
@@ -51,6 +70,7 @@ void FunctionEnd::Start()
 //更新処理
 void FunctionEnd::Run()
 {
+	//フェードイン完了したかどうか？
 	if (TK_Lib::Lib_Fade::GetFadeVolume()>=1.0f)
 	{
 		//次のステージへ移行
@@ -61,5 +81,7 @@ void FunctionEnd::Run()
 //終了処理
 void FunctionEnd::End()
 {
-	TK_Lib::Lib_Fade::FadeOutBegin(0.02f);
+	//フェードインの強さ
+	const float FadeOutVolume = 0.02f;
+	TK_Lib::Lib_Fade::FadeOutBegin(FadeOutVolume);
 }

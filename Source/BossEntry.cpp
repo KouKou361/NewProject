@@ -7,8 +7,11 @@
 //開始処理
 void BossEntry::Start()
 {
-	//アニメーションの再生
-	TK_Lib::Model::PlayAnimation(owner->GetModel(), owner->GetAnime()->GetIndex(owner->GetAnime()->BossOpen), false);
+	//ボスの登場モーションの取得
+	const int BossEntryAnimetion=owner->GetAnime()->GetIndex(owner->GetAnime()->BossOpen);
+	//ボスの登場アニメーションの再生
+	TK_Lib::Model::PlayAnimation(owner->GetModel(), BossEntryAnimetion, false);
+	//サウンド
 	TK_Lib::Lib_Sound::SoundPlay("BossEntry", false);
 }
 
@@ -18,13 +21,12 @@ ActionBase::State BossEntry::Run()
 	//攻撃モーション中なら
 	if (TK_Lib::Model::IsPlayAnimetion(owner->GetModel()))
 	{
-		//サウンド
-		float AnimetionRate = TK_Lib::Model::IsPlayAnimetionRate(owner->GetModel());
-
+		//アニメーション
+		const float AnimetionRate = TK_Lib::Model::IsPlayAnimetionRate(owner->GetModel());
 		//ボスの登場サウンド開始
-		constexpr float BossTranceformStart = 0.42f;
+		const float BossTranceformStart = 0.42f;
 		//ボスの登場サウンド終了
-		constexpr float BossTranceformEnd = 0.43f;
+		const float BossTranceformEnd = 0.43f;
 
 		//ボスの登場サウンド（球体からロボットに変身する）
 		if (AnimetionRate >= BossTranceformStart && AnimetionRate <= BossTranceformEnd)

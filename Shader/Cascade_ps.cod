@@ -65,11 +65,10 @@
 // TEXCOORD                 2   xyz         1     NONE   float   xyz 
 // TEXCOORD                 0   xy          2     NONE   float   xy  
 // COLOR                    0   xyzw        3     NONE   float   xyzw
-// TEXCOORD                 4   xyz         4     NONE   float       
-// NORMAL                   0   xyz         5     NONE   float       
-// TEXCOORD                 5   xyz         6     NONE   float   xyz 
-// TEXCOORD                 6   xyz         7     NONE   float   xyz 
-// TEXCOORD                 7   xyz         8     NONE   float   xyz 
+// NORMAL                   0   xyz         4     NONE   float       
+// TEXCOORD                 5   xyz         5     NONE   float   xyz 
+// TEXCOORD                 6   xyz         6     NONE   float   xyz 
+// TEXCOORD                 7   xyz         7     NONE   float   xyz 
 //
 //
 // Output signature:
@@ -94,9 +93,9 @@ dcl_input_ps_siv linear noperspective v0.xyz, position
 dcl_input_ps linear v1.xyz
 dcl_input_ps linear v2.xy
 dcl_input_ps linear v3.xyzw
+dcl_input_ps linear v5.xyz
 dcl_input_ps linear v6.xyz
 dcl_input_ps linear v7.xyz
-dcl_input_ps linear v8.xyz
 dcl_output o0.xyzw
 dcl_temps 9
 dcl_indexableTemp x0[3], 4
@@ -106,38 +105,37 @@ dcl_indexableTemp x0[3], 4
 //   v1.x <- pin.Wposition.x; v1.y <- pin.Wposition.y; v1.z <- pin.Wposition.z; 
 //   v2.x <- pin.texcoord.x; v2.y <- pin.texcoord.y; 
 //   v3.x <- pin.color.x; v3.y <- pin.color.y; v3.z <- pin.color.z; v3.w <- pin.color.w; 
-//   v4.x <- pin.vShadow.x; v4.y <- pin.vShadow.y; v4.z <- pin.vShadow.z; 
-//   v5.x <- pin.normal.x; v5.y <- pin.normal.y; v5.z <- pin.normal.z; 
-//   v6.x <- pin.VX.x; v6.y <- pin.VX.y; v6.z <- pin.VX.z; 
-//   v7.x <- pin.VY.x; v7.y <- pin.VY.y; v7.z <- pin.VY.z; 
-//   v8.x <- pin.VZ.x; v8.y <- pin.VZ.y; v8.z <- pin.VZ.z; 
+//   v4.x <- pin.normal.x; v4.y <- pin.normal.y; v4.z <- pin.normal.z; 
+//   v5.x <- pin.VX.x; v5.y <- pin.VX.y; v5.z <- pin.VX.z; 
+//   v6.x <- pin.VY.x; v6.y <- pin.VY.y; v6.z <- pin.VY.z; 
+//   v7.x <- pin.VZ.x; v7.y <- pin.VZ.y; v7.z <- pin.VZ.z; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 59 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Cascade.hlsli"
+#line 59 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade.hlsli"
 mov x0[0].x, l(0.000900)
 mov x0[1].x, l(0.001000)
 mov x0[2].x, l(0.002000)
 
-#line 11 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\PointLight.hlsli"
+#line 11 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\PointLight.hlsli"
 mov r0.x, l(8)  // r0.x <- POINTMAX
 
-#line 8 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Cascade_ps.hlsl"
+#line 8 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 sample_indexable(texture2d)(float,float,float,float) r1.xyzw, v2.xyxx, t0.xyzw, s0  // r1.x <- color.x; r1.y <- color.y; r1.z <- color.z; r1.w <- color.w
 
 #line 13
-dp3 r0.y, v6.xyzx, v6.xyzx
+dp3 r0.y, v5.xyzx, v5.xyzx
 rsq r0.y, r0.y
-mul r0.yzw, r0.yyyy, v6.xxyz  // r0.y <- VX.x; r0.z <- VX.y; r0.w <- VX.z
+mul r0.yzw, r0.yyyy, v5.xxyz  // r0.y <- VX.x; r0.z <- VX.y; r0.w <- VX.z
 
 #line 14
-dp3 r2.x, v7.xyzx, v7.xyzx
+dp3 r2.x, v6.xyzx, v6.xyzx
 rsq r2.x, r2.x
-mul r2.xyz, r2.xxxx, v7.xyzx  // r2.x <- VY.x; r2.y <- VY.y; r2.z <- VY.z
+mul r2.xyz, r2.xxxx, v6.xyzx  // r2.x <- VY.x; r2.y <- VY.y; r2.z <- VY.z
 
 #line 15
-dp3 r2.w, v8.xyzx, v8.xyzx
+dp3 r2.w, v7.xyzx, v7.xyzx
 rsq r2.w, r2.w
-mul r3.xyz, r2.wwww, v8.xyzx  // r3.x <- VZ.x; r3.y <- VZ.y; r3.z <- VZ.z
+mul r3.xyz, r2.wwww, v7.xyzx  // r3.x <- VZ.x; r3.y <- VZ.y; r3.z <- VZ.z
 
 #line 18
 mov r4.x, r0.y  // r4.x <- mat._m00
@@ -192,7 +190,7 @@ mov r3.xyz, r3.xyzx
 mov r4.xyz, r4.xyzx
 mov r5.xyz, r5.xyzx
 
-#line 67 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Cascade.hlsli"
+#line 67 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade.hlsli"
 mov r6.xyz, -r3.xyzx
 dp3 r2.w, r0.yzwy, r6.xyzx  // r2.w <- D
 
@@ -209,7 +207,7 @@ add r2.w, r2.w, l(0.500000)  // r2.w <- D
 mul r6.xyz, r2.wwww, r4.xyzx
 mul r5.xyz, r5.xyzx, r6.xyzx  // r5.x <- <Diffuse return value>.x; r5.y <- <Diffuse return value>.y; r5.z <- <Diffuse return value>.z
 
-#line 34 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Cascade_ps.hlsl"
+#line 34 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mov r5.xyz, r5.xyzx  // r5.x <- D.x; r5.y <- D.y; r5.z <- D.z
 
 #line 37
@@ -223,7 +221,7 @@ mov r4.xyz, r4.xyzx
 mov r2.xyz, r2.xyzx
 mov r6.xyz, r6.xyzx
 
-#line 91 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Cascade.hlsli"
+#line 91 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade.hlsli"
 mov r7.xyz, -r3.xyzx
 dp3 r2.w, r7.xyzx, r0.yzwy
 add r2.w, r2.w, r2.w
@@ -258,7 +256,7 @@ mul r2.xyz, r4.xyzx, r2.xyzx  // r2.x <- S.x; r2.y <- S.y; r2.z <- S.z
 #line 96
 mov r2.xyz, r2.xyzx  // r2.x <- <PhongSpecular return value>.x; r2.y <- <PhongSpecular return value>.y; r2.z <- <PhongSpecular return value>.z
 
-#line 38 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Cascade_ps.hlsl"
+#line 38 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mov r2.xyz, r2.xyzx  // r2.x <- S.x; r2.y <- S.y; r2.z <- S.z
 
 #line 39
@@ -268,7 +266,7 @@ mov r3.xyz, r3.xyzx
 mov r4.xyz, r4.xyzx
 itof r6.xyz, l(1, 1, 1, 0)
 
-#line 108 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Cascade.hlsli"
+#line 108 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade.hlsli"
 mov r3.xyz, -r3.xyzx
 dp3 r0.y, r0.yzwy, r3.xyzx  // r0.y <- D
 
@@ -280,14 +278,14 @@ add r0.y, r0.y, l(0.500000)  // r0.y <- D
 mul r0.yzw, r0.yyyy, r4.xxyz
 mul r0.yzw, r6.xxyz, r0.yyzw  // r0.y <- <HalfLambert return value>.x; r0.z <- <HalfLambert return value>.y; r0.w <- <HalfLambert return value>.z
 
-#line 39 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Cascade_ps.hlsl"
+#line 39 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mov r0.yzw, r0.yyzw  // r0.y <- H.x; r0.z <- H.y; r0.w <- H.z
 
 #line 42
 nop 
 mov r3.xyz, v1.xyzx
 
-#line 58 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\PointLight.hlsli"
+#line 58 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\PointLight.hlsli"
 itof r4.xyz, l(0, 0, 0, 0)  // r4.x <- PD.x; r4.y <- PD.y; r4.z <- PD.z
 
 #line 59
@@ -354,7 +352,7 @@ endloop
 #line 78
 add r3.xyz, r6.xyzx, r7.xyzx  // r3.x <- <AddPointLight return value>.x; r3.y <- <AddPointLight return value>.y; r3.z <- <AddPointLight return value>.z
 
-#line 42 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Cascade_ps.hlsl"
+#line 42 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mov r3.xyz, r3.xyzx  // r3.x <- PL.x; r3.y <- PL.y; r3.z <- PL.z
 
 #line 48
@@ -369,24 +367,30 @@ mul r0.xyzw, r0.xyzw, r1.xyzw  // r0.x <- color.x; r0.y <- color.y; r0.z <- colo
 nop 
 mov r1.xyz, v1.xyzx
 
-#line 166 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Cascade.hlsli"
+#line 170 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade.hlsli"
+itof r2.xyz, l(1, 1, 1, 0)  // r2.x <- color.x; r2.y <- color.y; r2.z <- color.z
+
+#line 172
+mov r2.w, l(0)  // r2.w <- j
+
+#line 175
 nop 
-mov r2.x, cb3[0].x
-mov r2.y, cb3[1].x
-mov r2.z, cb3[2].x
-mov r2.w, cb3[3].x
-mov r3.x, cb3[0].y
-mov r3.y, cb3[1].y
-mov r3.z, cb3[2].y
-mov r3.w, cb3[3].y
-mov r4.x, cb3[0].z
-mov r4.y, cb3[1].z
-mov r4.z, cb3[2].z
-mov r4.w, cb3[3].z
-mov r5.x, cb3[0].w
-mov r5.y, cb3[1].w
-mov r5.z, cb3[2].w
-mov r5.w, cb3[3].w
+mov r3.x, cb3[0].x
+mov r3.y, cb3[1].x
+mov r3.z, cb3[2].x
+mov r3.w, cb3[3].x
+mov r4.x, cb3[0].y
+mov r4.y, cb3[1].y
+mov r4.z, cb3[2].y
+mov r4.w, cb3[3].y
+mov r5.x, cb3[0].z
+mov r5.y, cb3[1].z
+mov r5.z, cb3[2].z
+mov r5.w, cb3[3].z
+mov r6.x, cb3[0].w
+mov r6.y, cb3[1].w
+mov r6.z, cb3[2].w
+mov r6.w, cb3[3].w
 mov r1.xyz, r1.xyzx
 
 #line 121
@@ -396,237 +400,235 @@ mov r1.xyz, r1.xyzx  // r1.x <- wvpPos.x; r1.y <- wvpPos.y; r1.z <- wvpPos.z
 mov r1.w, l(1.000000)  // r1.w <- wvpPos.w
 
 #line 124
-dp4 r2.x, r2.xyzw, r1.xyzw  // r2.x <- wvpPos.x
-dp4 r2.y, r3.xyzw, r1.xyzw  // r2.y <- wvpPos.y
-dp4 r2.z, r4.xyzw, r1.xyzw  // r2.z <- wvpPos.z
-dp4 r2.w, r5.xyzw, r1.xyzw  // r2.w <- wvpPos.w
+dp4 r3.x, r3.xyzw, r1.xyzw  // r3.x <- wvpPos.x
+dp4 r3.y, r4.xyzw, r1.xyzw  // r3.y <- wvpPos.y
+dp4 r3.z, r5.xyzw, r1.xyzw  // r3.z <- wvpPos.z
+dp4 r3.w, r6.xyzw, r1.xyzw  // r3.w <- wvpPos.w
 
 #line 125
-div r2.xyz, r2.xyzx, r2.wwww
+div r3.xyz, r3.xyzx, r3.wwww
 
 #line 127
-mov r2.w, -r2.y  // r2.w <- wvpPos.y
+mov r3.w, -r3.y  // r3.w <- wvpPos.y
 
 #line 128
-mul r3.xy, r2.xwxx, l(0.500000, 0.500000, 0.000000, 0.000000)
-add r2.xy, r3.xyxx, l(0.500000, 0.500000, 0.000000, 0.000000)  // r2.y <- wvpPos.y
+mul r4.xy, r3.xwxx, l(0.500000, 0.500000, 0.000000, 0.000000)
+add r3.xy, r4.xyxx, l(0.500000, 0.500000, 0.000000, 0.000000)  // r3.y <- wvpPos.y
 
 #line 129
-mov r2.xy, r2.xyxx  // r2.x <- <GetShadowTex return value>.x; r2.y <- <GetShadowTex return value>.y
-mov r2.z, r2.z  // r2.z <- <GetShadowTex return value>.z
+mov r3.xy, r3.xyxx  // r3.x <- <GetShadowTex return value>.x; r3.y <- <GetShadowTex return value>.y
+mov r3.z, r3.z  // r3.z <- <GetShadowTex return value>.z
 
-#line 166
-mov r2.xyz, r2.xyzx  // r2.x <- vShadow.x; r2.y <- vShadow.y; r2.z <- vShadow.z
+#line 175
+mov r3.xyz, r3.xyzx  // r3.x <- vShadow.x; r3.y <- vShadow.y; r3.z <- vShadow.z
 
-#line 167
-mov r2.xyz, r2.xyzx  // r2.x <- ShadowTexcoord.x; r2.y <- ShadowTexcoord.y; r2.z <- ShadowTexcoord.z
+#line 176
+mov r3.xyz, r3.xyzx  // r3.x <- ShadowTexcoord.x; r3.y <- ShadowTexcoord.y; r3.z <- ShadowTexcoord.z
 
-#line 168
-itof r2.w, l(0)
-ge r2.w, r2.z, r2.w
-itof r3.x, l(1)
-ge r3.x, r3.x, r2.z
-and r2.w, r2.w, r3.x
-itof r3.x, l(0)
-ge r3.x, r2.x, r3.x
-and r2.w, r2.w, r3.x
-itof r3.x, l(1)
-ge r3.x, r3.x, r2.x
-and r2.w, r2.w, r3.x
-itof r3.x, l(0)
-ge r3.x, r2.y, r3.x
-and r2.w, r2.w, r3.x
-itof r3.x, l(1)
-ge r3.x, r3.x, r2.y
-and r3.xy, r2.wwww, r3.xxxx
-if_nz r3.y
+#line 178
+itof r3.w, l(0)
+ge r3.w, r3.z, r3.w
+itof r4.x, l(1)
+ge r4.x, r4.x, r3.z
+and r3.w, r3.w, r4.x
+itof r4.x, l(0)
+ge r4.x, r3.x, r4.x
+and r3.w, r3.w, r4.x
+itof r4.x, l(1)
+ge r4.x, r4.x, r3.x
+and r3.w, r3.w, r4.x
+itof r4.x, l(0)
+ge r4.x, r3.y, r4.x
+and r3.w, r3.w, r4.x
+itof r4.x, l(1)
+ge r4.x, r4.x, r3.y
+and r3.w, r3.w, r4.x
+if_nz r3.w
 
-#line 172
-  nop 
-  nop 
-  nop 
-  mov r2.xyz, r2.xyzx
-  mov r4.xyz, cb3[12].xyzx
-  mov r2.w, x0[0].x
+#line 189
+  switch r2.w
 
-#line 137
-  sample_indexable(texture2d)(float,float,float,float) r2.x, r2.xyxx, t1.xyzw, s1  // r2.x <- d
+#line 191
+    case l(0)
+    nop 
+    nop 
+    nop 
+    mov r3.xyz, r3.xyzx
+    mov r4.xyz, cb3[12].xyzx
+    mov r2.w, x0[0].x
 
-#line 139
-  mov r2.x, -r2.x
-  add r2.x, r2.x, r2.z
-  lt r2.x, r2.w, r2.x
-  itof r2.yzw, l(0, 1, 1, 1)
-  movc r2.xyz, r2.xxxx, r4.xyzx, r2.yzwy  // r2.x <- Scolor.x; r2.y <- Scolor.y; r2.z <- Scolor.z
+#line 142
+    sample_indexable(texture2d)(float,float,float,float) r3.x, r3.xyxx, t1.xyzw, s1  // r3.x <- d
 
-#line 153
-  mov r4.xyz, -r2.xyzx
-  add r4.xyz, r4.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
-  mul r4.xyz, r4.xyzx, l(0.200000, 0.200000, 0.200000, 0.000000)
-  add r2.xyz, r2.xyzx, r4.xyzx
+#line 144
+    mov r3.x, -r3.x
+    add r3.x, r3.x, r3.z
+    lt r2.w, r2.w, r3.x
+    itof r3.xyz, l(1, 1, 1, 0)
+    movc r3.xyz, r2.wwww, r4.xyzx, r3.xyzx  // r3.x <- Scolor.x; r3.y <- Scolor.y; r3.z <- Scolor.z
 
-#line 155
-  mov r2.xyz, r2.xyzx  // r2.x <- <GetShadow return value>.x; r2.y <- <GetShadow return value>.y; r2.z <- <GetShadow return value>.z
+#line 158
+    mov r4.xyz, -r3.xyzx
+    add r4.xyz, r4.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+    mul r4.xyz, r4.xyzx, l(0.200000, 0.200000, 0.200000, 0.000000)
+    add r2.xyz, r3.xyzx, r4.xyzx  // r2.x <- Scolor.x; r2.y <- Scolor.y; r2.z <- Scolor.z
 
-#line 172
-  mov r2.xyz, r2.xyzx  // r2.x <- <GetCascadeShadow return value>.x; r2.y <- <GetCascadeShadow return value>.y; r2.z <- <GetCascadeShadow return value>.z
+#line 160
+    mov r2.xyz, r2.xyzx  // r2.x <- <GetShadow return value>.x; r2.y <- <GetShadow return value>.y; r2.z <- <GetShadow return value>.z
 
-#line 173
+#line 191
+    mov r2.xyz, r2.xyzx  // r2.x <- color.x; r2.y <- color.y; r2.z <- color.z
+
+#line 192
+    break   // r2.w <- j; r3.x <- vShadow.x; r3.y <- vShadow.y; r3.z <- vShadow.z; r3.x <- ShadowTexcoord.x; r3.y <- ShadowTexcoord.y; r3.z <- ShadowTexcoord.z; r3.x <- <GetShadowTex return value>.x; r3.y <- <GetShadowTex return value>.y; r3.z <- <GetShadowTex return value>.z; r4.z <- vp._m12; r3.x <- wvpPos.x; r3.y <- wvpPos.y; r3.z <- wvpPos.z
+
+#line 197
+  endswitch 
+
+#line 200
 endif 
 
-#line 163
-not r2.w, r3.y
-not r3.z, r3.x
-and r2.w, r2.w, r3.z
-not r3.zw, r2.wwww
-and r3.w, r2.w, r3.w
-or r3.y, r3.y, r3.w
-and r2.w, r2.w, r3.z
-or r2.w, r3.x, r2.w
-not r3.x, r3.y
-not r3.z, r2.w
-and r3.x, r3.z, r3.x
-if_nz r3.x
+#line 172
+not r2.w, r3.w
+not r2.w, r2.w
+or r2.w, r3.w, r2.w
+if_z r2.w
 
-#line 166
+#line 175
   nop 
-  mov r4.x, cb3[4].x  // r4.x <- vp._m00
-  mov r4.y, cb3[5].x  // r4.y <- vp._m01
-  mov r4.z, cb3[6].x  // r4.z <- vp._m02
-  mov r4.w, cb3[7].x  // r4.w <- vp._m03
-  mov r5.x, cb3[4].y  // r5.x <- vp._m10
-  mov r5.y, cb3[5].y  // r5.y <- vp._m11
-  mov r5.z, cb3[6].y  // r5.z <- vp._m12
-  mov r5.w, cb3[7].y  // r5.w <- vp._m13
-  mov r6.x, cb3[4].z  // r6.x <- vp._m20
-  mov r6.y, cb3[5].z  // r6.y <- vp._m21
-  mov r6.z, cb3[6].z  // r6.z <- vp._m22
-  mov r6.w, cb3[7].z  // r6.w <- vp._m23
-  mov r7.x, cb3[4].w  // r7.x <- vp._m30
-  mov r7.y, cb3[5].w  // r7.y <- vp._m31
-  mov r7.z, cb3[6].w  // r7.z <- vp._m32
-  mov r7.w, cb3[7].w  // r7.w <- vp._m33
-  mov r8.xyz, r1.xyzx  // r8.x <- wPos.x; r8.y <- wPos.y; r8.z <- wPos.z
+  mov r3.x, cb3[4].x  // r3.x <- vp._m00
+  mov r3.y, cb3[5].x  // r3.y <- vp._m01
+  mov r3.z, cb3[6].x  // r3.z <- vp._m02
+  mov r3.w, cb3[7].x  // r3.w <- vp._m03
+  mov r4.x, cb3[4].y  // r4.x <- vp._m10
+  mov r4.y, cb3[5].y  // r4.y <- vp._m11
+  mov r4.z, cb3[6].y  // r4.z <- vp._m12
+  mov r4.w, cb3[7].y
+  mov r5.x, cb3[4].z
+  mov r5.y, cb3[5].z
+  mov r5.z, cb3[6].z
+  mov r5.w, cb3[7].z
+  mov r6.x, cb3[4].w
+  mov r6.y, cb3[5].w
+  mov r6.z, cb3[6].w
+  mov r6.w, cb3[7].w
+  mov r7.xyz, r1.xyzx  // r7.x <- wPos.x; r7.y <- wPos.y; r7.z <- wPos.z
 
 #line 121
-  mov r8.xyz, r8.xyzx  // r8.x <- wvpPos.x; r8.y <- wvpPos.y; r8.z <- wvpPos.z
+  mov r7.xyz, r7.xyzx  // r7.x <- wvpPos.x; r7.y <- wvpPos.y; r7.z <- wvpPos.z
 
 #line 122
-  mov r8.w, l(1.000000)  // r8.w <- wvpPos.w
+  mov r7.w, l(1.000000)  // r7.w <- wvpPos.w
 
 #line 124
-  dp4 r4.x, r4.xyzw, r8.xyzw  // r4.x <- wvpPos.x
-  dp4 r4.y, r5.xyzw, r8.xyzw  // r4.y <- wvpPos.y
-  dp4 r4.z, r6.xyzw, r8.xyzw  // r4.z <- wvpPos.z
-  dp4 r3.x, r7.xyzw, r8.xyzw  // r3.x <- wvpPos.w
+  dp4 r3.x, r3.xyzw, r7.xyzw  // r3.x <- wvpPos.x
+  dp4 r3.y, r4.xyzw, r7.xyzw  // r3.y <- wvpPos.y
+  dp4 r3.z, r5.xyzw, r7.xyzw  // r3.z <- wvpPos.z
+  dp4 r3.w, r6.xyzw, r7.xyzw  // r3.w <- wvpPos.w
 
 #line 125
-  div r4.xyz, r4.xyzx, r3.xxxx
+  div r3.xyz, r3.xyzx, r3.wwww
 
 #line 127
-  mov r4.w, -r4.y  // r4.w <- wvpPos.y
+  mov r3.w, -r3.y  // r3.w <- wvpPos.y
 
 #line 128
-  mul r3.xz, r4.xxwx, l(0.500000, 0.000000, 0.500000, 0.000000)
-  add r4.xy, r3.xzxx, l(0.500000, 0.500000, 0.000000, 0.000000)  // r4.y <- wvpPos.y
+  mul r4.xy, r3.xwxx, l(0.500000, 0.500000, 0.000000, 0.000000)
+  add r3.xy, r4.xyxx, l(0.500000, 0.500000, 0.000000, 0.000000)  // r3.y <- wvpPos.y
 
 #line 129
-  mov r4.xy, r4.xyxx  // r4.x <- <GetShadowTex return value>.x; r4.y <- <GetShadowTex return value>.y
-  mov r4.z, r4.z  // r4.z <- <GetShadowTex return value>.z
+  mov r3.xy, r3.xyxx  // r3.x <- <GetShadowTex return value>.x; r3.y <- <GetShadowTex return value>.y
+  mov r3.z, r3.z  // r3.z <- <GetShadowTex return value>.z
 
-#line 166
-  mov r4.xyz, r4.xyzx  // r4.x <- vShadow.x; r4.y <- vShadow.y; r4.z <- vShadow.z
+#line 175
+  mov r3.xyz, r3.xyzx  // r3.x <- vShadow.x; r3.y <- vShadow.y; r3.z <- vShadow.z
 
-#line 167
-  not r3.x, r3.y
-  not r3.z, r2.w
-  and r3.x, r3.x, r3.z
-  if_nz r3.x
-    mov r4.xyz, r4.xyzx  // r4.x <- ShadowTexcoord.x; r4.y <- ShadowTexcoord.y; r4.z <- ShadowTexcoord.z
+#line 176
+  if_z r2.w
+    mov r3.xyz, r3.xyzx  // r3.x <- ShadowTexcoord.x; r3.y <- ShadowTexcoord.y; r3.z <- ShadowTexcoord.z
 
-#line 168
-    itof r3.z, l(0)
-    ge r3.z, r4.z, r3.z
-    itof r3.w, l(1)
-    ge r3.w, r3.w, r4.z
-    and r3.z, r3.w, r3.z
+#line 178
     itof r3.w, l(0)
-    ge r3.w, r4.x, r3.w
-    and r3.z, r3.w, r3.z
-    itof r3.w, l(1)
-    ge r3.w, r3.w, r4.x
-    and r3.z, r3.w, r3.z
-    itof r3.w, l(0)
-    ge r3.w, r4.y, r3.w
-    and r3.z, r3.w, r3.z
-    itof r3.w, l(1)
-    ge r3.w, r3.w, r4.y
-    and r3.zw, r3.wwww, r3.zzzz
+    ge r3.w, r3.z, r3.w
+    itof r4.x, l(1)
+    ge r4.x, r4.x, r3.z
+    and r3.w, r3.w, r4.x
+    itof r4.x, l(0)
+    ge r4.x, r3.x, r4.x
+    and r3.w, r3.w, r4.x
+    itof r4.x, l(1)
+    ge r4.x, r4.x, r3.x
+    and r3.w, r3.w, r4.x
+    itof r4.x, l(0)
+    ge r4.x, r3.y, r4.x
+    and r3.w, r3.w, r4.x
+    itof r4.x, l(1)
+    ge r4.x, r4.x, r3.y
+    and r3.w, r3.w, r4.x
     if_nz r3.w
 
-#line 172
-      nop 
-      nop 
-      nop 
-      mov r4.xyz, r4.xyzx  // r4.x <- Tex.x; r4.y <- Tex.y; r4.z <- Tex.z
-      mov r5.xyz, cb3[12].xyzx  // r5.x <- Scolor.x; r5.y <- Scolor.y; r5.z <- Scolor.z
-      mov r4.w, x0[1].x  // r4.w <- Bias
+#line 189
+      mov r4.x, l(1)
+      switch r4.x
 
-#line 137
-      sample_indexable(texture2d)(float,float,float,float) r4.x, r4.xyxx, t2.xyzw, s1  // r4.x <- d
+#line 193
+        case l(1)
+        nop 
+        nop 
+        nop 
+        mov r3.xyz, r3.xyzx
+        mov r4.xyz, cb3[12].xyzx
+        mov r4.w, x0[1].x
 
-#line 139
-      mov r4.x, -r4.x
-      add r4.x, r4.x, r4.z
-      lt r4.x, r4.w, r4.x
-      itof r4.yzw, l(0, 1, 1, 1)
-      movc r4.xyz, r4.xxxx, r5.xyzx, r4.yzwy  // r4.x <- Scolor.x; r4.y <- Scolor.y; r4.z <- Scolor.z
+#line 142
+        sample_indexable(texture2d)(float,float,float,float) r3.x, r3.xyxx, t2.xyzw, s1  // r3.x <- d
 
-#line 153
-      mov r5.xyz, -r4.xyzx
-      add r5.xyz, r5.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
-      mul r5.xyz, r5.xyzx, l(0.200000, 0.200000, 0.200000, 0.000000)
-      add r2.xyz, r4.xyzx, r5.xyzx  // r2.x <- Scolor.x; r2.y <- Scolor.y; r2.z <- Scolor.z
+#line 144
+        mov r3.x, -r3.x
+        add r3.x, r3.x, r3.z
+        lt r3.x, r4.w, r3.x
+        itof r5.xyz, l(1, 1, 1, 0)
+        movc r3.xyz, r3.xxxx, r4.xyzx, r5.xyzx  // r3.x <- Scolor.x; r3.y <- Scolor.y; r3.z <- Scolor.z
 
-#line 155
-      mov r2.xyz, r2.xyzx  // r2.x <- <GetShadow return value>.x; r2.y <- <GetShadow return value>.y; r2.z <- <GetShadow return value>.z
+#line 158
+        mov r4.xyz, -r3.xyzx
+        add r4.xyz, r4.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+        mul r4.xyz, r4.xyzx, l(0.200000, 0.200000, 0.200000, 0.000000)
+        add r2.xyz, r3.xyzx, r4.xyzx  // r2.x <- Scolor.x; r2.y <- Scolor.y; r2.z <- Scolor.z
 
-#line 172
-      mov r2.xyz, r2.xyzx
+#line 160
+        mov r2.xyz, r2.xyzx  // r2.x <- <GetShadow return value>.x; r2.y <- <GetShadow return value>.y; r2.z <- <GetShadow return value>.z
 
-#line 173
+#line 193
+        mov r2.xyz, r2.xyzx  // r2.x <- color.x; r2.y <- color.y; r2.z <- color.z
+
+#line 194
+        break   // r3.x <- vShadow.x; r3.y <- vShadow.y; r3.z <- vShadow.z; r3.x <- ShadowTexcoord.x; r3.y <- ShadowTexcoord.y; r3.z <- ShadowTexcoord.z; r3.x <- <GetShadowTex return value>.x; r3.y <- <GetShadowTex return value>.y; r3.z <- <GetShadowTex return value>.z; r4.z <- vp._m12; r4.w <- vp._m13; r5.x <- vp._m20; r5.y <- vp._m21; r5.z <- vp._m22; r3.x <- wvpPos.x; r3.y <- wvpPos.y; r3.z <- wvpPos.z
+
+#line 197
+      endswitch 
+
+#line 200
     endif 
-  else   // Prior locations: r4.x <- vShadow.x; r4.y <- vShadow.y; r4.z <- vShadow.z; r4.x <- <GetShadowTex return value>.x; r4.y <- <GetShadowTex return value>.y; r4.z <- <GetShadowTex return value>.z; r5.x <- vp._m10; r5.y <- vp._m11; r5.z <- vp._m12; r4.x <- wvpPos.x; r4.y <- wvpPos.y; r4.z <- wvpPos.z
-    mov r3.z, l(-1)
+  else   // Prior locations: r3.x <- vShadow.x; r3.y <- vShadow.y; r3.z <- vShadow.z; r3.x <- <GetShadowTex return value>.x; r3.y <- <GetShadowTex return value>.y; r3.z <- <GetShadowTex return value>.z; r4.z <- vp._m12; r4.w <- vp._m13; r5.x <- vp._m20; r5.y <- vp._m21; r5.z <- vp._m22; r3.x <- wvpPos.x; r3.y <- wvpPos.y; r3.z <- wvpPos.z
     mov r3.w, l(-1)
   endif 
-  and r3.w, r3.w, r3.x
-  or r3.y, r3.y, r3.w
-  and r3.x, r3.z, r3.x
-  or r3.x, r2.w, r3.x
+  or r2.w, r2.w, r3.w
 
-#line 163
-  not r3.z, r3.y
-  not r3.w, r3.x
-  and r3.z, r3.z, r3.w
-  not r4.xy, r3.zzzz
-  and r3.w, r3.z, r4.y
-  or r3.y, r3.y, r3.w
-  and r3.z, r3.z, r4.x
-  or r2.w, r3.x, r3.z
+#line 172
+  not r3.x, r2.w
+  not r3.x, r3.x
+  or r2.w, r2.w, r3.x
 
-#line 174
-else   // Prior locations: r4.w <- vp._m23; r5.x <- vp._m30; r5.y <- vp._m31; r5.z <- vp._m32; r5.w <- vp._m33
-  mov r3.y, l(-1)
+#line 201
+else   // Prior locations: r4.w <- vp._m13; r5.x <- vp._m20; r5.y <- vp._m21; r5.z <- vp._m22
+  mov r2.w, l(-1)
 endif 
 
-#line 163
-not r3.x, r3.y
-not r3.y, r2.w
-and r3.x, r3.y, r3.x
-if_nz r3.x
+#line 172
+if_z r2.w
 
-#line 166
+#line 175
   nop 
   mov r3.x, cb3[8].x  // r3.x <- vp._m00
   mov r3.y, cb3[9].x  // r3.y <- vp._m01
@@ -639,11 +641,11 @@ if_nz r3.x
   mov r5.x, cb3[8].z  // r5.x <- vp._m20
   mov r5.y, cb3[9].z  // r5.y <- vp._m21
   mov r5.z, cb3[10].z  // r5.z <- vp._m22
-  mov r5.w, cb3[11].z  // r5.w <- vp._m23
-  mov r6.x, cb3[8].w  // r6.x <- vp._m30
-  mov r6.y, cb3[9].w  // r6.y <- vp._m31
-  mov r6.z, cb3[10].w  // r6.z <- vp._m32
-  mov r6.w, cb3[11].w  // r6.w <- vp._m33
+  mov r5.w, cb3[11].z
+  mov r6.x, cb3[8].w
+  mov r6.y, cb3[9].w
+  mov r6.z, cb3[10].w
+  mov r6.w, cb3[11].w
 
 #line 121
   mov r1.xyz, r1.xyzx  // r1.x <- wvpPos.x; r1.y <- wvpPos.y; r1.z <- wvpPos.z
@@ -671,86 +673,87 @@ if_nz r3.x
   mov r1.xy, r1.xyxx  // r1.x <- <GetShadowTex return value>.x; r1.y <- <GetShadowTex return value>.y
   mov r1.z, r1.z  // r1.z <- <GetShadowTex return value>.z
 
-#line 166
+#line 175
   mov r1.xyz, r1.xyzx  // r1.x <- vShadow.x; r1.y <- vShadow.y; r1.z <- vShadow.z
 
-#line 167
+#line 176
   mov r1.xyz, r1.xyzx  // r1.x <- ShadowTexcoord.x; r1.y <- ShadowTexcoord.y; r1.z <- ShadowTexcoord.z
 
-#line 168
+#line 178
   itof r1.w, l(0)
   ge r1.w, r1.z, r1.w
-  itof r3.x, l(1)
-  ge r3.x, r3.x, r1.z
-  and r1.w, r1.w, r3.x
-  itof r3.x, l(0)
-  ge r3.x, r1.x, r3.x
-  and r1.w, r1.w, r3.x
-  itof r3.x, l(1)
-  ge r3.x, r3.x, r1.x
-  and r1.w, r1.w, r3.x
-  itof r3.x, l(0)
-  ge r3.x, r1.y, r3.x
-  and r1.w, r1.w, r3.x
-  itof r3.x, l(1)
-  ge r3.x, r3.x, r1.y
-  and r3.xy, r1.wwww, r3.xxxx
-  if_nz r3.y
+  itof r2.w, l(1)
+  ge r2.w, r2.w, r1.z
+  and r1.w, r1.w, r2.w
+  itof r2.w, l(0)
+  ge r2.w, r1.x, r2.w
+  and r1.w, r1.w, r2.w
+  itof r2.w, l(1)
+  ge r2.w, r2.w, r1.x
+  and r1.w, r1.w, r2.w
+  itof r2.w, l(0)
+  ge r2.w, r1.y, r2.w
+  and r1.w, r1.w, r2.w
+  itof r2.w, l(1)
+  ge r2.w, r2.w, r1.y
+  and r1.w, r1.w, r2.w
+  if_nz r1.w
 
-#line 172
-    nop 
-    nop 
-    nop 
-    mov r1.xyz, r1.xyzx  // r1.x <- Tex.x; r1.y <- Tex.y; r1.z <- Tex.z
-    mov r4.xyz, cb3[12].xyzx  // r4.x <- Scolor.x; r4.y <- Scolor.y; r4.z <- Scolor.z
-    mov r1.w, x0[2].x  // r1.w <- Bias
+#line 189
+    mov r1.w, l(2)
+    switch r1.w
 
-#line 137
-    sample_indexable(texture2d)(float,float,float,float) r1.x, r1.xyxx, t3.xyzw, s1  // r1.x <- d
+#line 195
+      case l(2)
+      nop 
+      nop 
+      nop 
+      mov r1.xyz, r1.xyzx
+      mov r3.xyz, cb3[12].xyzx
+      mov r1.w, x0[2].x
 
-#line 139
-    mov r1.x, -r1.x
-    add r1.x, r1.x, r1.z
-    lt r1.x, r1.w, r1.x
-    itof r1.yzw, l(0, 1, 1, 1)
-    movc r1.xyz, r1.xxxx, r4.xyzx, r1.yzwy  // r1.x <- Scolor.x; r1.y <- Scolor.y; r1.z <- Scolor.z
+#line 142
+      sample_indexable(texture2d)(float,float,float,float) r1.x, r1.xyxx, t3.xyzw, s1  // r1.x <- d
 
-#line 153
-    mov r4.xyz, -r1.xyzx
-    add r4.xyz, r4.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
-    mul r4.xyz, r4.xyzx, l(0.200000, 0.200000, 0.200000, 0.000000)
-    add r2.xyz, r1.xyzx, r4.xyzx  // r2.x <- Scolor.x; r2.y <- Scolor.y; r2.z <- Scolor.z
+#line 144
+      mov r1.x, -r1.x
+      add r1.x, r1.x, r1.z
+      lt r1.x, r1.w, r1.x
+      itof r1.yzw, l(0, 1, 1, 1)
+      movc r1.xyz, r1.xxxx, r3.xyzx, r1.yzwy  // r1.x <- Scolor.x; r1.y <- Scolor.y; r1.z <- Scolor.z
 
-#line 155
-    mov r2.xyz, r2.xyzx  // r2.x <- <GetShadow return value>.x; r2.y <- <GetShadow return value>.y; r2.z <- <GetShadow return value>.z
+#line 158
+      mov r3.xyz, -r1.xyzx
+      add r3.xyz, r3.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
+      mul r3.xyz, r3.xyzx, l(0.200000, 0.200000, 0.200000, 0.000000)
+      add r2.xyz, r1.xyzx, r3.xyzx  // r2.x <- Scolor.x; r2.y <- Scolor.y; r2.z <- Scolor.z
 
-#line 172
-    mov r2.xyz, r2.xyzx
+#line 160
+      mov r2.xyz, r2.xyzx  // r2.x <- <GetShadow return value>.x; r2.y <- <GetShadow return value>.y; r2.z <- <GetShadow return value>.z
 
-#line 173
+#line 195
+      mov r2.xyz, r2.xyzx  // r2.x <- color.x; r2.y <- color.y; r2.z <- color.z
+
+#line 196
+      break   // r1.x <- vShadow.x; r1.y <- vShadow.y; r1.z <- vShadow.z; r1.x <- ShadowTexcoord.x; r1.y <- ShadowTexcoord.y; r1.z <- ShadowTexcoord.z
+
+#line 197
+    endswitch 
+
+#line 200
   endif 
 
-#line 163
-  not r1.x, r3.y
-  not r1.y, r3.x
-  and r1.x, r1.x, r1.y
-  not r1.y, r1.x
-  and r1.x, r1.y, r1.x
-  or r2.w, r3.x, r1.x
-
-#line 174
+#line 201
 endif 
 
-#line 175
-if_z r2.w
-  itof r2.xyz, l(1, 1, 1, 0)
-endif 
+#line 202
+mov r2.xyz, r2.xyzx  // r2.x <- <GetCascadeShadow return value>.x; r2.y <- <GetCascadeShadow return value>.y; r2.z <- <GetCascadeShadow return value>.z
 
-#line 51 "C:\Users\taketomo\Desktop\GithubGameProgram\Shader\Cascade_ps.hlsl"
+#line 51 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mul r0.xyz, r0.xyzx, r2.xyzx
 
 #line 66
 mov o0.xyz, r0.xyzx
 mov o0.w, r0.w
 ret 
-// Approximately 411 instruction slots used
+// Approximately 396 instruction slots used

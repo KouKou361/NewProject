@@ -34,8 +34,9 @@ void Charactor::ModelRender()
 		if (TK_Lib::Camera::IsCamera(GetPos()))
 		{
 			ShaderType shaderType= ShaderType::Shader_MakeShadow;
+			const float L=200;
 			//もしカメラから遠い場合、DrawShadowに切り替わる。
-			if (SearchPosition(200, TK_Lib::Camera::GetPos())==false)
+			if (SearchPosition(L, TK_Lib::Camera::GetPos())==false)
 			{
 				shaderType = ShaderType::Shader_DrawShadow;
 			}
@@ -81,7 +82,7 @@ void Charactor::ImguiDebug()
 	
 }
 //登れるかどうか
-bool Charactor::TryInclined(const VECTOR3 Normal)
+bool Charactor::TryInclined(const VECTOR3& Normal)
 {
 	XMVECTOR V_up = XMVectorSet(0, 1, 0, 0);
 	XMVECTOR V_Normal = XMLoadFloat3(&Normal);
@@ -94,14 +95,14 @@ bool Charactor::TryInclined(const VECTOR3 Normal)
 	dot=acosf(dot);
 	dot -= XMConvertToRadians(90);
 	dot = fabsf(dot);
-
-	ImGui::Begin("aaa");
-	ImGui::Text("Radius=%f", dot/0.01754f);
-	if (dot >= canInclined)
-	{
-		ImGui::Text("OK");
-	}
-	ImGui::End();
+	
+	//ImGui::Begin("aaa");
+	//ImGui::Text("Radius=%f", XMConvertToDegrees(dot));
+	//if (dot >= canInclined)
+	//{
+	//	ImGui::Text("OK");
+	//}
+	//ImGui::End();
 
 	return (dot >= canInclined);
 
@@ -159,9 +160,10 @@ void Charactor::Turn(const VECTOR3& moveVec)
 	if (isnan(fabsf(dot))) {
 		return;
 	}
-
+	//二つのベクトルが近似している区切り
+	constexpr float min=XMConvertToRadians(1);
 	//二つのベクトルが近似している時は直ぐにreturn
-	if ((fabsf(dot) < XMConvertToRadians(1))) {
+	if ((fabsf(dot) < min)) {
 		return;
 	}
 
@@ -201,7 +203,7 @@ void Charactor::Turn(const VECTOR3& moveVec)
 
 }
 //目標に進むベクトルの算出
-bool Charactor::MoveOnPosition(VECTOR3 Position)
+bool Charactor::MoveOnPosition(const VECTOR3& Position)
 {
 	constexpr float Scale = 0.1f;
 	if (SearchPosition(Scale,Position))
@@ -222,7 +224,7 @@ bool Charactor::MoveOnPosition(VECTOR3 Position)
 }
 
 //索敵範囲にTargetがいればTRUEを返す
-bool Charactor::SearchPosition(const float L,VECTOR3 Position)
+bool Charactor::SearchPosition(const float& L,const VECTOR3& Position)
 {
 	//目標までの距離を算出
 	float TargetL;
@@ -240,8 +242,8 @@ bool Charactor::SearchPosition(const float L,VECTOR3 Position)
 //縦方向の当たり判定（Y方向）
 void Charactor::VerticalCollision()
 {
-	VECTOR3 Start = { pos.x,pos.y + BesideRayPickUP, pos.z };
-	VECTOR3 End = { pos.x,pos.y - BesideRayPickUnder, pos.z };
+	const VECTOR3 Start = { pos.x,pos.y + BesideRayPickUP, pos.z };
+	const VECTOR3 End = { pos.x,pos.y - BesideRayPickUnder, pos.z };
 	RayOut ray;
 	Collision::Instance().RayPick(Start, End, ray);
 	//ImGui::Begin("a");
@@ -261,7 +263,7 @@ void Charactor::BesideCollision()
 	//レイピックに当たった位置の情報
 	RayOut ray;
 	//補正位置
-	VECTOR3 Position=GetPos();
+	VECTOR3 Pos=GetPos();
 
 	//半径を考慮したレイピック
 	//Collision::Instance().RadiusRayPick(Start, End, ray,1.0f);
@@ -330,7 +332,7 @@ void Charactor::BesideCollision()
 			//XMStoreFloat(&dot, Dot);
 			//MEMO こっちの方がいいかも
 			//Position = WallPosition + ray.Normal * radius;
-			Position = WallPosition;
+			Pos = WallPosition;
 			//でもX座標横向き方向も考えるげきなので現段階ではこれに応用している
 		//	Position = WallPosition + ray.Normal * dot;
 		}
@@ -338,7 +340,7 @@ void Charactor::BesideCollision()
 		//レイピックに当たった位置の情報
 		RayOut ray2;
 		Start = { pos.x,pos.y + BesideRayPickUP,pos.z };
-		End = { Position.x ,Position.y, Position.z };
+		End = { Pos.x ,Pos.y, Pos.z };
 		Collision::Instance().RayPick(Start, End, ray2);
 		//めり込みしていかどうか
 		if (ray2.materialIndex >= 0)
@@ -348,14 +350,14 @@ void Charactor::BesideCollision()
 			//乗り越えるとこができるか？
 			if (TryInclined(ray2.Normal))
 			{
-				pos.x = Position.x;
-				pos.z = Position.z;
+				pos.x = Pos.x;
+				pos.z = Pos.z;
 			}
 		}
 		else
 		{
-			pos.x = Position.x;
-			pos.z = Position.z;
+			pos.x = Pos.x;
+			pos.z = Pos.z;
 		}
 		
 
@@ -439,16 +441,16 @@ void Charactor::StageOverhang()
 //	}
 }
 //指定された位置までのベクトルの算出
-XMVECTOR Charactor::Vector(const VECTOR3 Position)
+XMVECTOR Charactor::Vector(const VECTOR3& Position)
 {
-	XMVECTOR PosA,PosB,Vec;
+	XMVECTOR PosA,PosB;
 	PosA = XMLoadFloat3(&pos);
 	PosB = XMLoadFloat3(&Position);
 	//引き算した値を返す
 	return XMVectorSubtract(PosB,PosA);
 }
 //指定された位置までの距離の算出
-float Charactor::Length(const VECTOR3 Position)
+float Charactor::Length(const VECTOR3& Position)
 {
 	float L;
 	XMVECTOR Vec=Vector(Position);
@@ -458,7 +460,7 @@ float Charactor::Length(const VECTOR3 Position)
 }
 
 //CSVからデータを取り出して、ステータスの設定する。
-void Charactor::SetStatus(string SearchName)
+void Charactor::SetStatus(const string& SearchName)
 {
 
 }
@@ -469,7 +471,7 @@ void Charactor::Move()
 	pos.z += moveVec.z * speed;
 }
 //速度に加算
-void Charactor::AddVelocity(VECTOR3 velocity)
+void Charactor::AddVelocity(const VECTOR3& velocity)
 {
 	this->velocity += velocity;
 
@@ -485,7 +487,7 @@ void Charactor::AddVelocity(VECTOR3 velocity)
 		XMStoreFloat3(&this->velocity, Velocity);
 	}
 }
-void Charactor::SetInvincibleTime(int invincibleTime)
+void Charactor::SetInvincibleTime(const float& invincibleTime)
 {
 	this->invincibleTime = invincibleTime;
 }
@@ -493,9 +495,10 @@ void Charactor::SetInvincibleTime(int invincibleTime)
 //更新処理
 void Charactor::AttackCoolTimeUpdate()
 {
-	if (attackCoolTime >= 1)
+	if (attackCoolTime > 0)
 	{
-		attackCoolTime--;
+		float time = TK_Lib::Window::GetElapsedTime();
+		attackCoolTime-= time;
 	}
 }
 
@@ -508,7 +511,7 @@ void Charactor::InvincibleTimeUpdate()
 	}
 }
 //ダメージを判定
-bool Charactor::AddDamage(int Damage,int SetinvincibleTime)
+bool Charactor::AddDamage(const int& Damage,const float& SetinvincibleTime)
 {
 	//体力が0以下なら
 	if (GetHp()<= 0)return false;
