@@ -61,3 +61,21 @@ bool Camera::LerpCamera(VECTOR3& outpos, const VECTOR3 startPos, const VECTOR3& 
 	
 	return true;
 }
+
+//U“®
+void Camera::SetVibration(const float volume, const float time)
+{
+	vibrationTime = time;
+	vibrationVolume = volume;
+}
+//U“®XVˆ—
+void Camera::VibrationUpdate()
+{
+	if (vibrationTime <= 0)return;
+
+	vibrationTime -= TK_Lib::Window::GetElapsedTime();
+	targetPos.x += Mathf::RandomRange(-vibrationVolume,vibrationVolume);
+	targetPos.y += Mathf::RandomRange(-vibrationVolume, vibrationVolume);
+	targetPos.z += Mathf::RandomRange(-vibrationVolume, vibrationVolume);
+
+}

@@ -68,7 +68,7 @@ public:
 	//死亡フラグやダメージフラグが来ていないか確認
 	void ResetNode();
 
-	bool AddDamage(const int damage, const float setInvincibleTime=0);
+	bool AddDamage(const int &damage, const float &setInvincibleTime=0);
 
 	//ビヘイビアツリーの行動処理
 	void ActionBehaviorTree();

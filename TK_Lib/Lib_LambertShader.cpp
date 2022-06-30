@@ -98,7 +98,16 @@ void Lib_LambertShader::Render(ID3D11DeviceContext* context, const ModelResource
 	const std::vector<ModelResource::Node>& nodes = model->GetNodes();
 	const std::vector<ModelResource::NodeTest>& testnodes = model->GetNodetest();
 
-	
+
+	if (model->GetAddTextures().size() == 0)
+	{
+		assert(!"NoTexture");
+	}
+	for (int i = 0; i < model->GetAddTextures().size(); i++)
+	{
+		model->GetAddTextures().at(i).textureResource->Set(context, model->GetAddTextures().at(i).SetNum);
+	}
+
 
 	//TODO:色の切り替え(未完成)
 	//コンスタントバッファ

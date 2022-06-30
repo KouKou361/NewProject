@@ -82,6 +82,14 @@ void Player::Init()
 }
 void Player::Update()
 {
+	
+	ImGui::Begin("test");
+	ImGui::Text("test=%f", GetMaskVolume());
+	if (ImGui::Button("test"))
+	{
+		MaskStart(0.1f);
+	}
+	ImGui::End();
 	//ダメージ確認
 	if (GetDamageFlg() == true)
 	{
@@ -165,6 +173,8 @@ void Player::InputAttack()
 	//もし攻撃モードならreturn;
 	if (state == State::ATTACK)return;
 
+	if (GetSiroboManager()->GetTypeSiroboSize(Sirobo::StateType::TYPE_STAND_BY) == 0)return;
+
 	if (TK_Lib::Gamepad::GetButtonDown(BTN::RT) == 1)
 	//if (TK_Lib::Gamepad::GetButtonDown(BTN::Y) == 1)
 	{
@@ -209,7 +219,8 @@ void Player::InputMove()
 //プレイヤーのカメラ入力処理
 void Player::InputCamera()
 {
-	
+	if (GetSiroboManager()->GetTypeSiroboSize(Sirobo::StateType::TYPE_STAND_BY) == 0)return;
+
 	//if (TK_Lib::Gamepad::GetButtonDown(BTN::X) == 1)
 	if (TK_Lib::Gamepad::GetButtonDown(BTN::LT) >= 1)
 	{
@@ -285,7 +296,7 @@ void Player::CollisionDebug()
 		sirobo->CollisionDebug();
 
 		//当たり判定
-		TK_Lib::Debug3D::Circle(GetPos(), sirobo->StandBySerchL);
+		//TK_Lib::Debug3D::Circle(GetPos(), sirobo->StandBySerchL);
 	}
 }
 //目標の敵の設定

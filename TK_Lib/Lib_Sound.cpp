@@ -205,6 +205,7 @@ Wave::Wave(const char* filename)
 	errno_t error = fopen_s(&fp, filename, "rb");
 	_ASSERT_EXPR_A(error == 0, "WAV File not found");
 
+	if (fp == 0)assert(L"Waveエラー");
 	// ファイルのサイズを求める
 	fseek(fp, 0, SEEK_END);
 	size_t size = static_cast<size_t>(ftell(fp));

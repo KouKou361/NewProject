@@ -144,7 +144,7 @@ void Sirobo::RegisterAnimetion()
 		"Swap",
 		"Throw",
 		"ThrowReady",
-		"Walk",
+		anime->Walk,
 		anime->End//"End",
 	};
 	//アニメーションの登録

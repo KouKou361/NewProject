@@ -4,6 +4,7 @@
 #include "Animetion.h"
 #include "EnemyDerived.h"
 #include "Collision.h"
+#include "Scene.h"
 
 
 //回転攻撃開始処理
@@ -110,6 +111,11 @@ void BossRollAttackAction::DebugImgui()
 //前進する
 void BossRollAttackAction::Advance(const float AdvanceSpeed)
 {
+	const float Vibrationtime = 0.1f;
+	const float VibrationVolume = 0.25f;
+	//振動
+	owner->GetSceneGame()->GetCameraManager()->SetVibration(VibrationVolume, Vibrationtime);
+
 	VECTOR3 Front, MoveVec;
 	//前方向ベクトルの取得
 	Front=owner->GetFront();

@@ -8,6 +8,7 @@ struct VS_OUT
 {
     float4 position : SV_POSITION;
     float4 Depth : TEXCOORD1; //ê[ìxèÓïÒ
+    float2 texcoord:TEXCOORD2;
 };
 
 cbuffer CBPerMesh : register(b0)
@@ -22,7 +23,7 @@ cbuffer CbMesh : register(b1)
     row_major float4x4 boneTransforms[MAX_BONES];
 };
 
-cbuffer CbSubset : register(b2)
-{
-    float4 materialColor;
-};
+//cbuffer CbSubset : register(b2)
+//{
+//    float4 materialColor;
+//};

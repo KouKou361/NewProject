@@ -36,7 +36,7 @@
 // POSITION                 0   xyzw        0     NONE   float   xyzw
 // NORMAL                   0   xyz         1     NONE   float       
 // TANGENT                  0   xyz         2     NONE   float       
-// TEXCOORD                 0   xy          3     NONE   float       
+// TEXCOORD                 0   xy          3     NONE   float   xy  
 // COLOR                    0   xyzw        4     NONE   float       
 // WEIGHTS                  0   xyzw        5     NONE   float   xyzw
 // BONES                    0   xyzw        6     NONE    uint   xyzw
@@ -48,6 +48,7 @@
 // -------------------- ----- ------ -------- -------- ------- ------
 // SV_POSITION              0   xyzw        0      POS   float   xyzw
 // TEXCOORD                 1   xyzw        1     NONE   float   xyzw
+// TEXCOORD                 2   xy          2     NONE   float   xy  
 //
 vs_5_0
 dcl_globalFlags refactoringAllowed | skipOptimization
@@ -62,10 +63,12 @@ dcl_immediateConstantBuffer { { 1.000000, 0, 0, 0},
 dcl_constantbuffer CB0[4], immediateIndexed
 dcl_constantbuffer CB1[512], dynamicIndexed
 dcl_input v0.xyzw
+dcl_input v3.xy
 dcl_input v5.xyzw
 dcl_input v6.xyzw
 dcl_output_siv o0.xyzw, position
 dcl_output o1.xyzw
+dcl_output o2.xy
 dcl_temps 5
 //
 // Initial variable locations:
@@ -76,6 +79,7 @@ dcl_temps 5
 //   v4.x <- color.x; v4.y <- color.y; v4.z <- color.z; v4.w <- color.w; 
 //   v5.x <- boneWeights.x; v5.y <- boneWeights.y; v5.z <- boneWeights.z; v5.w <- boneWeights.w; 
 //   v6.x <- boneIndices.x; v6.y <- boneIndices.y; v6.z <- boneIndices.z; v6.w <- boneIndices.w; 
+//   o2.x <- <main return value>.texcoord.x; o2.y <- <main return value>.texcoord.y; 
 //   o1.x <- <main return value>.Depth.x; o1.y <- <main return value>.Depth.y; o1.z <- <main return value>.Depth.z; o1.w <- <main return value>.Depth.w; 
 //   o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w
 //
@@ -122,8 +126,12 @@ add r0.xyzw, r0.xyzw, r1.xyzw  // r0.x <- vout.position.x; r0.y <- vout.position
 #line 22
 mov r0.xyzw, r0.xyzw  // r0.x <- vout.Depth.x; r0.y <- vout.Depth.y; r0.z <- vout.Depth.z; r0.w <- vout.Depth.w
 
-#line 24
+#line 23
+mov r1.xy, v3.xyxx  // r1.x <- vout.texcoord.x; r1.y <- vout.texcoord.y
+
+#line 25
 mov o0.xyzw, r0.xyzw
 mov o1.xyzw, r0.xyzw
+mov o2.xy, r1.xyxx
 ret 
-// Approximately 34 instruction slots used
+// Approximately 36 instruction slots used

@@ -26,11 +26,16 @@ void ObjectBase::Init()
 //更新処理
 void ObjectBase::Update()
 {
-	//モデルの行列更新
-	if (GetModel() >= 0)
+//	//モデルの行列更新
+//	if (GetModel() >= 0)
+//	{
+//		TK_Lib::Model::Tranceform(GetModel(), GetPos(), GetQuaternion(), GetScale());
+//		TK_Lib::Model::AnimetionUpdate(GetModel());
+//	}
+
+	if (GetMaskVolume()>=1.0f)
 	{
-		TK_Lib::Model::Tranceform(GetModel(), GetPos(), GetQuaternion(), GetScale());
-		TK_Lib::Model::AnimetionUpdate(GetModel());
+		Destroy();
 	}
 }
 
@@ -96,13 +101,28 @@ bool ObjectBase::AddDamage(const int &damage,const float &maxInvincibleTime)
 	return true;
 }
 
+//マスクスタート
+void ObjectBase::MaskStart(const float speed)
+{
+	TK_Lib::Model::MaskStart(GetModel(), speed);
+}
+//マスク大きさ取得
+float ObjectBase::GetMaskVolume()
+{
+	return TK_Lib::Model::GetMaskVolume(GetModel());
+}
+
+
 //オブジェクトの死亡処理
 void ObjectBase::Dead()
 {
 	//破棄時のエフェクト
 	const int EffectNum = 20;
 	scene->GetEffectManager()->GetEffectFromSerchKey("Destroy")->Play(GetPos(), EffectNum);
-	Destroy();
+
+	const float MaskSpeed = 0.5f;
+	MaskStart(MaskSpeed);
+
 }
 
 //オブジェクトのダメージ処理

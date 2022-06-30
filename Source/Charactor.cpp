@@ -22,6 +22,7 @@ void Charactor::Update()
 	{
 		TK_Lib::Model::Tranceform(modelIndex, pos, GetQuaternion(), scale);
 		TK_Lib::Model::AnimetionUpdate(modelIndex);
+		TK_Lib::Model::UpdateMask(modelIndex);
 	}
 	
 }
@@ -533,4 +534,15 @@ bool Charactor::AddDamage(const int& Damage,const float& SetinvincibleTime)
 		SetDeadFlg(true);
 	}
 	return true;
+}
+
+//マスクスタート
+void Charactor::MaskStart(const float speed)
+{
+	TK_Lib::Model::MaskStart(GetModel(),speed);
+}
+//マスク大きさ取得
+float Charactor::GetMaskVolume()
+{
+	return TK_Lib::Model::GetMaskVolume(GetModel());
 }

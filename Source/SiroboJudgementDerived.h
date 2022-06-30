@@ -15,6 +15,16 @@ public:
 
 
 // 仲間行動開始
+class SiroboAlliesJudgement : public SiroboJudgementBase
+{
+public:
+	SiroboAlliesJudgement(Sirobo* sirobo) :SiroboJudgementBase(sirobo) {}
+	//判定処理
+	bool Judgement();
+};
+
+
+//プレイヤーの後ろについていく
 class SiroboFollowJudgement : public SiroboJudgementBase
 {
 public:
@@ -22,6 +32,7 @@ public:
 	//判定処理
 	bool Judgement();
 };
+
 
 //ついていく　攻撃OK
 class SiroboBackJudgement : public SiroboJudgementBase
@@ -40,7 +51,6 @@ public:
 	//判定処理
 	bool Judgement();
 };
-
 
 
 // 追跡行動

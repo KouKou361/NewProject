@@ -73,3 +73,9 @@ void CameraManager::Imgui()
 {
 	currentCamera->Imgui();
 }
+
+//U“®
+void CameraManager::SetVibration(const float volume, const float time)
+{
+	currentCamera->SetVibration(volume, time);
+}

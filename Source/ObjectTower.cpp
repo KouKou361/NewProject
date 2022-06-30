@@ -34,9 +34,15 @@ void ObjectTower::Update()
 {
 	//時間の更新処理
 	timer += TK_Lib::Window::GetElapsedTime();
-	
+	TK_Lib::Model::UpdateMask(GetModel());
+
 	//スポットライトの更新処理
 	TK_Lib::SpotLight::Set(spotLightHandle, GetPos(), { 1,0,1,1 }, sinf(timer)* spotLightRadius+20.0f);
+
+	if (GetMaskVolume() >= 1.0f)
+	{
+		Destroy();
+	}
 	
 }
 //オブジェクトの死亡処理
@@ -57,5 +63,7 @@ void ObjectTower::Dead()
 	//スポットライトの破棄
 	TK_Lib::SpotLight::Delete(spotLightHandle);
 
-	Destroy();
+//	Destroy();
+	const float MaskSpeed = 0.5f;
+	MaskStart(MaskSpeed);
 }

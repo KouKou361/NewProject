@@ -53,6 +53,10 @@ ActionBase::State BossDeadAction::Run()
 //終了処理
 void BossDeadAction::End()
 {
+	const float Vibrationtime = 6.0f;
+	const float VibrationVolume = 0.15f;
+	//振動
+	owner->GetSceneGame()->GetCameraManager()->SetVibration(VibrationVolume, Vibrationtime);
 	//ゲームクリアオブジェクトの生成
 	{
 		std::shared_ptr<FunctionEnd> objFunction = make_shared<FunctionEnd>(owner->GetSceneGame());
@@ -77,6 +81,7 @@ void BossDeadAction::StateStop()
 	//死亡時間の更新
 	if (owner->UpdateDeathTime())
 	{
+		TK_Lib::Lib_Sound::SoundPlay("BossRoll", false);
 		//体力が０になってから消えてしまうまでの時間
 		constexpr float DeathTime = 2.0f;
 		//死亡タイムの設定
@@ -99,10 +104,15 @@ void BossDeadAction::StateFire()
 	//死亡時間の更新
 	if (owner->UpdateDeathTime())
 	{
-		//体力が０になってから消えてしまうまでの時間
-		constexpr float DeathTime = 3.0f;
-		//死亡タイムの設定
-		owner->SetDeathTime(DeathTime);
+		TK_Lib::Lib_Sound::SoundPlay("BossExplosion", false);
+
+		const float MaskSpeed = 0.2f;
+		owner->MaskStart(MaskSpeed);
+
+		////体力が０になってから消えてしまうまでの時間
+		//constexpr float DeathTime = 3.0f;
+		////死亡タイムの設定
+		//owner->SetDeathTime(DeathTime);
 		// 次の状態へ
 		state = EventDeleteState::EXPLOSION;
 	}
@@ -110,6 +120,10 @@ void BossDeadAction::StateFire()
 //爆発状態
 void BossDeadAction::StateExplosion()
 {
+	const float Vibrationtime = 0.1f;
+	const float VibrationVolume = 0.5f;
+	//振動
+	owner->GetSceneGame()->GetCameraManager()->SetVibration(VibrationVolume, Vibrationtime);
 	//爆発エフェクト
 	{
 		//エフェクトの出す数
@@ -118,10 +132,7 @@ void BossDeadAction::StateExplosion()
 		owner->GetSceneGame()->GetEffectManager()->GetEffectFromSerchKey("BossExplosion")->Play(owner->GetPos(), EffectPlayNum);
 	}
 
-
-
-	//死亡時間の更新
-	if (owner->UpdateDeathTime())
+	if (owner->GetMaskVolume() >= 1.0f)
 	{
 		// 次の状態へ
 		state = EventDeleteState::END;

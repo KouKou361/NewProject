@@ -1,5 +1,6 @@
 
 #include "RenderShadow.hlsli"
+#include "Mask.hlsli"
 
 PSInput main(VSInput input)
 {

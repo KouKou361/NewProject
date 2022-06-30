@@ -112,6 +112,8 @@ void CameraNormal::UpdateTarget()
 	targetPos = owner->GetPos();
 	endTargetPos = targetPos;
 	LerpTargetCamera(LerpTimer);
+
+
 	//SetTarget(owner->pos);
 	//LerpTargetCamera(0.05f);
 }
@@ -123,6 +125,8 @@ void CameraNormal::Update()
 	UpdateEye();
 	//注視点を決める更新
 	UpdateTarget();
+	//振動更新処理
+	VibrationUpdate();
 
 	//地面とレイピック
 	//RayPick();

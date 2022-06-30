@@ -32,7 +32,7 @@ cbuffer CbMesh : register(b1)
     row_major float4x4 boneTransforms[MAX_BONES];
 };
 
-cbuffer CbSubset : register(b2)
-{
-    float4 materialColor;
-};
+//cbuffer CbSubset : register(b2)
+//{
+//    float4 materialColor;
+//};

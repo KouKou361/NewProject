@@ -1,5 +1,5 @@
 #include "Lambert.hlsli"
-
+#include "Mask.hlsli"
 PSInput main(VSInput input)
 {
     float3 p = { 0, 0, 0 };

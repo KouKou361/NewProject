@@ -3,6 +3,7 @@
 #include "Lib.h"
 #include "Animetion.h"
 #include "EnemyDerived.h"
+#include "Scene.h"
 
 //ŠJnˆ—
 void BossRollAttackStartAction::Start()

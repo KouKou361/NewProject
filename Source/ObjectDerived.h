@@ -35,7 +35,7 @@ public:
 	//更新処理
 	void Update();
 	//ダメージを受けた時
-	bool AddDamage(int Damage, float SetInvincibleTime);
+	bool AddDamage(const int& damage, const float& maxInvincibleTime);
 	//シロボの召喚
 	void SummonSirobo();
 

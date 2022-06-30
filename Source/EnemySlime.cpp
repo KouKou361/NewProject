@@ -34,7 +34,6 @@ void EnemySlime::Init()
 	SetBehaviorTree();
 
 	
-
 }
 
 //ƒAƒjƒƒVƒ‡ƒ“İ’è

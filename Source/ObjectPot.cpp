@@ -21,15 +21,20 @@ void ObjectPot::Init()
 //更新処理
 void ObjectPot::Update()
 {
+	TK_Lib::Model::UpdateMask(GetModel());
 
+	if (GetMaskVolume() >= 1.0f)
+	{
+		Destroy();
+	}
 }
 
-bool ObjectPot::AddDamage(int Damage, float MaxinvincibleTime)
+bool ObjectPot::AddDamage(const int& damage, const float& maxInvincibleTime)
 {
 	//体力が0以下なら
 	if (GetHp() <= 0)return false;
 
-	SetHp(GetHp() - Damage);
+	SetHp(GetHp() - damage);
 	//もし生き残っていたなら
 	if (GetHp() >= 1)
 	{	//オブジェクトのダメージ処理

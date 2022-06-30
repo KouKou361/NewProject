@@ -1,4 +1,5 @@
 #include "Lib_Outline.hlsli"
+#include "Mask.hlsli"
 
 GSInput main(VSInput input)
 {

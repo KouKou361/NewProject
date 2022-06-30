@@ -86,13 +86,13 @@ dcl_temps 6
 //   o1.x <- <main return value>.texcoord.x; o1.y <- <main return value>.texcoord.y; o1.z <- <main return value>.power; 
 //   o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w
 //
-#line 5 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\NoLight_vs.hlsl"
+#line 6 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\NoLight_vs.hlsl"
 itof r0.xyz, l(0, 0, 0, 0)  // r0.x <- p.x; r0.y <- p.y; r0.z <- p.z
 
-#line 6
+#line 7
 itof r1.xyz, l(0, 0, 0, 0)  // r1.x <- n.x; r1.y <- n.y; r1.z <- n.z
 
-#line 7
+#line 8
 mov r0.w, l(0)  // r0.w <- i
 mov r2.xyz, r1.xyzx  // r2.x <- n.x; r2.y <- n.y; r2.z <- n.z
 mov r3.x, r0.x  // r3.x <- p.x
@@ -103,7 +103,7 @@ loop
   ilt r2.w, r1.w, l(4)
   breakc_z r2.w
 
-#line 9
+#line 10
   dp4 r2.w, v5.xyzw, icb[r1.w + 0].xyzw
   and r4.xyzw, v6.xyzw, icb[r1.w + 4].xyzw
   or r4.xy, r4.ywyy, r4.xzxx
@@ -119,7 +119,7 @@ loop
   mul r4.xyz, r2.wwww, r4.xyzx
   add r3.xyz, r4.xyzx, r3.xyzx
 
-#line 10
+#line 11
   dp4 r2.w, v5.xyzw, icb[r1.w + 0].xyzw
   itof r3.w, l(0)
   and r4.xyzw, v6.xyzw, icb[r1.w + 4].xyzw
@@ -136,11 +136,11 @@ loop
   mul r4.xyz, r2.wwww, r4.xyzx
   add r2.xyz, r2.xyzx, r4.xyzx
 
-#line 11
+#line 12
   iadd r1.w, r1.w, l(1)
 endloop 
 
-#line 14
+#line 15
 mul r0.xyzw, r3.xxxx, cb0[0].xyzw
 mul r1.xyzw, r3.yyyy, cb0[1].xyzw
 add r0.xyzw, r0.xyzw, r1.xyzw
@@ -149,33 +149,33 @@ add r0.xyzw, r0.xyzw, r1.xyzw
 mul r1.xyzw, cb0[3].xyzw, l(1.000000, 1.000000, 1.000000, 1.000000)
 add r0.xyzw, r0.xyzw, r1.xyzw  // r0.x <- vout.position.x; r0.y <- vout.position.y; r0.z <- vout.position.z; r0.w <- vout.position.w
 
-#line 17
+#line 18
 dp3 r1.x, r2.xyzx, r2.xyzx
 rsq r1.x, r1.x
 mul r1.xyz, r1.xxxx, r2.xyzx  // r1.x <- N.x; r1.y <- N.y; r1.z <- N.z
 
-#line 18
+#line 19
 mov r2.xyz, -cb0[4].xyzx
 dp3 r1.w, r2.xyzx, r2.xyzx
 rsq r1.w, r1.w
 mul r2.xyz, r1.wwww, r2.xyzx  // r2.x <- L.x; r2.y <- L.y; r2.z <- L.z
 
-#line 19
+#line 20
 dp3 r1.x, r2.xyzx, r1.xyzx
 mul r1.x, r1.x, l(0.500000)
 add r1.x, r1.x, l(0.500000)  // r1.x <- d
 
-#line 20
+#line 21
 itof r1.y, l(0)
 max r1.x, r1.x, r1.y  // r1.x <- vout.power
 
-#line 21
+#line 22
 itof r2.xyzw, l(1, 1, 1, 1)  // r2.x <- vout.color.x; r2.y <- vout.color.y; r2.z <- vout.color.z; r2.w <- vout.color.w
 
-#line 22
+#line 23
 mov r1.yz, v3.xxyx  // r1.y <- vout.texcoord.x; r1.z <- vout.texcoord.y
 
-#line 24
+#line 25
 mov o0.xyzw, r0.xyzw
 mov o2.xyzw, r2.xyzw
 mov o1.xy, r1.yzyy

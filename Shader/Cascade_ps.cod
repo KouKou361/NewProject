@@ -39,6 +39,15 @@
 //
 // }
 //
+// cbuffer CbSubset
+// {
+//
+//   float4 materialColor;              // Offset:    0 Size:    16 [unused]
+//   float maskVolume;                  // Offset:   16 Size:     4
+//   float3 dummy;                      // Offset:   20 Size:    12 [unused]
+//
+// }
+//
 //
 // Resource Bindings:
 //
@@ -51,7 +60,9 @@
 // ShadowTexture1                    texture  float4          2d             t2      1 
 // ShadowTexture2                    texture  float4          2d             t3      1 
 // NormalTexture                     texture  float4          2d             t4      1 
+// MaskTexture                       texture  float4          2d             t5      1 
 // CbScene                           cbuffer      NA          NA            cb0      1 
+// CbSubset                          cbuffer      NA          NA            cb2      1 
 // CBPerFrame3                       cbuffer      NA          NA            cb3      1 
 // CBPerFrame                        cbuffer      NA          NA            cb4      1 
 //
@@ -82,6 +93,7 @@ dcl_globalFlags refactoringAllowed | skipOptimization
 dcl_constantbuffer CB0[5], immediateIndexed
 dcl_constantbuffer CB3[14], immediateIndexed
 dcl_constantbuffer CB4[24], dynamicIndexed
+dcl_constantbuffer CB2[2], immediateIndexed
 dcl_sampler s0, mode_default
 dcl_sampler s1, mode_default
 dcl_resource_texture2d (float,float,float,float) t0
@@ -89,6 +101,7 @@ dcl_resource_texture2d (float,float,float,float) t1
 dcl_resource_texture2d (float,float,float,float) t2
 dcl_resource_texture2d (float,float,float,float) t3
 dcl_resource_texture2d (float,float,float,float) t4
+dcl_resource_texture2d (float,float,float,float) t5
 dcl_input_ps_siv linear noperspective v0.xyz, position
 dcl_input_ps linear v1.xyz
 dcl_input_ps linear v2.xy
@@ -119,25 +132,25 @@ mov x0[2].x, l(0.002000)
 #line 11 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\PointLight.hlsli"
 mov r0.x, l(8)  // r0.x <- POINTMAX
 
-#line 8 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
+#line 9 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 sample_indexable(texture2d)(float,float,float,float) r1.xyzw, v2.xyxx, t0.xyzw, s0  // r1.x <- color.x; r1.y <- color.y; r1.z <- color.z; r1.w <- color.w
 
-#line 13
+#line 14
 dp3 r0.y, v5.xyzx, v5.xyzx
 rsq r0.y, r0.y
 mul r0.yzw, r0.yyyy, v5.xxyz  // r0.y <- VX.x; r0.z <- VX.y; r0.w <- VX.z
 
-#line 14
+#line 15
 dp3 r2.x, v6.xyzx, v6.xyzx
 rsq r2.x, r2.x
 mul r2.xyz, r2.xxxx, v6.xyzx  // r2.x <- VY.x; r2.y <- VY.y; r2.z <- VY.z
 
-#line 15
+#line 16
 dp3 r2.w, v7.xyzx, v7.xyzx
 rsq r2.w, r2.w
 mul r3.xyz, r2.wwww, v7.xyzx  // r3.x <- VZ.x; r3.y <- VZ.y; r3.z <- VZ.z
 
-#line 18
+#line 19
 mov r4.x, r0.y  // r4.x <- mat._m00
 mov r4.y, r2.x  // r4.y <- mat._m10
 mov r4.z, r3.x  // r4.z <- mat._m20
@@ -148,16 +161,16 @@ mov r3.x, r0.w  // r3.x <- mat._m02
 mov r3.y, r2.z  // r3.y <- mat._m12
 mov r3.z, r3.z  // r3.z <- mat._m22
 
-#line 19
+#line 20
 sample_indexable(texture2d)(float,float,float,float) r0.yzw, v2.xyxx, t4.wxyz, s0
 mov r0.yzw, r0.yyzw  // r0.y <- N.x; r0.z <- N.y; r0.w <- N.z
 
-#line 20
+#line 21
 mul r0.yzw, r0.yyzw, l(0.000000, 2.000000, 2.000000, 2.000000)
 mov r2.xyz, l(-1.000000,-1.000000,-1.000000,-0.000000)
 add r0.yzw, r0.yyzw, r2.xxyz
 
-#line 22
+#line 23
 dp3 r2.x, r0.yzwy, r4.xyzx
 dp3 r2.y, r0.yzwy, r5.xyzx
 dp3 r2.z, r0.yzwy, r3.xyzx
@@ -165,25 +178,25 @@ dp3 r0.y, r2.xyzx, r2.xyzx
 rsq r0.y, r0.y
 mul r0.yzw, r0.yyyy, r2.xxyz
 
-#line 26
+#line 27
 mov r2.xyz, -v0.xyzx
 add r2.xyz, r2.xyzx, cb3[13].xyzx
 dp3 r2.w, r2.xyzx, r2.xyzx
 rsq r2.w, r2.w
 mul r2.xyz, r2.wwww, r2.xyzx  // r2.x <- E.x; r2.y <- E.y; r2.z <- E.z
 
-#line 27
+#line 28
 dp3 r2.w, cb0[4].xyzx, cb0[4].xyzx
 rsq r2.w, r2.w
 mul r3.xyz, r2.wwww, cb0[4].xyzx  // r3.x <- L.x; r3.y <- L.y; r3.z <- L.z
 
-#line 32
+#line 33
 itof r4.xyz, l(1, 1, 1, 0)  // r4.x <- C.x; r4.y <- C.y; r4.z <- C.z
 
-#line 33
+#line 34
 itof r5.xyz, l(1, 1, 1, 0)  // r5.x <- Kd.x; r5.y <- Kd.y; r5.z <- Kd.z
 
-#line 34
+#line 35
 nop 
 mov r0.yzw, r0.yyzw
 mov r3.xyz, r3.xyzx
@@ -207,13 +220,13 @@ add r2.w, r2.w, l(0.500000)  // r2.w <- D
 mul r6.xyz, r2.wwww, r4.xyzx
 mul r5.xyz, r5.xyzx, r6.xyzx  // r5.x <- <Diffuse return value>.x; r5.y <- <Diffuse return value>.y; r5.z <- <Diffuse return value>.z
 
-#line 34 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
+#line 35 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mov r5.xyz, r5.xyzx  // r5.x <- D.x; r5.y <- D.y; r5.z <- D.z
 
-#line 37
+#line 38
 mov r6.xyz, l(1.000000,1.000000,1.000000,0)  // r6.x <- Ks.x; r6.y <- Ks.y; r6.z <- Ks.z
 
-#line 38
+#line 39
 nop 
 mov r0.yzw, r0.yyzw
 mov r3.xyz, r3.xyzx
@@ -256,10 +269,10 @@ mul r2.xyz, r4.xyzx, r2.xyzx  // r2.x <- S.x; r2.y <- S.y; r2.z <- S.z
 #line 96
 mov r2.xyz, r2.xyzx  // r2.x <- <PhongSpecular return value>.x; r2.y <- <PhongSpecular return value>.y; r2.z <- <PhongSpecular return value>.z
 
-#line 38 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
+#line 39 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mov r2.xyz, r2.xyzx  // r2.x <- S.x; r2.y <- S.y; r2.z <- S.z
 
-#line 39
+#line 40
 nop 
 mov r0.yzw, r0.yyzw
 mov r3.xyz, r3.xyzx
@@ -278,10 +291,10 @@ add r0.y, r0.y, l(0.500000)  // r0.y <- D
 mul r0.yzw, r0.yyyy, r4.xxyz
 mul r0.yzw, r6.xxyz, r0.yyzw  // r0.y <- <HalfLambert return value>.x; r0.z <- <HalfLambert return value>.y; r0.w <- <HalfLambert return value>.z
 
-#line 39 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
+#line 40 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mov r0.yzw, r0.yyzw  // r0.y <- H.x; r0.z <- H.y; r0.w <- H.z
 
-#line 42
+#line 43
 nop 
 mov r3.xyz, v1.xyzx
 
@@ -352,18 +365,18 @@ endloop
 #line 78
 add r3.xyz, r6.xyzx, r7.xyzx  // r3.x <- <AddPointLight return value>.x; r3.y <- <AddPointLight return value>.y; r3.z <- <AddPointLight return value>.z
 
-#line 42 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
+#line 43 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mov r3.xyz, r3.xyzx  // r3.x <- PL.x; r3.y <- PL.y; r3.z <- PL.z
 
-#line 48
+#line 49
 add r2.xyz, r2.xyzx, r5.xyzx
 add r0.xyz, r0.yzwy, r2.xyzx
 add r0.xyz, r3.xyzx, r0.xyzx
 mov r0.w, l(1.000000)
 mul r0.xyzw, r0.xyzw, v3.xyzw
-mul r0.xyzw, r0.xyzw, r1.xyzw  // r0.x <- color.x; r0.y <- color.y; r0.z <- color.z; r0.w <- color.w
+mul r0.xyzw, r0.wxyz, r1.wxyz  // r0.x <- color.w; r0.y <- color.x; r0.z <- color.y; r0.w <- color.z
 
-#line 51
+#line 52
 nop 
 mov r1.xyz, v1.xyzx
 
@@ -749,11 +762,34 @@ endif
 #line 202
 mov r2.xyz, r2.xyzx  // r2.x <- <GetCascadeShadow return value>.x; r2.y <- <GetCascadeShadow return value>.y; r2.z <- <GetCascadeShadow return value>.z
 
-#line 51 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
-mul r0.xyz, r0.xyzx, r2.xyzx
+#line 52 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
+mul r1.xyz, r0.yzwy, r2.xyzx  // r1.x <- color.x; r1.y <- color.y; r1.z <- color.z
 
-#line 66
-mov o0.xyz, r0.xyzx
-mov o0.w, r0.w
+#line 55
+nop 
+nop 
+mov r1.xyz, r1.xyzx
+mov r0.x, r0.x
+
+#line 16 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Mask.hlsli"
+sample_indexable(texture2d)(float,float,float,float) r0.y, v2.xyxx, t5.yxzw, s0
+mov r0.y, r0.y  // r0.y <- mask_value
+
+#line 18
+ge r0.y, r0.y, cb2[1].x
+movc r0.y, r0.y, l(1.000000), l(0)  // r0.y <- alpha
+
+#line 20
+mul r1.w, r0.y, r0.x  // r1.w <- color.w
+
+#line 23
+mov r1.xyz, r1.xyzx  // r1.x <- <Mask return value>.x; r1.y <- <Mask return value>.y; r1.z <- <Mask return value>.z
+mov r1.w, r1.w  // r1.w <- <Mask return value>.w
+
+#line 55 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
+mov r1.xyzw, r1.xyzw  // r1.w <- color.w
+
+#line 67
+mov o0.xyzw, r1.xyzw
 ret 
-// Approximately 396 instruction slots used
+// Approximately 407 instruction slots used

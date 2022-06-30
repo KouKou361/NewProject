@@ -59,6 +59,7 @@ HRESULT	CreateVertexShaderFromCSO( ID3D11Device* _pDevice
 	if( FAILED( hr ) )
 	{
 		delete[]	pCSOData;
+		pCSOData = nullptr;
 		return	hr;	//	çÏê¨Ç≈Ç´Ç»Ç©Ç¡ÇΩÇÃÇ≈èâä˙âªé∏îs
 	}
 
@@ -71,6 +72,7 @@ HRESULT	CreateVertexShaderFromCSO( ID3D11Device* _pDevice
 	_ASSERT_EXPR( SUCCEEDED( hr ), hr_trace( hr ) );
 
 	delete[]	pCSOData;
+	pCSOData = nullptr;
 	return	hr;
 }
 
@@ -94,6 +96,7 @@ HRESULT	CreatePixelShaderFromCSO( ID3D11Device* _pDevice
 	_ASSERT_EXPR( SUCCEEDED( hr ), hr_trace( hr ) );
 
 	delete[]	pCSOData;
+	pCSOData = nullptr;
 	return hr;
 }
 

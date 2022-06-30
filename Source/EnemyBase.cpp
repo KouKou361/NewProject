@@ -272,7 +272,7 @@ void EnemyBase::HPRender(const int& spriteIndex, const VECTOR2& pos)
 	//TK_Lib::Draw::Sprite(SpriteIndex, { Pos.x,Pos.y }, VECTOR2{ TargetHpRatio,10 }, VECTOR4{ 0,0,942 / 3,60 / 4 });
 }
 
-bool EnemyBase::AddDamage(int damage, float maxInvincibleTime)
+bool EnemyBase::AddDamage(const int &damage,const float& maxInvincibleTime)
 {
 	//‘Ì—Í‚ª0ˆÈ‰º‚È‚ç
 	if (GetHp() <= 0)return false;

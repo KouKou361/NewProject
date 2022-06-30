@@ -63,6 +63,10 @@ public:
 	virtual void ParameterDebug();
 	//破棄処理
 	virtual void Destroy() {};
+	//マスクスタート
+	void MaskStart(const float speed);
+	//マスク大きさ取得
+	float GetMaskVolume();
 
 	//回転処理
 	void Turn(const VECTOR3& moveVec);
@@ -110,8 +114,8 @@ public:
 	//==================================
 	
 	//目標キャラクター
-	inline  void SetTarget(Actor* target) { targetActor = target; }
-	inline  Actor* GetTarget() { return targetActor; }
+	inline void SetTarget(Actor* target) { targetActor = target; }
+	inline Actor* GetTarget() { return targetActor; }
 	//攻撃クールタイム
 	inline void SetAttackCoolTime(const float attackTime) { attackCoolTime = attackTime; }
 	inline float GetAttackCoolTime() { return attackCoolTime; }
@@ -128,6 +132,7 @@ public:
 	inline VECTOR3 GetVelocity() { return this->velocity; };
 	//速度
 	inline float GetSpeed() { return speed; }
+	inline void SetSpeed(const float speed) { this->speed; }
 	//登れる値設定
 	inline void SetCanInclined(const float canInclined) { this->canInclined = canInclined; };
 	//進む方向設定

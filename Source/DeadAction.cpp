@@ -17,6 +17,7 @@ void DeadAction::Start()
 
 	owner->SetDeadFlg(false);
 
+
 	//目標にされなくする。
 	owner->TargetFaild();
 	//死亡時間の設定
@@ -34,10 +35,17 @@ ActionBase::State DeadAction::Run()
 		//死亡時間の更新
 		if (owner->UpdateDeathTime())
 		{
-			//死亡時間になったら
-			owner->Destroy();
-			return ActionBase::State::FAILED;
+			const float MaskSpeed = 1.5f;
+			owner->MaskStart(MaskSpeed);
+		
 		}
+	}
+
+	if (owner->GetMaskVolume() >= 1.0f)
+	{
+		//死亡時間になったら
+		owner->Destroy();
+		return ActionBase::State::FAILED;
 	}
 
 	//次の行動に移行

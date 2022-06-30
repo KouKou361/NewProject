@@ -19,8 +19,8 @@ protected:
 	unique_ptr<ShaderResource> m_shader;
 	//描画するモデルデータ
 	vector<ModelResource*> modelList;
-
-
+	//マスク処理
+	unique_ptr<TextureResource> maskTexture;
 	
 public:
 	BaseShader() {};

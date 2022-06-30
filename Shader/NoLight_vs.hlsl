@@ -1,4 +1,5 @@
 #include "NoLight.hlsli"
+#include "Mask.hlsli"
 
 PSInput main(VSInput input)
 {

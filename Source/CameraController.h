@@ -29,6 +29,11 @@ protected:
 	//目標のキャラ
 	Actor* targetChara = nullptr;
 
+	//振動時間
+	float vibrationTime = 0.0f;
+	//振動ボリューム
+	float vibrationVolume = 0.0f;
+
 
 public:
 	Camera() {}
@@ -50,6 +55,11 @@ public:
 	bool LerpTargetCamera(const float time);
 	//カメラの視点移動(補完)
 	bool LerpEyeCamera(const float time);
+
+	//振動
+	void SetVibration(const float volume, const float time);
+	//振動更新処理
+	void VibrationUpdate();
 
 
 	inline void SetTarget(const VECTOR3& targetPos) { this->targetPos = targetPos; };
@@ -189,6 +199,8 @@ public:
 	void ChangeCamera(Camera* newScene);
 	//カメラの切り替え（Pos指定あり）
 	void ChangeCamera(Camera* newScene, const VECTOR3 cameraPos);
+	//振動
+	void SetVibration(const float volume, const float time);
 
 	inline CameraType GetNowType() { return static_cast<CameraType>(cameraType); }
 	//カメラの目標のキャラクターのセット

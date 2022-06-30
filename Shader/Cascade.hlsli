@@ -43,10 +43,10 @@ cbuffer CbMesh : register(b1)
 };
 
 
-cbuffer CbSubset : register(b2)
-{
-    float4 materialColor;
-};
+//cbuffer CbSubset : register(b2)
+//{
+//    float4 materialColor;
+//};
 
 cbuffer CBPerFrame3 : register(b3)
 {

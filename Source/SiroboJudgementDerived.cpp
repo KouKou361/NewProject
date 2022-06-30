@@ -13,7 +13,7 @@ bool SiroboIdleJudgement::Judgement()
 }
 
 //仲間判定処理
-bool SiroboFollowJudgement::Judgement()
+bool SiroboAlliesJudgement::Judgement()
 {
 	//ミニオンがプレイヤーの味方なら
 	if (siroboOwner->GetTeam() == static_cast<Sirobo::Team>(Sirobo::Team::TEAM_PLAYER))
@@ -22,6 +22,10 @@ bool SiroboFollowJudgement::Judgement()
 	}
 	return false;
 }
+
+
+
+
 bool SiroboBackJudgement::Judgement()
 {
 	//もしプレイヤーの決められた範囲外なら
@@ -42,7 +46,6 @@ bool SiroboStandByJudgement::Judgement()
 	}
 	return false;
 }
-
 
 //追跡判定処理
 bool SiroboPursuitJudgement::Judgement()

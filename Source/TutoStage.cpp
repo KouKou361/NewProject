@@ -150,6 +150,7 @@ void TutoStage::Init()
 
 
 	delete script;
+	script = nullptr;
 	
 	nowTuto = tutoManager.at(tutoIndex);
 	TK_Lib::Lib_Sound::SoundPlay("Title", true);

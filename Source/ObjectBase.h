@@ -50,6 +50,11 @@ public:
 	void HPRender(const int &spriteIndex, const VECTOR2 &pos);
 	bool AddDamage(const int& damage, const float& maxInvincibleTime);
 
+	//マスクスタート
+	void MaskStart(const float speed);
+	//マスク大きさ取得
+	float GetMaskVolume();
+
 	inline ObjectType GetType() { return static_cast<ObjectType>(objectType); }
 protected:
 	int collisionModel = -1;

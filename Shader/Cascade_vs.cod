@@ -23,6 +23,8 @@
 // {
 //
 //   float4 materialColor;              // Offset:    0 Size:    16
+//   float maskVolume;                  // Offset:   16 Size:     4 [unused]
+//   float3 dummy;                      // Offset:   20 Size:    12 [unused]
 //
 // }
 //

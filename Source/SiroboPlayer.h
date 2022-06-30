@@ -141,6 +141,8 @@ public:
 	void OneAttack(Sirobo* sirobo);
 	//ミニオンの帰還
 	void AllBack();
+	//シロボ達の状態タイプの数を返す
+	int GetTypeSiroboSize(const Sirobo::StateType type);
 
 	void SetEnemyManager(EnemyManager* manager) { this->enemyManager = manager; }
 	EnemyManager* GetEnemyManager() { return enemyManager; }

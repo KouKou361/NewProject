@@ -272,6 +272,7 @@
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\StageManager.cpp" />
     <ClCompile Include="Source\EnemyDummy.cpp" />
+    <ClCompile Include="Source\StandByAnimetion.cpp" />
     <ClCompile Include="Source\Tuto.cpp" />
     <ClCompile Include="Source\TutoManager.cpp" />
     <ClCompile Include="Source\TutoStage.cpp" />
@@ -369,6 +370,7 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\Stage.h" />
     <ClInclude Include="Source\StageManager.h" />
+    <ClInclude Include="Source\StandByAnimetion.h" />
     <ClInclude Include="Source\TutoManager.h" />
     <ClInclude Include="Source\UIBase.h" />
     <ClInclude Include="Source\UIDerived.h" />
@@ -418,6 +420,7 @@
     <None Include="Shader\JapanFont.hlsli" />
     <None Include="Shader\Lambert.hlsli" />
     <None Include="Shader\Lib_Outline.hlsli" />
+    <None Include="Shader\Mask.hlsli" />
     <None Include="Shader\NoLight.hlsli" />
     <None Include="Shader\PointLight.hlsli" />
     <None Include="Shader\PointSprite.hlsli" />

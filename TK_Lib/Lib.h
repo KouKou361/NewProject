@@ -149,6 +149,10 @@ namespace TK_Lib
 
         void SetModelTexture(const string ModelName, const string textureName, const int setNum);
         void SetModelTexture(const int setModel, const int TextureIndex, const int setNum);
+
+        void UpdateMask(const int handle);
+        void  MaskStart(const int TextureIndex,const float maskSpeed);
+        float GetMaskVolume(const int TextureIndex);
 	}
 
 

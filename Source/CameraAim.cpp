@@ -28,6 +28,8 @@ void CameraAim::Update()
 	UpdateEye();
 	//注視点を決める更新
 	UpdateTarget();
+	//振動更新処理
+	VibrationUpdate();
 	//カメラの設定
 	TK_Lib::Camera::SetLookAt(eye, targetPos, { 0,1,0 });
 	//カメラのキャンセル

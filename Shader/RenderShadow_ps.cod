@@ -105,33 +105,33 @@ mov r0.x, l(0.000010)  // r0.x <- Bias
 #line 11 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\PointLight.hlsli"
 mov r0.y, l(8)  // r0.y <- POINTMAX
 
-#line 8 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
+#line 9 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
 sample_indexable(texture2d)(float,float,float,float) r1.xyzw, v2.xyxx, t0.xyzw, s0  // r1.x <- color.x; r1.y <- color.y; r1.z <- color.z; r1.w <- color.w
 
-#line 9
+#line 10
 dp3 r0.z, v5.xyzx, v5.xyzx
 rsq r0.z, r0.z
 mul r2.xyz, r0.zzzz, v5.xyzx  // r2.x <- N.x; r2.y <- N.y; r2.z <- N.z
 
-#line 10
+#line 11
 mov r3.xyz, -v0.xyzx
 add r3.xyz, r3.xyzx, cb3[5].xyzx
 dp3 r0.z, r3.xyzx, r3.xyzx
 rsq r0.z, r0.z
 mul r3.xyz, r0.zzzz, r3.xyzx  // r3.x <- E.x; r3.y <- E.y; r3.z <- E.z
 
-#line 11
+#line 12
 dp3 r0.z, cb0[4].xyzx, cb0[4].xyzx
 rsq r0.z, r0.z
 mul r4.xyz, r0.zzzz, cb0[4].xyzx  // r4.x <- L.x; r4.y <- L.y; r4.z <- L.z
 
-#line 16
+#line 17
 itof r5.xyz, l(1, 1, 1, 0)  // r5.x <- C.x; r5.y <- C.y; r5.z <- C.z
 
-#line 17
+#line 18
 itof r6.xyz, l(1, 1, 1, 0)  // r6.x <- Kd.x; r6.y <- Kd.y; r6.z <- Kd.z
 
-#line 18
+#line 19
 nop 
 mov r2.xyz, r2.xyzx
 mov r4.xyz, r4.xyzx
@@ -155,13 +155,13 @@ add r0.z, r0.z, l(0.500000)  // r0.z <- D
 mul r7.xyz, r0.zzzz, r5.xyzx
 mul r6.xyz, r6.xyzx, r7.xyzx  // r6.x <- <Diffuse return value>.x; r6.y <- <Diffuse return value>.y; r6.z <- <Diffuse return value>.z
 
-#line 18 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
+#line 19 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
 mov r6.xyz, r6.xyzx  // r6.x <- D.x; r6.y <- D.y; r6.z <- D.z
 
-#line 21
+#line 22
 mov r7.xyz, l(1.000000,1.000000,1.000000,0)  // r7.x <- Ks.x; r7.y <- Ks.y; r7.z <- Ks.z
 
-#line 22
+#line 23
 nop 
 mov r2.xyz, r2.xyzx
 mov r4.xyz, r4.xyzx
@@ -204,10 +204,10 @@ mul r3.xyz, r5.xyzx, r3.xyzx  // r3.x <- S.x; r3.y <- S.y; r3.z <- S.z
 #line 83
 mov r3.xyz, r3.xyzx  // r3.x <- <PhongSpecular return value>.x; r3.y <- <PhongSpecular return value>.y; r3.z <- <PhongSpecular return value>.z
 
-#line 22 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
+#line 23 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
 mov r3.xyz, r3.xyzx  // r3.x <- S.x; r3.y <- S.y; r3.z <- S.z
 
-#line 23
+#line 24
 nop 
 mov r2.xyz, r2.xyzx
 mov r4.xyz, r4.xyzx
@@ -226,10 +226,10 @@ add r0.z, r0.z, l(0.500000)  // r0.z <- D
 mul r2.xyz, r0.zzzz, r5.xyzx
 mul r2.xyz, r7.xyzx, r2.xyzx  // r2.x <- <HalfLambert return value>.x; r2.y <- <HalfLambert return value>.y; r2.z <- <HalfLambert return value>.z
 
-#line 23 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
+#line 24 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
 mov r2.xyz, r2.xyzx  // r2.x <- H.x; r2.y <- H.y; r2.z <- H.z
 
-#line 26
+#line 27
 nop 
 mov r4.xyz, v1.xyzx
 
@@ -300,10 +300,10 @@ endloop
 #line 78
 add r0.yzw, r7.xxyz, r8.xxyz  // r0.y <- <AddPointLight return value>.x; r0.z <- <AddPointLight return value>.y; r0.w <- <AddPointLight return value>.z
 
-#line 26 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
+#line 27 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
 mov r0.yzw, r0.yyzw  // r0.y <- PL.x; r0.z <- PL.y; r0.w <- PL.z
 
-#line 32
+#line 33
 add r3.xyz, r3.xyzx, r6.xyzx
 add r2.xyz, r2.xyzx, r3.xyzx
 add r2.xyz, r0.yzwy, r2.xyzx
@@ -311,7 +311,7 @@ mov r2.w, l(1.000000)
 mul r2.xyzw, r2.xyzw, v3.xyzw
 mul r1.xyzw, r1.xyzw, r2.xyzw
 
-#line 35
+#line 36
 nop 
 nop 
 nop 
@@ -356,10 +356,10 @@ add r0.yzw, r0.yyzw, r2.xxyz  // r0.y <- Scolor.x; r0.z <- Scolor.y; r0.w <- Sco
 #line 151
 max r0.xyz, r0.xxxx, r0.yzwy  // r0.x <- <GetShadow return value>.x; r0.y <- <GetShadow return value>.y; r0.z <- <GetShadow return value>.z
 
-#line 35 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
+#line 36 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\RenderShadow_ps.hlsl"
 mul r0.xyz, r0.xyzx, r1.xyzx  // r0.x <- color.x; r0.y <- color.y; r0.z <- color.z
 
-#line 51
+#line 52
 mov o0.xyz, r0.xyzx
 mov o0.w, r1.w
 ret 

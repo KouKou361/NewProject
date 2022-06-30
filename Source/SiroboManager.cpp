@@ -87,6 +87,23 @@ void SiroboManager::AllBack()
 		}
 	}
 }
+
+//シロボ達の状態タイプの数を返す
+int SiroboManager::GetTypeSiroboSize(const Sirobo::StateType type)
+{
+	int result = 0;
+	for (shared_ptr<Sirobo> sirobo : sirobos)
+	{
+		if (sirobo)
+		{
+			if (sirobo->GetState() == type)
+			{
+				result++;
+			}
+		}
+	}
+	return result;
+}
 //ミニオンの攻撃OK行動のみ攻撃する
 void SiroboManager::OneAttack(Sirobo* sirobo)
 {

@@ -209,6 +209,12 @@
     <Filter Include="Program\Source\Player\Sirobo\Action">
       <UniqueIdentifier>{aede908f-2ca1-4299-8829-ff4f0ebdb5a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Program\Source\Player\Sirobo\Action\standByAnimetion">
+      <UniqueIdentifier>{681ec880-b2fe-4304-9481-faec679b5471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Shader\Mask">
+      <UniqueIdentifier>{d877446d-79b6-4c2f-97a1-53f03b829261}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\WinMain.cpp">
@@ -484,9 +490,6 @@
     <ClCompile Include="Source\SiroboPursuitAction.cpp">
       <Filter>Program\Source\Player\Sirobo\Action</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SiroboStandByAction.cpp">
-      <Filter>Program\Source\Player\Sirobo\Action</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SiroboThrowAction.cpp">
       <Filter>Program\Source\Player\Sirobo\Action</Filter>
     </ClCompile>
@@ -678,6 +681,12 @@
     </ClCompile>
     <ClCompile Include="Source\ExportCSV.cpp">
       <Filter>Program\Source\ExportScript</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SiroboStandByAction.cpp">
+      <Filter>Program\Source\Player\Sirobo\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\StandByAnimetion.cpp">
+      <Filter>Program\Source\Player\Sirobo\Action\standByAnimetion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -939,6 +948,9 @@
     <ClInclude Include="Source\Export.h">
       <Filter>Program\Header\ExportScript</Filter>
     </ClInclude>
+    <ClInclude Include="Source\StandByAnimetion.h">
+      <Filter>Program\Header\Player\Sirobo\Action</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\Sprite.hlsli">
@@ -985,6 +997,9 @@
     </None>
     <None Include="Shader\ToShadowMap.hlsli">
       <Filter>Library\Shader\Cascade\ToShadowMap</Filter>
+    </None>
+    <None Include="Shader\Mask.hlsli">
+      <Filter>Library\Shader\Mask</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

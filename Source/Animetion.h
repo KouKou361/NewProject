@@ -11,6 +11,7 @@ public:
 	const string Damage = "Damage";
 	const string Die = "Die";
 	const string End = "End";
+	const string Walk = "Walk";
 
 	const string BossOpen = "Open";
 	const string BossOpenGoToRoll = "OpenGoToRoll";

@@ -165,7 +165,7 @@ public:
 	void Update();
 
 	//ダメージを判定
-	bool AddDamage(int damage, float setinvincibleTime);
+	bool AddDamage(const int &damage, const float &setinvincibleTime);
 	
 	//部位あたる名前
 	string siteName;

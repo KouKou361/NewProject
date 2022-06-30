@@ -1,5 +1,5 @@
-
 #include "Cascade.hlsli"
+#include "Mask.hlsli"
 
 PSInput main(VSInput input)
 {

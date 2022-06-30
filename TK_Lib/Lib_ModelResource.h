@@ -320,11 +320,11 @@ struct Animation
 		DirectX::XMFLOAT4X4	boneTransforms[MaxBones];
 	};
 
-	struct CbSubset
-	{
-		DirectX::XMFLOAT4	materialColor;
-	};
-
+//	struct CbSubset
+//	{
+//		DirectX::XMFLOAT4	materialColor;
+//	};
+//
 
 public:
 	bool Load(ID3D11Device* device, const char* filename = nullptr);
@@ -362,6 +362,10 @@ public:
 	void RayPick(const XMFLOAT3& start,const XMFLOAT3& end, RayOut& ray);
 	//半径のレイピック
 	void RadiusRayPick(const XMFLOAT3& start, const XMFLOAT3& end, RayOut& ray, const float radius);
+
+	void UpdateMaskVolume();
+	void MaskStart(const float maskSpeed) { this->maskSpeed = maskSpeed; };
+	inline const float GetMaskVolume() const { return this->maskVolume; };
 private:
 	std::vector<Node>		nodes;
 	std::vector<Material>	materials;
@@ -379,4 +383,7 @@ private:
 	//補完用
 	float animetionBlendTime = 0.0f;
 	float animetionBlendSeconds = 0.0f;
+
+	float maskVolume = 0.0f;
+	float maskSpeed = 0.0f;
 };

@@ -1,6 +1,7 @@
 
 #include "Cascade.hlsli"
 #include "PointLight.hlsli"
+#include "Mask.hlsli"
 
 float4 main(PSInput pin) : SV_TARGET
 {
@@ -51,7 +52,7 @@ float4 main(PSInput pin) : SV_TARGET
     color.xyz *= GetCascadeShadow(pin.Wposition.xyz);
 	
 
-	
+    color = Mask(diffuseMapSamplerState, pin.texcoord, color);
   
 	
 	     //ポイントライト

@@ -25,6 +25,8 @@ private:
 	struct CbSubset
 	{
 		DirectX::XMFLOAT4	materialColor;
+		float               maskVolume;
+		DirectX::XMFLOAT3   dummy;
 	};
 
 	ComPtr<ID3D11Buffer>			m_sceneConstantBuffer;

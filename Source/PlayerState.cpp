@@ -38,6 +38,12 @@ void AttackState::Run(Player* pl)
 		pl->ChangeState(pl->stateWalk.get());
 		return;
 	}
+	//もしスタンバイ状態のシロボがいない場合
+	if (pl->GetSiroboManager()->GetTypeSiroboSize(Sirobo::StateType::TYPE_STAND_BY) == 0)
+	{
+		pl->ChangeState(pl->stateWalk.get());
+		return;
+	}
 
 	//敵の方向に向かせる
 	VECTOR3 Vec;

@@ -213,9 +213,9 @@ void Lib_CascadeShader::CreateShadowTexture(ID3D11DeviceContext* context, const 
 		//p.y = LightView.GetPos().y;
 		//p.z = LightView.GetPos().z;
 
-		p.x = t.x - LightView.GetFront().x * 500.0f;
-		p.y = t.y - LightView.GetFront().y * 500.0f;
-		p.z = t.z - LightView.GetFront().z * 500.0f;
+		p.x = t.x - LightView.GetFront().x * 200.0f;
+		p.y = t.y - LightView.GetFront().y * 200.0f;
+		p.z = t.z - LightView.GetFront().z * 200.0f;
 
 		// ライト用のカメラ
 		CameraLib v;
@@ -818,14 +818,16 @@ void Lib_CascadeShader::Render(ID3D11DeviceContext* context, const ModelResource
 	const std::vector<ModelResource::Node>& nodes = model->GetNodes();
 	const std::vector<ModelResource::NodeTest>& testnodes = model->GetNodetest();
 
-	if (model->GetAddTextures().size() == 0)
+	const int AddTextureSize = static_cast<u_int>(model->GetAddTextures().size());
+	if (AddTextureSize == 0)
 	{
 		assert(!"NoTexture");
 	}
-	else
+	for (int i = 0; i < AddTextureSize; i++)
 	{
-		model->GetAddTextures().at(0).textureResource->Set(context,model->GetAddTextures().at(0).SetNum);
+		model->GetAddTextures().at(i).textureResource->Set(context, model->GetAddTextures().at(i).SetNum);
 	}
+
 
 	for (const ModelResource::Mesh& mesh : model->GetMeshes())
 	{
@@ -857,13 +859,13 @@ void Lib_CascadeShader::Render(ID3D11DeviceContext* context, const ModelResource
 		//context->PSSetShaderResources(1, 1, shadowTexture->GetShaderResourceView());
 		//context->PSSetShaderResources(1, 1, GaussTexture->GetShaderResourceView());
 
-
-
+		const float MaskVolume = model->GetMaskVolume();
 		//メッシュに会ったマテリアルの設定
 		for (const ModelResource::Subset& subset : mesh.subsets)
 		{
 			CbSubset cbSubset;
 			cbSubset.materialColor = subset.material->color;
+			cbSubset.maskVolume = MaskVolume;
 			context->UpdateSubresource(m_subsetConstantBuffer.Get(), 0, 0, &cbSubset, 0, 0);
 
 			context->PSSetShaderResources(0, 1, subset.material->shaderResourceView.GetAddressOf());
@@ -882,11 +884,11 @@ void Lib_CascadeShader::End(ID3D11DeviceContext* context)
 
 	//影用のテクスチャの描画
 	
-//	for (int i = 0; i < NUM_SHADOW_MAP; i++)
-//	{
-//		TK_Lib::Draw::Sprite(shadow_Texture[i].get(), VECTOR2(0, 200*i+5*i), VECTOR2(200, 200), VECTOR4(0, 0, shadow_Texture[i]->GetWidth(), shadow_Texture[i]->GetHeight()), 0.0f, VECTOR4(1, 1, 1, 1));
-//	}
-//	
+	//for (int i = 0; i < NUM_SHADOW_MAP; i++)
+	//{
+	//	TK_Lib::Draw::Sprite(shadow_Texture[i].get(), VECTOR2(0, 200*i+5*i), VECTOR2(200, 200), VECTOR4(0, 0, shadow_Texture[i]->GetWidth(), shadow_Texture[i]->GetHeight()), 0.0f, VECTOR4(1, 1, 1, 1));
+	//}
+	
 //	for (int i = 0; i < NUM_SHADOW_MAP; i++)
 //	{
 //		TK_Lib::Draw::Sprite(Gauss_Texture[i].get(), VECTOR2(1720, 200 * i + 5 * i), VECTOR2(200, 200), VECTOR4(0, 0, shadow_Texture[i]->GetWidth(), shadow_Texture[i]->GetHeight()), 0.0f, VECTOR4(1, 1, 1, 1));

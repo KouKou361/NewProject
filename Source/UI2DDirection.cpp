@@ -14,6 +14,7 @@ void UI2DDirection::Init()
 	targetWorldPos = { 0,0,0 };
 	targetScreenPos = TK_Lib::Window::GetWindowSize()/2;
 	targetAngle = 0.0f;
+	Update();
 }
 //XVˆ—
 void UI2DDirection::Update()

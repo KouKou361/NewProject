@@ -25,7 +25,9 @@ private:
 
 	struct CbSubset
 	{
-		DirectX::XMFLOAT4	materialColor;
+		DirectX::XMFLOAT4	materialColor = {0,0,0,0};
+		float               maskVolume=0;
+		DirectX::XMFLOAT3   dummy = {0,0,0};
 	};
 
 	struct ShadowConstant

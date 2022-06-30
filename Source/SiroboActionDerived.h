@@ -1,8 +1,13 @@
 #pragma once
 #include "SiroboActionBase.h"
 #include "Lib.h"
+#include "StandByAnimetion.h"
 class EnemyBase;
 
+class BaseStandByAnimetion;
+class WalkStandByAnimetion;
+class RunStandByAnimetion;
+class IdelStandByAnimetion;
 
 //待機行動
 class SiroboIdleAction :public SiroboActionBase
@@ -25,52 +30,36 @@ public:
 	//Imguiデバッグ
 	void DebugImgui();
 };
-//シロボ、プレイヤーの後についていく（歩き）
-class SiroboFollowRun:public SiroboActionBase
-
-{
-public:
-	SiroboFollowRun(Sirobo* sirobo) :SiroboActionBase(sirobo) {}
-
-	//開始処理
-	void Start();
-
-	//実行処理
-	ActionBase::State Run();
-
-
-
-	//終了処理
-	void End();
-
-
-	//Imguiデバッグ
-	void DebugImgui();
-
-	//もし目標物が消えてしまった場合
-	ActionBase::State DeleteTarget();
-private:
-
-	//群衆
-	void Flock();
-
-	//シロボ同士の当たり判定
-	void SiroboVsSirobo();
-
-	//プレイヤーの当たり判定
-	void VsPlayer();
-};
 
 
 
 
-
-
-//シロボ、プレイヤーの後についていく（歩き）
+//攻撃OK行動
 class SiroboStandByAction :public SiroboActionBase
 {
+private:
+	BaseStandByAnimetion* current=nullptr;
+
+	WalkStandByAnimetion* walk = nullptr;
+	RunStandByAnimetion*  run = nullptr;
+	IdelStandByAnimetion* idei = nullptr;
+	float speed = 0.0f;
 public:
-	SiroboStandByAction(Sirobo* sirobo) :SiroboActionBase(sirobo) {}
+	SiroboStandByAction(Sirobo* minion) :SiroboActionBase(minion) {
+		walk = new WalkStandByAnimetion(minion);
+		run = new RunStandByAnimetion(minion);
+		idei = new IdelStandByAnimetion(minion);
+	}
+
+	~SiroboStandByAction()
+	{
+		delete walk;
+		walk = nullptr;
+		delete run;
+		run = nullptr;
+		delete idei;
+		idei = nullptr;
+	}
 
 	//開始処理
 	void Start();
@@ -78,11 +67,8 @@ public:
 	//実行処理
 	ActionBase::State Run();
 
-
-
 	//終了処理
 	void End();
-
 
 	//Imguiデバッグ
 	void DebugImgui();
@@ -90,15 +76,16 @@ public:
 	//もし目標物が消えてしまった場合
 	ActionBase::State DeleteTarget();
 private:
-
 	//群衆
 	void Flock();
-
 	//シロボ同士の当たり判定
 	void SiroboVsSirobo();
-
-	//プレイヤーの当たり判定
+	//プレイヤーとの当たり判定
 	void VsPlayer();
+	//適切なアニメーションに移行する。
+	void AllAppropriateAnimesion();
+	//適切なアニメーションに移行する。
+	bool AppropriateAnimesion(BaseStandByAnimetion* anime);
 };
 
 
@@ -106,7 +93,7 @@ private:
 class SiroboBackAction : public SiroboActionBase
 {
 public:
-	SiroboBackAction(Sirobo* sirobo) :SiroboActionBase(sirobo) {}
+	SiroboBackAction(Sirobo* minion) :SiroboActionBase(minion) {}
 
 	//開始処理
 	void Start();
@@ -122,12 +109,7 @@ public:
 
 	//もし目標物が消えてしまった場合
 	ActionBase::State DeleteTarget();
-
-private:
-	//プレイヤー方向に走る
-	void RunToThePlaye();
 };
-
 
 
 // 追跡行動

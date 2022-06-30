@@ -20,16 +20,16 @@ SiroboPlayerAI::SiroboPlayerAI(
 	//リアクション
 	behaviorTree->AddNode("root",   "Resuscitation", 0, BehaviorTree::SelectRule::PRIORITY, new SiroboResuscitationJudgement(owner), new SiroboResuscitationAction(owner));
 	behaviorTree->AddNode("root",   "Die",           1, BehaviorTree::SelectRule::PRIORITY, new SiroboDieJudgement(owner), new SiroboDieAction(owner));
-	behaviorTree->AddNode("root",   "Follow",        2, BehaviorTree::SelectRule::PRIORITY, new SiroboFollowJudgement(owner), nullptr);
+	behaviorTree->AddNode("root",   "Allies",        2, BehaviorTree::SelectRule::PRIORITY, new SiroboAlliesJudgement(owner), nullptr);
 
 	//攻撃
-	behaviorTree->AddNode("Follow", "Battle",        3, BehaviorTree::SelectRule::SEQUENCE, new SiroboBattleJudgement(owner),nullptr);
+	behaviorTree->AddNode("Allies", "Battle",        3, BehaviorTree::SelectRule::SEQUENCE, new SiroboBattleJudgement(owner),nullptr);
 	behaviorTree->AddNode("Battle", "Throw",         0, BehaviorTree::SelectRule::NONE, new SiroboThrowJudgement(owner), new SiroboThrowAction(owner));
 	behaviorTree->AddNode("Battle", "Attack",        0, BehaviorTree::SelectRule::NONE, new SiroboAttackJudgement(owner), new SiroboAttackAction(owner));
 
 	//帰還
-	behaviorTree->AddNode("Follow", "Stand by",      4, BehaviorTree::SelectRule::PRIORITY, new SiroboStandByJudgement(owner), new SiroboStandByAction(owner));
-	behaviorTree->AddNode("Follow", "Back",          5, BehaviorTree::SelectRule::PRIORITY, new SiroboBackJudgement(owner), new SiroboBackAction(owner));
+	behaviorTree->AddNode("Allies", "Stand by", 4, BehaviorTree::SelectRule::PRIORITY, new SiroboStandByJudgement(owner), new SiroboStandByAction(owner));
+	behaviorTree->AddNode("Allies", "Back", 5, BehaviorTree::SelectRule::PRIORITY, new SiroboBackJudgement(owner), new SiroboBackAction(owner));
 
 	 
 	 behaviorTree->AddNode("root", "Idle", 3, BehaviorTree::SelectRule::PRIORITY, new SiroboIdleJudgement(owner), new SiroboIdleAction(owner));

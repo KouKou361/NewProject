@@ -327,6 +327,19 @@ void ModelResource::SetTexture(TextureResource* texture, const int setNum)
 	addTextures.push_back(addtexture);
 }
 
+void ModelResource::UpdateMaskVolume()
+{
+	if (maskSpeed == 0)return;
+	if (maskVolume >= 1)
+	{
+		maskVolume = 1;
+		maskSpeed = 0;
+		return;
+	}
+	const float Volume = TK_Lib::Window::GetElapsedTime()*maskSpeed;
+	maskVolume += Volume;
+}
+
 ModelResource::NodeTest* ModelResource::FindNode(const char* name)
 {
 
@@ -364,7 +377,8 @@ void ModelResource::UpdateAnimation(float elapsedTime)
 	{
 		// 現在の時間がどのキーフレームの間にいるか判定する
 		const ModelResource::Keyframe& keyframe0 = keyframes.at(keyIndex);
-		const ModelResource::Keyframe& keyframe1 = keyframes.at(keyIndex + 1);
+		const u_int NextKeyIndex = keyIndex + 1;
+		const ModelResource::Keyframe& keyframe1 = keyframes.at(NextKeyIndex);
 		if (currentSeconds >= keyframe0.seconds && currentSeconds < keyframe1.seconds)
 		{
 			float rate = (currentSeconds - keyframe0.seconds / keyframe1.seconds - keyframe0.seconds);
@@ -580,11 +594,13 @@ void  ModelResource::RayPick(const XMFLOAT3& start,const XMFLOAT3& end, RayOut& 
 			for (UINT i = 0; i < subset.indexCount; i += 3)
 			{
 
-				UINT index = subset.startIndex + i;
+				const UINT Index = subset.startIndex + i;
+				const UINT NextIndex = Index + 1;
+				const UINT Next2Index = NextIndex + 1;
 				//三角形の頂点情報を算出する
-				const ModelResource::Vertex& a = vetices.at(indices.at(index));
-				const ModelResource::Vertex& b = vetices.at(indices.at(index + 1));
-				const ModelResource::Vertex& c = vetices.at(indices.at(index + 2));
+				const ModelResource::Vertex& a = vetices.at(indices.at(Index));
+				const ModelResource::Vertex& b = vetices.at(indices.at(NextIndex));
+				const ModelResource::Vertex& c = vetices.at(indices.at(Next2Index));
 
 
 
@@ -792,12 +808,13 @@ void  ModelResource::RadiusRayPick(const XMFLOAT3& start, const XMFLOAT3& end, R
 		{
 			for (UINT i = 0; i < subset.indexCount; i += 3)
 			{
-
-				UINT index = subset.startIndex + i;
+				const UINT Index = subset.startIndex + i;
+				const UINT NextIndex = Index + 1;
+				const UINT Next2Index = NextIndex + 1;
 				//三角形の頂点情報を算出する
-				const ModelResource::Vertex& a = vetices.at(indices.at(index));
-				const ModelResource::Vertex& b = vetices.at(indices.at(index + 1));
-				const ModelResource::Vertex& c = vetices.at(indices.at(index + 2));
+				const ModelResource::Vertex& a = vetices.at(indices.at(Index));
+				const ModelResource::Vertex& b = vetices.at(indices.at(NextIndex));
+				const ModelResource::Vertex& c = vetices.at(indices.at(Next2Index));
 
 
 

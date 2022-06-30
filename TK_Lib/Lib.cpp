@@ -737,6 +737,12 @@ namespace TK_Lib
             m.modelResourceManager->Tranceform(m.graphics->Get_device(), W, handle);
         }
         //モデル
+        void UpdateMask(const int handle)
+        {
+            ModelResource* model = m.modelResourceManager->GetModelResource(handle);
+            model->UpdateMaskVolume();
+        }
+        //モデル
         void Tranceform(const int handle, VECTOR3 Positoin, VECTOR3 Angle, VECTOR3 Scale)
         {
             // ワールド行列の更新
@@ -843,6 +849,18 @@ namespace TK_Lib
             ModelResource* model = m.modelResourceManager->GetModelResource(setModel);
             TextureResource* texture = m.textureResourceManager->GetTextureResource(textureIndex);
             model->SetTexture(texture, setNum);
+        }
+
+        void  MaskStart(const int TextureIndex, const float maskSpeed)
+        {
+            ModelResource* model = m.modelResourceManager->GetModelResource(TextureIndex);
+            model->MaskStart(maskSpeed);
+        }
+
+        float GetMaskVolume(const int TextureIndex)
+        {
+            ModelResource* model = m.modelResourceManager->GetModelResource(TextureIndex);
+            return model->GetMaskVolume();
         }
     }
     //======================================
@@ -1250,7 +1268,7 @@ namespace TK_Lib
 
             // バッファの破棄
             delete[] cpUCS2;
-
+            cpUCS2 = nullptr;
 
            
    

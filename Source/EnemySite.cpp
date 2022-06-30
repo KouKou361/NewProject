@@ -10,6 +10,8 @@
 #include "Scene.h"
 #include"EffectManager.h"
 #include "EffectBase.h"
+#include "EXP.h"
+#include"EXPManager.h"
 
 void EnemySite::Init()
 {
@@ -69,12 +71,12 @@ void EnemySite::Update()
 
 
 //ダメージを判定
-bool EnemySite::AddDamage(int Damage, float SetinvincibleTime)
+bool EnemySite::AddDamage(const int &damage, const  float &setinvincibleTime)
 {
 	//体力が0以下なら
 	if (GetHp() <= 0)return false;
 
-	hp -= Damage;
+	hp -= damage;
 	//もし生き残っていたなら
 	if (hp >= 1)
 	{
@@ -90,7 +92,16 @@ bool EnemySite::AddDamage(int Damage, float SetinvincibleTime)
 		//targetFlg = TargetFlg::Failed;
 		//ダメージフラグのオン
 		SetDeadFlg(true);
-		GetSceneGame()->GetEffectManager()->GetEffectFromSerchKey("Fire")->Play(GetPos(), 10);
+		const int EffectNum = 10;
+		GetSceneGame()->GetEffectManager()->GetEffectFromSerchKey("Fire")->Play(GetPos(), EffectNum);
+		TK_Lib::Lib_Sound::SoundPlay("BossSiteExplosion", false);
+
+		//経験値の出現
+		for (int i = 0; i < GetExpNum(); i++)
+		{
+			shared_ptr<EXP> m_exp = make_shared<EXP>();
+			sceneGame->GetExpManager()->Register(m_exp, GetPos());
+		}
 	}
 	return true;
 }

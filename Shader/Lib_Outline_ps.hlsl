@@ -1,4 +1,5 @@
 #include "Lib_Outline.hlsli"
+#include "Mask.hlsli"
 
 float4 main(PSInput pin) : SV_TARGET
 {

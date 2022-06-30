@@ -19,17 +19,22 @@
 void SceneGame::LoadModel()
 {
 
+	const char* EnmMaskTexture="./Data/MaskTexture/Asea.png";
+	const char* ObjMaskTexture= "./Data/MaskTexture/dissolve_animation3.png";
 	//FontTexture = TK_Lib::Load::LoadTexture("./Data/Sprite/fonts/font0.png");
 
 	//プレイヤー
 	model[static_cast<int>(ModelIndex::PLAYER_MODEL)] = TK_Lib::Load::LoadModel("./Data/Model/Player/Player.mdl", "Player");
 	TK_Lib::Model::SetModelTexture("Player", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
+	TK_Lib::Model::SetModelTexture("Player", EnmMaskTexture, 5);
 	//ミニオン
 	model[static_cast<int>(ModelIndex::SIROBO_PLAYER_MODEL)] = TK_Lib::Load::LoadModel("./Data/Model/Sirobo/Sirobo.mdl", "Sirobo");
 	TK_Lib::Model::SetModelTexture("Sirobo", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
+	TK_Lib::Model::SetModelTexture("Sirobo", EnmMaskTexture, 5);
 	//敵スライム
 	model[static_cast<int>(ModelIndex::ENEMY_SLIME_MODEL)] = TK_Lib::Load::LoadModel("./Data/Model/Slime/Slime.mdl", "Slime");
 	TK_Lib::Model::SetModelTexture("Slime", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
+	TK_Lib::Model::SetModelTexture("Slime", EnmMaskTexture, 5);
 	////敵爆発
 	//model[ENEMY_BOOM_MODEL] = TK_Lib::Load::LoadModel("./Data/Model/Boom/Boom.mdl", "Boom");
 	//TK_Lib::Model::SetModelTexture("Boom", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
@@ -39,16 +44,19 @@ void SceneGame::LoadModel()
 	//敵宝箱
 	model[static_cast<int>(ModelIndex::ENEMY_CHEST_MODEL)] = TK_Lib::Load::LoadModel("./Data/Model/ChestEnemy/ChestEnemy.mdl", "ChestEnemy");
 	TK_Lib::Model::SetModelTexture("ChestEnemy", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
+	TK_Lib::Model::SetModelTexture("ChestEnemy", EnmMaskTexture, 5);
 	//敵亀
 	model[static_cast<int>(ModelIndex::ENEMY_TURTLESHELL_MODEL)] = TK_Lib::Load::LoadModel("./Data/Model/TurtleShell/TurtleShell.mdl", "TurtleShell");
 	TK_Lib::Model::SetModelTexture("TurtleShell", "./Data/Model/TurtleShell/Textures/PBRTurtleShellNormal.png", 4);
+	TK_Lib::Model::SetModelTexture("TurtleShell", EnmMaskTexture, 5);
 	//敵ボス
 	TK_Lib::Load::LoadModel("./Data/Model/Boss/Boss.mdl", "Boss");
 	TK_Lib::Model::SetModelTexture("Boss", "./Data/Model/Boss/Texture/NormalMap .png", 4);
+	TK_Lib::Model::SetModelTexture("Boss", EnmMaskTexture, 5);
 	//敵ダミー
 	model[static_cast<int>(ModelIndex::TRANING_DUMMY)] = TK_Lib::Load::LoadModel("./Data/Model/Training_Dummy/Training_dummy.mdl", "Dummy");
 	TK_Lib::Model::SetModelTexture("Dummy", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
-
+	TK_Lib::Model::SetModelTexture("Dummy", EnmMaskTexture, 5);
 
 	//Model[StageCollisionModel] = TK_Lib::Load::LoadModel("./Data/Model/Stage/Panel01/CollisionStagePanel1.mdl", "Collision");
 	//Model[StageNav] = TK_Lib::Load::LoadModel("./Data/Model/Stage/Panel01/NavStagepanel1.mdl", "Nav");
@@ -68,26 +76,32 @@ void SceneGame::LoadModel()
 	model[static_cast<int>(ModelIndex::STAGE_NAV2)] =            TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/NavStage02.mdl", "Nav2");
 	model[static_cast<int>(ModelIndex::STAGE_MODEL2)] =          TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/StageWall.mdl", "Stage2");
 	                              TK_Lib::Model::SetModelTexture("Stage2", "./Data/Model/Stage/NormalMap.png", 4);
+								  TK_Lib::Model::SetModelTexture("Stage2", EnmMaskTexture, 5);
 	                              TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel02/StageGround.mdl", "Stage2NoMakeShadow");
 								  TK_Lib::Model::SetModelTexture("Stage2NoMakeShadow", "./Data/Model/Stage/NormalMap.png", 4);
+								  TK_Lib::Model::SetModelTexture("Stage2NoMakeShadow", EnmMaskTexture, 5);
 
 	//3ステージ
 	TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel03/NavStage03.mdl", "Nav3");
 	TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel03/CollisionStage03.mdl", "Collision3");
 	TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel03/StageWall.mdl", "Stage3");
 	TK_Lib::Model::SetModelTexture("Stage3", "./Data/Model/Stage/NormalMap.png", 4);
+	TK_Lib::Model::SetModelTexture("Stage3", EnmMaskTexture, 5);
 	TK_Lib::Load::LoadModel("./Data/Model/Stage/NewPanel03/StageGround.mdl", "Stage3NoMakeShadow");
 	TK_Lib::Model::SetModelTexture("Stage3NoMakeShadow", "./Data/Model/Stage/NormalMap.png", 4);
-
+	TK_Lib::Model::SetModelTexture("Stage3NoMakeShadow", EnmMaskTexture, 5);
 	//ポット
 	model[static_cast<int>(ModelIndex::PAT)] = TK_Lib::Load::LoadModel("./Data/Model/Pat/Pat.mdl", "Pat");
 	TK_Lib::Model::SetModelTexture("Pat", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
+	TK_Lib::Model::SetModelTexture("Pat", ObjMaskTexture, 5);
 	//タワー
 	TK_Lib::Load::LoadModel("./Data/Model/Tower/Tower.mdl", "Tower");
 	TK_Lib::Model::SetModelTexture("Tower", "./Data/Model/Tower/Textures/NormalMap .png", 4);
+	TK_Lib::Model::SetModelTexture("Tower", ObjMaskTexture, 5);
 	//壁
 	model[static_cast<int>(ModelIndex::WALL)] = TK_Lib::Load::LoadModel("./Data/Model/Wall/Wall.mdl", "Wall");
 	TK_Lib::Model::SetModelTexture("Wall", "./Data/Model/Player/Textures/PBRTurtleShellNormal.png", 4);
+	TK_Lib::Model::SetModelTexture("Wall", ObjMaskTexture, 5);
 	//壁
 	TK_Lib::Load::LoadModel("./Data/Model/Wall/CollisionWall.mdl", "CollisionWall");
 	//空
@@ -179,6 +193,14 @@ void SceneGame::LoadSound()
 	//SE タワーの破壊２
 	TK_Lib::Lib_Sound::RegisterSound("./Data/Sound/Game/SE/TowerBreak2.wav", "TowerBreak2");
 	TK_Lib::Lib_Sound::SoundSetVolume("TowerBreak2", SoundVolume);
+
+	//SE ボス破壊
+	TK_Lib::Lib_Sound::RegisterSound("./Data/Sound/Game/SE/BossExplosion.wav", "BossExplosion");
+	TK_Lib::Lib_Sound::SoundSetVolume("BossExplosion", 0.7f);
+
+	//SE ボス部位破壊
+	TK_Lib::Lib_Sound::RegisterSound("./Data/Sound/Game/SE/BossSiteBreak.wav", "BossSiteExplosion");
+	TK_Lib::Lib_Sound::SoundSetVolume("BossSiteExplosion", 0.7f);
 
 	//SE ボスの回転（ゴロゴロ）
 	TK_Lib::Lib_Sound::RegisterSound("./Data/Sound/Game/SE/BossRoll.wav", "BossRoll");
@@ -634,9 +656,9 @@ void SceneGame::Render()
 //モデル用の処理
 void SceneGame::ModelRender()
 {
-
-	 player->ModelRender();
 	stageManager->ModelRender();
+	 player->ModelRender();
+
 	
 	//オブジェクトの更新処理
 	objectManager->ModelRender();
