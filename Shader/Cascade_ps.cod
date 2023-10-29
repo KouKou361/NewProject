@@ -124,15 +124,15 @@ dcl_indexableTemp x0[3], 4
 //   v7.x <- pin.VZ.x; v7.y <- pin.VZ.y; v7.z <- pin.VZ.z; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 59 "C:\Users\PC_User\Documents\Program\Shader\Cascade.hlsli"
+#line 59 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade.hlsli"
 mov x0[0].x, l(0.000900)
 mov x0[1].x, l(0.001000)
 mov x0[2].x, l(0.002000)
 
-#line 11 "C:\Users\PC_User\Documents\Program\Shader\PointLight.hlsli"
+#line 11 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\PointLight.hlsli"
 mov r0.x, l(8)  // r0.x <- POINTMAX
 
-#line 9 "C:\Users\PC_User\Documents\Program\Shader\Cascade_ps.hlsl"
+#line 9 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 sample_indexable(texture2d)(float,float,float,float) r1.xyzw, v2.xyxx, t0.xyzw, s0  // r1.x <- color.x; r1.y <- color.y; r1.z <- color.z; r1.w <- color.w
 
 #line 14
@@ -203,7 +203,7 @@ mov r3.xyz, r3.xyzx
 mov r4.xyz, r4.xyzx
 mov r5.xyz, r5.xyzx
 
-#line 67 "C:\Users\PC_User\Documents\Program\Shader\Cascade.hlsli"
+#line 67 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade.hlsli"
 mov r6.xyz, -r3.xyzx
 dp3 r2.w, r0.yzwy, r6.xyzx  // r2.w <- D
 
@@ -220,7 +220,7 @@ add r2.w, r2.w, l(0.500000)  // r2.w <- D
 mul r6.xyz, r2.wwww, r4.xyzx
 mul r5.xyz, r5.xyzx, r6.xyzx  // r5.x <- <Diffuse return value>.x; r5.y <- <Diffuse return value>.y; r5.z <- <Diffuse return value>.z
 
-#line 35 "C:\Users\PC_User\Documents\Program\Shader\Cascade_ps.hlsl"
+#line 35 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mov r5.xyz, r5.xyzx  // r5.x <- D.x; r5.y <- D.y; r5.z <- D.z
 
 #line 38
@@ -234,7 +234,7 @@ mov r4.xyz, r4.xyzx
 mov r2.xyz, r2.xyzx
 mov r6.xyz, r6.xyzx
 
-#line 91 "C:\Users\PC_User\Documents\Program\Shader\Cascade.hlsli"
+#line 91 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade.hlsli"
 mov r7.xyz, -r3.xyzx
 dp3 r2.w, r7.xyzx, r0.yzwy
 add r2.w, r2.w, r2.w
@@ -269,7 +269,7 @@ mul r2.xyz, r4.xyzx, r2.xyzx  // r2.x <- S.x; r2.y <- S.y; r2.z <- S.z
 #line 96
 mov r2.xyz, r2.xyzx  // r2.x <- <PhongSpecular return value>.x; r2.y <- <PhongSpecular return value>.y; r2.z <- <PhongSpecular return value>.z
 
-#line 39 "C:\Users\PC_User\Documents\Program\Shader\Cascade_ps.hlsl"
+#line 39 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mov r2.xyz, r2.xyzx  // r2.x <- S.x; r2.y <- S.y; r2.z <- S.z
 
 #line 40
@@ -279,7 +279,7 @@ mov r3.xyz, r3.xyzx
 mov r4.xyz, r4.xyzx
 itof r6.xyz, l(1, 1, 1, 0)
 
-#line 108 "C:\Users\PC_User\Documents\Program\Shader\Cascade.hlsli"
+#line 108 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade.hlsli"
 mov r3.xyz, -r3.xyzx
 dp3 r0.y, r0.yzwy, r3.xyzx  // r0.y <- D
 
@@ -291,14 +291,14 @@ add r0.y, r0.y, l(0.500000)  // r0.y <- D
 mul r0.yzw, r0.yyyy, r4.xxyz
 mul r0.yzw, r6.xxyz, r0.yyzw  // r0.y <- <HalfLambert return value>.x; r0.z <- <HalfLambert return value>.y; r0.w <- <HalfLambert return value>.z
 
-#line 40 "C:\Users\PC_User\Documents\Program\Shader\Cascade_ps.hlsl"
+#line 40 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mov r0.yzw, r0.yyzw  // r0.y <- H.x; r0.z <- H.y; r0.w <- H.z
 
 #line 43
 nop 
 mov r3.xyz, v1.xyzx
 
-#line 58 "C:\Users\PC_User\Documents\Program\Shader\PointLight.hlsli"
+#line 58 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\PointLight.hlsli"
 itof r4.xyz, l(0, 0, 0, 0)  // r4.x <- PD.x; r4.y <- PD.y; r4.z <- PD.z
 
 #line 59
@@ -365,7 +365,7 @@ endloop
 #line 78
 add r3.xyz, r6.xyzx, r7.xyzx  // r3.x <- <AddPointLight return value>.x; r3.y <- <AddPointLight return value>.y; r3.z <- <AddPointLight return value>.z
 
-#line 43 "C:\Users\PC_User\Documents\Program\Shader\Cascade_ps.hlsl"
+#line 43 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mov r3.xyz, r3.xyzx  // r3.x <- PL.x; r3.y <- PL.y; r3.z <- PL.z
 
 #line 49
@@ -380,7 +380,7 @@ mul r0.xyzw, r0.wxyz, r1.wxyz  // r0.x <- color.w; r0.y <- color.x; r0.z <- colo
 nop 
 mov r1.xyz, v1.xyzx
 
-#line 170 "C:\Users\PC_User\Documents\Program\Shader\Cascade.hlsli"
+#line 170 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade.hlsli"
 itof r2.xyz, l(1, 1, 1, 0)  // r2.x <- color.x; r2.y <- color.y; r2.z <- color.z
 
 #line 172
@@ -762,7 +762,7 @@ endif
 #line 202
 mov r2.xyz, r2.xyzx  // r2.x <- <GetCascadeShadow return value>.x; r2.y <- <GetCascadeShadow return value>.y; r2.z <- <GetCascadeShadow return value>.z
 
-#line 52 "C:\Users\PC_User\Documents\Program\Shader\Cascade_ps.hlsl"
+#line 52 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mul r1.xyz, r0.yzwy, r2.xyzx  // r1.x <- color.x; r1.y <- color.y; r1.z <- color.z
 
 #line 55
@@ -771,7 +771,7 @@ nop
 mov r1.xyz, r1.xyzx
 mov r0.x, r0.x
 
-#line 16 "C:\Users\PC_User\Documents\Program\Shader\Mask.hlsli"
+#line 16 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Mask.hlsli"
 sample_indexable(texture2d)(float,float,float,float) r0.y, v2.xyxx, t5.yxzw, s0
 mov r0.y, r0.y  // r0.y <- mask_value
 
@@ -786,7 +786,7 @@ mul r1.w, r0.y, r0.x  // r1.w <- color.w
 mov r1.xyz, r1.xyzx  // r1.x <- <Mask return value>.x; r1.y <- <Mask return value>.y; r1.z <- <Mask return value>.z
 mov r1.w, r1.w  // r1.w <- <Mask return value>.w
 
-#line 55 "C:\Users\PC_User\Documents\Program\Shader\Cascade_ps.hlsl"
+#line 55 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Cascade_ps.hlsl"
 mov r1.xyzw, r1.xyzw  // r1.w <- color.w
 
 #line 67
