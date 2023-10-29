@@ -86,7 +86,7 @@ dcl_temps 6
 //   o1.x <- <main return value>.texcoord.x; o1.y <- <main return value>.texcoord.y; o1.z <- <main return value>.power; 
 //   o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w
 //
-#line 6 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\NoLight_vs.hlsl"
+#line 6 "C:\Users\PC_User\Documents\Program\Shader\NoLight_vs.hlsl"
 itof r0.xyz, l(0, 0, 0, 0)  // r0.x <- p.x; r0.y <- p.y; r0.z <- p.z
 
 #line 7

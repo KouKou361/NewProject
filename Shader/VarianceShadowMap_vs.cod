@@ -79,7 +79,7 @@ dcl_temps 5
 //   o1.x <- <main return value>.Depth.x; o1.y <- <main return value>.Depth.y; o1.z <- <main return value>.Depth.z; o1.w <- <main return value>.Depth.w; 
 //   o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w
 //
-#line 14 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\VarianceShadowMap_vs.hlsl"
+#line 14 "C:\Users\PC_User\Documents\Program\Shader\VarianceShadowMap_vs.hlsl"
 itof r0.xyz, l(0, 0, 0, 0)  // r0.x <- p.x; r0.y <- p.y; r0.z <- p.z
 
 #line 16

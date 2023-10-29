@@ -41,7 +41,7 @@
     dcl t1  // input<6,7,8,9>
     dcl_2d s0
 
-#line 4 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Sprite_ps.hlsl"
+#line 4 "C:\Users\PC_User\Documents\Program\Shader\Sprite_ps.hlsl"
     texld r0, t0, s0
     mul r0, r0, t1  // ::color<0,1,2,3>
 
@@ -66,7 +66,7 @@ dcl_temps 1
 //   v2.x <- input.color.x; v2.y <- input.color.y; v2.z <- input.color.z; v2.w <- input.color.w; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 4 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Sprite_ps.hlsl"
+#line 4 "C:\Users\PC_User\Documents\Program\Shader\Sprite_ps.hlsl"
 sample r0.xyzw, v1.xyxx, t0.xyzw, s0
 mul r0.xyzw, r0.xyzw, v2.xyzw  // r0.x <- color.x; r0.y <- color.y; r0.z <- color.z; r0.w <- color.w
 

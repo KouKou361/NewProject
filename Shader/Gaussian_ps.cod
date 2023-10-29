@@ -56,7 +56,7 @@ dcl_temps 4
 //   v2.x <- input.Color.x; v2.y <- input.Color.y; v2.z <- input.Color.z; v2.w <- input.Color.w; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 6 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Gaussian_ps.hlsl"
+#line 6 "C:\Users\PC_User\Documents\Program\Shader\Gaussian_ps.hlsl"
 itof r0.xyz, l(0, 0, 0, 0)  // r0.x <- color.x; r0.y <- color.y; r0.z <- color.z
 
 #line 7

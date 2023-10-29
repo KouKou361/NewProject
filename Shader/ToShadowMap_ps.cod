@@ -55,7 +55,7 @@ dcl_temps 2
 //   v2.x <- input.texcoord.x; v2.y <- input.texcoord.y; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 5 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\ToShadowMap_ps.hlsl"
+#line 5 "C:\Users\PC_User\Documents\Program\Shader\ToShadowMap_ps.hlsl"
 div r0.y, v1.z, v1.w  // r0.y <- LightDepth
 
 #line 6
@@ -68,7 +68,7 @@ nop
 nop 
 mov r0.x, r0.x
 
-#line 16 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Mask.hlsli"
+#line 16 "C:\Users\PC_User\Documents\Program\Shader\Mask.hlsli"
 sample_indexable(texture2d)(float,float,float,float) r1.x, v2.xyxx, t5.xyzw, s0
 mov r1.x, r1.x  // r1.x <- mask_value
 
@@ -82,7 +82,7 @@ mul r0.x, r0.x, r1.x
 #line 23
 mov r0.x, r0.x  // r0.x <- <Mask return value>.w
 
-#line 8 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\ToShadowMap_ps.hlsl"
+#line 8 "C:\Users\PC_User\Documents\Program\Shader\ToShadowMap_ps.hlsl"
 mov r0.x, r0.x  // r0.x <- mask.w
 
 #line 10

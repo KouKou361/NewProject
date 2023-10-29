@@ -36,7 +36,7 @@
     dcl_texcoord1 v1  // input<3,4>
     dcl_texcoord2 v2  // input<5,6,7,8>
 
-#line 6 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Sprite_vs.hlsl"
+#line 6 "C:\Users\PC_User\Documents\Program\Shader\Sprite_vs.hlsl"
     mul r0, v0.xyzx, c1.xxxy
     add r0, r0, c1.yyyx  // ::output<0,1,2,3>
     mov r1.xy, v1  // ::output<4,5>
@@ -69,7 +69,7 @@ dcl_temps 3
 //   o1.x <- <main return value>.tex.x; o1.y <- <main return value>.tex.y; 
 //   o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w
 //
-#line 6 "C:\Users\taketomo\Desktop\就職作品\Game\GameProject\Shader\Sprite_vs.hlsl"
+#line 6 "C:\Users\PC_User\Documents\Program\Shader\Sprite_vs.hlsl"
 mov r0.xyz, v0.xyzx  // r0.x <- output.position.x; r0.y <- output.position.y; r0.z <- output.position.z
 mov r0.w, l(1.000000)  // r0.w <- output.position.w
 
